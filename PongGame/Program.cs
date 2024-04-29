@@ -223,13 +223,13 @@ namespace PongGame
         /**
          * Check collision between Dot and Kug
          */
-        static void collCheck(Paddle paddle, Kug kug)
+        static void collCheck(Paddle paddle, Ball ball)
         {
             //Versändlichere kurze Namen 
-            int kugL = kug.mPosX;
-            int kugR = kug.mPosX + kug.dotW;
-            int kugOb = kug.mPosY;
-            int kugUn = kug.mPosY + kug.dotH;
+            int kugL = ball.mPosX;
+            int kugR = ball.mPosX + ball.dotW;
+            int kugOb = ball.mPosY;
+            int kugUn = ball.mPosY + ball.dotH;
 
             int playL = paddle.mPosX;
             int playR = paddle.mPosX + paddle.dotW;
@@ -252,13 +252,13 @@ namespace PongGame
             //Bedingung Rechts
             if (kugL < playR && kugUn > playOb && kugOb < playUn && kugR > playR)
             {
-                kug.changeDir(0);
+                ball.changeDir(0);
             }
 
             //Bedingung Links
             if (kugL < playL && kugUn > playOb && kugOb < playUn && kugR > playL)
             {
-                kug.changeDir(0);
+                ball.changeDir(0);
             }
         }
 
@@ -300,10 +300,10 @@ namespace PongGame
                     //The player that will be moving around on the screen
                     Paddle player = new Paddle();
                     Paddle enemy = new Paddle();
-                    Kug kug = new Kug();
+                    Ball ball = new Ball();
 
                     //Set Startpos
-                    kug.startPos((SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2));
+                    ball.startPos((SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2));
                     player.startPos(0, 100);
                     enemy.startPos(SCREEN_WIDTH - enemy.dotW, 100);
 
@@ -330,8 +330,8 @@ namespace PongGame
                                 float playerRelativePosY = (float)player.mPosY / SCREEN_HEIGHT;
                                 float enemyRelativePosX = (float)enemy.mPosX / SCREEN_WIDTH;
                                 float enemyRelativePosY = (float)enemy.mPosY / SCREEN_HEIGHT;
-                                float kugRelativePosX = (float)kug.mPosX / SCREEN_WIDTH;
-                                float kugRelativePosY = (float)kug.mPosY / SCREEN_HEIGHT;
+                                float kugRelativePosX = (float)ball.mPosX / SCREEN_WIDTH;
+                                float kugRelativePosY = (float)ball.mPosY / SCREEN_HEIGHT;
 
                                 // Change screen size
                                 isFullScreen = !isFullScreen;
@@ -353,17 +353,17 @@ namespace PongGame
                                 player.mPosY = (int)(playerRelativePosY * SCREEN_HEIGHT);
                                 enemy.mPosX = (int)(enemyRelativePosX * SCREEN_WIDTH);
                                 enemy.mPosY = (int)(enemyRelativePosY * SCREEN_HEIGHT);
-                                kug.mPosX = (int)(kugRelativePosX * SCREEN_WIDTH);
-                                kug.mPosY = (int)(kugRelativePosY * SCREEN_HEIGHT);
+                                ball.mPosX = (int)(kugRelativePosX * SCREEN_WIDTH);
+                                ball.mPosY = (int)(kugRelativePosY * SCREEN_HEIGHT);
                             }
                         }
 
-                        collCheck(player, kug);
-                        collCheck(enemy, kug);
+                        collCheck(player, ball);
+                        collCheck(enemy, ball);
 
                         //Move the player
                         player.move();
-                        kug.move();
+                        ball.move();
                         enemy.moveEnemy();
 
                         //Clear screen
@@ -389,7 +389,7 @@ namespace PongGame
 
                         //Render objects
                         player.render();
-                        kug.render();
+                        ball.render();
                         enemy.render();
 
                         changeText(Convert.ToString(p1counter + " : " + p2counter));

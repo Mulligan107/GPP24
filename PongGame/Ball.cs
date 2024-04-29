@@ -5,7 +5,7 @@ using SDL2;
 namespace PongGame
 {
     //Texture wrapper class
-    class Kug
+    class Ball
     {
         //The dimensions of the dot
         public int dotW = 20;
@@ -23,7 +23,7 @@ namespace PongGame
         int mVelX, mVelY;
 
         //Initializes the variables
-        public Kug()
+        public Ball()
         {
 
         }
@@ -34,7 +34,7 @@ namespace PongGame
         }
 
         //Moves the dot
-        public void move()
+        public void move(uint deltaTime)
         {
             //var a = string.Format("mPosX:{0};mVelX:{1};mPosY:{2};mVelY:{3}", mPosX, mVelX, mPosY, mVelY);
             //Console.WriteLine(a);
