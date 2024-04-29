@@ -44,15 +44,23 @@ namespace PongGame
 
 
             //If the dot went too far to the left or right
-            if ((mPosX < 0) || (mPosX + dotW > Program.SCREEN_WIDTH))
+            if (mPosX < 0)
             {
                 //Move back
                 changeDir(0);
+                Program.p1counter++;
+            }
+
+            if (mPosX + dotW > Program.SCREEN_WIDTH)
+            {
+                //Move back
+                changeDir(0);
+                Program.p2counter++;
             }
 
 
             //If the dot went too far up or down
-            if ((mPosY < 100) || (mPosY + dotH > Program.SCREEN_HEIGHT)) // 100 wegen Boarder
+            if ((mPosY < 0) || (mPosY + dotH > Program.SCREEN_HEIGHT)) // 100 mit Boarder
             {
                 //Move back
                 changeDir(1);

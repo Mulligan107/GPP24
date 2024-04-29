@@ -12,7 +12,8 @@ namespace PongGame
         public  int dotH = 200;
 
         //Maximum axis velocity of the dot
-        const int DOT_VEL = 10;
+        public int DOT_VEL = 10;
+        public int DOT_VEL_ENEMY = 5;
 
 
         //The X and Y offsets of the dot
@@ -81,13 +82,24 @@ namespace PongGame
             mPosY += mVelY;
 
             //If the dot went too far up or down
-            if ((mPosY < 100) || (mPosY + dotH > Program.SCREEN_HEIGHT))
+            if ((mPosY < 0) || (mPosY + dotH > Program.SCREEN_HEIGHT))
             {
                 //Move back
                 mPosY -= mVelY;
+                DOT_VEL_ENEMY = DOT_VEL_ENEMY * (-1);
             }
 
             //Console.WriteLine("mPosX:{0};mVelX:{1};mPosY:{2};mVelY:{3}", mPosX, mVelX, mPosY, mVelY);
+        }
+
+        public void moveEnemy()
+        {
+            mPosY += DOT_VEL_ENEMY;
+
+            if ((mPosY < 0) || (mPosY + dotH > Program.SCREEN_HEIGHT))
+            {
+                DOT_VEL_ENEMY = DOT_VEL_ENEMY * (-1);
+            }
         }
 
         //Shows the dot on the screen

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PongGame", "PongGame.csproj", "{6973F402-F075-4847-9D5B-978D2DB4CEEC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PongGame", "PongGame.csproj", "{196B7672-43C2-420D-ADDB-76DF60415608}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{6973F402-F075-4847-9D5B-978D2DB4CEEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6973F402-F075-4847-9D5B-978D2DB4CEEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6973F402-F075-4847-9D5B-978D2DB4CEEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6973F402-F075-4847-9D5B-978D2DB4CEEC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{196B7672-43C2-420D-ADDB-76DF60415608}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{196B7672-43C2-420D-ADDB-76DF60415608}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{196B7672-43C2-420D-ADDB-76DF60415608}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{196B7672-43C2-420D-ADDB-76DF60415608}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {98E10815-4D8B-49B3-826C-6A6E3C2FA767}
+		SolutionGuid = {A4018386-5A11-4093-BEAC-BA9C5866659E}
 	EndGlobalSection
 EndGlobal

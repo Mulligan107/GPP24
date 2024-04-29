@@ -3,17 +3,21 @@ using System.Globalization;
 using System.Threading;
 using SDL2;
 
+
+//TODO Collcheck oben unten, gegenerKI, Pausemenue, etc
+
+
 namespace PongGame
 {
     class Program
     {
         //Screen dimension constants
         public const int SCREEN_WIDTH = 640;
-
         public const int SCREEN_HEIGHT = 480;
 
-        public int player1Counter = 0;
-        public int player2Counter = 0;
+        public static int p1counter = 0;
+        public static int p2counter = 0;
+
 
         //The window we'll be rendering to
         private static IntPtr gWindow = IntPtr.Zero;
@@ -27,14 +31,14 @@ namespace PongGame
         //Scene textures
         public static LTexture gDotTexture = new LTexture();
         public static LTexture gBarTexture = new LTexture();
+
         //Rendered texture
         private static readonly LTexture _TextTexture = new LTexture();
 
         //Game ticker
         public static LTimer timer = new LTimer();
-        
 
-        private static bool init()
+        private static bool Init()
         {
             //Initialization flag
             bool success = true;
@@ -54,7 +58,7 @@ namespace PongGame
                 }
 
                 //Create window
-                gWindow = SDL.SDL_CreateWindow("PongGame", SDL.SDL_WINDOWPOS_UNDEFINED, SDL.SDL_WINDOWPOS_UNDEFINED,
+                gWindow = SDL.SDL_CreateWindow("SDL Tutorial", SDL.SDL_WINDOWPOS_UNDEFINED, SDL.SDL_WINDOWPOS_UNDEFINED,
                     SCREEN_WIDTH, SCREEN_HEIGHT, SDL.SDL_WindowFlags.SDL_WINDOW_SHOWN);
                 if (gWindow == IntPtr.Zero)
                 {
@@ -68,7 +72,7 @@ namespace PongGame
                     gRenderer = SDL.SDL_CreateRenderer(gWindow, -1, renderFlags);
                     if (gRenderer == IntPtr.Zero)
                     {
-                        Console.WriteLine("Renderer could not be created! SDL Error: {0}", SDL.SDL_GetError());
+                        Console.WriteLine("gRenderer could not be created! SDL Error: {0}", SDL.SDL_GetError());
                         success = false;
                     }
                     else
@@ -83,23 +87,22 @@ namespace PongGame
                             Console.WriteLine("SDL_image could not initialize! SDL_image Error: {0}", SDL.SDL_GetError());
                             success = false;
                         }
+
+                        //Initialize SDL_ttf
+                        if (SDL_ttf.TTF_Init() == -1)
+                        {
+                            Console.WriteLine("SDL_ttf could not initialize! SDL_ttf Error: {0}", SDL.SDL_GetError());
+                            success = false;
+                        }
                     }
                 }
-                /*
-                //Initialize SDL_ttf
-                if (SDL_ttf.TTF_Init() == -1)
-                {
-                    Console.WriteLine("SDL_ttf could not initialize! SDL_ttf Error: {0}", SDL.SDL_GetError());
-                    success = false;
-                }
-                */
             }
 
             return success;
         }
 
 
-        static bool loadMedia()
+        static bool LoadMedia()
         {
             //Loading success flag
             bool success = true;
@@ -110,17 +113,17 @@ namespace PongGame
                 Console.WriteLine("Failed to load!");
                 success = false;
             }
-            if (!gBarTexture.loadFromFile("bar.bmp"))
+            if (!gBarTexture.loadFromFile("player.bmp"))
             {
                 Console.WriteLine("Failed to load!");
                 success = false;
             }
-            /*
+
             //Open the font
-            Font = SDL_ttf.TTF_OpenFont("runescape_uf.ttf", 28);
+            Font = SDL_ttf.TTF_OpenFont("lazy.ttf", 28);
             if (Font == IntPtr.Zero)
             {
-                Console.WriteLine("Failed to load font! SDL_ttf Error: {0}", SDL.SDL_GetError());
+                Console.WriteLine("Failed to load lazy font! SDL_ttf Error: {0}", SDL.SDL_GetError());
                 success = false;
             }
             else
@@ -133,25 +136,22 @@ namespace PongGame
                     success = false;
                 }
             }
-            */
+
             return success;
         }
 
-        private static void close()
+        private static void Close()
         {
             //Free loaded images
             gDotTexture.free();
             gBarTexture.free();
 
-
             //Free loaded images
             _TextTexture.free();
 
-            /*
             //Free global font
             SDL_ttf.TTF_CloseFont(Font);
             Font = IntPtr.Zero;
-            */
 
             //Destroy window
             SDL.SDL_DestroyRenderer(gRenderer);
@@ -161,6 +161,7 @@ namespace PongGame
             timer.stop();
 
             //Quit SDL subsystems
+            SDL_ttf.TTF_Quit();
             SDL_image.IMG_Quit();
             SDL.SDL_Quit();
         }
@@ -182,30 +183,42 @@ namespace PongGame
             if (kugUn > playOb && kugOb < playUn && kugR > playR)
             {
                 Console.WriteLine(true);
-            }else
+            }
+            else
             {
                 Console.WriteLine(false);
             }
 
 
-                //Bedingung X
-                if (kugL < playR && kugUn > playOb && kugOb < playUn && kugR > playR)
+            //Bedingung Rechts
+            if (kugL < playR && kugUn > playOb && kugOb < playUn && kugR > playR)
+            {
+                kug.changeDir(0);
+            }
+            //Bedingung Links
+            if (kugL < playL && kugUn > playOb && kugOb < playUn && kugR > playL)
             {
                 kug.changeDir(0);
             }
         }
 
+        static void changeText(String text)
+        {
+            _TextTexture.loadFromRenderedText(text, new SDL.SDL_Color());
+        }
+
         static int Main(string[] args)
         {
+            
+
             SDL.SDL_SetHint(SDL.SDL_HINT_WINDOWS_DISABLE_THREAD_NAMING, "1");
             Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
             Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
 
             timer.start(); //Später wichtig für Pause und Zeit
 
-
             //Start up SDL and create window
-            var success = init();
+            var success = Init();
             if (success == false)
             {
                 Console.WriteLine("Failed to initialize!");
@@ -213,7 +226,7 @@ namespace PongGame
             else
             {
                 //Load media
-                success = loadMedia();
+                success = LoadMedia();
                 if (success == false)
                 {
                     Console.WriteLine("Failed to load media!");
@@ -226,17 +239,20 @@ namespace PongGame
                     //Event handler
                     SDL.SDL_Event e;
 
-                    //The dot that will be moving around on the screen
-                    Dot dot = new Dot();
+                    //The player that will be moving around on the screen
+                    Dot player = new Dot();
+                    Dot enemy = new Dot();
                     Kug kug = new Kug();
 
                     //Set Startpos
-                    kug.startPos((SCREEN_WIDTH/2), (SCREEN_HEIGHT/2));
-                    dot.startPos(0, 100);
+                    kug.startPos((SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2));
+                    player.startPos(0, 100);
+                    enemy.startPos(SCREEN_WIDTH - enemy.dotW, 100);
 
                     //While application is running
                     while (!quit)
                     {
+
                         //Handle events on queue
                         while (SDL.SDL_PollEvent(out e) != 0)
                         {
@@ -245,63 +261,60 @@ namespace PongGame
                             {
                                 quit = true;
                             }
-
-                            //Handle input for the dot
-                            dot.handleEvent(e);
+                            //Handle input for the player
+                            player.handleEvent(e);
                         }
 
-                        collCheck(dot, kug);
+                        collCheck(player, kug);
+                        collCheck(enemy, kug);
 
-                        //Move the dot
-                        dot.move();
+                        //Move the player
+                        player.move();
                         kug.move();
-
-                        
-                       // Console.WriteLine(kug.mPosX);
+                        enemy.moveEnemy();
 
                         //Clear screen
                         SDL.SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
                         SDL.SDL_RenderClear(gRenderer);
 
+                        /*
                         //Begrenzung
                         var blackline = new SDL.SDL_Rect { x = 0, y = 100, w = SCREEN_WIDTH, h = 2 };
                         SDL.SDL_SetRenderDrawColor(gRenderer, 0x00, 0x00, 0x00, 0xFF);
                         SDL.SDL_RenderFillRect(gRenderer, ref blackline);
+                        */
 
-                        //Render current frame
-                      //  _TextTexture.render((SCREEN_WIDTH - _TextTexture.GetWidth()) / 2, (SCREEN_HEIGHT - _TextTexture.GetHeight()) / 2);
+                        var dotline = new SDL.SDL_Rect { x = SCREEN_WIDTH / 2, y = 0, w = 2, h = 8 };
+                        SDL.SDL_SetRenderDrawColor(gRenderer, 155, 155, 155, 255);
+                        for (dotline.y = 0; dotline.y < SCREEN_HEIGHT; dotline.y += 10)
+                        {
+                            SDL.SDL_RenderFillRect(gRenderer, ref dotline);
+                        }
+
+                        //Render current frame TEXT
+                        _TextTexture.render((SCREEN_WIDTH - _TextTexture.GetWidth()) / 2, 0);
 
                         //Render objects
-                        dot.render();
+                        player.render();
                         kug.render();
+                        enemy.render();
+
+                        changeText(Convert.ToString(p1counter + " : " + p2counter));
 
                         //Update screen
                         SDL.SDL_RenderPresent(gRenderer);
                     }
+                    }
                 }
-            }
 
 
-            //Free resources and close SDL
-            close();
+                //Free resources and close SDL
+                Close();
 
-            if (success == false)
-                Console.ReadLine();
+                if (success == false)
+                    Console.ReadLine();
 
-            return 0;
+                return 0;
         }
-
-        //Key press surfaces constants
-        public enum KeyPressSurfaces
-        {
-            KEY_PRESS_SURFACE_DEFAULT,
-            KEY_PRESS_SURFACE_UP,
-            KEY_PRESS_SURFACE_DOWN,
-            KEY_PRESS_SURFACE_LEFT,
-            KEY_PRESS_SURFACE_RIGHT,
-            KEY_PRESS_SURFACE_TOTAL
-        };
-
     }
-
 }
