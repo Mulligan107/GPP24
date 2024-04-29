@@ -4,7 +4,30 @@ using System.Threading;
 using SDL2;
 
 
-//TODO Collcheck oben unten, gegenerKI, Pausemenue, etc
+//TODO Collcheck oben unten, gegenerKI, Pausemenue, Physic?, Kugel Vel und richtung ändern Basierend auf Aufprall auf der Bar, etc
+
+// TODO Bar ->  dotH = 100 , 0 - 50 vel porportialnal steigern -y , 51 - 100 vel prop steigern +y
+
+//TODO Idee -> Pegglin Style. Drei Kugeln mit unterschiedlichen Farben. Mit 1,2,3 kann Farber der Bar geändert werden
+// Oberer Screen zeigt Ritter mit konstant zulaufen Gegnern. Gegner haben auch unterschiedliche Farben. Schwert von Ritter 
+// ist mit der Farbe der Bar verlinkt
+
+/*
+   x The player takes control of a ‘paddle’ and interacts with the gameworld by reflecting a ‘ball’. 
+   x Keep track of and display a score! 
+    There needs to be a game-over state and the option to play again.
+ 
++    Add sound and visual FX
++    Add an AI opponent or a multiplayer component.
+    Add gamepad support.
++    Add interesting gameplay twists.
+-    Add multiple levels.
++    Add additional screens. (e.g. Intro, Settings, Credits...)
+-    Add support for a persistent Highscore.
+    Add collectible Power-Ups.
++    Allow the game to be played in fullscreen mode.
+  
+ */
 
 
 namespace PongGame
