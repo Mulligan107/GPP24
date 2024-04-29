@@ -35,8 +35,15 @@ namespace PongGame
     class Program
     {
         //Screen dimension constants
+        public static int MAX_SCREEN_WIDTH;
+        public static int MAX_SCREEN_HEIGHT;
+        public static int ALT_SCREEN_WIDTH = 640;
+        public static int ALT_SCREEN_HEIGHT = 480;
         public static int SCREEN_WIDTH;
         public static int SCREEN_HEIGHT;
+        
+        //Screen size mode
+        public static bool isFullScreen = true;
 
         public static int p1counter = 0;
         public static int p2counter = 0;
@@ -84,14 +91,18 @@ namespace PongGame
                 SDL.SDL_DisplayMode current;
                 if (SDL.SDL_GetCurrentDisplayMode(0, out current) == 0)
                 {
-                    SCREEN_WIDTH = current.w;
-                    SCREEN_HEIGHT = current.h;
+                    MAX_SCREEN_WIDTH = current.w;
+                    MAX_SCREEN_HEIGHT = current.h;
                 }
                 else
                 {
                     Console.WriteLine("Could not get display mode for video display: {0}", SDL.SDL_GetError());
                     success = false;
                 }
+                
+                //Set initial screen size
+                SCREEN_WIDTH = MAX_SCREEN_WIDTH;
+                SCREEN_HEIGHT = MAX_SCREEN_HEIGHT;
 
                 //Create window
                 gWindow = SDL.SDL_CreateWindow("SDL Tutorial", SDL.SDL_WINDOWPOS_UNDEFINED, SDL.SDL_WINDOWPOS_UNDEFINED,
@@ -307,6 +318,23 @@ namespace PongGame
                             }
                             //Handle input for the player
                             player.handleEvent(e);
+                            
+                            //Switch screen size mode if 'F' key was pressed
+                            if (e.type == SDL.SDL_EventType.SDL_KEYDOWN && e.key.keysym.sym == SDL.SDL_Keycode.SDLK_f)
+                            {
+                                isFullScreen = !isFullScreen;
+                                if (isFullScreen)
+                                {
+                                    SCREEN_WIDTH = MAX_SCREEN_WIDTH;
+                                    SCREEN_HEIGHT = MAX_SCREEN_HEIGHT;
+                                }
+                                else
+                                {
+                                    SCREEN_WIDTH = ALT_SCREEN_WIDTH;
+                                    SCREEN_HEIGHT = ALT_SCREEN_HEIGHT;
+                                }
+                                SDL.SDL_SetWindowSize(gWindow, SCREEN_WIDTH, SCREEN_HEIGHT);
+                            }
                         }
 
                         collCheck(player, kug);
