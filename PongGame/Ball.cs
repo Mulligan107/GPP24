@@ -34,7 +34,7 @@ namespace PongGame
         }
 
         //Moves the dot
-        public void move(uint deltaTime)
+        public void move()
         {
             //var a = string.Format("mPosX:{0};mVelX:{1};mPosY:{2};mVelY:{3}", mPosX, mVelX, mPosY, mVelY);
             //Console.WriteLine(a);
