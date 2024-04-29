@@ -13,10 +13,10 @@ using SDL2;
 // ist mit der Farbe der Bar verlinkt
 
 /*
-   x The player takes control of a ‘paddle’ and interacts with the gameworld by reflecting a ‘ball’. 
-   x Keep track of and display a score! 
+   x The player takes control of a ‘paddle’ and interacts with the gameworld by reflecting a ‘ball’.
+   x Keep track of and display a score!
     There needs to be a game-over state and the option to play again.
- 
+
 +    Add sound and visual FX
 +    Add an AI opponent or a multiplayer component.
     Add gamepad support.
@@ -26,7 +26,7 @@ using SDL2;
 -    Add support for a persistent Highscore.
     Add collectible Power-Ups.
 +    Allow the game to be played in fullscreen mode.
-  
+
  */
 
 
@@ -41,7 +41,7 @@ namespace PongGame
         public static int ALT_SCREEN_HEIGHT = 480;
         public static int SCREEN_WIDTH;
         public static int SCREEN_HEIGHT;
-        
+
         //Screen size mode
         public static bool isFullScreen = true;
 
@@ -86,7 +86,7 @@ namespace PongGame
                 {
                     Console.WriteLine("Warning: Linear texture filtering not enabled!");
                 }
-                
+
                 //Get display mode for the current display
                 SDL.SDL_DisplayMode current;
                 if (SDL.SDL_GetCurrentDisplayMode(0, out current) == 0)
@@ -99,7 +99,7 @@ namespace PongGame
                     Console.WriteLine("Could not get display mode for video display: {0}", SDL.SDL_GetError());
                     success = false;
                 }
-                
+
                 //Set initial screen size
                 SCREEN_WIDTH = MAX_SCREEN_WIDTH;
                 SCREEN_HEIGHT = MAX_SCREEN_HEIGHT;
@@ -115,7 +115,8 @@ namespace PongGame
                 else
                 {
                     //Create vsynced renderer for window
-                    var renderFlags = SDL.SDL_RendererFlags.SDL_RENDERER_ACCELERATED | SDL.SDL_RendererFlags.SDL_RENDERER_PRESENTVSYNC;
+                    var renderFlags = SDL.SDL_RendererFlags.SDL_RENDERER_ACCELERATED |
+                                      SDL.SDL_RendererFlags.SDL_RENDERER_PRESENTVSYNC;
                     gRenderer = SDL.SDL_CreateRenderer(gWindow, -1, renderFlags);
                     if (gRenderer == IntPtr.Zero)
                     {
@@ -131,7 +132,8 @@ namespace PongGame
                         var imgFlags = SDL_image.IMG_InitFlags.IMG_INIT_PNG;
                         if ((SDL_image.IMG_Init(imgFlags) > 0 & imgFlags > 0) == false)
                         {
-                            Console.WriteLine("SDL_image could not initialize! SDL_image Error: {0}", SDL.SDL_GetError());
+                            Console.WriteLine("SDL_image could not initialize! SDL_image Error: {0}",
+                                SDL.SDL_GetError());
                             success = false;
                         }
 
@@ -160,6 +162,7 @@ namespace PongGame
                 Console.WriteLine("Failed to load!");
                 success = false;
             }
+
             if (!gBarTexture.loadFromFile("imgs/player.bmp"))
             {
                 Console.WriteLine("Failed to load!");
@@ -187,7 +190,7 @@ namespace PongGame
             return success;
         }
 
-        
+
         /**
          * Free media and shut down SDL
          */
@@ -216,7 +219,7 @@ namespace PongGame
             SDL_image.IMG_Quit();
             SDL.SDL_Quit();
         }
-        
+
         /**
          * Check collision between Dot and Kug
          */
@@ -251,6 +254,7 @@ namespace PongGame
             {
                 kug.changeDir(0);
             }
+
             //Bedingung Links
             if (kugL < playL && kugUn > playOb && kugOb < playUn && kugR > playL)
             {
@@ -265,8 +269,6 @@ namespace PongGame
 
         static int Main(string[] args)
         {
-            
-
             SDL.SDL_SetHint(SDL.SDL_HINT_WINDOWS_DISABLE_THREAD_NAMING, "1");
             Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
             Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
@@ -291,7 +293,7 @@ namespace PongGame
                 {
                     //Main loop flag
                     bool quit = false;
-                    
+
                     //Event handler
                     SDL.SDL_Event e;
 
@@ -316,9 +318,10 @@ namespace PongGame
                             {
                                 quit = true;
                             }
+
                             //Handle input for the player
                             player.handleEvent(e);
-                            
+
                             //Switch screen size mode if 'F' key was pressed
                             if (e.type == SDL.SDL_EventType.SDL_KEYDOWN && e.key.keysym.sym == SDL.SDL_Keycode.SDLK_f)
                             {
@@ -342,6 +345,7 @@ namespace PongGame
                                     SCREEN_WIDTH = ALT_SCREEN_WIDTH;
                                     SCREEN_HEIGHT = ALT_SCREEN_HEIGHT;
                                 }
+
                                 SDL.SDL_SetWindowSize(gWindow, SCREEN_WIDTH, SCREEN_HEIGHT);
 
                                 // Update positions based on relative positions
@@ -396,13 +400,13 @@ namespace PongGame
                 }
             }
 
-                //Free resources and close SDL
-                Close();
+            //Free resources and close SDL
+            Close();
 
-                if (success == false)
-                    Console.ReadLine();
+            if (success == false)
+                Console.ReadLine();
 
-                return 0;
+            return 0;
         }
     }
 }
