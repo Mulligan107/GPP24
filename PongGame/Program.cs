@@ -35,8 +35,8 @@ namespace PongGame
     class Program
     {
         //Screen dimension constants
-        public const int SCREEN_WIDTH = 640;
-        public const int SCREEN_HEIGHT = 480;
+        public static int SCREEN_WIDTH;
+        public static int SCREEN_HEIGHT;
 
         public static int p1counter = 0;
         public static int p2counter = 0;
@@ -78,6 +78,19 @@ namespace PongGame
                 if (SDL.SDL_SetHint(SDL.SDL_HINT_RENDER_SCALE_QUALITY, "1") == SDL.SDL_bool.SDL_FALSE)
                 {
                     Console.WriteLine("Warning: Linear texture filtering not enabled!");
+                }
+                
+                //Get display mode for the current display
+                SDL.SDL_DisplayMode current;
+                if (SDL.SDL_GetCurrentDisplayMode(0, out current) == 0)
+                {
+                    SCREEN_WIDTH = current.w;
+                    SCREEN_HEIGHT = current.h;
+                }
+                else
+                {
+                    Console.WriteLine("Could not get display mode for video display: {0}", SDL.SDL_GetError());
+                    success = false;
                 }
 
                 //Create window
