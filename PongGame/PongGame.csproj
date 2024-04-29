@@ -62,10 +62,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="player.bmp">
+    <Content Include="imgs\dot.bmp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="dot.bmp">
+    <Content Include="imgs\player.bmp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="libfreetype-6.dll">

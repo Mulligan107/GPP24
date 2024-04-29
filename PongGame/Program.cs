@@ -131,12 +131,12 @@ namespace PongGame
             bool success = true;
 
             //Load press texture
-            if (!gDotTexture.loadFromFile("dot.bmp"))
+            if (!gDotTexture.loadFromFile("imgs/dot.bmp"))
             {
                 Console.WriteLine("Failed to load!");
                 success = false;
             }
-            if (!gBarTexture.loadFromFile("player.bmp"))
+            if (!gBarTexture.loadFromFile("imgs/player.bmp"))
             {
                 Console.WriteLine("Failed to load!");
                 success = false;
@@ -163,6 +163,10 @@ namespace PongGame
             return success;
         }
 
+        
+        /**
+         * Free media and shut down SDL
+         */
         private static void Close()
         {
             //Free loaded images
@@ -188,7 +192,10 @@ namespace PongGame
             SDL_image.IMG_Quit();
             SDL.SDL_Quit();
         }
-
+        
+        /**
+         * Check collision between Dot and Kug
+         */
         static void collCheck(Dot dot, Kug kug)
         {
             //Versändlichere kurze Namen 
@@ -203,6 +210,7 @@ namespace PongGame
             int playUn = dot.mPosY + dot.dotH;
 
 
+            /*
             if (kugUn > playOb && kugOb < playUn && kugR > playR)
             {
                 Console.WriteLine(true);
@@ -211,6 +219,7 @@ namespace PongGame
             {
                 Console.WriteLine(false);
             }
+            */
 
 
             //Bedingung Rechts
@@ -258,7 +267,7 @@ namespace PongGame
                 {
                     //Main loop flag
                     bool quit = false;
-
+                    
                     //Event handler
                     SDL.SDL_Event e;
 
@@ -275,12 +284,11 @@ namespace PongGame
                     //While application is running
                     while (!quit)
                     {
-
                         //Handle events on queue
                         while (SDL.SDL_PollEvent(out e) != 0)
                         {
-                            //User requests quit
-                            if (e.type == SDL.SDL_EventType.SDL_QUIT)
+                            //User requests quit via closing the window or pressing esc
+                            if (e.type == SDL.SDL_EventType.SDL_QUIT || e.key.keysym.sym == SDL.SDL_Keycode.SDLK_ESCAPE)
                             {
                                 quit = true;
                             }
@@ -327,9 +335,8 @@ namespace PongGame
                         //Update screen
                         SDL.SDL_RenderPresent(gRenderer);
                     }
-                    }
                 }
-
+            }
 
                 //Free resources and close SDL
                 Close();
