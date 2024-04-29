@@ -220,7 +220,7 @@ namespace PongGame
         /**
          * Check collision between Dot and Kug
          */
-        static void collCheck(Dot dot, Kug kug)
+        static void collCheck(Paddle paddle, Kug kug)
         {
             //Versändlichere kurze Namen 
             int kugL = kug.mPosX;
@@ -228,10 +228,10 @@ namespace PongGame
             int kugOb = kug.mPosY;
             int kugUn = kug.mPosY + kug.dotH;
 
-            int playL = dot.mPosX;
-            int playR = dot.mPosX + dot.dotW;
-            int playOb = dot.mPosY;
-            int playUn = dot.mPosY + dot.dotH;
+            int playL = paddle.mPosX;
+            int playR = paddle.mPosX + paddle.dotW;
+            int playOb = paddle.mPosY;
+            int playUn = paddle.mPosY + paddle.dotH;
 
 
             /*
@@ -296,8 +296,8 @@ namespace PongGame
                     SDL.SDL_Event e;
 
                     //The player that will be moving around on the screen
-                    Dot player = new Dot();
-                    Dot enemy = new Dot();
+                    Paddle player = new Paddle();
+                    Paddle enemy = new Paddle();
                     Kug kug = new Kug();
 
                     //Set Startpos
@@ -322,6 +322,15 @@ namespace PongGame
                             //Switch screen size mode if 'F' key was pressed
                             if (e.type == SDL.SDL_EventType.SDL_KEYDOWN && e.key.keysym.sym == SDL.SDL_Keycode.SDLK_f)
                             {
+                                // Calculate relative positions
+                                float playerRelativePosX = (float)player.mPosX / SCREEN_WIDTH;
+                                float playerRelativePosY = (float)player.mPosY / SCREEN_HEIGHT;
+                                float enemyRelativePosX = (float)enemy.mPosX / SCREEN_WIDTH;
+                                float enemyRelativePosY = (float)enemy.mPosY / SCREEN_HEIGHT;
+                                float kugRelativePosX = (float)kug.mPosX / SCREEN_WIDTH;
+                                float kugRelativePosY = (float)kug.mPosY / SCREEN_HEIGHT;
+
+                                // Change screen size
                                 isFullScreen = !isFullScreen;
                                 if (isFullScreen)
                                 {
@@ -334,6 +343,14 @@ namespace PongGame
                                     SCREEN_HEIGHT = ALT_SCREEN_HEIGHT;
                                 }
                                 SDL.SDL_SetWindowSize(gWindow, SCREEN_WIDTH, SCREEN_HEIGHT);
+
+                                // Update positions based on relative positions
+                                player.mPosX = (int)(playerRelativePosX * SCREEN_WIDTH);
+                                player.mPosY = (int)(playerRelativePosY * SCREEN_HEIGHT);
+                                enemy.mPosX = (int)(enemyRelativePosX * SCREEN_WIDTH);
+                                enemy.mPosY = (int)(enemyRelativePosY * SCREEN_HEIGHT);
+                                kug.mPosX = (int)(kugRelativePosX * SCREEN_WIDTH);
+                                kug.mPosY = (int)(kugRelativePosY * SCREEN_HEIGHT);
                             }
                         }
 

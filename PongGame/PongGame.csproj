@@ -45,7 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Dot.cs" />
+    <Compile Include="Paddle.cs" />
     <Compile Include="Kug.cs" />
     <Compile Include="LTexture.cs" />
     <Compile Include="LTimer.cs" />
