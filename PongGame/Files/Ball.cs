@@ -34,35 +34,34 @@ namespace PongGame
         }
 
         //Moves the dot
-        public void move()
+        public void move(float deltaTime)
         {
             //var a = string.Format("mPosX:{0};mVelX:{1};mPosY:{2};mVelY:{3}", mPosX, mVelX, mPosY, mVelY);
             //Console.WriteLine(a);
 
-            mPosX += DOT_velX;
-            mPosY += DOT_velY;
+            // Multiply the velocity by delta time
+            mPosX += (int)(DOT_velX * deltaTime);
+            mPosY += (int)(DOT_velY * deltaTime);
 
-
-            //If the dot went too far to the left or right
+            // If the ball went too far to the left or right
             if (mPosX < 0)
             {
-                //Move back
+                // Move back
                 changeDir(0);
                 Program.p1counter++;
             }
 
             if (mPosX + dotW > Program.SCREEN_WIDTH)
             {
-                //Move back
+                // Move back
                 changeDir(0);
                 Program.p2counter++;
             }
 
-
-            //If the dot went too far up or down
-            if ((mPosY < 0) || (mPosY + dotH > Program.SCREEN_HEIGHT)) // 100 mit Boarder
+            // If the ball went too far up or down
+            if ((mPosY < 0) || (mPosY + dotH > Program.SCREEN_HEIGHT)) // 100 with Border
             {
-                //Move back
+                // Move back
                 changeDir(1);
             }
 

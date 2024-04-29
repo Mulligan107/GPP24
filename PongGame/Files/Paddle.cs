@@ -63,34 +63,33 @@ namespace PongGame
         }
 
         //Moves the dot
-        public void move()
+        public void move(float deltaTime)
         {
             //var a = string.Format("mPosX:{0};mVelX:{1};mPosY:{2};mVelY:{3}", mPosX, mVelX, mPosY, mVelY);
             //Console.WriteLine(a);
 
-            //Move the dot left or right
-            mPosX += mVelX;
+            // Move the paddle left or right
+            mPosX += (int)(mVelX * deltaTime);
 
-            //If the dot went too far to the left or right
+            // If the paddle went too far to the left or right
             if ((mPosX < 0) || (mPosX + dotW > Program.SCREEN_WIDTH))
             {
-                //Move back
-                mPosX -= mVelX;
+                // Move back
+                mPosX -= (int)(mVelX * deltaTime);
             }
 
-            //Move the dot up or down
-            mPosY += mVelY;
+            // Move the paddle up or down
+            mPosY += (int)(mVelY * deltaTime);
 
-            //If the dot went too far up or down
+            // If the paddle went too far up or down
             if ((mPosY < 0) || (mPosY + dotH > Program.SCREEN_HEIGHT))
             {
-                //Move back
-                mPosY -= mVelY;
-                DOT_VEL_ENEMY = DOT_VEL_ENEMY * (-1);
+                // Move back
+                mPosY -= (int)(mVelY * deltaTime);
             }
 
             //Console.WriteLine("mPosX:{0};mVelX:{1};mPosY:{2};mVelY:{3}", mPosX, mVelX, mPosY, mVelY);
-        }
+            }
 
         public void moveEnemy()
         {

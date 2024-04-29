@@ -7,6 +7,8 @@ namespace PongGame
     //Texture wrapper class
     class LTimer
     {
+        private uint mLastTicks;
+        private uint mDeltaTicks;
 
         //Initializes variables
         public LTimer()
@@ -21,15 +23,14 @@ namespace PongGame
 
         public void start()
         {
-            //Start the timer
-            mStarted = true;
-
-            //Unpause the timer
-            mPaused = false;
-
-            //Get the current clock time
-            mStartTicks = SDL.SDL_GetTicks();
-            mPausedTicks = 0;
+            mLastTicks = SDL.SDL_GetTicks();
+        }
+        
+        public void update()
+        {
+            uint currentTicks = SDL.SDL_GetTicks();
+            mDeltaTicks = currentTicks - mLastTicks;
+            mLastTicks = currentTicks;
         }
 
         public void stop()
@@ -74,8 +75,12 @@ namespace PongGame
                 mPausedTicks = 0;
             }
         }
-
-
+        
+        public float GetDeltaTime()
+        {
+            return mDeltaTicks / 1000f;
+        }
+        
         public uint getTicks()
         {
             //The actual timer time

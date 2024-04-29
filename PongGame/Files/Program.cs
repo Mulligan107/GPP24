@@ -310,6 +310,12 @@ namespace PongGame
                     //While application is running
                     while (!quit)
                     {
+                        // Update the timer
+                        timer.update();
+
+                        // Get delta time
+                        float deltaTime = timer.GetDeltaTime();
+                        
                         //Handle events on queue
                         while (SDL.SDL_PollEvent(out e) != 0)
                         {
@@ -360,10 +366,10 @@ namespace PongGame
 
                         collCheck(player, ball);
                         collCheck(enemy, ball);
-
-                        //Move the player
-                        player.move();
-                        ball.move();
+                        
+                        // Move the player and ball
+                        player.move(deltaTime);
+                        ball.move(deltaTime);
                         enemy.moveEnemy();
 
                         //Clear screen
