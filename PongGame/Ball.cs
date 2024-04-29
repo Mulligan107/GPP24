@@ -5,7 +5,7 @@ using SDL2;
 namespace PongGame
 {
     //Texture wrapper class
-    class Kug
+    class Ball
     {
         //The dimensions of the dot
         public int dotW = 20;
@@ -23,7 +23,7 @@ namespace PongGame
         int mVelX, mVelY;
 
         //Initializes the variables
-        public Kug()
+        public Ball()
         {
 
         }

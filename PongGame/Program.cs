@@ -13,10 +13,10 @@ using SDL2;
 // ist mit der Farbe der Bar verlinkt
 
 /*
-   x The player takes control of a ‘paddle’ and interacts with the gameworld by reflecting a ‘ball’. 
-   x Keep track of and display a score! 
+   x The player takes control of a ‘paddle’ and interacts with the gameworld by reflecting a ‘ball’.
+   x Keep track of and display a score!
     There needs to be a game-over state and the option to play again.
- 
+
 +    Add sound and visual FX
 +    Add an AI opponent or a multiplayer component.
     Add gamepad support.
@@ -26,7 +26,7 @@ using SDL2;
 -    Add support for a persistent Highscore.
     Add collectible Power-Ups.
 +    Allow the game to be played in fullscreen mode.
-  
+
  */
 
 
@@ -35,8 +35,15 @@ namespace PongGame
     class Program
     {
         //Screen dimension constants
-        public const int SCREEN_WIDTH = 640;
-        public const int SCREEN_HEIGHT = 480;
+        public static int MAX_SCREEN_WIDTH;
+        public static int MAX_SCREEN_HEIGHT;
+        public static int ALT_SCREEN_WIDTH = 640;
+        public static int ALT_SCREEN_HEIGHT = 480;
+        public static int SCREEN_WIDTH;
+        public static int SCREEN_HEIGHT;
+
+        //Screen size mode
+        public static bool isFullScreen = true;
 
         public static int p1counter = 0;
         public static int p2counter = 0;
@@ -80,6 +87,23 @@ namespace PongGame
                     Console.WriteLine("Warning: Linear texture filtering not enabled!");
                 }
 
+                //Get display mode for the current display
+                SDL.SDL_DisplayMode current;
+                if (SDL.SDL_GetCurrentDisplayMode(0, out current) == 0)
+                {
+                    MAX_SCREEN_WIDTH = current.w;
+                    MAX_SCREEN_HEIGHT = current.h;
+                }
+                else
+                {
+                    Console.WriteLine("Could not get display mode for video display: {0}", SDL.SDL_GetError());
+                    success = false;
+                }
+
+                //Set initial screen size
+                SCREEN_WIDTH = MAX_SCREEN_WIDTH;
+                SCREEN_HEIGHT = MAX_SCREEN_HEIGHT;
+
                 //Create window
                 gWindow = SDL.SDL_CreateWindow("SDL Tutorial", SDL.SDL_WINDOWPOS_UNDEFINED, SDL.SDL_WINDOWPOS_UNDEFINED,
                     SCREEN_WIDTH, SCREEN_HEIGHT, SDL.SDL_WindowFlags.SDL_WINDOW_SHOWN);
@@ -91,7 +115,8 @@ namespace PongGame
                 else
                 {
                     //Create vsynced renderer for window
-                    var renderFlags = SDL.SDL_RendererFlags.SDL_RENDERER_ACCELERATED | SDL.SDL_RendererFlags.SDL_RENDERER_PRESENTVSYNC;
+                    var renderFlags = SDL.SDL_RendererFlags.SDL_RENDERER_ACCELERATED |
+                                      SDL.SDL_RendererFlags.SDL_RENDERER_PRESENTVSYNC;
                     gRenderer = SDL.SDL_CreateRenderer(gWindow, -1, renderFlags);
                     if (gRenderer == IntPtr.Zero)
                     {
@@ -107,7 +132,8 @@ namespace PongGame
                         var imgFlags = SDL_image.IMG_InitFlags.IMG_INIT_PNG;
                         if ((SDL_image.IMG_Init(imgFlags) > 0 & imgFlags > 0) == false)
                         {
-                            Console.WriteLine("SDL_image could not initialize! SDL_image Error: {0}", SDL.SDL_GetError());
+                            Console.WriteLine("SDL_image could not initialize! SDL_image Error: {0}",
+                                SDL.SDL_GetError());
                             success = false;
                         }
 
@@ -136,6 +162,7 @@ namespace PongGame
                 Console.WriteLine("Failed to load!");
                 success = false;
             }
+
             if (!gBarTexture.loadFromFile("imgs/player.bmp"))
             {
                 Console.WriteLine("Failed to load!");
@@ -163,7 +190,7 @@ namespace PongGame
             return success;
         }
 
-        
+
         /**
          * Free media and shut down SDL
          */
@@ -192,22 +219,22 @@ namespace PongGame
             SDL_image.IMG_Quit();
             SDL.SDL_Quit();
         }
-        
+
         /**
          * Check collision between Dot and Kug
          */
-        static void collCheck(Dot dot, Kug kug)
+        static void collCheck(Paddle paddle, Ball ball)
         {
             //Versändlichere kurze Namen 
-            int kugL = kug.mPosX;
-            int kugR = kug.mPosX + kug.dotW;
-            int kugOb = kug.mPosY;
-            int kugUn = kug.mPosY + kug.dotH;
+            int kugL = ball.mPosX;
+            int kugR = ball.mPosX + ball.dotW;
+            int kugOb = ball.mPosY;
+            int kugUn = ball.mPosY + ball.dotH;
 
-            int playL = dot.mPosX;
-            int playR = dot.mPosX + dot.dotW;
-            int playOb = dot.mPosY;
-            int playUn = dot.mPosY + dot.dotH;
+            int playL = paddle.mPosX;
+            int playR = paddle.mPosX + paddle.dotW;
+            int playOb = paddle.mPosY;
+            int playUn = paddle.mPosY + paddle.dotH;
 
 
             /*
@@ -225,12 +252,13 @@ namespace PongGame
             //Bedingung Rechts
             if (kugL < playR && kugUn > playOb && kugOb < playUn && kugR > playR)
             {
-                kug.changeDir(0);
+                ball.changeDir(0);
             }
+
             //Bedingung Links
             if (kugL < playL && kugUn > playOb && kugOb < playUn && kugR > playL)
             {
-                kug.changeDir(0);
+                ball.changeDir(0);
             }
         }
 
@@ -241,8 +269,6 @@ namespace PongGame
 
         static int Main(string[] args)
         {
-            
-
             SDL.SDL_SetHint(SDL.SDL_HINT_WINDOWS_DISABLE_THREAD_NAMING, "1");
             Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
             Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
@@ -267,17 +293,17 @@ namespace PongGame
                 {
                     //Main loop flag
                     bool quit = false;
-                    
+
                     //Event handler
                     SDL.SDL_Event e;
 
                     //The player that will be moving around on the screen
-                    Dot player = new Dot();
-                    Dot enemy = new Dot();
-                    Kug kug = new Kug();
+                    Paddle player = new Paddle();
+                    Paddle enemy = new Paddle();
+                    Ball ball = new Ball();
 
                     //Set Startpos
-                    kug.startPos((SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2));
+                    ball.startPos((SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2));
                     player.startPos(0, 100);
                     enemy.startPos(SCREEN_WIDTH - enemy.dotW, 100);
 
@@ -292,16 +318,52 @@ namespace PongGame
                             {
                                 quit = true;
                             }
+
                             //Handle input for the player
                             player.handleEvent(e);
+
+                            //Switch screen size mode if 'F' key was pressed
+                            if (e.type == SDL.SDL_EventType.SDL_KEYDOWN && e.key.keysym.sym == SDL.SDL_Keycode.SDLK_f)
+                            {
+                                // Calculate relative positions
+                                float playerRelativePosX = (float)player.mPosX / SCREEN_WIDTH;
+                                float playerRelativePosY = (float)player.mPosY / SCREEN_HEIGHT;
+                                float enemyRelativePosX = (float)enemy.mPosX / SCREEN_WIDTH;
+                                float enemyRelativePosY = (float)enemy.mPosY / SCREEN_HEIGHT;
+                                float kugRelativePosX = (float)ball.mPosX / SCREEN_WIDTH;
+                                float kugRelativePosY = (float)ball.mPosY / SCREEN_HEIGHT;
+
+                                // Change screen size
+                                isFullScreen = !isFullScreen;
+                                if (isFullScreen)
+                                {
+                                    SCREEN_WIDTH = MAX_SCREEN_WIDTH;
+                                    SCREEN_HEIGHT = MAX_SCREEN_HEIGHT;
+                                }
+                                else
+                                {
+                                    SCREEN_WIDTH = ALT_SCREEN_WIDTH;
+                                    SCREEN_HEIGHT = ALT_SCREEN_HEIGHT;
+                                }
+
+                                SDL.SDL_SetWindowSize(gWindow, SCREEN_WIDTH, SCREEN_HEIGHT);
+
+                                // Update positions based on relative positions
+                                player.mPosX = (int)(playerRelativePosX * SCREEN_WIDTH);
+                                player.mPosY = (int)(playerRelativePosY * SCREEN_HEIGHT);
+                                enemy.mPosX = (int)(enemyRelativePosX * SCREEN_WIDTH);
+                                enemy.mPosY = (int)(enemyRelativePosY * SCREEN_HEIGHT);
+                                ball.mPosX = (int)(kugRelativePosX * SCREEN_WIDTH);
+                                ball.mPosY = (int)(kugRelativePosY * SCREEN_HEIGHT);
+                            }
                         }
 
-                        collCheck(player, kug);
-                        collCheck(enemy, kug);
+                        collCheck(player, ball);
+                        collCheck(enemy, ball);
 
                         //Move the player
                         player.move();
-                        kug.move();
+                        ball.move();
                         enemy.moveEnemy();
 
                         //Clear screen
@@ -327,7 +389,7 @@ namespace PongGame
 
                         //Render objects
                         player.render();
-                        kug.render();
+                        ball.render();
                         enemy.render();
 
                         changeText(Convert.ToString(p1counter + " : " + p2counter));
@@ -338,13 +400,13 @@ namespace PongGame
                 }
             }
 
-                //Free resources and close SDL
-                Close();
+            //Free resources and close SDL
+            Close();
 
-                if (success == false)
-                    Console.ReadLine();
+            if (success == false)
+                Console.ReadLine();
 
-                return 0;
+            return 0;
         }
     }
 }
