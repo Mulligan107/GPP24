@@ -374,6 +374,7 @@ namespace PongGame
                             if (e.type == SDL.SDL_EventType.SDL_KEYDOWN && e.key.keysym.sym == SDL.SDL_Keycode.SDLK_f)
                             {
                                 // Calculate relative positions
+                                
                                 float playerRelativePosX = (float)player.mPosX / SCREEN_WIDTH;
                                 float playerRelativePosY = (float)player.mPosY / SCREEN_HEIGHT;
                                 float enemyRelativePosX = (float)enemy.mPosX / SCREEN_WIDTH;
@@ -397,17 +398,20 @@ namespace PongGame
                                 SDL.SDL_SetWindowSize(gWindow, SCREEN_WIDTH, SCREEN_HEIGHT);
 
                                 // Update positions based on relative positions
-                                player.mPosX = (int)(playerRelativePosX * SCREEN_WIDTH);
+                                player.startPos(0, (SCREEN_HEIGHT / 2) - (player.dotH / 2));
+                                enemy.startPos(SCREEN_WIDTH - 20, (SCREEN_HEIGHT / 2) - (enemy.dotH / 2));
+                                ball.startPos((SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2));
+                                /*player.mPosX = (int)(playerRelativePosX * SCREEN_WIDTH);
                                 player.mPosY = (int)(playerRelativePosY * SCREEN_HEIGHT);
                                 enemy.mPosX = (int)(enemyRelativePosX * SCREEN_WIDTH);
                                 enemy.mPosY = (int)(enemyRelativePosY * SCREEN_HEIGHT);
                                 ball.mPosX = (int)(kugRelativePosX * SCREEN_WIDTH);
-                                ball.mPosY = (int)(kugRelativePosY * SCREEN_HEIGHT);
+                                ball.mPosY = (int)(kugRelativePosY * SCREEN_HEIGHT);*/
                             }
                             if (e.type == SDL.SDL_EventType.SDL_KEYDOWN && e.key.keysym.sym == SDL.SDL_Keycode.SDLK_r)
                             {
-                                player.startPos(0, 100);
-                                enemy.startPos(SCREEN_WIDTH - 20, 100);
+                                player.startPos(0, (SCREEN_HEIGHT / 2) - (player.dotH / 2));
+                                enemy.startPos(SCREEN_WIDTH - 20, (SCREEN_HEIGHT / 2) - (enemy.dotH / 2));
                                 ball.startPos((SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2));
                                 ball.getRandomVector();
                                 gameReset();
