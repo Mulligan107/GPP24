@@ -44,8 +44,8 @@ namespace PongGame
                 {
                     case SDL.SDL_Keycode.SDLK_UP: mVelY -= DOT_VEL; break;
                     case SDL.SDL_Keycode.SDLK_DOWN: mVelY += DOT_VEL; break;
-                    case SDL.SDL_Keycode.SDLK_LEFT: mVelX -= DOT_VEL; break;
-                    case SDL.SDL_Keycode.SDLK_RIGHT: mVelX += DOT_VEL; break;
+                    //case SDL.SDL_Keycode.SDLK_LEFT: mVelX -= DOT_VEL; break;
+                    //case SDL.SDL_Keycode.SDLK_RIGHT: mVelX += DOT_VEL; break;
                 }
             }
             //If a key was released
@@ -56,8 +56,8 @@ namespace PongGame
                 {
                     case SDL.SDL_Keycode.SDLK_UP: mVelY += DOT_VEL; break;
                     case SDL.SDL_Keycode.SDLK_DOWN: mVelY -= DOT_VEL; break;
-                    case SDL.SDL_Keycode.SDLK_LEFT: mVelX += DOT_VEL; break;
-                    case SDL.SDL_Keycode.SDLK_RIGHT: mVelX -= DOT_VEL; break;
+                    //case SDL.SDL_Keycode.SDLK_LEFT: mVelX += DOT_VEL; break;
+                    //case SDL.SDL_Keycode.SDLK_RIGHT: mVelX -= DOT_VEL; break;
                 }
             }
         }
