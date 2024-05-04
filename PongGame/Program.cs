@@ -498,7 +498,7 @@ namespace PongGame
                         enemy.render();
                         ball.render();
 
-                        changeText(_TextTexture,Convert.ToString(p1counter + " : " + p2counter));
+                        changeText(_TextTexture,Convert.ToString(p2counter + " : " + p1counter));
                         //Render current frame TEXT
                         _TextTexture.render(((SCREEN_WIDTH/2) - (_TextTexture.GetWidth() / 2)), 0);
 
