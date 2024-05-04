@@ -64,7 +64,7 @@ namespace PongGame
         //Scene textures
         public static LTexture gDotTexture = new LTexture();
         public static LTexture gBarTexture = new LTexture();
-        
+
 
         //Rendered texture
         private static readonly LTexture _TextTexture = new LTexture();
@@ -167,14 +167,13 @@ namespace PongGame
                 Console.WriteLine("Failed to load!");
                 success = false;
             }
-            
+
 
             if (!gBarTexture.loadFromFile("imgs/player.bmp"))
             {
                 Console.WriteLine("Failed to load!");
                 success = false;
             }
-
 
 
             //Open the font
@@ -193,20 +192,21 @@ namespace PongGame
                     Console.WriteLine("Failed to render text texture!");
                     success = false;
                 }
+
                 if (!alertTextTexture.loadFromRenderedText("PAUSE", textColor))
                 {
                     Console.WriteLine("Failed to render alert texture!");
                     success = false;
                 }
             }
-            
+
             return success;
         }
+
         public static void gameReset()
         {
             p1counter = 0;
             p2counter = 0;
-            
         }
 
         /**
@@ -281,7 +281,7 @@ namespace PongGame
             }
         }
 
-        static void changeText(LTexture Ltex ,String text)
+        static void changeText(LTexture Ltex, String text)
         {
             Ltex.loadFromRenderedText(text, new SDL.SDL_Color());
         }
@@ -290,7 +290,7 @@ namespace PongGame
         {
             /*
              * int posX, int posY, string buttonText
-             * 
+             *
             var textColor = new SDL.SDL_Color();
             LTexture buttonTexture = new LTexture();
             buttonTexture.loadFromRenderedText(buttonText, textColor);
@@ -302,7 +302,6 @@ namespace PongGame
             var pauseBackground = new SDL.SDL_Rect { x = 0, y = 0, w = SCREEN_WIDTH, h = SCREEN_HEIGHT };
             SDL.SDL_SetRenderDrawColor(gRenderer, 0xF0, 0xF0, 0xF0, 0x10);
             SDL.SDL_RenderFillRect(gRenderer, ref pauseBackground);
-            
         }
 
         static int Main(string[] args)
@@ -354,7 +353,7 @@ namespace PongGame
                     pongEntityList.Add(ball);
 
                     //Set 
-                    
+
 
                     //While application is running
                     while (!quit)
@@ -364,12 +363,14 @@ namespace PongGame
                         {
                             //Handle input for the player
                             player.handleEvent(e);
-                            
+
                             if (gamestart)
                             {
                                 paused = true;
-                                changeText(alertTextTexture, "WELCOME TO PONG - PRESS ANY TO START  F TO TOGGLE FULLSCREEN  P TO PAUSE");
-                                alertTextTexture.render((SCREEN_WIDTH / 2) - (alertTextTexture.getWidth() / 2), (SCREEN_HEIGHT / 2));
+                                changeText(alertTextTexture,
+                                    "WELCOME TO PONG - PRESS ANY TO START  F TO TOGGLE FULLSCREEN  P TO PAUSE");
+                                alertTextTexture.render((SCREEN_WIDTH / 2) - (alertTextTexture.getWidth() / 2),
+                                    (SCREEN_HEIGHT / 2));
                                 if (e.type == SDL.SDL_EventType.SDL_KEYDOWN)
                                 {
                                     paused = false;
@@ -377,13 +378,13 @@ namespace PongGame
                                     changeText(alertTextTexture, "PAUSE");
                                 }
                             }
-                            
+
                             //User requests quit via closing the window or pressing esc
                             if (e.type == SDL.SDL_EventType.SDL_QUIT || e.key.keysym.sym == SDL.SDL_Keycode.SDLK_ESCAPE)
                             {
                                 quit = true;
                             }
-                            
+
                             //Switch screen size mode if 'F' key was pressed
                             if (e.type == SDL.SDL_EventType.SDL_KEYDOWN && e.key.keysym.sym == SDL.SDL_Keycode.SDLK_f)
                             {
@@ -423,7 +424,7 @@ namespace PongGame
                                 ball.mPosX = (int)(kugRelativePosX * SCREEN_WIDTH);
                                 ball.mPosY = (int)(kugRelativePosY * SCREEN_HEIGHT);*/
                             }
-                            
+
                             if (e.type == SDL.SDL_EventType.SDL_KEYDOWN && e.key.keysym.sym == SDL.SDL_Keycode.SDLK_r)
                             {
                                 player.startPos(0, (SCREEN_HEIGHT / 2) - (player.dotH / 2));
@@ -436,6 +437,7 @@ namespace PongGame
                                 paused = false;
                                 changeText(alertTextTexture, "PAUSE");
                             }
+
                             if (e.type == SDL.SDL_EventType.SDL_KEYDOWN && e.key.keysym.sym == SDL.SDL_Keycode.SDLK_p)
                             {
                                 switch (paused)
@@ -455,6 +457,7 @@ namespace PongGame
                                 }
                             }
                         }
+
                         if (p1counter >= 1)
                         {
                             paused = true;
@@ -463,7 +466,6 @@ namespace PongGame
 
                         if (!paused)
                         {
-
                             collCheck(player, ball);
                             collCheck(enemy, ball);
 
@@ -472,7 +474,7 @@ namespace PongGame
                             ball.move();
                             enemy.moveEnemy();
                         }
-                        
+
 
                         //Clear screen
                         SDL.SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
@@ -492,26 +494,28 @@ namespace PongGame
                         {
                             SDL.SDL_RenderFillRect(gRenderer, ref dotline);
                         }
-                        
+
                         if (paused)
                         {
-                           createButton();
+                            createButton();
                             if (gameover)
                             {
                                 changeText(alertTextTexture, "GAMEOVER - PRESS R TO RETRY");
                                 gDotTexture.setAlpha(0); //ToDo , ändern Quickfix wegen transparanz
                             }
-                           alertTextTexture.render((SCREEN_WIDTH / 2) - (alertTextTexture.getWidth()/2), (SCREEN_HEIGHT / 2));
+
+                            alertTextTexture.render((SCREEN_WIDTH / 2) - (alertTextTexture.getWidth() / 2),
+                                (SCREEN_HEIGHT / 2));
                         }
-                        
+
                         //Render objects
                         player.render();
                         enemy.render();
                         ball.render();
 
-                        changeText(_TextTexture,Convert.ToString(p2counter + " : " + p1counter));
+                        changeText(_TextTexture, Convert.ToString(p2counter + " : " + p1counter));
                         //Render current frame TEXT
-                        _TextTexture.render(((SCREEN_WIDTH/2) - (_TextTexture.GetWidth() / 2)), 0);
+                        _TextTexture.render(((SCREEN_WIDTH / 2) - (_TextTexture.GetWidth() / 2)), 0);
 
                         //Update screen
                         SDL.SDL_RenderPresent(gRenderer);
