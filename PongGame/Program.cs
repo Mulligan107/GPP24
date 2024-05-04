@@ -331,8 +331,9 @@ namespace PongGame
                 {
                     //Main loop flag
                     bool quit = false;
-                    bool paused = false;
+                    bool paused = true;
                     bool gameover = false;
+                    bool gamestart = true;
 
                     //Event handler
                     SDL.SDL_Event e;
@@ -361,26 +362,40 @@ namespace PongGame
                         //Handle events on queue
                         while (SDL.SDL_PollEvent(out e) != 0)
                         {
+                            //Handle input for the player
+                            player.handleEvent(e);
+                            
+                            if (gamestart)
+                            {
+                                paused = true;
+                                changeText(alertTextTexture, "WELCOME TO PONG - PRESS ANY TO START  F TO TOGGLE FULLSCREEN  P TO PAUSE");
+                                alertTextTexture.render((SCREEN_WIDTH / 2) - (alertTextTexture.getWidth() / 2), (SCREEN_HEIGHT / 2));
+                                if (e.type == SDL.SDL_EventType.SDL_KEYDOWN)
+                                {
+                                    paused = false;
+                                    gamestart = false;
+                                    changeText(alertTextTexture, "PAUSE");
+                                }
+                            }
+                            
                             //User requests quit via closing the window or pressing esc
                             if (e.type == SDL.SDL_EventType.SDL_QUIT || e.key.keysym.sym == SDL.SDL_Keycode.SDLK_ESCAPE)
                             {
                                 quit = true;
                             }
-
-                            //Handle input for the player
-                            player.handleEvent(e);
-
+                            
                             //Switch screen size mode if 'F' key was pressed
                             if (e.type == SDL.SDL_EventType.SDL_KEYDOWN && e.key.keysym.sym == SDL.SDL_Keycode.SDLK_f)
                             {
                                 // Calculate relative positions
-                                
+                                /*
                                 float playerRelativePosX = (float)player.mPosX / SCREEN_WIDTH;
                                 float playerRelativePosY = (float)player.mPosY / SCREEN_HEIGHT;
                                 float enemyRelativePosX = (float)enemy.mPosX / SCREEN_WIDTH;
                                 float enemyRelativePosY = (float)enemy.mPosY / SCREEN_HEIGHT;
                                 float kugRelativePosX = (float)ball.mPosX / SCREEN_WIDTH;
                                 float kugRelativePosY = (float)ball.mPosY / SCREEN_HEIGHT;
+                                */
 
                                 // Change screen size
                                 isFullScreen = !isFullScreen;
@@ -408,6 +423,7 @@ namespace PongGame
                                 ball.mPosX = (int)(kugRelativePosX * SCREEN_WIDTH);
                                 ball.mPosY = (int)(kugRelativePosY * SCREEN_HEIGHT);*/
                             }
+                            
                             if (e.type == SDL.SDL_EventType.SDL_KEYDOWN && e.key.keysym.sym == SDL.SDL_Keycode.SDLK_r)
                             {
                                 player.startPos(0, (SCREEN_HEIGHT / 2) - (player.dotH / 2));
@@ -476,9 +492,7 @@ namespace PongGame
                         {
                             SDL.SDL_RenderFillRect(gRenderer, ref dotline);
                         }
-
-
-
+                        
                         if (paused)
                         {
                            createButton();
@@ -486,13 +500,10 @@ namespace PongGame
                             {
                                 changeText(alertTextTexture, "GAMEOVER - PRESS R TO RETRY");
                                 gDotTexture.setAlpha(0); //ToDo , ändern Quickfix wegen transparanz
-                                
                             }
                            alertTextTexture.render((SCREEN_WIDTH / 2) - (alertTextTexture.getWidth()/2), (SCREEN_HEIGHT / 2));
                         }
-
                         
-
                         //Render objects
                         player.render();
                         enemy.render();
