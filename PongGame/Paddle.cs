@@ -25,7 +25,7 @@ namespace PongGame
         //Initializes the variables
         public Paddle()
         {
-
+          //  startPos(x, y);
         }
         public void startPos(int poX, int poY)
         {

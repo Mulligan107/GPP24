@@ -11,9 +11,9 @@ namespace PongGame
         public int dotW = 20;
         public int dotH = 20;
 
-        //Maximum axis velocity of the dot
-        int DOT_velX = 5;
-        int DOT_velY = 5;
+        //Vector óf 
+        public int vectorX = 5;
+        public int vectorY = 5;
 
 
         //The X and Y offsets of the dot
@@ -25,7 +25,7 @@ namespace PongGame
         //Initializes the variables
         public Ball()
         {
-
+            getRandomVector();
         }
         public void startPos(int poX, int poY)
         {
@@ -39,8 +39,8 @@ namespace PongGame
             //var a = string.Format("mPosX:{0};mVelX:{1};mPosY:{2};mVelY:{3}", mPosX, mVelX, mPosY, mVelY);
             //Console.WriteLine(a);
 
-            mPosX += DOT_velX;
-            mPosY += DOT_velY;
+            mPosX += vectorX;
+            mPosY += vectorY;
 
 
             //If the dot went too far to the left or right
@@ -81,12 +81,39 @@ namespace PongGame
         {
             if (dir == 0)
             {
-                return DOT_velX = (DOT_velX * -1);
+                return vectorX = (vectorX * -1);
             }
             else
             {
-                return DOT_velY = (DOT_velY * -1);
+                return vectorY = (vectorY * -1);
             }
+        }
+
+        public void getRandomVector() //ToDo Vecotren besser mit Double
+        {
+            Random r = new Random();
+
+            int rIntX = r.Next(2);
+            int rIntY = r.Next(2);
+
+            if (rIntX == 0)
+            {
+                vectorX = -5;
+            }
+            else
+            {
+                vectorX = 5;
+            }
+            if (rIntY == 0)
+            {
+                vectorY = -5;
+            }
+            else
+            {
+                vectorY = 5;
+            }
+
+
         }
 
     }

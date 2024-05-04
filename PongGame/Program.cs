@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Globalization;
 using System.Threading;
 using SDL2;
@@ -48,6 +49,8 @@ namespace PongGame
         public static int p1counter = 0;
         public static int p2counter = 0;
 
+        //Liste der EntityPosis
+        public static ArrayList pongEntityList = new ArrayList(); //ToDO variable machen
 
         //The window we'll be rendering to
         private static IntPtr gWindow = IntPtr.Zero;
@@ -189,7 +192,12 @@ namespace PongGame
 
             return success;
         }
-
+        public static void gameReset()
+        {
+            p1counter = 0;
+            p2counter = 0;
+            
+        }
 
         /**
          * Free media and shut down SDL
@@ -297,15 +305,23 @@ namespace PongGame
                     //Event handler
                     SDL.SDL_Event e;
 
+                    gameReset();
+
                     //The player that will be moving around on the screen
                     Paddle player = new Paddle();
                     Paddle enemy = new Paddle();
                     Ball ball = new Ball();
 
-                    //Set Startpos
-                    ball.startPos((SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2));
                     player.startPos(0, 100);
-                    enemy.startPos(SCREEN_WIDTH - enemy.dotW, 100);
+                    enemy.startPos(SCREEN_WIDTH - 20, 100);
+                    ball.startPos((SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2));
+
+                    pongEntityList.Add(player);
+                    pongEntityList.Add(enemy);
+                    pongEntityList.Add(ball);
+
+                    //Set 
+                    
 
                     //While application is running
                     while (!quit)
@@ -355,6 +371,15 @@ namespace PongGame
                                 enemy.mPosY = (int)(enemyRelativePosY * SCREEN_HEIGHT);
                                 ball.mPosX = (int)(kugRelativePosX * SCREEN_WIDTH);
                                 ball.mPosY = (int)(kugRelativePosY * SCREEN_HEIGHT);
+                            }
+                            if (e.type == SDL.SDL_EventType.SDL_KEYDOWN && e.key.keysym.sym == SDL.SDL_Keycode.SDLK_r)
+                            {
+                                player.startPos(0, 100);
+                                enemy.startPos(SCREEN_WIDTH - 20, 100);
+                                ball.startPos((SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2));
+                                ball.getRandomVector();
+                                Console.WriteLine("X: {"+ ball.vectorX + "} Y: {" + ball.vectorY + "}" );
+                                gameReset();
                             }
                         }
 
