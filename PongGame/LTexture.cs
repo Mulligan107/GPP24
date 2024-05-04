@@ -130,6 +130,11 @@ namespace PongGame
 
             SDL.SDL_RenderCopyEx(Program.gRenderer, mTexture, IntPtr.Zero, ref renderQuad, angle, ref myCenter, flip);
         }
+        public void SetBlendMode(SDL.SDL_BlendMode blending)
+        {
+            //Set blending function
+            SDL.SDL_SetTextureBlendMode(mTexture, blending);
+        }
 
         //Gets image dimensions
         public int getWidth()

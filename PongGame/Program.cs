@@ -16,7 +16,7 @@ using SDL2;
 /*
    x The player takes control of a ‘paddle’ and interacts with the gameworld by reflecting a ‘ball’.
    x Keep track of and display a score!
-    There needs to be a game-over state and the option to play again.
+   x There needs to be a game-over state and the option to play again.
 
 +    Add sound and visual FX
 +    Add an AI opponent or a multiplayer component.
@@ -64,9 +64,11 @@ namespace PongGame
         //Scene textures
         public static LTexture gDotTexture = new LTexture();
         public static LTexture gBarTexture = new LTexture();
+        
 
         //Rendered texture
         private static readonly LTexture _TextTexture = new LTexture();
+        public static LTexture alertTextTexture = new LTexture();
 
         //Game ticker
         public static LTimer timer = new LTimer();
@@ -108,7 +110,7 @@ namespace PongGame
                 SCREEN_HEIGHT = MAX_SCREEN_HEIGHT;
 
                 //Create window
-                gWindow = SDL.SDL_CreateWindow("SDL Tutorial", SDL.SDL_WINDOWPOS_UNDEFINED, SDL.SDL_WINDOWPOS_UNDEFINED,
+                gWindow = SDL.SDL_CreateWindow("PongGame", SDL.SDL_WINDOWPOS_UNDEFINED, SDL.SDL_WINDOWPOS_UNDEFINED,
                     SCREEN_WIDTH, SCREEN_HEIGHT, SDL.SDL_WindowFlags.SDL_WINDOW_SHOWN);
                 if (gWindow == IntPtr.Zero)
                 {
@@ -129,7 +131,7 @@ namespace PongGame
                     else
                     {
                         //Initialize renderer color
-                        SDL.SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+                        SDL.SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0x00);
 
                         //Initialize PNG loading
                         var imgFlags = SDL_image.IMG_InitFlags.IMG_INIT_PNG;
@@ -165,12 +167,15 @@ namespace PongGame
                 Console.WriteLine("Failed to load!");
                 success = false;
             }
+            
 
             if (!gBarTexture.loadFromFile("imgs/player.bmp"))
             {
                 Console.WriteLine("Failed to load!");
                 success = false;
             }
+
+
 
             //Open the font
             Font = SDL_ttf.TTF_OpenFont("lazy.ttf", 28);
@@ -188,8 +193,13 @@ namespace PongGame
                     Console.WriteLine("Failed to render text texture!");
                     success = false;
                 }
+                if (!alertTextTexture.loadFromRenderedText("PAUSE", textColor))
+                {
+                    Console.WriteLine("Failed to render alert texture!");
+                    success = false;
+                }
             }
-
+            
             return success;
         }
         public static void gameReset()
@@ -210,6 +220,7 @@ namespace PongGame
 
             //Free loaded images
             _TextTexture.free();
+            alertTextTexture.free();
 
             //Free global font
             SDL_ttf.TTF_CloseFont(Font);
@@ -270,9 +281,28 @@ namespace PongGame
             }
         }
 
-        static void changeText(String text)
+        static void changeText(LTexture Ltex ,String text)
         {
-            _TextTexture.loadFromRenderedText(text, new SDL.SDL_Color());
+            Ltex.loadFromRenderedText(text, new SDL.SDL_Color());
+        }
+
+        static void createButton()
+        {
+            /*
+             * int posX, int posY, string buttonText
+             * 
+            var textColor = new SDL.SDL_Color();
+            LTexture buttonTexture = new LTexture();
+            buttonTexture.loadFromRenderedText(buttonText, textColor);
+            int scaleValue = 1; //Skalierung für veränderung des Fensters
+            var blackline = new SDL.SDL_Rect { x = posX, y = posY, w = 200 * scaleValue, h = 50 };
+            SDL.SDL_SetRenderDrawColor(gRenderer, 0x00, 0x00, 0x00, 0xFF);
+            SDL.SDL_RenderFillRect(gRenderer, ref blackline);
+            */
+            var pauseBackground = new SDL.SDL_Rect { x = 0, y = 0, w = SCREEN_WIDTH, h = SCREEN_HEIGHT };
+            SDL.SDL_SetRenderDrawColor(gRenderer, 0xF0, 0xF0, 0xF0, 0x10);
+            SDL.SDL_RenderFillRect(gRenderer, ref pauseBackground);
+            
         }
 
         static int Main(string[] args)
@@ -301,6 +331,8 @@ namespace PongGame
                 {
                     //Main loop flag
                     bool quit = false;
+                    bool paused = false;
+                    bool gameover = false;
 
                     //Event handler
                     SDL.SDL_Event e;
@@ -378,22 +410,54 @@ namespace PongGame
                                 enemy.startPos(SCREEN_WIDTH - 20, 100);
                                 ball.startPos((SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2));
                                 ball.getRandomVector();
-                                Console.WriteLine("X: {"+ ball.vectorX + "} Y: {" + ball.vectorY + "}" );
                                 gameReset();
+                                gDotTexture.setAlpha(255); //ToDo , ändern Quickfix wegen transparanz
+                                gameover = false;
+                                paused = false;
+                                changeText(alertTextTexture, "PAUSE");
+                            }
+                            if (e.type == SDL.SDL_EventType.SDL_KEYDOWN && e.key.keysym.sym == SDL.SDL_Keycode.SDLK_p)
+                            {
+                                switch (paused)
+                                {
+                                    case false:
+                                        paused = true;
+                                        gBarTexture.setAlpha(180);
+                                        gDotTexture.setAlpha(180);
+                                        _TextTexture.setAlpha(180);
+                                        break;
+                                    case true:
+                                        paused = false;
+                                        gBarTexture.setAlpha(0xFF);
+                                        gDotTexture.setAlpha(0xFF);
+                                        _TextTexture.setAlpha(0xFF);
+                                        break;
+                                }
                             }
                         }
+                        if (p1counter >= 1)
+                        {
+                            paused = true;
+                            gameover = true;
+                        }
 
-                        collCheck(player, ball);
-                        collCheck(enemy, ball);
+                        if (!paused)
+                        {
 
-                        //Move the player
-                        player.move();
-                        ball.move();
-                        enemy.moveEnemy();
+                            collCheck(player, ball);
+                            collCheck(enemy, ball);
+
+                            //Move the player
+                            player.move();
+                            ball.move();
+                            enemy.moveEnemy();
+                        }
+                        
 
                         //Clear screen
                         SDL.SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
                         SDL.SDL_RenderClear(gRenderer);
+
 
                         /*
                         //Begrenzung
@@ -409,15 +473,30 @@ namespace PongGame
                             SDL.SDL_RenderFillRect(gRenderer, ref dotline);
                         }
 
-                        //Render current frame TEXT
-                        _TextTexture.render((SCREEN_WIDTH - _TextTexture.GetWidth()) / 2, 0);
+
+
+                        if (paused)
+                        {
+                           createButton();
+                            if (gameover)
+                            {
+                                changeText(alertTextTexture, "GAMEOVER - PRESS R TO RETRY");
+                                gDotTexture.setAlpha(0); //ToDo , ändern Quickfix wegen transparanz
+                                
+                            }
+                           alertTextTexture.render((SCREEN_WIDTH / 2) - (alertTextTexture.getWidth()/2), (SCREEN_HEIGHT / 2));
+                        }
+
+                        
 
                         //Render objects
                         player.render();
-                        ball.render();
                         enemy.render();
+                        ball.render();
 
-                        changeText(Convert.ToString(p1counter + " : " + p2counter));
+                        changeText(_TextTexture,Convert.ToString(p1counter + " : " + p2counter));
+                        //Render current frame TEXT
+                        _TextTexture.render(((SCREEN_WIDTH/2) - (_TextTexture.GetWidth() / 2)), 0);
 
                         //Update screen
                         SDL.SDL_RenderPresent(gRenderer);

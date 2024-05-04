@@ -47,14 +47,18 @@ namespace PongGame
             if (mPosX < 0)
             {
                 //Move back
-                changeDir(0);
+                //changeDir(0);
+                startPos((Program.SCREEN_WIDTH / 2), (Program.SCREEN_HEIGHT / 2));
+                getRandomVector();
                 Program.p1counter++;
             }
 
             if (mPosX + dotW > Program.SCREEN_WIDTH)
             {
                 //Move back
-                changeDir(0);
+                //changeDir(0);
+                startPos((Program.SCREEN_WIDTH / 2), (Program.SCREEN_HEIGHT / 2));
+                getRandomVector();
                 Program.p2counter++;
             }
 
