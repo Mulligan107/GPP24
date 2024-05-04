@@ -344,8 +344,8 @@ namespace PongGame
                     Paddle enemy = new Paddle();
                     Ball ball = new Ball();
 
-                    player.startPos(0, 100);
-                    enemy.startPos(SCREEN_WIDTH - 20, 100);
+                    player.startPos(0, (SCREEN_HEIGHT / 2) - (player.dotH / 2));
+                    enemy.startPos(SCREEN_WIDTH - 20, (SCREEN_HEIGHT / 2) - (enemy.dotH / 2));
                     ball.startPos((SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2));
 
                     pongEntityList.Add(player);
