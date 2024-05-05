@@ -263,15 +263,15 @@ namespace PongGame
         static void collCheck(Paddle paddle, Ball ball)
         {
             //Versändlichere kurze Namen 
-            int kugL = ball.mPosX;
-            int kugR = ball.mPosX + ball.dotW;
-            int kugOb = ball.mPosY;
-            int kugUn = ball.mPosY + ball.dotH;
+            double kugL = ball.mPosX;
+            double kugR = ball.mPosX + ball.dotW;
+            double kugOb = ball.mPosY;
+            double kugUn = ball.mPosY + ball.dotH;
 
-            int playL = paddle.mPosX;
-            int playR = paddle.mPosX + paddle.dotW;
-            int playOb = paddle.mPosY;
-            int playUn = paddle.mPosY + paddle.dotH;
+            double playL = paddle.mPosX;
+            double playR = paddle.mPosX + paddle.dotW;
+            double playOb = paddle.mPosY;
+            double playUn = paddle.mPosY + paddle.dotH;
 
 
             /*
@@ -290,7 +290,7 @@ namespace PongGame
             if (kugL < playR && kugUn > playOb && kugOb < playUn && kugR > playR)
             {
                 //Paddle ist 200 Lang
-                int aufschlagsPunkt =  ball.mPosY - paddle.mPosY;
+                double aufschlagsPunkt =  ball.mPosY - paddle.mPosY;
                 
                 // Vectoren sind geeyeballed
                 if (aufschlagsPunkt <= 40)
@@ -531,7 +531,7 @@ namespace PongGame
 
         }
 
-        static void updateGame()
+        static void updateGame(double deltaTime)
         {
             // < 2 statt == 0 weil ticks manchmal geskippt werden
             // alle 500 ticks einen neuen Ball hinzufügen bis 3 existiteren
@@ -557,12 +557,12 @@ namespace PongGame
                 }
 
                 //Move the player
-                player.move();
-                enemy.moveEnemy();
+                player.move(deltaTime);
+                enemy.moveEnemy(deltaTime);
 
                 foreach (Ball ballsy in pongEntityList)
                 {
-                    ballsy.move();
+                    ballsy.move(deltaTime);
                 }
 
             }
@@ -615,16 +615,12 @@ namespace PongGame
                         double elapsed = current - previous;
                         previous = current;
 
-                        Console.WriteLine(elapsed);
 
                         //Handle events on queue
                         handleUserInput();
 
                         //Update nach deltaTime?
-                        if (elapsed > 10)
-                        {
-                            updateGame();
-                        }
+                        updateGame(elapsed);
                        
 
                         drawBackground();

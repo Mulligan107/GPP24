@@ -8,26 +8,26 @@ namespace PongGame
     class Paddle
     {
         //The dimensions of the dot
-        public  int dotW = 20;
-        public  int dotH = 200;
+        public  double dotW = 20;
+        public  double dotH = 200;
 
         //Maximum axis velocity of the dot
-        public int DOT_VEL = 10;
-        public int DOT_VEL_ENEMY = 5;
+        public double DOT_VEL = 10;
+        public double DOT_VEL_ENEMY = 5;
 
 
         //The X and Y offsets of the dot
-        public int mPosX, mPosY;
+        public double mPosX, mPosY;
 
         //The velocity of the dot
-        public int mVelX, mVelY;
+        public double mVelX, mVelY;
 
         //Initializes the variables
         public Paddle()
         {
           //  startPos(x, y);
         }
-        public void startPos(int poX, int poY)
+        public void startPos(double poX, double poY)
         {
             mPosX = poX;
             mPosY = poY;
@@ -63,13 +63,13 @@ namespace PongGame
         }
 
         //Moves the dot
-        public void move()
+        public void move(double deltaTime)
         {
             //var a = string.Format("mPosX:{0};mVelX:{1};mPosY:{2};mVelY:{3}", mPosX, mVelX, mPosY, mVelY);
             //Console.WriteLine(a);
 
             //Move the dot left or right
-            mPosX += mVelX;
+            mPosX += mVelX * (deltaTime / 10);
 
             //If the dot went too far to the left or right
             if ((mPosX < 0) || (mPosX + dotW > Program.SCREEN_WIDTH))
@@ -92,9 +92,9 @@ namespace PongGame
             //Console.WriteLine("mPosX:{0};mVelX:{1};mPosY:{2};mVelY:{3}", mPosX, mVelX, mPosY, mVelY);
         }
 
-        public void moveEnemy()
+        public void moveEnemy(double deltaTime)
         {
-            mPosY += DOT_VEL_ENEMY;
+            mPosY += DOT_VEL_ENEMY * (deltaTime / 10);
 
             if ((mPosY < 0) || (mPosY + dotH > Program.SCREEN_HEIGHT))
             {
@@ -106,7 +106,7 @@ namespace PongGame
         public void render()
         {
             //Show the dot
-            Program.gBarTexture.render(mPosX, mPosY);
+            Program.gBarTexture.render((int)mPosX, (int)mPosY);
         }
 
     }

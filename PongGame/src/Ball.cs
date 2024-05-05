@@ -8,17 +8,17 @@ namespace PongGame
     class Ball
     {
         //The dimensions of the dot
-        public int dotW = 20;
-        public int dotH = 20;
+        public double dotW = 20;
+        public double dotH = 20;
 
         //Vector óf 
-        public int vectorX = 5;
-        public int vectorY = 5;
+        public double vectorX = 5;
+        public double vectorY = 5;
 
 
         //The X and Y offsets of the dot
-        public int mPosX = Program.SCREEN_WIDTH / 2;
-        public int mPosY = Program.SCREEN_HEIGHT / 2;
+        public double mPosX = Program.SCREEN_WIDTH / 2;
+        public double mPosY = Program.SCREEN_HEIGHT / 2;
 
         public float kugRelativePosX;
         public float kugRelativePosY;
@@ -28,20 +28,20 @@ namespace PongGame
         {
             getRandomVector(Program.gRandom.Next(100), Program.gRandom.Next(100));
         }
-        public void startPos(int poX, int poY)
+        public void startPos(double poX, double poY)
         {
             mPosX = poX;
             mPosY = poY;
         }
 
         //Moves the dot
-        public void move()
+        public void move(double deltaTime)
         {
             //var a = string.Format("mPosX:{0};mVelX:{1};mPosY:{2};mVelY:{3}", mPosX, mVelX, mPosY, mVelY);
             //Console.WriteLine(a);
 
-            mPosX += vectorX;
-            mPosY += vectorY;
+            mPosX += vectorX * (deltaTime / 10);
+            mPosY += vectorY * (deltaTime / 10);
 
 
             //If the dot went too far to the left or right
@@ -78,11 +78,11 @@ namespace PongGame
         public void render()
         {
             //Show the dot
-            Program.gDotTexture.render(mPosX, mPosY);
+            Program.gDotTexture.render(((int)mPosX), (int)mPosY);
         }
 
         // X == 0 , Y == 1
-        public int changeDir(int dir)
+        public double changeDir(double dir)
         {
             if (dir == 0)
             {
@@ -94,7 +94,7 @@ namespace PongGame
             }
         }
 
-        public void getRandomVector(int num1, int num2) //ToDo Vecotren besser mit Double
+        public void getRandomVector(double num1, double num2) //ToDo Vecotren besser mit Double
         { 
 
             if (num1 % 2 == 0)
@@ -113,7 +113,7 @@ namespace PongGame
             {
                 vectorY = 5;
             }
-            Console.WriteLine(num1 + " rintX, " + num2 + " rintY, " +  vectorX + " vx, " + vectorY + " vy");
+            Console.WriteLine(num1 + " rdoubleX, " + num2 + " rdoubleY, " +  vectorX + " vx, " + vectorY + " vy");
 
         }
 
