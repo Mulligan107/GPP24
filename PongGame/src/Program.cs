@@ -73,6 +73,8 @@ namespace PongGame
         //Game ticker
         public static LTimer timer = new LTimer();
 
+        public static Random gRandom = new Random();
+
         private static bool Init()
         {
             //Initialization flag
@@ -207,6 +209,8 @@ namespace PongGame
         {
             p1counter = 0;
             p2counter = 0;
+            timer.stop();
+            timer.start();
         }
 
         /**
@@ -271,7 +275,39 @@ namespace PongGame
             //Bedingung Rechts
             if (kugL < playR && kugUn > playOb && kugOb < playUn && kugR > playR)
             {
-                ball.changeDir(0);
+                //Paddle ist 200 Lang
+                int aufschlagsPunkt =  ball.mPosY - paddle.mPosY;
+                
+                // Vectoren sind geeyeballed
+                if (aufschlagsPunkt <= 40)
+                {
+                    ball.vectorX = 4;
+                    ball.vectorY = -16;
+                }
+                if (aufschlagsPunkt >= 40 && aufschlagsPunkt <= 80)
+                {
+                    ball.vectorX = 8;
+                    ball.vectorY = -4;
+                }
+                if (aufschlagsPunkt >= 80 && aufschlagsPunkt <= 120)
+                {
+                    ball.changeDir(0);
+                }
+                if (aufschlagsPunkt >= 120 && aufschlagsPunkt <= 160)
+                {
+                    ball.vectorX = 8;
+                    ball.vectorY = 4;
+                }
+                if (aufschlagsPunkt > 160)
+                {
+                    ball.vectorX = 4;
+                    ball.vectorY = 16;
+                }
+
+
+
+
+                
             }
 
             //Bedingung Links
@@ -342,15 +378,21 @@ namespace PongGame
                     //The player that will be moving around on the screen
                     Paddle player = new Paddle();
                     Paddle enemy = new Paddle();
-                    Ball ball = new Ball();
 
-                    player.startPos(0, (SCREEN_HEIGHT / 2) - (player.dotH / 2));
-                    enemy.startPos(SCREEN_WIDTH - 20, (SCREEN_HEIGHT / 2) - (enemy.dotH / 2));
-                    ball.startPos((SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2));
+                    /*
+                    for (int i = 0; i < 3; i++)
+                    {
+                        pongEntityList.Add(balls);
+                    }
+                    */
 
-                    pongEntityList.Add(player);
-                    pongEntityList.Add(enemy);
-                    pongEntityList.Add(ball);
+                    pongEntityList.Add(new Ball());
+
+
+                    player.startPos(0, 100);
+                    enemy.startPos(SCREEN_WIDTH - 20, 100);
+                    
+
 
                     //Set 
 
@@ -386,79 +428,124 @@ namespace PongGame
                             }
 
                             //Switch screen size mode if 'F' key was pressed
-                            if (e.type == SDL.SDL_EventType.SDL_KEYDOWN && e.key.keysym.sym == SDL.SDL_Keycode.SDLK_f)
+                            if (e.type == SDL.SDL_EventType.SDL_KEYDOWN) //ToDo könnte ein switch case sein
                             {
-                                // Calculate relative positions
-                                /*
-                                float playerRelativePosX = (float)player.mPosX / SCREEN_WIDTH;
-                                float playerRelativePosY = (float)player.mPosY / SCREEN_HEIGHT;
-                                float enemyRelativePosX = (float)enemy.mPosX / SCREEN_WIDTH;
-                                float enemyRelativePosY = (float)enemy.mPosY / SCREEN_HEIGHT;
-                                float kugRelativePosX = (float)ball.mPosX / SCREEN_WIDTH;
-                                float kugRelativePosY = (float)ball.mPosY / SCREEN_HEIGHT;
-                                */
-
-                                // Change screen size
-                                isFullScreen = !isFullScreen;
-                                if (isFullScreen)
+                                if (e.key.keysym.sym == SDL.SDL_Keycode.SDLK_f)
                                 {
-                                    SCREEN_WIDTH = MAX_SCREEN_WIDTH;
-                                    SCREEN_HEIGHT = MAX_SCREEN_HEIGHT;
+                                    // Calculate relative positions
+                                    /*
+                                    float playerRelativePosX = (float)player.mPosX / SCREEN_WIDTH;
+                                    float playerRelativePosY = (float)player.mPosY / SCREEN_HEIGHT;
+                                    float enemyRelativePosX = (float)enemy.mPosX / SCREEN_WIDTH;
+                                    float enemyRelativePosY = (float)enemy.mPosY / SCREEN_HEIGHT;
+                                    float kugRelativePosX = (float)ball.mPosX / SCREEN_WIDTH;
+                                    float kugRelativePosY = (float)ball.mPosY / SCREEN_HEIGHT;
+                                    */
+
+                                    // Change screen size
+                                   
+
+                                    // Calculate relative positions
+                                    float playerRelativePosX = (float)player.mPosX / SCREEN_WIDTH;
+                                    float playerRelativePosY = (float)player.mPosY / SCREEN_HEIGHT;
+                                    float enemyRelativePosX = (float)enemy.mPosX / SCREEN_WIDTH;
+                                    float enemyRelativePosY = (float)enemy.mPosY / SCREEN_HEIGHT;
+
+                                    foreach (Ball ballsy in pongEntityList)
+                                    {
+                                        ballsy.kugRelativePosX = (float)ballsy.mPosX / SCREEN_WIDTH;
+                                        ballsy.kugRelativePosY = (float)ballsy.mPosY / SCREEN_HEIGHT;
+                                    }
+                                        
+
+                                    // Change screen size
+                                    isFullScreen = !isFullScreen;
+                                    if (isFullScreen)
+                                    {
+                                        SCREEN_WIDTH = MAX_SCREEN_WIDTH;
+                                        SCREEN_HEIGHT = MAX_SCREEN_HEIGHT;
+                                    }
+                                    else
+                                    {
+                                        SCREEN_WIDTH = ALT_SCREEN_WIDTH;
+                                        SCREEN_HEIGHT = ALT_SCREEN_HEIGHT;
+                                    }
+
+                                    SDL.SDL_SetWindowSize(gWindow, SCREEN_WIDTH, SCREEN_HEIGHT);
+
+                                    // Update positions based on relative positions
+                                    player.mPosX = (int)(playerRelativePosX * SCREEN_WIDTH);
+                                    player.mPosY = (int)(playerRelativePosY * SCREEN_HEIGHT);
+                                    enemy.mPosX = (int)(enemyRelativePosX * SCREEN_WIDTH);
+                                    enemy.mPosY = (int)(enemyRelativePosY * SCREEN_HEIGHT);
+                                        
+                                    foreach (Ball ballsy in pongEntityList)
+                                    {
+                                        ballsy.mPosX = (int)(ballsy.kugRelativePosX * SCREEN_WIDTH);
+                                        ballsy.mPosY = (int)(ballsy.kugRelativePosY * SCREEN_HEIGHT);
+                                    }
                                 }
-                                else
+                                if (e.key.keysym.sym == SDL.SDL_Keycode.SDLK_r)
                                 {
-                                    SCREEN_WIDTH = ALT_SCREEN_WIDTH;
-                                    SCREEN_HEIGHT = ALT_SCREEN_HEIGHT;
+                                    player.startPos(0, 100);
+                                    enemy.startPos(SCREEN_WIDTH - 20, 100);
+
+                                    pongEntityList.Clear();
+
+                                    pongEntityList.Add(new Ball());
+
+                                    gameReset();
+                                    gDotTexture.setAlpha(255); //ToDo , ändern Quickfix wegen transparanz
+                                    gameover = false;
+                                    paused = false;
+                                    changeText(alertTextTexture, "PAUSE");
                                 }
 
-                                SDL.SDL_SetWindowSize(gWindow, SCREEN_WIDTH, SCREEN_HEIGHT);
 
-                                // Update positions based on relative positions
-                                player.startPos(0, (SCREEN_HEIGHT / 2) - (player.dotH / 2));
-                                enemy.startPos(SCREEN_WIDTH - 20, (SCREEN_HEIGHT / 2) - (enemy.dotH / 2));
-                                ball.startPos((SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2));
-                                /*player.mPosX = (int)(playerRelativePosX * SCREEN_WIDTH);
-                                player.mPosY = (int)(playerRelativePosY * SCREEN_HEIGHT);
-                                enemy.mPosX = (int)(enemyRelativePosX * SCREEN_WIDTH);
-                                enemy.mPosY = (int)(enemyRelativePosY * SCREEN_HEIGHT);
-                                ball.mPosX = (int)(kugRelativePosX * SCREEN_WIDTH);
-                                ball.mPosY = (int)(kugRelativePosY * SCREEN_HEIGHT);*/
-                            }
-
-                            if (e.type == SDL.SDL_EventType.SDL_KEYDOWN && e.key.keysym.sym == SDL.SDL_Keycode.SDLK_r)
-                            {
-                                player.startPos(0, (SCREEN_HEIGHT / 2) - (player.dotH / 2));
-                                enemy.startPos(SCREEN_WIDTH - 20, (SCREEN_HEIGHT / 2) - (enemy.dotH / 2));
-                                ball.startPos((SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2));
-                                ball.getRandomVector();
-                                gameReset();
-                                gDotTexture.setAlpha(255); //ToDo , ändern Quickfix wegen transparanz
-                                gameover = false;
-                                paused = false;
-                                changeText(alertTextTexture, "PAUSE");
-                            }
-
-                            if (e.type == SDL.SDL_EventType.SDL_KEYDOWN && e.key.keysym.sym == SDL.SDL_Keycode.SDLK_p)
-                            {
-                                switch (paused)
+                                if (e.key.keysym.sym == SDL.SDL_Keycode.SDLK_p)
                                 {
-                                    case false:
-                                        paused = true;
-                                        gBarTexture.setAlpha(180);
-                                        gDotTexture.setAlpha(180);
-                                        _TextTexture.setAlpha(180);
-                                        break;
-                                    case true:
-                                        paused = false;
-                                        gBarTexture.setAlpha(0xFF);
-                                        gDotTexture.setAlpha(0xFF);
-                                        _TextTexture.setAlpha(0xFF);
-                                        break;
+                                        switch (paused)
+                                        {
+                                            case false:
+                                                paused = true;
+                                                gBarTexture.setAlpha(180);
+                                                gDotTexture.setAlpha(180);
+                                                _TextTexture.setAlpha(180);
+                                                break;
+                                            case true:
+                                                paused = false;
+                                                gBarTexture.setAlpha(0xFF);
+                                                gDotTexture.setAlpha(0xFF);
+                                                _TextTexture.setAlpha(0xFF);
+                                                break;
+                                        }
+                                }
+
+                                // Tasten 1,2,3 für ändern der Farbe
+                                if (e.key.keysym.sym == SDL.SDL_Keycode.SDLK_1)
+                                {
+                                    gBarTexture.setColor(255, 0, 0);
+                                }
+                                if (e.key.keysym.sym == SDL.SDL_Keycode.SDLK_2)
+                                {
+                                    gBarTexture.setColor(0, 255, 0);
+                                }
+                                if (e.key.keysym.sym == SDL.SDL_Keycode.SDLK_3)
+                                {
+                                    gBarTexture.setColor(0, 0, 255);
                                 }
                             }
                         }
+                        
+                        // < 2 statt == 0 weil ticks manchmal geskippt werden
+                        // alle 500 ticks einen neuen Ball hinzufügen bis 3 existiteren
+                        if ((timer.getTicks() % 500 < 2) && (pongEntityList.Count < 3))
+                        {
+                            pongEntityList.Add(new Ball());
+                        }
+                        
 
-                        if (p1counter >= 1)
+                        if (p1counter >= 3)
                         {
                             paused = true;
                             gameover = true;
@@ -466,20 +553,29 @@ namespace PongGame
 
                         if (!paused)
                         {
-                            collCheck(player, ball);
-                            collCheck(enemy, ball);
+                            
+                            foreach (Ball ballsy in pongEntityList)
+                            {
+                                collCheck(player, ballsy);
+                                collCheck(enemy, ballsy);
+                            }
 
                             //Move the player
                             player.move();
-                            ball.move();
                             enemy.moveEnemy();
+
+                            foreach (Ball ballsy in pongEntityList)
+                            {
+                                ballsy.move();
+                            }
+                            
                         }
 
 
                         //Clear screen
                         SDL.SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
                         SDL.SDL_RenderClear(gRenderer);
-
+                        
 
                         /*
                         //Begrenzung
@@ -500,7 +596,7 @@ namespace PongGame
                             createButton();
                             if (gameover)
                             {
-                                changeText(alertTextTexture, "GAMEOVER - PRESS R TO RETRY");
+                                changeText(alertTextTexture, "GAME OVER - PRESS R TO RETRY");
                                 gDotTexture.setAlpha(0); //ToDo , ändern Quickfix wegen transparanz
                             }
 
@@ -511,9 +607,13 @@ namespace PongGame
                         //Render objects
                         player.render();
                         enemy.render();
-                        ball.render();
 
-                        changeText(_TextTexture, Convert.ToString(p2counter + " : " + p1counter));
+                        foreach (Ball ballsy in pongEntityList)
+                        {
+                            ballsy.render();
+                        }
+
+                        changeText(_TextTexture,Convert.ToString(p1counter + " : " + p2counter));
                         //Render current frame TEXT
                         _TextTexture.render(((SCREEN_WIDTH / 2) - (_TextTexture.GetWidth() / 2)), 0);
 

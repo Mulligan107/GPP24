@@ -17,15 +17,16 @@ namespace PongGame
 
 
         //The X and Y offsets of the dot
-        public int mPosX, mPosY;
+        public int mPosX = Program.SCREEN_WIDTH / 2;
+        public int mPosY = Program.SCREEN_HEIGHT / 2;
 
-        //The velocity of the dot
-        int mVelX, mVelY;
+        public float kugRelativePosX;
+        public float kugRelativePosY;
 
         //Initializes the variables
         public Ball()
         {
-            getRandomVector();
+            getRandomVector(Program.gRandom.Next(100), Program.gRandom.Next(100));
         }
         public void startPos(int poX, int poY)
         {
@@ -49,7 +50,7 @@ namespace PongGame
                 //Move back
                 //changeDir(0);
                 startPos((Program.SCREEN_WIDTH / 2), (Program.SCREEN_HEIGHT / 2));
-                getRandomVector();
+                getRandomVector(Program.gRandom.Next(100), Program.gRandom.Next(100));
                 Program.p1counter++;
             }
 
@@ -58,7 +59,7 @@ namespace PongGame
                 //Move back
                 //changeDir(0);
                 startPos((Program.SCREEN_WIDTH / 2), (Program.SCREEN_HEIGHT / 2));
-                getRandomVector();
+                getRandomVector(Program.gRandom.Next(100), Program.gRandom.Next(100));
                 Program.p2counter++;
             }
 
@@ -93,14 +94,10 @@ namespace PongGame
             }
         }
 
-        public void getRandomVector() //ToDo Vecotren besser mit Double
-        {
-            Random r = new Random();
+        public void getRandomVector(int num1, int num2) //ToDo Vecotren besser mit Double
+        { 
 
-            int rIntX = r.Next(2);
-            int rIntY = r.Next(2);
-
-            if (rIntX == 0)
+            if (num1 % 2 == 0)
             {
                 vectorX = -5;
             }
@@ -108,7 +105,7 @@ namespace PongGame
             {
                 vectorX = 5;
             }
-            if (rIntY == 0)
+            if (num2 % 2 == 0)
             {
                 vectorY = -5;
             }
@@ -116,7 +113,7 @@ namespace PongGame
             {
                 vectorY = 5;
             }
-
+            Console.WriteLine(num1 + " rintX, " + num2 + " rintY, " +  vectorX + " vx, " + vectorY + " vy");
 
         }
 
