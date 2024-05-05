@@ -75,6 +75,20 @@ namespace PongGame
 
         public static Random gRandom = new Random();
 
+        //Main loop flag
+        static bool quit = false;
+        static bool paused = true;
+        static bool gameover = false;
+        static bool gamestart = true;
+
+        //Event handler
+        static SDL.SDL_Event e;
+
+        //The player that will be moving around on the screen
+        public static Paddle player = new Paddle();
+        public static Paddle enemy = new Paddle();
+
+
         private static bool Init()
         {
             //Initialization flag
@@ -340,13 +354,228 @@ namespace PongGame
             SDL.SDL_RenderFillRect(gRenderer, ref pauseBackground);
         }
 
+        static void handleUserInput()
+        {
+            while (SDL.SDL_PollEvent(out e) != 0)
+            {
+                //Handle input for the player
+                player.handleEvent(e);
+
+                if (gamestart)
+                {
+                    paused = true;
+                    changeText(alertTextTexture,
+                        "WELCOME TO PONG - PRESS ANY TO START  F TO TOGGLE FULLSCREEN  P TO PAUSE");
+                    alertTextTexture.render((SCREEN_WIDTH / 2) - (alertTextTexture.getWidth() / 2),
+                        (SCREEN_HEIGHT / 2));
+                    if (e.type == SDL.SDL_EventType.SDL_KEYDOWN)
+                    {
+                        paused = false;
+                        gamestart = false;
+                        changeText(alertTextTexture, "PAUSE");
+                    }
+                }
+
+                //User requests quit via closing the window or pressing esc
+                if (e.type == SDL.SDL_EventType.SDL_QUIT || e.key.keysym.sym == SDL.SDL_Keycode.SDLK_ESCAPE)
+                {
+                    quit = true;
+                }
+
+                //Switch screen size mode if 'F' key was pressed
+                if (e.type == SDL.SDL_EventType.SDL_KEYDOWN) //ToDo könnte ein switch case sein
+                {
+                    if (e.key.keysym.sym == SDL.SDL_Keycode.SDLK_f)
+                    {
+                        // Calculate relative positions
+                        /*
+                        float playerRelativePosX = (float)player.mPosX / SCREEN_WIDTH;
+                        float playerRelativePosY = (float)player.mPosY / SCREEN_HEIGHT;
+                        float enemyRelativePosX = (float)enemy.mPosX / SCREEN_WIDTH;
+                        float enemyRelativePosY = (float)enemy.mPosY / SCREEN_HEIGHT;
+                        float kugRelativePosX = (float)ball.mPosX / SCREEN_WIDTH;
+                        float kugRelativePosY = (float)ball.mPosY / SCREEN_HEIGHT;
+                        */
+
+                        // Change screen size
+
+
+                        // Calculate relative positions
+                        float playerRelativePosX = (float)player.mPosX / SCREEN_WIDTH;
+                        float playerRelativePosY = (float)player.mPosY / SCREEN_HEIGHT;
+                        float enemyRelativePosX = (float)enemy.mPosX / SCREEN_WIDTH;
+                        float enemyRelativePosY = (float)enemy.mPosY / SCREEN_HEIGHT;
+
+                        foreach (Ball ballsy in pongEntityList)
+                        {
+                            ballsy.kugRelativePosX = (float)ballsy.mPosX / SCREEN_WIDTH;
+                            ballsy.kugRelativePosY = (float)ballsy.mPosY / SCREEN_HEIGHT;
+                        }
+
+
+                        // Change screen size
+                        isFullScreen = !isFullScreen;
+                        if (isFullScreen)
+                        {
+                            SCREEN_WIDTH = MAX_SCREEN_WIDTH;
+                            SCREEN_HEIGHT = MAX_SCREEN_HEIGHT;
+                        }
+                        else
+                        {
+                            SCREEN_WIDTH = ALT_SCREEN_WIDTH;
+                            SCREEN_HEIGHT = ALT_SCREEN_HEIGHT;
+                        }
+
+                        SDL.SDL_SetWindowSize(gWindow, SCREEN_WIDTH, SCREEN_HEIGHT);
+
+                        // Update positions based on relative positions
+                        player.mPosX = (int)(playerRelativePosX * SCREEN_WIDTH);
+                        player.mPosY = (int)(playerRelativePosY * SCREEN_HEIGHT);
+                        enemy.mPosX = (int)(enemyRelativePosX * SCREEN_WIDTH);
+                        enemy.mPosY = (int)(enemyRelativePosY * SCREEN_HEIGHT);
+
+                        foreach (Ball ballsy in pongEntityList)
+                        {
+                            ballsy.mPosX = (int)(ballsy.kugRelativePosX * SCREEN_WIDTH);
+                            ballsy.mPosY = (int)(ballsy.kugRelativePosY * SCREEN_HEIGHT);
+                        }
+                    }
+                    if (e.key.keysym.sym == SDL.SDL_Keycode.SDLK_r)
+                    {
+                        player.startPos(0, 100);
+                        enemy.startPos(SCREEN_WIDTH - 20, 100);
+
+                        pongEntityList.Clear();
+
+
+                        gameReset();
+                        gDotTexture.setAlpha(255); //ToDo , ändern Quickfix wegen transparanz
+                        gameover = false;
+                        paused = false;
+                        changeText(alertTextTexture, "PAUSE");
+                    }
+
+
+                    if (e.key.keysym.sym == SDL.SDL_Keycode.SDLK_p)
+                    {
+                        switch (paused)
+                        {
+                            case false:
+                                paused = true;
+                                gBarTexture.setAlpha(180);
+                                gDotTexture.setAlpha(180);
+                                _TextTexture.setAlpha(180);
+                                break;
+                            case true:
+                                paused = false;
+                                gBarTexture.setAlpha(0xFF);
+                                gDotTexture.setAlpha(0xFF);
+                                _TextTexture.setAlpha(0xFF);
+                                break;
+                        }
+                    }
+
+                    // Tasten 1,2,3 für ändern der Farbe
+                    if (e.key.keysym.sym == SDL.SDL_Keycode.SDLK_1)
+                    {
+                        gBarTexture.setColor(255, 0, 0);
+                    }
+                    if (e.key.keysym.sym == SDL.SDL_Keycode.SDLK_2)
+                    {
+                        gBarTexture.setColor(0, 255, 0);
+                    }
+                    if (e.key.keysym.sym == SDL.SDL_Keycode.SDLK_3)
+                    {
+                        gBarTexture.setColor(0, 0, 255);
+                    }
+                }
+            }
+        }
+        
+        static void renderObjects()
+        {
+            //Render objects
+            player.render();
+            enemy.render();
+
+            foreach (Ball ballsy in pongEntityList)
+            {
+                ballsy.render();
+            }
+        }
+
+        static void drawBackground()
+        {
+            //Clear screen
+            SDL.SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+            SDL.SDL_RenderClear(gRenderer);
+
+
+            /*
+            //Begrenzung
+            var blackline = new SDL.SDL_Rect { x = 0, y = 100, w = SCREEN_WIDTH, h = 2 };
+            SDL.SDL_SetRenderDrawColor(gRenderer, 0x00, 0x00, 0x00, 0xFF);
+            SDL.SDL_RenderFillRect(gRenderer, ref blackline);
+            */
+
+            var dotline = new SDL.SDL_Rect { x = SCREEN_WIDTH / 2, y = 0, w = 2, h = 8 };
+            SDL.SDL_SetRenderDrawColor(gRenderer, 155, 155, 155, 255);
+            for (dotline.y = 0; dotline.y < SCREEN_HEIGHT; dotline.y += 10)
+            {
+                SDL.SDL_RenderFillRect(gRenderer, ref dotline);
+            }
+
+            changeText(_TextTexture, Convert.ToString(p1counter + " : " + p2counter));
+            //Render current frame TEXT
+            _TextTexture.render(((SCREEN_WIDTH / 2) - (_TextTexture.GetWidth() / 2)), 0);
+
+        }
+
+        static void updateGame()
+        {
+            // < 2 statt == 0 weil ticks manchmal geskippt werden
+            // alle 500 ticks einen neuen Ball hinzufügen bis 3 existiteren
+            if ((timer.getTicks() % 1000 < 2) && (pongEntityList.Count < 3))
+            {
+                pongEntityList.Add(new Ball());
+            }
+
+            //Gameover abfrage
+            if (p1counter >= 3)
+            {
+                paused = true;
+                gameover = true;
+            }
+
+            if (!paused)
+            {
+
+                foreach (Ball ballsy in pongEntityList)
+                {
+                    collCheck(player, ballsy);
+                    collCheck(enemy, ballsy);
+                }
+
+                //Move the player
+                player.move();
+                enemy.moveEnemy();
+
+                foreach (Ball ballsy in pongEntityList)
+                {
+                    ballsy.move();
+                }
+
+            }
+        }
+
         static int Main(string[] args)
         {
             SDL.SDL_SetHint(SDL.SDL_HINT_WINDOWS_DISABLE_THREAD_NAMING, "1");
             Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
             Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
 
-            timer.start(); //Später wichtig für Pause und Zeit
+            //(Re-)Set point counter and timer
+            gameReset();
 
             //Start up SDL and create window
             var success = Init();
@@ -364,20 +593,6 @@ namespace PongGame
                 }
                 else
                 {
-                    //Main loop flag
-                    bool quit = false;
-                    bool paused = true;
-                    bool gameover = false;
-                    bool gamestart = true;
-
-                    //Event handler
-                    SDL.SDL_Event e;
-
-                    gameReset();
-
-                    //The player that will be moving around on the screen
-                    Paddle player = new Paddle();
-                    Paddle enemy = new Paddle();
 
                     /*
                     for (int i = 0; i < 3; i++)
@@ -388,209 +603,32 @@ namespace PongGame
 
                     pongEntityList.Add(new Ball());
 
-
                     player.startPos(0, 100);
                     enemy.startPos(SCREEN_WIDTH - 20, 100);
-                    
 
-
-                    //Set 
-
+                    double previous = 0.0;
 
                     //While application is running
                     while (!quit)
                     {
+                        double current = timer.getTicks();
+                        double elapsed = current - previous;
+                        previous = current;
+
+                        Console.WriteLine(elapsed);
+
                         //Handle events on queue
-                        while (SDL.SDL_PollEvent(out e) != 0)
+                        handleUserInput();
+
+                        //Update nach deltaTime?
+                        if (elapsed > 10)
                         {
-                            //Handle input for the player
-                            player.handleEvent(e);
-
-                            if (gamestart)
-                            {
-                                paused = true;
-                                changeText(alertTextTexture,
-                                    "WELCOME TO PONG - PRESS ANY TO START  F TO TOGGLE FULLSCREEN  P TO PAUSE");
-                                alertTextTexture.render((SCREEN_WIDTH / 2) - (alertTextTexture.getWidth() / 2),
-                                    (SCREEN_HEIGHT / 2));
-                                if (e.type == SDL.SDL_EventType.SDL_KEYDOWN)
-                                {
-                                    paused = false;
-                                    gamestart = false;
-                                    changeText(alertTextTexture, "PAUSE");
-                                }
-                            }
-
-                            //User requests quit via closing the window or pressing esc
-                            if (e.type == SDL.SDL_EventType.SDL_QUIT || e.key.keysym.sym == SDL.SDL_Keycode.SDLK_ESCAPE)
-                            {
-                                quit = true;
-                            }
-
-                            //Switch screen size mode if 'F' key was pressed
-                            if (e.type == SDL.SDL_EventType.SDL_KEYDOWN) //ToDo könnte ein switch case sein
-                            {
-                                if (e.key.keysym.sym == SDL.SDL_Keycode.SDLK_f)
-                                {
-                                    // Calculate relative positions
-                                    /*
-                                    float playerRelativePosX = (float)player.mPosX / SCREEN_WIDTH;
-                                    float playerRelativePosY = (float)player.mPosY / SCREEN_HEIGHT;
-                                    float enemyRelativePosX = (float)enemy.mPosX / SCREEN_WIDTH;
-                                    float enemyRelativePosY = (float)enemy.mPosY / SCREEN_HEIGHT;
-                                    float kugRelativePosX = (float)ball.mPosX / SCREEN_WIDTH;
-                                    float kugRelativePosY = (float)ball.mPosY / SCREEN_HEIGHT;
-                                    */
-
-                                    // Change screen size
-                                   
-
-                                    // Calculate relative positions
-                                    float playerRelativePosX = (float)player.mPosX / SCREEN_WIDTH;
-                                    float playerRelativePosY = (float)player.mPosY / SCREEN_HEIGHT;
-                                    float enemyRelativePosX = (float)enemy.mPosX / SCREEN_WIDTH;
-                                    float enemyRelativePosY = (float)enemy.mPosY / SCREEN_HEIGHT;
-
-                                    foreach (Ball ballsy in pongEntityList)
-                                    {
-                                        ballsy.kugRelativePosX = (float)ballsy.mPosX / SCREEN_WIDTH;
-                                        ballsy.kugRelativePosY = (float)ballsy.mPosY / SCREEN_HEIGHT;
-                                    }
-                                        
-
-                                    // Change screen size
-                                    isFullScreen = !isFullScreen;
-                                    if (isFullScreen)
-                                    {
-                                        SCREEN_WIDTH = MAX_SCREEN_WIDTH;
-                                        SCREEN_HEIGHT = MAX_SCREEN_HEIGHT;
-                                    }
-                                    else
-                                    {
-                                        SCREEN_WIDTH = ALT_SCREEN_WIDTH;
-                                        SCREEN_HEIGHT = ALT_SCREEN_HEIGHT;
-                                    }
-
-                                    SDL.SDL_SetWindowSize(gWindow, SCREEN_WIDTH, SCREEN_HEIGHT);
-
-                                    // Update positions based on relative positions
-                                    player.mPosX = (int)(playerRelativePosX * SCREEN_WIDTH);
-                                    player.mPosY = (int)(playerRelativePosY * SCREEN_HEIGHT);
-                                    enemy.mPosX = (int)(enemyRelativePosX * SCREEN_WIDTH);
-                                    enemy.mPosY = (int)(enemyRelativePosY * SCREEN_HEIGHT);
-                                        
-                                    foreach (Ball ballsy in pongEntityList)
-                                    {
-                                        ballsy.mPosX = (int)(ballsy.kugRelativePosX * SCREEN_WIDTH);
-                                        ballsy.mPosY = (int)(ballsy.kugRelativePosY * SCREEN_HEIGHT);
-                                    }
-                                }
-                                if (e.key.keysym.sym == SDL.SDL_Keycode.SDLK_r)
-                                {
-                                    player.startPos(0, 100);
-                                    enemy.startPos(SCREEN_WIDTH - 20, 100);
-
-                                    pongEntityList.Clear();
-
-                                    pongEntityList.Add(new Ball());
-
-                                    gameReset();
-                                    gDotTexture.setAlpha(255); //ToDo , ändern Quickfix wegen transparanz
-                                    gameover = false;
-                                    paused = false;
-                                    changeText(alertTextTexture, "PAUSE");
-                                }
-
-
-                                if (e.key.keysym.sym == SDL.SDL_Keycode.SDLK_p)
-                                {
-                                        switch (paused)
-                                        {
-                                            case false:
-                                                paused = true;
-                                                gBarTexture.setAlpha(180);
-                                                gDotTexture.setAlpha(180);
-                                                _TextTexture.setAlpha(180);
-                                                break;
-                                            case true:
-                                                paused = false;
-                                                gBarTexture.setAlpha(0xFF);
-                                                gDotTexture.setAlpha(0xFF);
-                                                _TextTexture.setAlpha(0xFF);
-                                                break;
-                                        }
-                                }
-
-                                // Tasten 1,2,3 für ändern der Farbe
-                                if (e.key.keysym.sym == SDL.SDL_Keycode.SDLK_1)
-                                {
-                                    gBarTexture.setColor(255, 0, 0);
-                                }
-                                if (e.key.keysym.sym == SDL.SDL_Keycode.SDLK_2)
-                                {
-                                    gBarTexture.setColor(0, 255, 0);
-                                }
-                                if (e.key.keysym.sym == SDL.SDL_Keycode.SDLK_3)
-                                {
-                                    gBarTexture.setColor(0, 0, 255);
-                                }
-                            }
+                            updateGame();
                         }
+                       
+
+                        drawBackground();
                         
-                        // < 2 statt == 0 weil ticks manchmal geskippt werden
-                        // alle 500 ticks einen neuen Ball hinzufügen bis 3 existiteren
-                        if ((timer.getTicks() % 500 < 2) && (pongEntityList.Count < 3))
-                        {
-                            pongEntityList.Add(new Ball());
-                        }
-                        
-
-                        if (p1counter >= 3)
-                        {
-                            paused = true;
-                            gameover = true;
-                        }
-
-                        if (!paused)
-                        {
-                            
-                            foreach (Ball ballsy in pongEntityList)
-                            {
-                                collCheck(player, ballsy);
-                                collCheck(enemy, ballsy);
-                            }
-
-                            //Move the player
-                            player.move();
-                            enemy.moveEnemy();
-
-                            foreach (Ball ballsy in pongEntityList)
-                            {
-                                ballsy.move();
-                            }
-                            
-                        }
-
-
-                        //Clear screen
-                        SDL.SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
-                        SDL.SDL_RenderClear(gRenderer);
-                        
-
-                        /*
-                        //Begrenzung
-                        var blackline = new SDL.SDL_Rect { x = 0, y = 100, w = SCREEN_WIDTH, h = 2 };
-                        SDL.SDL_SetRenderDrawColor(gRenderer, 0x00, 0x00, 0x00, 0xFF);
-                        SDL.SDL_RenderFillRect(gRenderer, ref blackline);
-                        */
-
-                        var dotline = new SDL.SDL_Rect { x = SCREEN_WIDTH / 2, y = 0, w = 2, h = 8 };
-                        SDL.SDL_SetRenderDrawColor(gRenderer, 155, 155, 155, 255);
-                        for (dotline.y = 0; dotline.y < SCREEN_HEIGHT; dotline.y += 10)
-                        {
-                            SDL.SDL_RenderFillRect(gRenderer, ref dotline);
-                        }
-
                         if (paused)
                         {
                             createButton();
@@ -604,18 +642,9 @@ namespace PongGame
                                 (SCREEN_HEIGHT / 2));
                         }
 
-                        //Render objects
-                        player.render();
-                        enemy.render();
+                        renderObjects();
 
-                        foreach (Ball ballsy in pongEntityList)
-                        {
-                            ballsy.render();
-                        }
-
-                        changeText(_TextTexture,Convert.ToString(p1counter + " : " + p2counter));
-                        //Render current frame TEXT
-                        _TextTexture.render(((SCREEN_WIDTH / 2) - (_TextTexture.GetWidth() / 2)), 0);
+                        
 
                         //Update screen
                         SDL.SDL_RenderPresent(gRenderer);
