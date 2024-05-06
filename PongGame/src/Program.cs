@@ -50,6 +50,7 @@ namespace PongGame
 
         public static int p1counter = 0;
         public static int p2counter = 0;
+        public static int speedLevel = 0;
 
         public static int playerColor = 3; //3 zum testen
 
@@ -278,18 +279,6 @@ namespace PongGame
             double playUn = paddle.mPosY + paddle.dotH;
 
 
-            /*
-            if (kugUn > playOb && kugOb < playUn && kugR > playR)
-            {
-                Console.WriteLine(true);
-            }
-            else
-            {
-                Console.WriteLine(false);
-            }
-            */
-
-
             //Bedingung Rechts
             if (kugL < playR && kugUn > playOb && kugOb < playUn && kugR > playR)
             {
@@ -328,11 +317,8 @@ namespace PongGame
                     ball.vectorX = vecX;
                     ball.vectorY = vecY;
 
-
-                    foreach (Ball ballsy in pongEntityList)
-                    {
-                        ballsy.changeColor();
-                    }
+                    ball.changeColor();
+                    
                 }
 
             }
@@ -341,11 +327,7 @@ namespace PongGame
             if (kugL < playL && kugUn > playOb && kugOb < playUn && kugR > playL)
             {
                 ball.changeDir(0);
-
-                foreach (Ball ballsy in pongEntityList)
-                {
-                    ballsy.changeColor();
-                }
+                ball.changeColor();
             }
         }
 
@@ -536,6 +518,25 @@ namespace PongGame
                         gBarTexture.setColor(0, 0, 255);
                         playerColor = 0;
                     }
+
+                    if (e.key.keysym.sym == SDL.SDL_Keycode.SDLK_t)
+                    {
+                        
+                        foreach (Ball ballsy in pongEntityList)
+                        {
+                            if (ballsy.speed <= 2.0)
+                            {
+                                ballsy.speed += 0.5;
+                            }
+                            else
+                            {
+                                ballsy.speed = 0.5;
+                            }
+                            
+                        }
+                    }
+
+
                 }
             }
         }
