@@ -21,12 +21,12 @@ using SDL2;
 +    Add sound and visual FX
 +    Add an AI opponent or a multiplayer component.
     Add gamepad support.
-+    Add interesting gameplay twists.
+X    Add interesting gameplay twists.
 -    Add multiple levels.
 +    Add additional screens. (e.g. Intro, Settings, Credits...)
 -    Add support for a persistent Highscore.
     Add collectible Power-Ups.
-+    Allow the game to be played in fullscreen mode.
+X    Allow the game to be played in fullscreen mode.
 
  */
 
@@ -42,6 +42,8 @@ namespace PongGame
         public static int ALT_SCREEN_HEIGHT = 480;
         public static int SCREEN_WIDTH;
         public static int SCREEN_HEIGHT;
+
+        public static double skalierung;
 
         //Screen size mode
         public static bool isFullScreen = true;
@@ -296,31 +298,35 @@ namespace PongGame
                     //Paddle ist 200 Lang
                     double aufschlagsPunkt = ball.mPosY - paddle.mPosY;
 
-                    // Vectoren sind geeyeballed
-                    if (aufschlagsPunkt <= 40)
+                    Console.WriteLine(aufschlagsPunkt);
+
+                    double vecX = 0.0;
+                    double vecY = -5.0;
+
+                    for (int i = 0; i <= aufschlagsPunkt; i++)
                     {
-                        ball.vectorX = 4;
-                        ball.vectorY = -16;
+                        
+                        if (i > 100)
+                        {
+                            vecX -= 0.05;
+                        }
+                        else
+                        {
+                            vecX += 0.05;
+                        }
+                        vecY += 0.05;
+                        /*
+                         * aufschlagspunkt = 0 - 200
+                         * 
+                         * d0 = x1 , y-5
+                         * d100 = x5, y0
+                         * d200 = x1, y5
+                         * 
+                         */
+
                     }
-                    if (aufschlagsPunkt >= 40 && aufschlagsPunkt <= 80)
-                    {
-                        ball.vectorX = 8;
-                        ball.vectorY = -4;
-                    }
-                    if (aufschlagsPunkt >= 80 && aufschlagsPunkt <= 120)
-                    {
-                        ball.changeDir(0);
-                    }
-                    if (aufschlagsPunkt >= 120 && aufschlagsPunkt <= 160)
-                    {
-                        ball.vectorX = 8;
-                        ball.vectorY = 4;
-                    }
-                    if (aufschlagsPunkt > 160)
-                    {
-                        ball.vectorX = 4;
-                        ball.vectorY = 16;
-                    }
+                    ball.vectorX = vecX;
+                    ball.vectorY = vecY;
 
 
                     foreach (Ball ballsy in pongEntityList)
@@ -468,7 +474,7 @@ namespace PongGame
                         enemy.startPos(SCREEN_WIDTH - 20, 100);
 
                         pongEntityList.Clear();
-                        pongEntityList.Add(new Ball());
+                        //pongEntityList.Add(new Ball());
 
                         gameReset();
 

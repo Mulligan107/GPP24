@@ -37,7 +37,8 @@ namespace PongGame
                 //success = false;
             }
             changeColor();
-            getRandomVector(Program.gRandom.Next(100), Program.gRandom.Next(100));
+            vectorX = getRandomVector();
+            vectorY = getRandomVector();
         }
         public void startPos(double poX, double poY)
         {
@@ -61,7 +62,8 @@ namespace PongGame
                 //Move back
                 //changeDir(0);
                 startPos((Program.SCREEN_WIDTH / 2), (Program.SCREEN_HEIGHT / 2));
-                getRandomVector(Program.gRandom.Next(100), Program.gRandom.Next(100));
+                vectorX = getRandomVector();
+                vectorY = getRandomVector();
                 Program.p1counter++;
                 changeColor();
             }
@@ -71,7 +73,8 @@ namespace PongGame
                 //Move back
                 //changeDir(0);
                 startPos((Program.SCREEN_WIDTH / 2), (Program.SCREEN_HEIGHT / 2));
-                getRandomVector(Program.gRandom.Next(100), Program.gRandom.Next(100));
+                vectorX = getRandomVector();
+                vectorY = getRandomVector();
                 Program.p2counter++;
                 changeColor();
             }
@@ -131,27 +134,27 @@ namespace PongGame
 
 
 
-        public void getRandomVector(double num1, double num2) //ToDo Vecotren besser mit Double
+        public double getRandomVector() //ToDo Vecotren besser mit Double
         {
+            double minimum = -5.0;
+            double maximum = 5.0;
 
-            if (num1 % 2 == 0)
-            {
-                vectorX = -5;
-            }
-            else
-            {
-                vectorX = 5;
-            }
-            if (num2 % 2 == 0)
-            {
-                vectorY = -5;
-            }
-            else
-            {
-                vectorY = 5;
-            }
-            Console.WriteLine(num1 + " rdoubleX, " + num2 + " rdoubleY, " + vectorX + " vx, " + vectorY + " vy");
+            
+            double randValue = Program.gRandom.NextDouble() * (maximum - minimum) + minimum; 
 
+            if ( randValue <= 1.0 && randValue >= -1.0)
+            {
+                if (randValue <= 0)
+                {
+                    randValue -= 1.0;
+                }
+                else
+                {
+                    randValue += 1.0;
+                } 
+            }
+
+            return randValue;
         }
 
     }
