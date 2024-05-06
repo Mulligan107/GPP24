@@ -62,7 +62,7 @@ namespace PongGame
         public static IntPtr Font = IntPtr.Zero;
 
         //Scene textures
-        public static LTexture gDotTexture = new LTexture();
+
         public static LTexture gBarTexture = new LTexture();
 
 
@@ -177,12 +177,7 @@ namespace PongGame
             //Loading success flag
             bool success = true;
 
-            //Load press texture
-            if (!gDotTexture.loadFromFile("imgs/dot.bmp"))
-            {
-                Console.WriteLine("Failed to load!");
-                success = false;
-            }
+            
 
 
             if (!gBarTexture.loadFromFile("imgs/player.bmp"))
@@ -233,7 +228,12 @@ namespace PongGame
         private static void Close()
         {
             //Free loaded images
-            gDotTexture.free();
+            
+            foreach (Ball ballsy in pongEntityList)
+            {
+                ballsy.gDotTexture.free();
+            }
+
             gBarTexture.free();
 
             //Free loaded images
@@ -319,15 +319,23 @@ namespace PongGame
                 }
 
 
+                foreach (Ball ballsy in pongEntityList)
+                {
+                    ballsy.changeColor();
+                }
 
 
-                
             }
 
             //Bedingung Links
             if (kugL < playL && kugUn > playOb && kugOb < playUn && kugR > playL)
             {
                 ball.changeDir(0);
+
+                foreach (Ball ballsy in pongEntityList)
+                {
+                    ballsy.changeColor();
+                }
             }
         }
 
@@ -368,11 +376,21 @@ namespace PongGame
                         "WELCOME TO PONG - PRESS ANY TO START  F TO TOGGLE FULLSCREEN  P TO PAUSE");
                     alertTextTexture.render((SCREEN_WIDTH / 2) - (alertTextTexture.getWidth() / 2),
                         (SCREEN_HEIGHT / 2));
+
+                    foreach (Ball ballsy in pongEntityList)
+                    {
+                        ballsy.gDotTexture.setAlpha(0); //ToDo , ändern Quickfix wegen transparanz
+                    }
+
                     if (e.type == SDL.SDL_EventType.SDL_KEYDOWN)
                     {
                         paused = false;
                         gamestart = false;
                         changeText(alertTextTexture, "PAUSE");
+                        foreach (Ball ballsy in pongEntityList)
+                        {
+                            ballsy.gDotTexture.setAlpha(255); //ToDo , ändern Quickfix wegen transparanz
+                        }
                     }
                 }
 
@@ -446,10 +464,16 @@ namespace PongGame
                         enemy.startPos(SCREEN_WIDTH - 20, 100);
 
                         pongEntityList.Clear();
-
+                        pongEntityList.Add(new Ball());
 
                         gameReset();
-                        gDotTexture.setAlpha(255); //ToDo , ändern Quickfix wegen transparanz
+
+                        foreach (Ball ballsy in pongEntityList)
+                        {
+                            ballsy.gDotTexture.setAlpha(255); //ToDo , ändern Quickfix wegen transparanz
+                        }
+
+                        
                         gameover = false;
                         paused = false;
                         changeText(alertTextTexture, "PAUSE");
@@ -463,14 +487,25 @@ namespace PongGame
                             case false:
                                 paused = true;
                                 gBarTexture.setAlpha(180);
-                                gDotTexture.setAlpha(180);
                                 _TextTexture.setAlpha(180);
+
+                                foreach (Ball ballsy in pongEntityList)
+                                {
+                                    ballsy.gDotTexture.setAlpha(180);
+                                }
+                                
                                 break;
+
                             case true:
                                 paused = false;
                                 gBarTexture.setAlpha(0xFF);
-                                gDotTexture.setAlpha(0xFF);
                                 _TextTexture.setAlpha(0xFF);
+
+                                foreach (Ball ballsy in pongEntityList)
+                                {
+                                    ballsy.gDotTexture.setAlpha(0xFF);
+                                }
+                                
                                 break;
                         }
                     }
@@ -534,12 +569,13 @@ namespace PongGame
         static void updateGame(double deltaTime)
         {
             // < 2 statt == 0 weil ticks manchmal geskippt werden
-            // alle 500 ticks einen neuen Ball hinzufügen bis 3 existiteren
-            if ((timer.getTicks() % 1000 < 2) && (pongEntityList.Count < 3))
+            // alle 3000 ticks einen neuen Ball hinzufügen bis 3 existiteren
+            if (((timer.getTicks() * (deltaTime / 10)) % 3000 < 2) && (pongEntityList.Count < 3))
             {
                 pongEntityList.Add(new Ball());
             }
 
+            
             //Gameover abfrage
             if (p1counter >= 3)
             {
@@ -614,7 +650,9 @@ namespace PongGame
                         double current = timer.getTicks();
                         double elapsed = current - previous;
                         previous = current;
-
+                        if (elapsed < 1.0) {
+                            elapsed = 5.0;
+                        }
 
                         //Handle events on queue
                         handleUserInput();
@@ -631,7 +669,12 @@ namespace PongGame
                             if (gameover)
                             {
                                 changeText(alertTextTexture, "GAME OVER - PRESS R TO RETRY");
-                                gDotTexture.setAlpha(0); //ToDo , ändern Quickfix wegen transparanz
+
+
+                                foreach (Ball ballsy in pongEntityList)
+                                {
+                                    ballsy.gDotTexture.setAlpha(0);//ToDo , ändern Quickfix wegen transparanz
+                                }
                             }
 
                             alertTextTexture.render((SCREEN_WIDTH / 2) - (alertTextTexture.getWidth() / 2),

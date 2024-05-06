@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Runtime.InteropServices;
-using SDL2;
 
 namespace PongGame
 {
@@ -23,9 +21,20 @@ namespace PongGame
         public float kugRelativePosX;
         public float kugRelativePosY;
 
+        public LTexture gDotTexture = new LTexture();
+
+        public int letzteFarbe = 0;
+
         //Initializes the variables
         public Ball()
         {
+            //Load press texture
+            if (!gDotTexture.loadFromFile("imgs/dot.bmp"))
+            {
+                Console.WriteLine("Failed to load!");
+                //success = false;
+            }
+            changeColor();
             getRandomVector(Program.gRandom.Next(100), Program.gRandom.Next(100));
         }
         public void startPos(double poX, double poY)
@@ -52,6 +61,7 @@ namespace PongGame
                 startPos((Program.SCREEN_WIDTH / 2), (Program.SCREEN_HEIGHT / 2));
                 getRandomVector(Program.gRandom.Next(100), Program.gRandom.Next(100));
                 Program.p1counter++;
+                changeColor();
             }
 
             if (mPosX + dotW > Program.SCREEN_WIDTH)
@@ -61,6 +71,7 @@ namespace PongGame
                 startPos((Program.SCREEN_WIDTH / 2), (Program.SCREEN_HEIGHT / 2));
                 getRandomVector(Program.gRandom.Next(100), Program.gRandom.Next(100));
                 Program.p2counter++;
+                changeColor();
             }
 
 
@@ -69,6 +80,7 @@ namespace PongGame
             {
                 //Move back
                 changeDir(1);
+                changeColor();
             }
 
             //Console.WriteLine("mPosX:{0};mVelX:{1};mPosY:{2};mVelY:{3}", mPosX, mVelX, mPosY, mVelY);
@@ -78,7 +90,7 @@ namespace PongGame
         public void render()
         {
             //Show the dot
-            Program.gDotTexture.render(((int)mPosX), (int)mPosY);
+            gDotTexture.render(((int)System.Math.Floor(mPosX)), (int)System.Math.Floor(mPosY));
         }
 
         // X == 0 , Y == 1
@@ -94,8 +106,31 @@ namespace PongGame
             }
         }
 
+        public void changeColor()
+        {
+            //int switcher = Program.gRandom.Next(3);
+            switch (letzteFarbe)
+            {
+                case (0):
+                    gDotTexture.setColor(255, 0, 0);
+                    letzteFarbe = 1;
+                    break;
+                case (1):
+                    gDotTexture.setColor(0, 255, 0);
+                    letzteFarbe = 2;
+                    break;
+                case (2):
+                    gDotTexture.setColor(0, 0, 255);
+                    letzteFarbe = 0;
+                    break;
+            }
+        }
+
+
+
+
         public void getRandomVector(double num1, double num2) //ToDo Vecotren besser mit Double
-        { 
+        {
 
             if (num1 % 2 == 0)
             {
@@ -113,7 +148,7 @@ namespace PongGame
             {
                 vectorY = 5;
             }
-            Console.WriteLine(num1 + " rdoubleX, " + num2 + " rdoubleY, " +  vectorX + " vx, " + vectorY + " vy");
+            Console.WriteLine(num1 + " rdoubleX, " + num2 + " rdoubleY, " + vectorX + " vx, " + vectorY + " vy");
 
         }
 

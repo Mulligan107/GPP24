@@ -2,6 +2,7 @@
 using System.Runtime.InteropServices;
 using SDL2;
 
+
 namespace PongGame
 {
     //Texture wrapper class
@@ -106,7 +107,7 @@ namespace PongGame
         public void render()
         {
             //Show the dot
-            Program.gBarTexture.render((int)mPosX, (int)mPosY);
+            Program.gBarTexture.render((int)System.Math.Floor(mPosX), (int)System.Math.Floor(mPosY));
         }
 
     }
