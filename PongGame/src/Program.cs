@@ -49,6 +49,8 @@ namespace PongGame
         public static int p1counter = 0;
         public static int p2counter = 0;
 
+        public static int playerColor = 3; //3 zum testen
+
         //Liste der EntityPosis
         public static ArrayList pongEntityList = new ArrayList(); //ToDO variable machen
 
@@ -289,41 +291,43 @@ namespace PongGame
             //Bedingung Rechts
             if (kugL < playR && kugUn > playOb && kugOb < playUn && kugR > playR)
             {
-                //Paddle ist 200 Lang
-                double aufschlagsPunkt =  ball.mPosY - paddle.mPosY;
-                
-                // Vectoren sind geeyeballed
-                if (aufschlagsPunkt <= 40)
+                if (playerColor == ball.letzteFarbe || playerColor == 3) //3 zum testen
                 {
-                    ball.vectorX = 4;
-                    ball.vectorY = -16;
-                }
-                if (aufschlagsPunkt >= 40 && aufschlagsPunkt <= 80)
-                {
-                    ball.vectorX = 8;
-                    ball.vectorY = -4;
-                }
-                if (aufschlagsPunkt >= 80 && aufschlagsPunkt <= 120)
-                {
-                    ball.changeDir(0);
-                }
-                if (aufschlagsPunkt >= 120 && aufschlagsPunkt <= 160)
-                {
-                    ball.vectorX = 8;
-                    ball.vectorY = 4;
-                }
-                if (aufschlagsPunkt > 160)
-                {
-                    ball.vectorX = 4;
-                    ball.vectorY = 16;
-                }
+                    //Paddle ist 200 Lang
+                    double aufschlagsPunkt = ball.mPosY - paddle.mPosY;
+
+                    // Vectoren sind geeyeballed
+                    if (aufschlagsPunkt <= 40)
+                    {
+                        ball.vectorX = 4;
+                        ball.vectorY = -16;
+                    }
+                    if (aufschlagsPunkt >= 40 && aufschlagsPunkt <= 80)
+                    {
+                        ball.vectorX = 8;
+                        ball.vectorY = -4;
+                    }
+                    if (aufschlagsPunkt >= 80 && aufschlagsPunkt <= 120)
+                    {
+                        ball.changeDir(0);
+                    }
+                    if (aufschlagsPunkt >= 120 && aufschlagsPunkt <= 160)
+                    {
+                        ball.vectorX = 8;
+                        ball.vectorY = 4;
+                    }
+                    if (aufschlagsPunkt > 160)
+                    {
+                        ball.vectorX = 4;
+                        ball.vectorY = 16;
+                    }
 
 
-                foreach (Ball ballsy in pongEntityList)
-                {
-                    ballsy.changeColor();
+                    foreach (Ball ballsy in pongEntityList)
+                    {
+                        ballsy.changeColor();
+                    }
                 }
-
 
             }
 
@@ -514,14 +518,17 @@ namespace PongGame
                     if (e.key.keysym.sym == SDL.SDL_Keycode.SDLK_1)
                     {
                         gBarTexture.setColor(255, 0, 0);
+                        playerColor = 1;
                     }
                     if (e.key.keysym.sym == SDL.SDL_Keycode.SDLK_2)
                     {
                         gBarTexture.setColor(0, 255, 0);
+                        playerColor = 2;
                     }
                     if (e.key.keysym.sym == SDL.SDL_Keycode.SDLK_3)
                     {
                         gBarTexture.setColor(0, 0, 255);
+                        playerColor = 0;
                     }
                 }
             }

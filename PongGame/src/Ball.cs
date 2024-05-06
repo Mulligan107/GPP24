@@ -13,6 +13,8 @@ namespace PongGame
         public double vectorX = 5;
         public double vectorY = 5;
 
+        public double speed = 0.5;
+
 
         //The X and Y offsets of the dot
         public double mPosX = Program.SCREEN_WIDTH / 2;
@@ -49,8 +51,8 @@ namespace PongGame
             //var a = string.Format("mPosX:{0};mVelX:{1};mPosY:{2};mVelY:{3}", mPosX, mVelX, mPosY, mVelY);
             //Console.WriteLine(a);
 
-            mPosX += vectorX * (deltaTime / 10);
-            mPosY += vectorY * (deltaTime / 10);
+            mPosX += vectorX * (deltaTime / 10) * speed;
+            mPosY += vectorY * (deltaTime / 10) * speed;
 
 
             //If the dot went too far to the left or right
