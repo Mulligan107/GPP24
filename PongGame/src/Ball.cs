@@ -18,7 +18,7 @@ namespace PongGame
 
         //The X and Y offsets of the dot
         public double mPosX = Program.SCREEN_WIDTH / 2;
-        public double mPosY = Program.SCREEN_HEIGHT / 2;
+        public double mPosY = (Program.SCREEN_HEIGHT / 2) + Program.pannelH;
 
         public float kugRelativePosX;
         public float kugRelativePosY;
@@ -61,7 +61,7 @@ namespace PongGame
             {
                 //Move back
                 //changeDir(0);
-                startPos((Program.SCREEN_WIDTH / 2), (Program.SCREEN_HEIGHT / 2));
+                startPos((Program.SCREEN_WIDTH / 2) , (Program.SCREEN_HEIGHT / 2) + Program.pannelH);
                 vectorX = getRandomVector();
                 vectorY = getRandomVector();
                 Program.p1counter++;
@@ -72,7 +72,7 @@ namespace PongGame
             {
                 //Move back
                 //changeDir(0);
-                startPos((Program.SCREEN_WIDTH / 2), (Program.SCREEN_HEIGHT / 2));
+                startPos((Program.SCREEN_WIDTH / 2), (Program.SCREEN_HEIGHT / 2) + Program.pannelH);
                 vectorX = getRandomVector();
                 vectorY = getRandomVector();
                 Program.p2counter++;
@@ -81,7 +81,7 @@ namespace PongGame
 
 
             //If the dot went too far up or down
-            if ((mPosY < 0) || (mPosY + dotH > Program.SCREEN_HEIGHT)) // 100 mit Boarder
+            if ((mPosY < Program.pannelH) || (mPosY + dotH > Program.SCREEN_HEIGHT)) // 100 mit Boarder
             {
                 //Move back
                 changeDir(1);

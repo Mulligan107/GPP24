@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Globalization;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading;
 using SDL2;
@@ -47,6 +48,8 @@ namespace PongGame
 
         public static double skalierung;
 
+        public static int pannelH = 200;
+
         //Screen size mode
         public static bool isFullScreen = true;
 
@@ -62,13 +65,15 @@ namespace PongGame
 
 
         //The window we'll be rendering to
-        private static IntPtr gWindow = IntPtr.Zero;
+        public static IntPtr gWindow = IntPtr.Zero;
 
         //The surface contained by the window
         public static IntPtr gRenderer = IntPtr.Zero;
 
         //Globally used font
         public static IntPtr Font = IntPtr.Zero;
+
+        public static IntPtr ghostSurface = IntPtr.Zero;
 
         //Scene textures
 
@@ -186,9 +191,7 @@ namespace PongGame
         {
             //Loading success flag
             bool success = true;
-
             
-
 
             if (!gBarTexture.loadFromFile("imgs/player.bmp"))
             {
@@ -199,6 +202,13 @@ namespace PongGame
             if (!ghostTexture.loadFromFile("imgs/ghostSpriteSheet.png"))
             {
                 Console.WriteLine("Failed to load!");
+                success = false;
+            }
+
+            IntPtr ghostSurface = SDL_image.IMG_Load("imgs/ghostSpriteSheet.png");
+            if (ghostSurface == IntPtr.Zero)
+            {
+                Console.WriteLine("Unable to load image {0}! SDL Error: {1}", "imgs/ghostSpriteSheet.png", SDL.SDL_GetError());
                 success = false;
             }
 
@@ -229,6 +239,8 @@ namespace PongGame
             return success;
         }
 
+
+
         public static void gameReset()
         {
             p1counter = 0;
@@ -236,6 +248,9 @@ namespace PongGame
             timer.stop();
             timer.start();
         }
+
+   
+ 
 
         /**
          * Free media and shut down SDL
@@ -495,6 +510,8 @@ namespace PongGame
                                 {
                                     ballsy.gDotTexture.setAlpha(180);
                                 }
+
+
                                 
                                 break;
 
@@ -507,7 +524,6 @@ namespace PongGame
                                 {
                                     ballsy.gDotTexture.setAlpha(0xFF);
                                 }
-                                
                                 break;
                         }
                     }
@@ -583,16 +599,27 @@ namespace PongGame
             SDL.SDL_RenderFillRect(gRenderer, ref blackline);
             */
 
-            var dotline = new SDL.SDL_Rect { x = SCREEN_WIDTH / 2, y = 0, w = 2, h = 8 };
+            var dotline = new SDL.SDL_Rect { x = SCREEN_WIDTH / 2, y = 0, w = 2, h = 8};
             SDL.SDL_SetRenderDrawColor(gRenderer, 155, 155, 155, 255);
-            for (dotline.y = 0; dotline.y < SCREEN_HEIGHT; dotline.y += 10)
+            for (dotline.y = pannelH; dotline.y < SCREEN_HEIGHT; dotline.y += 10)
             {
                 SDL.SDL_RenderFillRect(gRenderer, ref dotline);
             }
 
+            //Render black outlined pannel  i = wanddicke
+            for (int i = 0; i < 5; i++)
+            {
+                var outlineRect = new SDL.SDL_Rect { x = 5 + i, y = 5 + i, w = (SCREEN_WIDTH - 10) - i * 2, h = (pannelH) - i * 2 };
+                SDL.SDL_SetRenderDrawColor(gRenderer, 0x00, 0x00, 0x00, 0xFF);
+                SDL.SDL_RenderDrawRect(gRenderer, ref outlineRect);
+            }
+            
+
+
+
             changeText(_TextTexture, Convert.ToString(p1counter + " : " + p2counter));
             //Render current frame TEXT
-            _TextTexture.render(((SCREEN_WIDTH / 2) - (_TextTexture.GetWidth() / 2)), 0);
+            _TextTexture.render(((SCREEN_WIDTH / 2) - (_TextTexture.GetWidth() / 2)), pannelH + 5);
 
         }
 
@@ -666,8 +693,8 @@ namespace PongGame
 
                     ballList.Add(new Ball());
 
-                    player.startPos(0, 100);
-                    enemy.startPos(SCREEN_WIDTH - 20, 100);
+                    player.startPos(20, pannelH);
+                    enemy.startPos(SCREEN_WIDTH - 40, pannelH);
 
                     double previous = 0.0;
 
@@ -692,6 +719,9 @@ namespace PongGame
                         
                         if (paused)
                         {
+                            
+
+
                             createButton();
                             if (gameover)
                             {
@@ -702,6 +732,7 @@ namespace PongGame
                                 {
                                     ballsy.gDotTexture.setAlpha(0);//ToDo , ändern Quickfix wegen transparanz
                                 }
+
                             }
 
                             alertTextTexture.render((SCREEN_WIDTH / 2) - (alertTextTexture.getWidth() / 2),

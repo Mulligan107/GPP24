@@ -83,7 +83,7 @@ namespace PongGame
             mPosY += mVelY;
 
             //If the dot went too far up or down
-            if ((mPosY < 0) || (mPosY + dotH > Program.SCREEN_HEIGHT))
+            if ((mPosY < Program.pannelH) || (mPosY + dotH > Program.SCREEN_HEIGHT))
             {
                 //Move back
                 mPosY -= mVelY;
@@ -95,9 +95,9 @@ namespace PongGame
 
         public void moveEnemy(double deltaTime)
         {
-            mPosY += DOT_VEL_ENEMY * (deltaTime / 10);
+            mPosY -= DOT_VEL_ENEMY * (deltaTime / 10);
 
-            if ((mPosY < 0) || (mPosY + dotH > Program.SCREEN_HEIGHT))
+            if ((mPosY < Program.pannelH) || (mPosY + dotH > Program.SCREEN_HEIGHT))
             {
                 DOT_VEL_ENEMY = DOT_VEL_ENEMY * (-1);
             }

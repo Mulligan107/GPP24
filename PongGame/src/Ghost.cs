@@ -19,16 +19,19 @@ namespace PongGame
         public double vectorX;
         public double vectorY;
 
-        public double speed = 0.5;
+        
 
         public float ghostRelativePosX;
         public float ghostRelativePosY;
         */
+        public double speed = 0.5;
         public double ghostVel = 10;
+
+        public double SinusValue = 0;
 
         //The X and Y offsets
         public double posX = Program.SCREEN_WIDTH;
-        public double posY = (Program.SCREEN_HEIGHT - (int)ghostH) / 2;
+        public double posY = Program.pannelH;
 
         public bool alive = true;
 
@@ -67,20 +70,24 @@ namespace PongGame
         }
         public void move(double deltaTime)
         {
-           posX -= ghostVel * (deltaTime / 10);
+           posX -= ghostVel * (deltaTime / 10) * speed;
 
-            if (posX < 0)
+            if (posX < 0 - ghostW)
             {
                 posX = Program.SCREEN_WIDTH;
             }
+
+            SinusValue += (deltaTime / 80); // länge der Amplitude
+            posY = posY + Math.Sin(SinusValue); // Höhe der Amplitude
+
+
         }
 
         public void render()
         {
             if (alive)
             {
-                Console.WriteLine(frameTicker);
-
+                
                 //Animation Speed
                 if (frameTicker >= 0.5)
                 {
@@ -97,9 +104,16 @@ namespace PongGame
                 }
                 //Render current frame
                 SDL.SDL_Rect currentClip = _SpriteClips[frame];
-                Console.WriteLine(currentClip.w + currentClip.h);
-                ghostTexture.render(((int)System.Math.Floor(posX)), (int)System.Math.Floor(posY), currentClip);
+                // Console.WriteLine(currentClip.w + currentClip.h);
+                SDL.SDL_Rect pannelRect = new SDL.SDL_Rect { x = Program.SCREEN_WIDTH - 15 - 46, y = 15, w = 46 , h = 70 };
 
+
+                ghostTexture.render(((int)System.Math.Floor(posX)), (int)System.Math.Floor(posY), currentClip);
+               
+              //  SDL.SDL_SetRenderDrawColor(Program.gRenderer, 0xFF, 0x00, 0x00, 0xFF);
+              //  SDL.SDL_RenderFillRect(Program.gRenderer, ref pannelRect); //TestFeld
+
+                SDL.SDL_BlitSurface(Program.ghostSurface, IntPtr.Zero, Program.gWindow, ref pannelRect);
             }
 
         }
