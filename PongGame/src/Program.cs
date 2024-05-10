@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Globalization;
+using System.Runtime.InteropServices;
 using System.Threading;
 using SDL2;
+
 
 
 //TODO Collcheck oben unten, gegenerKI, Pausemenue, Physic?, Kugel Vel und richtung ändern Basierend auf Aufprall auf der Bar, etc
@@ -55,7 +57,9 @@ namespace PongGame
         public static int playerColor = 3; //3 zum testen
 
         //Liste der EntityPosis
-        public static ArrayList pongEntityList = new ArrayList(); //ToDO variable machen
+        public static ArrayList ballList = new ArrayList();
+        public static ArrayList ghostList = new ArrayList();
+
 
         //The window we'll be rendering to
         private static IntPtr gWindow = IntPtr.Zero;
@@ -69,6 +73,7 @@ namespace PongGame
         //Scene textures
 
         public static LTexture gBarTexture = new LTexture();
+        public static LTexture ghostTexture = new LTexture();
 
 
         //Rendered texture
@@ -191,6 +196,11 @@ namespace PongGame
                 success = false;
             }
 
+            if (!ghostTexture.loadFromFile("imgs/ghostSpriteSheet.png"))
+            {
+                Console.WriteLine("Failed to load!");
+                success = false;
+            }
 
             //Open the font
             Font = SDL_ttf.TTF_OpenFont("lazy.ttf", 28);
@@ -234,7 +244,7 @@ namespace PongGame
         {
             //Free loaded images
             
-            foreach (Ball ballsy in pongEntityList)
+            foreach (Ball ballsy in ballList)
             {
                 ballsy.gDotTexture.free();
             }
@@ -369,7 +379,7 @@ namespace PongGame
                     alertTextTexture.render((SCREEN_WIDTH / 2) - (alertTextTexture.getWidth() / 2),
                         (SCREEN_HEIGHT / 2));
 
-                    foreach (Ball ballsy in pongEntityList)
+                    foreach (Ball ballsy in ballList)
                     {
                         ballsy.gDotTexture.setAlpha(0); //ToDo , ändern Quickfix wegen transparanz
                     }
@@ -379,7 +389,7 @@ namespace PongGame
                         paused = false;
                         gamestart = false;
                         changeText(alertTextTexture, "PAUSE");
-                        foreach (Ball ballsy in pongEntityList)
+                        foreach (Ball ballsy in ballList)
                         {
                             ballsy.gDotTexture.setAlpha(255); //ToDo , ändern Quickfix wegen transparanz
                         }
@@ -416,7 +426,7 @@ namespace PongGame
                         float enemyRelativePosX = (float)enemy.mPosX / SCREEN_WIDTH;
                         float enemyRelativePosY = (float)enemy.mPosY / SCREEN_HEIGHT;
 
-                        foreach (Ball ballsy in pongEntityList)
+                        foreach (Ball ballsy in ballList)
                         {
                             ballsy.kugRelativePosX = (float)ballsy.mPosX / SCREEN_WIDTH;
                             ballsy.kugRelativePosY = (float)ballsy.mPosY / SCREEN_HEIGHT;
@@ -444,7 +454,7 @@ namespace PongGame
                         enemy.mPosX = (int)(enemyRelativePosX * SCREEN_WIDTH);
                         enemy.mPosY = (int)(enemyRelativePosY * SCREEN_HEIGHT);
 
-                        foreach (Ball ballsy in pongEntityList)
+                        foreach (Ball ballsy in ballList)
                         {
                             ballsy.mPosX = (int)(ballsy.kugRelativePosX * SCREEN_WIDTH);
                             ballsy.mPosY = (int)(ballsy.kugRelativePosY * SCREEN_HEIGHT);
@@ -455,12 +465,12 @@ namespace PongGame
                         player.startPos(0, 100);
                         enemy.startPos(SCREEN_WIDTH - 20, 100);
 
-                        pongEntityList.Clear();
-                        //pongEntityList.Add(new Ball());
+                        ballList.Clear();
+                        //ballList.Add(new Ball());
 
                         gameReset();
 
-                        foreach (Ball ballsy in pongEntityList)
+                        foreach (Ball ballsy in ballList)
                         {
                             ballsy.gDotTexture.setAlpha(255); //ToDo , ändern Quickfix wegen transparanz
                         }
@@ -481,7 +491,7 @@ namespace PongGame
                                 gBarTexture.setAlpha(180);
                                 _TextTexture.setAlpha(180);
 
-                                foreach (Ball ballsy in pongEntityList)
+                                foreach (Ball ballsy in ballList)
                                 {
                                     ballsy.gDotTexture.setAlpha(180);
                                 }
@@ -493,7 +503,7 @@ namespace PongGame
                                 gBarTexture.setAlpha(0xFF);
                                 _TextTexture.setAlpha(0xFF);
 
-                                foreach (Ball ballsy in pongEntityList)
+                                foreach (Ball ballsy in ballList)
                                 {
                                     ballsy.gDotTexture.setAlpha(0xFF);
                                 }
@@ -522,7 +532,7 @@ namespace PongGame
                     if (e.key.keysym.sym == SDL.SDL_Keycode.SDLK_t)
                     {
                         
-                        foreach (Ball ballsy in pongEntityList)
+                        foreach (Ball ballsy in ballList)
                         {
                             if (ballsy.speed <= 2.0)
                             {
@@ -547,10 +557,16 @@ namespace PongGame
             player.render();
             enemy.render();
 
-            foreach (Ball ballsy in pongEntityList)
+            foreach (Ball ballsy in ballList)
             {
                 ballsy.render();
             }
+
+            foreach (Ghost ghosts in ghostList)
+            {
+                ghosts.render();
+            }
+
         }
 
         static void drawBackground()
@@ -584,9 +600,9 @@ namespace PongGame
         {
             // < 2 statt == 0 weil ticks manchmal geskippt werden
             // alle 3000 ticks einen neuen Ball hinzufügen bis 3 existiteren
-            if (((timer.getTicks() * (deltaTime / 10)) % 3000 < 2) && (pongEntityList.Count < 3))
+            if (((timer.getTicks() * (deltaTime / 10)) % 3000 < 2) && (ballList.Count < 3))
             {
-                pongEntityList.Add(new Ball());
+                ballList.Add(new Ball());
             }
 
             
@@ -600,20 +616,23 @@ namespace PongGame
             if (!paused)
             {
 
-                foreach (Ball ballsy in pongEntityList)
+                foreach (Ball ballsy in ballList)
                 {
                     collCheck(player, ballsy);
                     collCheck(enemy, ballsy);
+                    ballsy.move(deltaTime);
+                }
+
+                foreach (Ghost ghosts in ghostList)
+                {
+
+                    ghosts.frameTicker += (deltaTime / 1000);
+                    ghosts.move( deltaTime / 10);
                 }
 
                 //Move the player
                 player.move(deltaTime);
                 enemy.moveEnemy(deltaTime);
-
-                foreach (Ball ballsy in pongEntityList)
-                {
-                    ballsy.move(deltaTime);
-                }
 
             }
         }
@@ -643,15 +662,9 @@ namespace PongGame
                 }
                 else
                 {
+                    ghostList.Add(new Ghost(ghostTexture));
 
-                    /*
-                    for (int i = 0; i < 3; i++)
-                    {
-                        pongEntityList.Add(balls);
-                    }
-                    */
-
-                    pongEntityList.Add(new Ball());
+                    ballList.Add(new Ball());
 
                     player.startPos(0, 100);
                     enemy.startPos(SCREEN_WIDTH - 20, 100);
@@ -685,7 +698,7 @@ namespace PongGame
                                 changeText(alertTextTexture, "GAME OVER - PRESS R TO RETRY");
 
 
-                                foreach (Ball ballsy in pongEntityList)
+                                foreach (Ball ballsy in ballList)
                                 {
                                     ballsy.gDotTexture.setAlpha(0);//ToDo , ändern Quickfix wegen transparanz
                                 }

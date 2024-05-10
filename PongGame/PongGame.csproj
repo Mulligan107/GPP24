@@ -50,6 +50,7 @@
     <Compile Include="Sdl\SDL2_image.cs" />
     <Compile Include="Sdl\SDL2_ttf.cs" />
     <Compile Include="src\Ball.cs" />
+    <Compile Include="src\Ghost.cs" />
     <Compile Include="src\LTexture.cs" />
     <Compile Include="src\LTimer.cs" />
     <Compile Include="src\Paddle.cs" />
@@ -63,6 +64,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="imgs\dot.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="imgs\ghostSpriteSheet.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="imgs\player.bmp">
