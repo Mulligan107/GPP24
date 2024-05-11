@@ -478,7 +478,11 @@ namespace PongGame
 
                             SDL.SDL_SetWindowFullscreen(gWindow, (int)SDL.SDL_WindowFlags.SDL_WINDOW_RESIZABLE);
                             
-                            // Update positions based on relative positions
+                            /*
+                            This is so the paddles don't bug into the screen edges. Depending on whether the
+                            paddle is under or above the middle of the screen the paddle gets an "extra position boost"
+                            */
+                            
                             if (playerRelativePosY * SCREEN_HEIGHT < SCREEN_HEIGHT / 2)
                             {
                                 player.mPosY = (int)(playerRelativePosY * SCREEN_HEIGHT) + 100;
