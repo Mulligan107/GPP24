@@ -80,10 +80,14 @@ namespace PongGame
         public static LTexture gBarTexture = new LTexture();
         public static LTexture ghostTexture = new LTexture();
 
+        public static LTexture backgroundTexture = new LTexture();
+        public static LTexture pannelBackgroundTexture = new LTexture();
+
 
         //Rendered texture
         private static readonly LTexture _TextTexture = new LTexture();
-        public static LTexture alertTextTexture = new LTexture();
+        public static LTexture alertTextTexture1 = new LTexture();
+        public static LTexture alertTextTexture2 = new LTexture();
 
         //Game ticker
         public static LTimer timer = new LTimer();
@@ -205,6 +209,18 @@ namespace PongGame
                 success = false;
             }
 
+            if (!backgroundTexture.loadFromFile("imgs/Gray.png"))
+            {
+                Console.WriteLine("Failed to load!");
+                success = false;
+            }
+
+            if (!pannelBackgroundTexture.loadFromFile("imgs/Green.png"))
+            {
+                Console.WriteLine("Failed to load!");
+                success = false;
+            }
+
             IntPtr ghostSurface = SDL_image.IMG_Load("imgs/ghostSpriteSheet.png");
             if (ghostSurface == IntPtr.Zero)
             {
@@ -229,7 +245,7 @@ namespace PongGame
                     success = false;
                 }
 
-                if (!alertTextTexture.loadFromRenderedText("PAUSE", textColor))
+                if (!alertTextTexture1.loadFromRenderedText("PAUSE", textColor))
                 {
                     Console.WriteLine("Failed to render alert texture!");
                     success = false;
@@ -268,7 +284,7 @@ namespace PongGame
 
             //Free loaded images
             _TextTexture.free();
-            alertTextTexture.free();
+            alertTextTexture1.free();
 
             //Free global font
             SDL_ttf.TTF_CloseFont(Font);
@@ -390,9 +406,9 @@ namespace PongGame
                 if (gamestart)
                 {
                     paused = true;
-                    changeText(alertTextTexture,
+                    changeText(alertTextTexture1,
                         "WELCOME TO PONG - PRESS ANY TO START  F TO TOGGLE FULLSCREEN  P TO PAUSE");
-                    alertTextTexture.render((SCREEN_WIDTH / 2) - (alertTextTexture.getWidth() / 2),
+                    alertTextTexture1.render((SCREEN_WIDTH / 2) - (alertTextTexture1.getWidth() / 2),
                         (SCREEN_HEIGHT / 2));
 
                     foreach (Ball ballsy in ballList)
@@ -404,7 +420,7 @@ namespace PongGame
                     {
                         paused = false;
                         gamestart = false;
-                        changeText(alertTextTexture, "PAUSE");
+                        changeText(alertTextTexture1, "PAUSE");
                         foreach (Ball ballsy in ballList)
                         {
                             ballsy.gDotTexture.setAlpha(255); //ToDo , ändern Quickfix wegen transparanz
@@ -494,7 +510,7 @@ namespace PongGame
                         
                         gameover = false;
                         paused = false;
-                        changeText(alertTextTexture, "PAUSE");
+                        changeText(alertTextTexture1, "PAUSE");
                     }
 
 
@@ -592,6 +608,23 @@ namespace PongGame
             SDL.SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
             SDL.SDL_RenderClear(gRenderer);
 
+            for (int j = 0; j < SCREEN_HEIGHT; j += backgroundTexture.getHeight())
+            {
+
+                for (int i = 0; i < SCREEN_WIDTH; i += backgroundTexture.getWidth())
+                {
+                    backgroundTexture.render(i, j);
+                }
+            }
+
+            for (int j = 10; j < pannelH; j += pannelBackgroundTexture.getHeight())
+            {
+
+                for (int i = 11; i < SCREEN_WIDTH - 15; i += pannelBackgroundTexture.getWidth())
+                {
+                    pannelBackgroundTexture.render(i, j);
+                }
+            }
 
             /*
             //Begrenzung
@@ -726,7 +759,7 @@ namespace PongGame
                             createButton();
                             if (gameover)
                             {
-                                changeText(alertTextTexture, "GAME OVER - PRESS R TO RETRY");
+                                changeText(alertTextTexture1, "GAME OVER - PRESS R TO RETRY");
 
 
                                 foreach (Ball ballsy in ballList)
@@ -736,7 +769,7 @@ namespace PongGame
 
                             }
 
-                            alertTextTexture.render((SCREEN_WIDTH / 2) - (alertTextTexture.getWidth() / 2),
+                            alertTextTexture1.render((SCREEN_WIDTH / 2) - (alertTextTexture1.getWidth() / 2),
                                 (SCREEN_HEIGHT / 2));
                         }
 
