@@ -63,6 +63,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="imgs\dot-blue.png" />
+    <Content Include="imgs\dot-lila.png" />
+    <Content Include="imgs\dot-orange.png" />
     <Content Include="imgs\dot.bmp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -75,6 +78,9 @@
     <Content Include="imgs\Green.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="imgs\padle-blue.png" />
+    <Content Include="imgs\padle-lila.png" />
+    <Content Include="imgs\padle-orange.png" />
     <Content Include="imgs\player.bmp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
