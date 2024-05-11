@@ -40,8 +40,8 @@ namespace PongGame
         //Screen dimension constants
         public static int MAX_SCREEN_WIDTH;
         public static int MAX_SCREEN_HEIGHT;
-        public static int ALT_SCREEN_WIDTH = 640;
-        public static int ALT_SCREEN_HEIGHT = 480;
+        public static int ALT_SCREEN_WIDTH;
+        public static int ALT_SCREEN_HEIGHT;
         public static int SCREEN_WIDTH;
         public static int SCREEN_HEIGHT;
 
@@ -132,6 +132,9 @@ namespace PongGame
                 {
                     MAX_SCREEN_WIDTH = current.w;
                     MAX_SCREEN_HEIGHT = current.h;
+                    
+                    ALT_SCREEN_WIDTH = (int)(MAX_SCREEN_WIDTH * 0.75);
+                    ALT_SCREEN_HEIGHT = (int)(MAX_SCREEN_HEIGHT * 0.75);
                 }
                 else
                 {
@@ -464,11 +467,23 @@ namespace PongGame
                         {
                             SCREEN_WIDTH = MAX_SCREEN_WIDTH;
                             SCREEN_HEIGHT = MAX_SCREEN_HEIGHT;
+                            
+                            // Set the window to fullscreen
+                            SDL.SDL_SetWindowFullscreen(gWindow, (int) SDL.SDL_WindowFlags.SDL_WINDOW_FULLSCREEN_DESKTOP);
                         }
                         else
                         {
                             SCREEN_WIDTH = ALT_SCREEN_WIDTH;
                             SCREEN_HEIGHT = ALT_SCREEN_HEIGHT;
+                            
+                            // calculate the middle of screen
+                            int windowPosX = (MAX_SCREEN_WIDTH - ALT_SCREEN_WIDTH) / 2;
+                            int windowPosY = (MAX_SCREEN_HEIGHT - ALT_SCREEN_HEIGHT) / 2;
+
+                            // Set the window position
+                            SDL.SDL_SetWindowPosition(gWindow, windowPosX, windowPosY);
+                            
+                            SDL.SDL_SetWindowFullscreen(gWindow, (int) SDL.SDL_WindowFlags.SDL_WINDOW_RESIZABLE);
                         }
 
                         SDL.SDL_SetWindowSize(gWindow, SCREEN_WIDTH, SCREEN_HEIGHT);
