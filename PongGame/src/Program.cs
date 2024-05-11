@@ -431,34 +431,21 @@ namespace PongGame
                 //Switch screen size mode if 'F' key was pressed
                 if (e.type == SDL.SDL_EventType.SDL_KEYDOWN) //ToDo könnte ein switch case sein
                 {
+                    // Change screen size
                     if (e.key.keysym.sym == SDL.SDL_Keycode.SDLK_f)
                     {
                         // Calculate relative positions
-                        /*
                         float playerRelativePosX = (float)player.mPosX / SCREEN_WIDTH;
                         float playerRelativePosY = (float)player.mPosY / SCREEN_HEIGHT;
                         float enemyRelativePosX = (float)enemy.mPosX / SCREEN_WIDTH;
                         float enemyRelativePosY = (float)enemy.mPosY / SCREEN_HEIGHT;
-                        float kugRelativePosX = (float)ball.mPosX / SCREEN_WIDTH;
-                        float kugRelativePosY = (float)ball.mPosY / SCREEN_HEIGHT;
-                        */
-
-                        // Change screen size
-
-
-                        // Calculate relative positions
-                        float playerRelativePosX = (float)player.mPosX / SCREEN_WIDTH;
-                        float playerRelativePosY = (float)player.mPosY / SCREEN_HEIGHT;
-                        float enemyRelativePosX = (float)enemy.mPosX / SCREEN_WIDTH;
-                        float enemyRelativePosY = (float)enemy.mPosY / SCREEN_HEIGHT;
-
+                        
                         foreach (Ball ballsy in ballList)
                         {
                             ballsy.kugRelativePosX = (float)ballsy.mPosX / SCREEN_WIDTH;
                             ballsy.kugRelativePosY = (float)ballsy.mPosY / SCREEN_HEIGHT;
                         }
-
-
+                        
                         // Change screen size
                         isFullScreen = !isFullScreen;
                         if (isFullScreen)
@@ -467,9 +454,16 @@ namespace PongGame
                             SCREEN_HEIGHT = MAX_SCREEN_HEIGHT;
 
                             // Set the window to fullscreen
-                            SDL.SDL_SetWindowFullscreen(gWindow,
+                            SDL.SDL_SetWindowFullscreen(gWindow, 
                                 (int)SDL.SDL_WindowFlags.SDL_WINDOW_FULLSCREEN_DESKTOP);
+                        
+                            // Update positions based on relative positions
+                            player.mPosX = (int)(playerRelativePosX * SCREEN_WIDTH);
+                            player.mPosY = (int)(playerRelativePosY * SCREEN_HEIGHT);
+                            enemy.mPosX = (int)(enemyRelativePosX * SCREEN_WIDTH);
+                            enemy.mPosY = (int)(enemyRelativePosY * SCREEN_HEIGHT);
                         }
+                        
                         else
                         {
                             SCREEN_WIDTH = ALT_SCREEN_WIDTH;
@@ -483,15 +477,32 @@ namespace PongGame
                             SDL.SDL_SetWindowPosition(gWindow, windowPosX, windowPosY);
 
                             SDL.SDL_SetWindowFullscreen(gWindow, (int)SDL.SDL_WindowFlags.SDL_WINDOW_RESIZABLE);
+                            
+                            // Update positions based on relative positions
+                            if (playerRelativePosY * SCREEN_HEIGHT < SCREEN_HEIGHT / 2)
+                            {
+                                player.mPosY = (int)(playerRelativePosY * SCREEN_HEIGHT) + 100;
+                            }
+                            else
+                            {
+                                player.mPosY = (int)(playerRelativePosY * SCREEN_HEIGHT) - 100;
+                            }
+
+                            if (enemyRelativePosY * SCREEN_HEIGHT < SCREEN_HEIGHT / 2)
+                            {
+                                enemy.mPosY = (int)(enemyRelativePosY * SCREEN_HEIGHT) + 100;
+                            }
+                            else
+                            {
+                                enemy.mPosY = (int)(enemyRelativePosY * SCREEN_HEIGHT) - 100;
+                            }
+                        
+                            // Update positions based on relative positions
+                            player.mPosX = (int)(playerRelativePosX * SCREEN_WIDTH);
+                            enemy.mPosX = (int)(enemyRelativePosX * SCREEN_WIDTH);
                         }
 
                         SDL.SDL_SetWindowSize(gWindow, SCREEN_WIDTH, SCREEN_HEIGHT);
-
-                        // Update positions based on relative positions
-                        player.mPosX = (int)(playerRelativePosX * SCREEN_WIDTH);
-                        player.mPosY = (int)(playerRelativePosY * SCREEN_HEIGHT);
-                        enemy.mPosX = (int)(enemyRelativePosX * SCREEN_WIDTH);
-                        enemy.mPosY = (int)(enemyRelativePosY * SCREEN_HEIGHT);
 
                         foreach (Ball ballsy in ballList)
                         {
