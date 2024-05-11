@@ -312,7 +312,6 @@ namespace PongGame
                     //Paddle ist 200 Lang
                     double aufschlagsPunkt = ball.mPosY - paddle.mPosY;
 
-                    Console.WriteLine(aufschlagsPunkt);
 
                     double vecX = 0.0;
                     double vecY = -5.0;
@@ -339,6 +338,7 @@ namespace PongGame
                          */
 
                     }
+                    ball.mPosX += 5;
                     ball.vectorX = vecX;
                     ball.vectorY = vecY;
 
@@ -353,6 +353,7 @@ namespace PongGame
             {
                 ball.changeDir(0);
                 ball.changeColor();
+                ball.mPosX -= 5;
             }
         }
 
@@ -477,8 +478,8 @@ namespace PongGame
                     }
                     if (e.key.keysym.sym == SDL.SDL_Keycode.SDLK_r)
                     {
-                        player.startPos(0, 100);
-                        enemy.startPos(SCREEN_WIDTH - 20, 100);
+                        player.startPos(20, pannelH);
+                        enemy.startPos(SCREEN_WIDTH - 40, pannelH);
 
                         ballList.Clear();
                         //ballList.Add(new Ball());

@@ -15,6 +15,7 @@ namespace PongGame
         //Maximum axis velocity of the dot
         public double DOT_VEL = 10;
         public double DOT_VEL_ENEMY = 5;
+        int versatzt = 5;
 
 
         //The X and Y offsets of the dot
@@ -96,10 +97,13 @@ namespace PongGame
         public void moveEnemy(double deltaTime)
         {
             mPosY -= DOT_VEL_ENEMY * (deltaTime / 10);
+            
 
             if ((mPosY < Program.pannelH) || (mPosY + dotH > Program.SCREEN_HEIGHT))
             {
                 DOT_VEL_ENEMY = DOT_VEL_ENEMY * (-1);
+                versatzt = versatzt * (-1);
+                mPosY -= versatzt;
             }
         }
 

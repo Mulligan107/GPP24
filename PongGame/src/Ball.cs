@@ -81,11 +81,18 @@ namespace PongGame
 
 
             //If the dot went too far up or down
-            if ((mPosY < Program.pannelH) || (mPosY + dotH > Program.SCREEN_HEIGHT)) // 100 mit Boarder
+            if ((mPosY < Program.pannelH)) // 100 mit Boarder
             {
                 //Move back
                 changeDir(1);
                 changeColor();
+                mPosY += 5;
+            }
+            if (mPosY + dotH > Program.SCREEN_HEIGHT) {
+                //Move back
+                changeDir(1);
+                changeColor();
+                mPosY -= 5;
             }
 
             //Console.WriteLine("mPosX:{0};mVelX:{1};mPosY:{2};mVelY:{3}", mPosX, mVelX, mPosY, mVelY);
