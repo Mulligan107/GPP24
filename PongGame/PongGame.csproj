@@ -63,12 +63,15 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="imgs\dot-blue.png" />
-    <Content Include="imgs\dot-lila.png" />
-    <Content Include="imgs\dot-orange.png" />
     <Content Include="imgs\dot.bmp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="imgs\dotBlue.bmp" />
+    <Content Include="imgs\dotBlue.png" />
+    <Content Include="imgs\dotLila.bmp" />
+    <Content Include="imgs\dotLila.png" />
+    <Content Include="imgs\dotOrange.bmp" />
+    <Content Include="imgs\dotOrange.png" />
     <Content Include="imgs\ghostSpriteSheet.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -78,9 +81,12 @@
     <Content Include="imgs\Green.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="imgs\padle-blue.png" />
-    <Content Include="imgs\padle-lila.png" />
-    <Content Include="imgs\padle-orange.png" />
+    <Content Include="imgs\padleBlue.bmp" />
+    <Content Include="imgs\padleBlue.png" />
+    <Content Include="imgs\padleLila.bmp" />
+    <Content Include="imgs\padleLila.png" />
+    <Content Include="imgs\padleOrange.bmp" />
+    <Content Include="imgs\padleOrange.png" />
     <Content Include="imgs\player.bmp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
