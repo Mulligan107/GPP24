@@ -132,7 +132,7 @@ namespace PongGame
                 {
                     MAX_SCREEN_WIDTH = current.w;
                     MAX_SCREEN_HEIGHT = current.h;
-                    
+
                     ALT_SCREEN_WIDTH = (int)(MAX_SCREEN_WIDTH * 0.75);
                     ALT_SCREEN_HEIGHT = (int)(MAX_SCREEN_HEIGHT * 0.75);
                 }
@@ -197,7 +197,7 @@ namespace PongGame
         {
             //Loading success flag
             bool success = true;
-            
+
             if (!gBarTexture.loadFromFile("imgs/player.bmp"))
             {
                 Console.WriteLine("Failed to load!");
@@ -225,7 +225,8 @@ namespace PongGame
             IntPtr ghostSurface = SDL_image.IMG_Load("imgs/ghostSpriteSheet.png");
             if (ghostSurface == IntPtr.Zero)
             {
-                Console.WriteLine("Unable to load image {0}! SDL Error: {1}", "imgs/ghostSpriteSheet.png", SDL.SDL_GetError());
+                Console.WriteLine("Unable to load image {0}! SDL Error: {1}", "imgs/ghostSpriteSheet.png",
+                    SDL.SDL_GetError());
                 success = false;
             }
 
@@ -255,7 +256,7 @@ namespace PongGame
 
             return success;
         }
-        
+
         public static void gameReset()
         {
             p1counter = 0;
@@ -263,14 +264,14 @@ namespace PongGame
             timer.stop();
             timer.start();
         }
-        
+
         /**
          * Free media and shut down SDL
          */
         private static void Close()
         {
             //Free loaded images
-            
+
             foreach (Ball ballsy in ballList)
             {
                 ballsy.gDotTexture.free();
@@ -304,7 +305,6 @@ namespace PongGame
          */
         static void collCheck(Paddle paddle, Ball ball)
         {
-            
             //Versändlichere kurze Namen 
             double kugL = ball.mPosX;
             double kugR = ball.mPosX + ball.dotW;
@@ -324,13 +324,12 @@ namespace PongGame
                 {
                     //Paddle ist 200 Lang
                     double aufschlagsPunkt = ball.mPosY - paddle.mPosY;
-                    
+
                     double vecX = 0.0;
                     double vecY = -5.0;
 
                     for (int i = 0; i <= aufschlagsPunkt; i++)
                     {
-                        
                         if (i > 100)
                         {
                             vecX -= 0.05;
@@ -339,25 +338,24 @@ namespace PongGame
                         {
                             vecX += 0.05;
                         }
+
                         vecY += 0.05;
                         /*
                          * aufschlagspunkt = 0 - 200
-                         * 
+                         *
                          * d0 = x1 , y-5
                          * d100 = x5, y0
                          * d200 = x1, y5
-                         * 
+                         *
                          */
-
                     }
+
                     ball.mPosX += 5;
                     ball.vectorX = vecX;
                     ball.vectorY = vecY;
 
                     ball.changeColor();
-                    
                 }
-
             }
 
             //Bedingung Links
@@ -467,23 +465,24 @@ namespace PongGame
                         {
                             SCREEN_WIDTH = MAX_SCREEN_WIDTH;
                             SCREEN_HEIGHT = MAX_SCREEN_HEIGHT;
-                            
+
                             // Set the window to fullscreen
-                            SDL.SDL_SetWindowFullscreen(gWindow, (int) SDL.SDL_WindowFlags.SDL_WINDOW_FULLSCREEN_DESKTOP);
+                            SDL.SDL_SetWindowFullscreen(gWindow,
+                                (int)SDL.SDL_WindowFlags.SDL_WINDOW_FULLSCREEN_DESKTOP);
                         }
                         else
                         {
                             SCREEN_WIDTH = ALT_SCREEN_WIDTH;
                             SCREEN_HEIGHT = ALT_SCREEN_HEIGHT;
-                            
+
                             // calculate the middle of screen
                             int windowPosX = (MAX_SCREEN_WIDTH - ALT_SCREEN_WIDTH) / 2;
                             int windowPosY = (MAX_SCREEN_HEIGHT - ALT_SCREEN_HEIGHT) / 2;
 
                             // Set the window position
                             SDL.SDL_SetWindowPosition(gWindow, windowPosX, windowPosY);
-                            
-                            SDL.SDL_SetWindowFullscreen(gWindow, (int) SDL.SDL_WindowFlags.SDL_WINDOW_RESIZABLE);
+
+                            SDL.SDL_SetWindowFullscreen(gWindow, (int)SDL.SDL_WindowFlags.SDL_WINDOW_RESIZABLE);
                         }
 
                         SDL.SDL_SetWindowSize(gWindow, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -500,6 +499,7 @@ namespace PongGame
                             ballsy.mPosY = (int)(ballsy.kugRelativePosY * SCREEN_HEIGHT);
                         }
                     }
+
                     if (e.key.keysym.sym == SDL.SDL_Keycode.SDLK_r)
                     {
                         player.startPos(20, pannelH);
@@ -515,7 +515,7 @@ namespace PongGame
                             ballsy.gDotTexture.setAlpha(255); //ToDo , ändern Quickfix wegen transparanz
                         }
 
-                        
+
                         gameover = false;
                         paused = false;
                         changeText(alertTextTexture1, "PAUSE");
@@ -537,7 +537,6 @@ namespace PongGame
                                 }
 
 
-                                
                                 break;
 
                             case true:
@@ -549,6 +548,7 @@ namespace PongGame
                                 {
                                     ballsy.gDotTexture.setAlpha(0xFF);
                                 }
+
                                 break;
                         }
                     }
@@ -559,11 +559,13 @@ namespace PongGame
                         gBarTexture.setColor(255, 0, 0);
                         playerColor = 1;
                     }
+
                     if (e.key.keysym.sym == SDL.SDL_Keycode.SDLK_2)
                     {
                         gBarTexture.setColor(0, 255, 0);
                         playerColor = 2;
                     }
+
                     if (e.key.keysym.sym == SDL.SDL_Keycode.SDLK_3)
                     {
                         gBarTexture.setColor(0, 0, 255);
@@ -572,7 +574,6 @@ namespace PongGame
 
                     if (e.key.keysym.sym == SDL.SDL_Keycode.SDLK_t)
                     {
-                        
                         foreach (Ball ballsy in ballList)
                         {
                             if (ballsy.speed <= 2.0)
@@ -583,15 +584,12 @@ namespace PongGame
                             {
                                 ballsy.speed = 0.5;
                             }
-                            
                         }
                     }
-
-
                 }
             }
         }
-        
+
         static void renderObjects()
         {
             //Render objects
@@ -607,7 +605,6 @@ namespace PongGame
             {
                 ghosts.render();
             }
-
         }
 
         static void drawBackground()
@@ -618,7 +615,6 @@ namespace PongGame
 
             for (int j = 0; j < SCREEN_HEIGHT; j += backgroundTexture.getHeight())
             {
-
                 for (int i = 0; i < SCREEN_WIDTH; i += backgroundTexture.getWidth())
                 {
                     backgroundTexture.render(i, j);
@@ -627,7 +623,6 @@ namespace PongGame
 
             for (int j = 10; j < pannelH; j += pannelBackgroundTexture.getHeight())
             {
-
                 for (int i = 11; i < SCREEN_WIDTH - 15; i += pannelBackgroundTexture.getWidth())
                 {
                     pannelBackgroundTexture.render(i, j);
@@ -641,7 +636,7 @@ namespace PongGame
             SDL.SDL_RenderFillRect(gRenderer, ref blackline);
             */
 
-            var dotline = new SDL.SDL_Rect { x = SCREEN_WIDTH / 2, y = 0, w = 2, h = 8};
+            var dotline = new SDL.SDL_Rect { x = SCREEN_WIDTH / 2, y = 0, w = 2, h = 8 };
             SDL.SDL_SetRenderDrawColor(gRenderer, 155, 155, 155, 255);
             for (dotline.y = pannelH; dotline.y < SCREEN_HEIGHT; dotline.y += 10)
             {
@@ -651,18 +646,16 @@ namespace PongGame
             //Render black outlined pannel  i = wanddicke
             for (int i = 0; i < 5; i++)
             {
-                var outlineRect = new SDL.SDL_Rect { x = 5 + i, y = 5 + i, w = (SCREEN_WIDTH - 10) - i * 2, h = (pannelH) - i * 2 };
+                var outlineRect = new SDL.SDL_Rect
+                    { x = 5 + i, y = 5 + i, w = (SCREEN_WIDTH - 10) - i * 2, h = (pannelH) - i * 2 };
                 SDL.SDL_SetRenderDrawColor(gRenderer, 0x00, 0x00, 0x00, 0xFF);
                 SDL.SDL_RenderDrawRect(gRenderer, ref outlineRect);
             }
-            
-
 
 
             changeText(_TextTexture, Convert.ToString(p1counter + " : " + p2counter));
             //Render current frame TEXT
             _TextTexture.render(((SCREEN_WIDTH / 2) - (_TextTexture.GetWidth() / 2)), pannelH + 5);
-
         }
 
         static void updateGame(double deltaTime)
@@ -674,7 +667,7 @@ namespace PongGame
                 ballList.Add(new Ball());
             }
 
-            
+
             //Gameover abfrage
             if (p1counter >= 3)
             {
@@ -684,7 +677,6 @@ namespace PongGame
 
             if (!paused)
             {
-
                 foreach (Ball ballsy in ballList)
                 {
                     collCheck(player, ballsy);
@@ -694,15 +686,13 @@ namespace PongGame
 
                 foreach (Ghost ghosts in ghostList)
                 {
-
                     ghosts.frameTicker += (deltaTime / 1000);
-                    ghosts.move( deltaTime / 10);
+                    ghosts.move(deltaTime / 10);
                 }
 
                 //Move the player
                 player.move(deltaTime);
                 enemy.moveEnemy(deltaTime);
-
             }
         }
 
@@ -714,10 +704,10 @@ namespace PongGame
 
             //(Re-)Set point counter and timer
             gameReset();
-            
+
             // er kennt den Pfad nicht`?
             // ToDo: SoundPlayer soundPlayer = new SoundPlayer("sounds/boing.wav");
-            
+
             //Start up SDL and create window
             var success = Init();
             if (success == false)
@@ -749,7 +739,8 @@ namespace PongGame
                         double current = timer.getTicks();
                         double elapsed = current - previous;
                         previous = current;
-                        if (elapsed < 1.0) {
+                        if (elapsed < 1.0)
+                        {
                             elapsed = 5.0;
                         }
 
@@ -758,15 +749,12 @@ namespace PongGame
 
                         //Update nach deltaTime?
                         updateGame(elapsed);
-                       
+
 
                         drawBackground();
-                        
+
                         if (paused)
                         {
-                            
-
-
                             createButton();
                             if (gameover)
                             {
@@ -775,9 +763,8 @@ namespace PongGame
 
                                 foreach (Ball ballsy in ballList)
                                 {
-                                    ballsy.gDotTexture.setAlpha(0);//ToDo , ändern Quickfix wegen transparanz
+                                    ballsy.gDotTexture.setAlpha(0); //ToDo , ändern Quickfix wegen transparanz
                                 }
-
                             }
 
                             alertTextTexture1.render((SCREEN_WIDTH / 2) - (alertTextTexture1.getWidth() / 2),
@@ -786,7 +773,6 @@ namespace PongGame
 
                         renderObjects();
 
-                        
 
                         //Update screen
                         SDL.SDL_RenderPresent(gRenderer);
