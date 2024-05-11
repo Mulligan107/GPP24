@@ -1,12 +1,11 @@
 ﻿using System;
+using System.Media;
 using System.Collections;
 using System.Globalization;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading;
 using SDL2;
-
-
 
 //TODO Collcheck oben unten, gegenerKI, Pausemenue, Physic?, Kugel Vel und richtung ändern Basierend auf Aufprall auf der Bar, etc
 
@@ -196,7 +195,6 @@ namespace PongGame
             //Loading success flag
             bool success = true;
             
-
             if (!gBarTexture.loadFromFile("imgs/player.bmp"))
             {
                 Console.WriteLine("Failed to load!");
@@ -254,9 +252,7 @@ namespace PongGame
 
             return success;
         }
-
-
-
+        
         public static void gameReset()
         {
             p1counter = 0;
@@ -264,10 +260,7 @@ namespace PongGame
             timer.stop();
             timer.start();
         }
-
-   
- 
-
+        
         /**
          * Free media and shut down SDL
          */
@@ -308,6 +301,7 @@ namespace PongGame
          */
         static void collCheck(Paddle paddle, Ball ball)
         {
+            
             //Versändlichere kurze Namen 
             double kugL = ball.mPosX;
             double kugR = ball.mPosX + ball.dotW;
@@ -327,8 +321,7 @@ namespace PongGame
                 {
                     //Paddle ist 200 Lang
                     double aufschlagsPunkt = ball.mPosY - paddle.mPosY;
-
-
+                    
                     double vecX = 0.0;
                     double vecY = -5.0;
 
@@ -706,7 +699,10 @@ namespace PongGame
 
             //(Re-)Set point counter and timer
             gameReset();
-
+            
+            // er kennt den Pfad nicht`?
+            // ToDo: SoundPlayer soundPlayer = new SoundPlayer("sounds/boing.wav");
+            
             //Start up SDL and create window
             var success = Init();
             if (success == false)
