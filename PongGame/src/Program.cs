@@ -82,6 +82,11 @@ namespace PongGame
         public static LTexture ghostTexture = new LTexture();
         public static LTexture ballTexture = new LTexture();
 
+        public static LTexture knightTexture = new LTexture();
+        public static ArrayList knightAnimList = new ArrayList();
+        public static string[] knightFiles = { "imgs/_Attack2.png", "imgs/_DeathNoMovement.png", "imgs/_Hit.png", "imgs/_Idle.png" };
+        public static Knight playerKnight = new Knight(knightTexture);
+
         public static LTexture backgroundTexture = new LTexture();
         public static LTexture pannelBackgroundTexture = new LTexture();
 
@@ -259,6 +264,20 @@ namespace PongGame
                 Console.WriteLine("Failed to load!");
                 success = false;
             }
+
+            for (int i = 0; i < 4; i++)
+            {
+                LTexture knight = new LTexture();
+                if (!knight.loadFromFile(knightFiles[i]))
+                {
+                    Console.WriteLine("Failed to load!");
+                    success = false;
+                }
+                knightAnimList.Add(knight); // Attack , Death , Hit , Idle
+            }
+            
+
+
 
             //Open the font
             Font = SDL_ttf.TTF_OpenFont("lazy.ttf", 28);
@@ -458,6 +477,7 @@ namespace PongGame
             SDL.SDL_RenderFillRect(gRenderer, ref pauseBackground);
         }
 
+
         static void handleUserInput()
         {
             while (SDL.SDL_PollEvent(out e) != 0)
@@ -632,6 +652,7 @@ namespace PongGame
 
                         gameover = false;
                         paused = false;
+                        gamestart = false;
                         changeText(alertTextTexture1, "PAUSE");
                     }
 
@@ -720,6 +741,10 @@ namespace PongGame
             {
                 ghosts.render();
             }
+
+            playerKnight.render();
+            
+
         }
 
         static void drawBackground()
@@ -842,6 +867,9 @@ namespace PongGame
                     ghosts.move(deltaTime / 10);
                 }
 
+                playerKnight.frameTicker += (deltaTime / 500);
+
+
                 //Move the player
                 player.move(deltaTime);
                 enemy.moveEnemy(deltaTime);
@@ -897,6 +925,11 @@ namespace PongGame
                     pannelH = calcPannelH() + 10;
 
                     playMusic();
+
+                    knightTexture = (LTexture)knightAnimList[3];
+
+                    playerKnight.updateKnightTexture();
+
                     
                     ghostList.Add(new Ghost(ghostTexture));
 
