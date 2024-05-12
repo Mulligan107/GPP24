@@ -411,9 +411,12 @@ namespace PongGame
             //Bedingung Links
             if (kugL < playL && kugUn > playOb && kugOb < playUn && kugR > playL)
             {
-                ball.changeDir(0);
-                ball.changeColor();
-                ball.mPosX -= 5;
+                if (player.color == ball.letzteFarbe || paddle == enemy) //3 zum testen
+                {
+                    ball.changeDir(0);
+                    ball.changeColor();
+                    ball.mPosX -= 5;
+                }
             }
         }
 
@@ -574,11 +577,6 @@ namespace PongGame
                         //ballList.Add(new Ball());
 
                         gameReset();
-
-                        foreach (Ball ballsy in ballList)
-                        {
-                            ballsy.gDotTexture.setAlpha(255); //ToDo , ändern Quickfix wegen transparanz
-                        }
 
 
                         gameover = false;
@@ -789,7 +787,7 @@ namespace PongGame
                 {
                     playMusic();
                     
-                    ghostList.Add(new Ghost(ghostTexture));
+                    ghostList.Add(new Ghost(ghostTexture,ghostSurface));
 
                     ballList.Add(new Ball(ballTexture));
 

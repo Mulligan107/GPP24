@@ -36,6 +36,7 @@ namespace PongGame
         public bool alive = true;
 
         private static LTexture ghostTexture = new LTexture();
+        public static IntPtr ghostSurface;
 
         //Current animation frame
         public double frameTicker;
@@ -46,9 +47,10 @@ namespace PongGame
         private static readonly SDL.SDL_Rect[] _SpriteClips = new SDL.SDL_Rect[ANIMATION_FRAMES];
 
 
-        public Ghost(LTexture texture)
+        public Ghost(LTexture texture, IntPtr surface)
         {
             ghostTexture = texture;
+            ghostSurface = surface;
 
             if (ghostTexture == null)
             {
@@ -113,7 +115,7 @@ namespace PongGame
               //  SDL.SDL_SetRenderDrawColor(Program.gRenderer, 0xFF, 0x00, 0x00, 0xFF);
               //  SDL.SDL_RenderFillRect(Program.gRenderer, ref pannelRect); //TestFeld
 
-                SDL.SDL_BlitSurface(Program.ghostSurface, IntPtr.Zero, Program.gWindow, ref pannelRect);
+                SDL.SDL_BlitScaled(ghostSurface, IntPtr.Zero, Program.gWindow, ref pannelRect);
             }
 
         }
