@@ -519,6 +519,12 @@ namespace PongGame
                             ballsy.kugRelativePosX = (float)ballsy.mPosX / SCREEN_WIDTH;
                             ballsy.kugRelativePosY = (float)ballsy.mPosY / SCREEN_HEIGHT;
                         }
+
+                        foreach (Ghost ghostys in ghostList)
+                        {
+                            ghostys.ghostRelativePosX = (float)ghostys.posX / SCREEN_WIDTH;
+                            ghostys.ghostRelativePosY = (float)ghostys.posY / SCREEN_WIDTH;
+                        }
                         
                         // Change screen size
                         isFullScreen = !isFullScreen;
@@ -536,6 +542,20 @@ namespace PongGame
                             player.mPosY = (int)(playerRelativePosY * SCREEN_HEIGHT);
                             enemy.mPosX = (int)(enemyRelativePosX * SCREEN_WIDTH);
                             enemy.mPosY = (int)(enemyRelativePosY * SCREEN_HEIGHT);
+
+                            foreach (Ball ballsy in ballList)
+                            {
+                                ballsy.mPosX = (int)(ballsy.kugRelativePosX * SCREEN_WIDTH);
+                                ballsy.mPosY = (int)(ballsy.kugRelativePosY * SCREEN_HEIGHT);
+                            }
+
+                            foreach (Ghost ghostys in ghostList)
+                            {
+                                ghostys.posX = (float)ghostys.ghostRelativePosX * SCREEN_WIDTH;
+                                ghostys.posY = (float)ghostys.ghostRelativePosY * SCREEN_WIDTH;
+                            }
+
+
                         }
                         
                         else
@@ -587,6 +607,13 @@ namespace PongGame
                             ballsy.mPosX = (int)(ballsy.kugRelativePosX * SCREEN_WIDTH);
                             ballsy.mPosY = (int)(ballsy.kugRelativePosY * SCREEN_HEIGHT);
                         }
+
+                        foreach (Ghost ghostys in ghostList)
+                        {
+                            ghostys.posX = (float)ghostys.ghostRelativePosX * SCREEN_WIDTH;
+                            ghostys.posY = (float)ghostys.ghostRelativePosY * SCREEN_WIDTH;
+                        }
+
                     }
 
                     if (e.key.keysym.sym == SDL.SDL_Keycode.SDLK_r)
@@ -615,7 +642,8 @@ namespace PongGame
                                 playMusic();
                                 gBarTexture.setAlpha(180);
                                 _TextTexture.setAlpha(180);
-
+                                ghostTexture.setAlpha(180);
+                                timer.pause();
                                 foreach (Ball ballsy in ballList)
                                 {
                                     ballsy.gDotTexture.setAlpha(180);
@@ -629,7 +657,8 @@ namespace PongGame
                                 playMusic();
                                 gBarTexture.setAlpha(0xFF);
                                 _TextTexture.setAlpha(0xFF);
-
+                                ghostTexture.setAlpha(0xFF);
+                                timer.unpause();
                                 foreach (Ball ballsy in ballList)
                                 {
                                     ballsy.gDotTexture.setAlpha(0xFF);
@@ -692,8 +721,17 @@ namespace PongGame
 
         static void drawBackground()
         {
+            byte alpha;
+            if (paused)
+            {
+                alpha = 180;
+            }
+            else
+            {
+                alpha = 0xFF;
+            }
             //Clear screen
-            SDL.SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+            SDL.SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, alpha);
             SDL.SDL_RenderClear(gRenderer);
 
             for (int j = 0; j < SCREEN_HEIGHT; j += backgroundTexture.getHeight())
@@ -701,6 +739,7 @@ namespace PongGame
                 for (int i = 0; i < SCREEN_WIDTH; i += backgroundTexture.getWidth())
                 {
                     backgroundTexture.render(i, j);
+                    backgroundTexture.setAlpha(alpha);
                 }
             }
 
@@ -709,6 +748,7 @@ namespace PongGame
                 for (int i = 11; i < SCREEN_WIDTH - 15; i += pannelBackgroundTexture.getWidth())
                 {
                     pannelBackgroundTexture.render(i, j);
+                    pannelBackgroundTexture.setAlpha(alpha);
                 }
             }
 
@@ -720,7 +760,7 @@ namespace PongGame
             */
 
             var dotline = new SDL.SDL_Rect { x = SCREEN_WIDTH / 2, y = 0, w = 2, h = 8 };
-            SDL.SDL_SetRenderDrawColor(gRenderer, 155, 155, 155, 255);
+            SDL.SDL_SetRenderDrawColor(gRenderer, 155, 155, 155, alpha);
             for (dotline.y = pannelH; dotline.y < SCREEN_HEIGHT; dotline.y += 10)
             {
                 SDL.SDL_RenderFillRect(gRenderer, ref dotline);
@@ -731,7 +771,7 @@ namespace PongGame
             {
                 var outlineRect = new SDL.SDL_Rect
                     { x = 5 + i, y = 5 + i, w = (SCREEN_WIDTH - 10) - i * 2, h = (pannelH) - i * 2 };
-                SDL.SDL_SetRenderDrawColor(gRenderer, 0x00, 0x00, 0x00, 0xFF);
+                SDL.SDL_SetRenderDrawColor(gRenderer, 0x00, 0x00, 0x00, alpha);
                 SDL.SDL_RenderDrawRect(gRenderer, ref outlineRect);
             }
 
@@ -739,16 +779,14 @@ namespace PongGame
             changeText(_TextTexture, Convert.ToString(p1counter + " : " + p2counter));
             //Render current frame TEXT
             _TextTexture.render(((SCREEN_WIDTH / 2) - (_TextTexture.GetWidth() / 2)), pannelH + 5);
+
+
+
         }
 
         static void updateGame(double deltaTime)
         {
-            // < 2 statt == 0 weil ticks manchmal geskippt werden
-            // alle 3000 ticks einen neuen Ball hinzufügen bis 3 existiteren
-            if (((timer.getTicks() * (deltaTime / 10)) % 3000 < 2) && (ballList.Count < 3))
-            {
-                ballList.Add(new Ball(ballTexture));
-            }
+            
 
 
             //Gameover abfrage
@@ -760,6 +798,13 @@ namespace PongGame
 
             if (!paused)
             {
+                // < 2 statt == 0 weil ticks manchmal geskippt werden
+                // alle 3000 ticks einen neuen Ball hinzufügen bis 3 existiteren
+                if (((timer.getTicks() * (deltaTime / 10)) % 3000 < 5) && (ballList.Count < 3))
+                {
+                    ballList.Add(new Ball(ballTexture));
+                }
+
                 foreach (Ball ballsy in ballList)
                 {
                     collCheck(player, ballsy);
@@ -833,12 +878,12 @@ namespace PongGame
                         //Update nach deltaTime?
                         updateGame(elapsed);
 
-
+                       // createButton();
                         drawBackground();
 
                         if (paused)
                         {
-                            createButton();
+                            
                             if (gameover)
                             {
                                 changeText(alertTextTexture1, "GAME OVER - PRESS R TO RETRY");

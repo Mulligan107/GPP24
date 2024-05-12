@@ -20,10 +20,10 @@ namespace PongGame
         public double vectorY;
 
         
-
+        */
         public float ghostRelativePosX;
         public float ghostRelativePosY;
-        */
+        
         public double speed = 0.5;
         public double ghostVel = 10;
 
@@ -31,7 +31,7 @@ namespace PongGame
 
         //The X and Y offsets
         public double posX = Program.SCREEN_WIDTH;
-        public double posY = 0;
+        public double posY;
 
         public bool alive = true;
 
