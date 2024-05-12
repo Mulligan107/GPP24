@@ -149,6 +149,10 @@ namespace PongGame
             return mHeight;
         }
 
+        public IntPtr getTexture()
+        {
+            return mTexture;
+        }
 
         //The actual hardware texture
         private IntPtr mTexture;

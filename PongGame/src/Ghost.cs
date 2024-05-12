@@ -31,7 +31,7 @@ namespace PongGame
 
         //The X and Y offsets
         public double posX = Program.SCREEN_WIDTH;
-        public double posY = Program.pannelH;
+        public double posY = 0;
 
         public bool alive = true;
 
@@ -107,15 +107,18 @@ namespace PongGame
                 //Render current frame
                 SDL.SDL_Rect currentClip = _SpriteClips[frame];
                 // Console.WriteLine(currentClip.w + currentClip.h);
-                SDL.SDL_Rect pannelRect = new SDL.SDL_Rect { x = Program.SCREEN_WIDTH - 15 - 46, y = 15, w = 46 , h = 70 };
+                SDL.SDL_Rect pannelRect = new SDL.SDL_Rect { x = (int)posX - 15 - 46 , y = (int)posY + 15, w = 46 , h = 70 };
 
 
-                ghostTexture.render(((int)System.Math.Floor(posX)), (int)System.Math.Floor(posY), currentClip);
-               
+               // ghostTexture.render(((int)System.Math.Floor(posX)), (int)System.Math.Floor(posY), currentClip);
+
+
+                SDL.SDL_RenderCopy(Program.gRenderer, ghostTexture.getTexture(), ref currentClip, ref pannelRect);
+
               //  SDL.SDL_SetRenderDrawColor(Program.gRenderer, 0xFF, 0x00, 0x00, 0xFF);
               //  SDL.SDL_RenderFillRect(Program.gRenderer, ref pannelRect); //TestFeld
 
-                SDL.SDL_BlitScaled(ghostSurface, IntPtr.Zero, Program.gWindow, ref pannelRect);
+              //  SDL.SDL_BlitScaled(ghostSurface, IntPtr.Zero, Program.gWindow, ref pannelRect);
             }
 
         }
