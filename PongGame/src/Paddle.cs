@@ -17,6 +17,7 @@ namespace PongGame
         public double DOT_VEL_ENEMY = 5;
         int versatzt = 5;
 
+        public LTexture paddleTexture = new LTexture();
 
         //The X and Y offsets of the dot
         public double mPosX, mPosY;
@@ -24,10 +25,41 @@ namespace PongGame
         //The velocity of the dot
         public double mVelX, mVelY;
 
+        public int color;
+
+
+        //animation
+        private const int ANIMATION_FRAMES = 3;
+        private static readonly SDL.SDL_Rect[] _SpriteClips = new SDL.SDL_Rect[ANIMATION_FRAMES];
+
+
         //Initializes the variables
-        public Paddle()
+        public Paddle(LTexture texture)
         {
-          //  startPos(x, y);
+            paddleTexture = texture;
+
+            if (paddleTexture == null)
+            {
+                Console.WriteLine("Failed to load media!");
+                Console.ReadLine();
+            }
+
+            //Set sprite clips
+            _SpriteClips[0].x = 0;
+            _SpriteClips[0].y = 0;
+            _SpriteClips[0].w = 21;
+            _SpriteClips[0].h = 200;
+
+            _SpriteClips[1].x = 21;
+            _SpriteClips[1].y = 0;
+            _SpriteClips[1].w = 21;
+            _SpriteClips[1].h = 200;
+
+            _SpriteClips[2].x = 42;
+            _SpriteClips[2].y = 0;
+            _SpriteClips[2].w = 21;
+            _SpriteClips[2].h = 200;
+
         }
         public void startPos(double poX, double poY)
         {
@@ -110,8 +142,10 @@ namespace PongGame
         //Shows the dot on the screen
         public void render()
         {
+            //Render current frame
+            SDL.SDL_Rect currentClip = _SpriteClips[color];
             //Show the dot
-            Program.gBarTexture.render((int)System.Math.Floor(mPosX), (int)System.Math.Floor(mPosY));
+            Program.gBarTexture.render((int)System.Math.Floor(mPosX), (int)System.Math.Floor(mPosY), currentClip);
         }
 
     }

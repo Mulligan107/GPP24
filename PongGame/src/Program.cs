@@ -56,8 +56,6 @@ namespace PongGame
         public static int p2counter = 0;
         public static int speedLevel = 0;
 
-        public static int playerColor = 3; //3 zum testen
-
         //Liste der EntityPosis
         public static ArrayList ballList = new ArrayList();
         public static ArrayList ghostList = new ArrayList();
@@ -78,6 +76,7 @@ namespace PongGame
 
         public static LTexture gBarTexture = new LTexture();
         public static LTexture ghostTexture = new LTexture();
+        public static LTexture ballTexture = new LTexture();
 
         public static LTexture backgroundTexture = new LTexture();
         public static LTexture pannelBackgroundTexture = new LTexture();
@@ -103,8 +102,8 @@ namespace PongGame
         static SDL.SDL_Event e;
 
         //The player that will be moving around on the screen
-        public static Paddle player = new Paddle();
-        public static Paddle enemy = new Paddle();
+        public static Paddle player = new Paddle(gBarTexture);
+        public static Paddle enemy = new Paddle(gBarTexture);
 
 
         private static bool Init()
@@ -198,13 +197,19 @@ namespace PongGame
             //Loading success flag
             bool success = true;
 
-            if (!gBarTexture.loadFromFile("imgs/player.bmp"))
+            if (!gBarTexture.loadFromFile("imgs/padleSpriteSheet.png"))
             {
                 Console.WriteLine("Failed to load!");
                 success = false;
             }
 
             if (!ghostTexture.loadFromFile("imgs/ghostSpriteSheet.png"))
+            {
+                Console.WriteLine("Failed to load!");
+                success = false;
+            }
+
+            if (!ballTexture.loadFromFile("imgs/dotSpriteSheet.png"))
             {
                 Console.WriteLine("Failed to load!");
                 success = false;
@@ -320,7 +325,7 @@ namespace PongGame
             //Bedingung Rechts
             if (kugL < playR && kugUn > playOb && kugOb < playUn && kugR > playR)
             {
-                if (playerColor == ball.letzteFarbe || playerColor == 3) //3 zum testen
+                if (player.color == ball.letzteFarbe) //3 zum testen
                 {
                     //Paddle ist 200 Lang
                     double aufschlagsPunkt = ball.mPosY - paddle.mPosY;
@@ -571,20 +576,17 @@ namespace PongGame
                     // Tasten 1,2,3 für ändern der Farbe
                     if (e.key.keysym.sym == SDL.SDL_Keycode.SDLK_1)
                     {
-                        gBarTexture.setColor(255, 0, 0);
-                        playerColor = 1;
+                        player.color = 0;
                     }
 
                     if (e.key.keysym.sym == SDL.SDL_Keycode.SDLK_2)
                     {
-                        gBarTexture.setColor(0, 255, 0);
-                        playerColor = 2;
+                        player.color = 1;
                     }
 
                     if (e.key.keysym.sym == SDL.SDL_Keycode.SDLK_3)
                     {
-                        gBarTexture.setColor(0, 0, 255);
-                        playerColor = 0;
+                        player.color = 2;
                     }
 
                     if (e.key.keysym.sym == SDL.SDL_Keycode.SDLK_t)
@@ -679,7 +681,7 @@ namespace PongGame
             // alle 3000 ticks einen neuen Ball hinzufügen bis 3 existiteren
             if (((timer.getTicks() * (deltaTime / 10)) % 3000 < 2) && (ballList.Count < 3))
             {
-                ballList.Add(new Ball());
+                ballList.Add(new Ball(ballTexture));
             }
 
 
@@ -741,7 +743,7 @@ namespace PongGame
                 {
                     ghostList.Add(new Ghost(ghostTexture));
 
-                    ballList.Add(new Ball());
+                    ballList.Add(new Ball(ballTexture));
 
                     player.startPos(20, pannelH);
                     enemy.startPos(SCREEN_WIDTH - 40, pannelH);

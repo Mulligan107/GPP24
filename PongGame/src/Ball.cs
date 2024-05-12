@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SDL2;
+using System;
 
 namespace PongGame
 {
@@ -27,16 +28,40 @@ namespace PongGame
 
         public int letzteFarbe = 0;
 
+
+        //animation
+        private const int ANIMATION_FRAMES = 3;
+        private static readonly SDL.SDL_Rect[] _SpriteClips = new SDL.SDL_Rect[ANIMATION_FRAMES];
+
+
         //Initializes the variables
-        public Ball()
+        public Ball(LTexture texture)
         {
-            //Load press texture
-            if (!gDotTexture.loadFromFile("imgs/dot.bmp"))
+            gDotTexture = texture;
+
+            if (gDotTexture == null)
             {
-                Console.WriteLine("Failed to load!");
-                //success = false;
+                Console.WriteLine("Failed to load media!");
+                Console.ReadLine();
             }
-            changeColor();
+
+            //Set sprite clips
+            _SpriteClips[0].x = 0;
+            _SpriteClips[0].y = 0;
+            _SpriteClips[0].w = 21;
+            _SpriteClips[0].h = 21;
+
+            _SpriteClips[1].x = 21;
+            _SpriteClips[1].y = 0;
+            _SpriteClips[1].w = 21;
+            _SpriteClips[1].h = 21;
+
+            _SpriteClips[2].x = 42;
+            _SpriteClips[2].y = 0;
+            _SpriteClips[2].w = 21;
+            _SpriteClips[2].h = 21;
+
+
             vectorX = getRandomVector();
             vectorY = getRandomVector();
         }
@@ -101,8 +126,10 @@ namespace PongGame
         //Shows the dot on the screen
         public void render()
         {
+            //Render current frame
+            SDL.SDL_Rect currentClip = _SpriteClips[letzteFarbe];
             //Show the dot
-            gDotTexture.render(((int)System.Math.Floor(mPosX)), (int)System.Math.Floor(mPosY));
+            gDotTexture.render(((int)System.Math.Floor(mPosX)), (int)System.Math.Floor(mPosY),currentClip);
         }
 
         // X == 0 , Y == 1
@@ -120,19 +147,17 @@ namespace PongGame
 
         public void changeColor()
         {
+
             //int switcher = Program.gRandom.Next(3);
             switch (letzteFarbe)
             {
                 case (0):
-                    gDotTexture.setColor(255, 0, 0);
                     letzteFarbe = 1;
                     break;
                 case (1):
-                    gDotTexture.setColor(0, 255, 0);
                     letzteFarbe = 2;
                     break;
                 case (2):
-                    gDotTexture.setColor(0, 0, 255);
                     letzteFarbe = 0;
                     break;
             }
