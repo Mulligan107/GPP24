@@ -185,6 +185,13 @@ namespace PongGame
                             Console.WriteLine("SDL_ttf could not initialize! SDL_ttf Error: {0}", SDL.SDL_GetError());
                             success = false;
                         }
+                        
+                        //Initialize SDL_mixer
+                        if (SDL_mixer.Mix_OpenAudio(44100, SDL_mixer.MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+                        {
+                            Console.WriteLine("SDL_mixer could not initialize! SDL_mixer Error: {0}", SDL.SDL_GetError());
+                            success = false;
+                        }
                     }
                 }
             }
@@ -199,7 +206,7 @@ namespace PongGame
             bool success = true;
             
             //Load music
-            _Music = SDL_mixer.Mix_LoadWAV("sounds/8bit_Forest.wav");
+            _Music = SDL_mixer.Mix_LoadMUS("sounds/8bit_Forest.wav");
             if (_Music == IntPtr.Zero)
             {
                 Console.WriteLine("Failed to load! {0}", SDL.SDL_GetError());
@@ -271,13 +278,29 @@ namespace PongGame
             return success;
         }
 
-        public static void loadMusic()
+        public static void playMusic()
         {
             //If there is no music playing
             if (SDL_mixer.Mix_PlayingMusic() == 0)
             {
                 //Play the music
                 SDL_mixer.Mix_PlayMusic(_Music, -1);
+            }
+            //If music is being played
+            else
+            {
+                //If the music is paused
+                if (SDL_mixer.Mix_PausedMusic() == 1)
+                {
+                    //Resume the music
+                    SDL_mixer.Mix_ResumeMusic();
+                }
+                //If the music is playing
+                else
+                {
+                    //Pause the music
+                    SDL_mixer.Mix_PauseMusic();
+                }
             }
         }
         public static void gameReset()
@@ -743,8 +766,6 @@ namespace PongGame
 
             //(Re-)Set point counter and timer
             gameReset();
-
-            loadMusic();
             
             // er kennt den Pfad nicht`?
             // ToDo: SoundPlayer soundPlayer = new SoundPlayer("sounds/boing.wav");
@@ -759,12 +780,15 @@ namespace PongGame
             {
                 //Load media
                 success = LoadMedia();
+                
                 if (success == false)
                 {
                     Console.WriteLine("Failed to load media!");
                 }
                 else
                 {
+                    playMusic();
+                    
                     ghostList.Add(new Ghost(ghostTexture));
 
                     ballList.Add(new Ball(ballTexture));
