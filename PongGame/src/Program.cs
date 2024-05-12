@@ -63,7 +63,7 @@ namespace PongGame
         private static IntPtr _Music = IntPtr.Zero;
         
         //The sound effects that will be used
-        private static IntPtr _Boing = IntPtr.Zero;
+        public static IntPtr _Boing = IntPtr.Zero;
 
         //The window we'll be rendering to
         public static IntPtr gWindow = IntPtr.Zero;
@@ -228,6 +228,7 @@ namespace PongGame
             {
                 Console.WriteLine("File does not exist");
             }
+            
             //Load sound effects
             _Boing = SDL_mixer.Mix_LoadWAV("sounds/8bit_Boing.wav");
             if (_Boing == IntPtr.Zero)

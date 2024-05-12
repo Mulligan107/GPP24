@@ -108,12 +108,16 @@ namespace PongGame
             //If the dot went too far up or down
             if ((mPosY < Program.pannelH)) // 100 mit Boarder
             {
+                //sound
+                SDL_mixer.Mix_PlayChannel(-1, Program._Boing, 0);
                 //Move back
                 changeDir(1);
                 changeColor();
                 mPosY += 5;
             }
             if (mPosY + dotH > Program.SCREEN_HEIGHT) {
+                //sound
+                SDL_mixer.Mix_PlayChannel(-1, Program._Boing, 0);
                 //Move back
                 changeDir(1);
                 changeColor();
