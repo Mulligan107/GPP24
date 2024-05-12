@@ -42,7 +42,7 @@ namespace PongGame
         public int frame;
 
         //animation
-        private const int ANIMATION_FRAMES = 2;
+        private const int ANIMATION_FRAMES = 6;
         private static readonly SDL.SDL_Rect[] _SpriteClips = new SDL.SDL_Rect[ANIMATION_FRAMES];
 
 
@@ -103,8 +103,8 @@ namespace PongGame
                 posX = Program.SCREEN_WIDTH;
             }
 
-            SinusValue += (deltaTime / 80); // länge der Amplitude
-            posY = posY + Math.Sin(SinusValue); // Höhe der Amplitude
+            SinusValue += (0.05); // länge der Amplitude
+            posY = posY + Math.Sin(SinusValue) * Program.pannelH/70; // Höhe der Amplitude
 
 
         }
