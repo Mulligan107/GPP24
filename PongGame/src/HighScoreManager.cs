@@ -13,7 +13,7 @@ namespace PongGame
             highScore = ReadHighScore();
         }
 
-        private int ReadHighScore()
+        public int ReadHighScore()
         {
             if (!File.Exists(highScoreFile))
             {

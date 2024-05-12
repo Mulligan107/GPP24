@@ -87,7 +87,8 @@ namespace PongGame
 
 
         //Rendered texture
-        private static readonly LTexture _TextTexture = new LTexture();
+        private static readonly LTexture _ScoreTextTexture = new LTexture();
+        private static readonly LTexture _HighScoreTextTexture = new LTexture();
         public static LTexture alertTextTexture1 = new LTexture();
         public static LTexture alertTextTexture2 = new LTexture();
 
@@ -271,7 +272,15 @@ namespace PongGame
             {
                 //Render text
                 var textColor = new SDL.SDL_Color();
-                if (!_TextTexture.loadFromRenderedText("The quick brown fox jumps over the lazy dog", textColor))
+                if (!_ScoreTextTexture.loadFromRenderedText("The quick brown fox jumps over the lazy dog", textColor))
+                {
+                    Console.WriteLine("Failed to render text texture!");
+                    success = false;
+                }
+                
+                //Render text
+                var highScoreTextColor = new SDL.SDL_Color();
+                if (!_HighScoreTextTexture.loadFromRenderedText("The quick brown fox jumps over the lazy dog", highScoreTextColor))
                 {
                     Console.WriteLine("Failed to render text texture!");
                     success = false;
@@ -343,7 +352,8 @@ namespace PongGame
             gBarTexture.free();
 
             //Free loaded images
-            _TextTexture.free();
+            _ScoreTextTexture.free();
+            _HighScoreTextTexture.free();
             alertTextTexture1.free();
 
             //Free global font
@@ -644,7 +654,7 @@ namespace PongGame
                                 paused = true;
                                 playMusic();
                                 gBarTexture.setAlpha(180);
-                                _TextTexture.setAlpha(180);
+                                _ScoreTextTexture.setAlpha(180);
                                 ghostTexture.setAlpha(180);
                                 timer.pause();
                                 foreach (Ball ballsy in ballList)
@@ -659,7 +669,7 @@ namespace PongGame
                                 paused = false;
                                 playMusic();
                                 gBarTexture.setAlpha(0xFF);
-                                _TextTexture.setAlpha(0xFF);
+                                _ScoreTextTexture.setAlpha(0xFF);
                                 ghostTexture.setAlpha(0xFF);
                                 timer.unpause();
                                 foreach (Ball ballsy in ballList)
@@ -788,13 +798,15 @@ namespace PongGame
             {
                 SDL.SDL_RenderFillRect(gRenderer, ref dotline);
             }
-
             
-
-
-            changeText(_TextTexture, Convert.ToString(p1counter + " : " + p2counter));
+            //Current Score Text
+            changeText(_ScoreTextTexture, Convert.ToString(p1counter + " : " + p2counter));
             //Render current frame TEXT
-            _TextTexture.render(((SCREEN_WIDTH / 2) - (_TextTexture.GetWidth() / 2)), pannelH + 15);
+            _ScoreTextTexture.render(((SCREEN_WIDTH / 2) - (_ScoreTextTexture.GetWidth() / 2)), pannelH + 15);
+            
+            //Highscore Text
+            changeText(_HighScoreTextTexture, Convert.ToString("Highscore : " + highScoreManager.ReadHighScore()));
+            _HighScoreTextTexture.render(((SCREEN_WIDTH / 2) - (_ScoreTextTexture.GetWidth() / 2)) - 35, pannelH + 35);
 
             for (int i = 0; i < 5; i++)
             {
