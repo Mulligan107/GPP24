@@ -654,6 +654,11 @@ namespace PongGame
                         ballList.Clear();
                         //ballList.Add(new Ball());
 
+                        foreach (Ball ballsy in ballList)
+                        {
+                            ballsy.gDotTexture.setAlpha(0xFF); //ToDo , ändern Quickfix wegen transparanz
+                        }
+
                         ghostList.Clear();
                         ghostList.Add(new Ghost(ghostTexture));
 
