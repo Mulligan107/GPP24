@@ -34,6 +34,9 @@ namespace PongGame
         public int frame;
         public static int anzahlFrames;
 
+        public bool endofAnimation;
+        public bool activAttack = false;
+
         //animation
         private static int ANIMATION_FRAMES;
         private static  SDL.SDL_Rect[] _SpriteClips;
@@ -71,6 +74,9 @@ namespace PongGame
                 _SpriteClips[i].w = 120;
                 _SpriteClips[i].h = 80;
             }
+            frame = 0;
+            frameTicker = 0;
+            endofAnimation = false;
         }
 
         public void render()
@@ -83,11 +89,13 @@ namespace PongGame
                     if (frame >= anzahlFrames -1)
                     {
                         frame = 0;
+                        endofAnimation = true;
                     }
                     else
                     {
-                        frame++;    
-                    }
+                        frame++;
+                        endofAnimation = false;
+                }
                     frameTicker = 0;
                 }
                 //Render current frame

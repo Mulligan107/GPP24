@@ -34,6 +34,7 @@ namespace PongGame
         public double posY;
 
         public bool alive = true;
+        public int color = 0;
 
         private static LTexture ghostTexture = new LTexture();
 
@@ -46,10 +47,10 @@ namespace PongGame
         private static readonly SDL.SDL_Rect[] _SpriteClips = new SDL.SDL_Rect[ANIMATION_FRAMES];
 
 
-        public Ghost(LTexture texture)
+        public Ghost(LTexture texture, int farbe)
         {
             ghostTexture = texture;
-
+            color = farbe;
             if (ghostTexture == null)
             {
                 Console.WriteLine("Failed to load media!");
@@ -91,7 +92,7 @@ namespace PongGame
             _SpriteClips[5].w = 90;
             _SpriteClips[5].h = 143;
 
-
+            color = 0; //entfernen
 
         }
         public void move(double deltaTime)
@@ -117,7 +118,8 @@ namespace PongGame
                 //Animation Speed
                 if (frameTicker >= 0.5)
                 {
-                    switch (frame)
+                    int c2 = color + 1;
+                    switch (color)
                     {
                         case (0):
                             frame = 1;
