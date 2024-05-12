@@ -58,6 +58,7 @@
     <Compile Include="src\Knight.cs" />
     <Compile Include="src\LTexture.cs" />
     <Compile Include="src\LTimer.cs" />
+    <Compile Include="src\Menu.cs" />
     <Compile Include="src\Paddle.cs" />
     <Compile Include="src\Program.cs" />
   </ItemGroup>

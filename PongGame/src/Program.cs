@@ -70,6 +70,8 @@ namespace PongGame
 
         //The surface contained by the window
         public static IntPtr gRenderer = IntPtr.Zero;
+        
+        public static IntPtr menuRenderer = IntPtr.Zero;
 
         //Globally used font
         public static IntPtr Font = IntPtr.Zero;
@@ -102,6 +104,7 @@ namespace PongGame
         public static LTimer timer = new LTimer();
 
         public static Random gRandom = new Random();
+        
 
         //Main loop flag
         static bool quit = false;
