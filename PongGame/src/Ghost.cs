@@ -36,6 +36,8 @@ namespace PongGame
         public bool alive = true;
         public int color = 0;
 
+        public bool animSwitchBool = false;
+
         private static LTexture ghostTexture = new LTexture();
 
         //Current animation frame
@@ -92,22 +94,26 @@ namespace PongGame
             _SpriteClips[5].w = 90;
             _SpriteClips[5].h = 143;
 
-            color = 0; //entfernen
+            //color = 0; //entfernen
 
         }
         public void move(double deltaTime)
         {
-           posX -= ghostVel * (deltaTime / 10) * speed;
-
-            if (posX < 0 - ghostW)
+            if (alive)
             {
-                posX = Program.SCREEN_WIDTH;
+
+
+                posX -= ghostVel * (deltaTime / 10) * speed;
+
+                if (posX < 0 - ghostW)
+                {
+                    posX = Program.SCREEN_WIDTH;
+                }
+
+                SinusValue += (0.05); // länge der Amplitude
+                posY = posY + Math.Sin(SinusValue) * Program.pannelH / 70; // Höhe der Amplitude
+
             }
-
-            SinusValue += (0.05); // länge der Amplitude
-            posY = posY + Math.Sin(SinusValue) * Program.pannelH/70; // Höhe der Amplitude
-
-
         }
 
         public void render()
@@ -118,17 +124,20 @@ namespace PongGame
                 //Animation Speed
                 if (frameTicker >= 0.5)
                 {
-                    int c2 = color + 1;
-                    switch (color)
+                    int nextCol = color * 2;
+                    switch (animSwitchBool)
                     {
-                        case (0):
-                            frame = 1;
+                        case (false):
+                            frame =  nextCol;
+                            animSwitchBool = true;
                             break;
-                        case (1):
-                            frame = 0;
+                        case (true):
+                            frame =  nextCol + 1;
+                            animSwitchBool = false;
                             break;
 ;                    }
                     frameTicker = 0;
+                    Console.WriteLine(frame);
                 }
                 //Render current frame
                 SDL.SDL_Rect currentClip = _SpriteClips[frame];

@@ -670,7 +670,7 @@ namespace PongGame
                         }
 
                         ghostList.Clear();
-                        int i = gRandom.Next(2);
+                        int i = gRandom.Next(3);
                         ghostList.Add(new Ghost(ghostTexture, i));
 
                         gameReset();
@@ -866,12 +866,24 @@ namespace PongGame
         {
             
             //Gameover abfrage
-            if (p2counter >= 3)
+            if (p2counter > 3)
             {
-                paused = true;
+
                 gameover = true;
                 highScoreManager.CheckScore(p1counter);
                 highScoreManager.SaveHighScore();
+                if (!playerKnight.activAttack)
+                {
+                    playerKnight.activAttack = true;
+                    knightTexture = (LTexture)knightAnimList[1];
+                    playerKnight.updateKnightTexture();
+                }
+
+                if(playerKnight.endofAnimation)
+                {
+                    paused = true;
+                    
+                }
             }
 
             
@@ -887,9 +899,9 @@ namespace PongGame
 
                 // < 2 statt == 0 weil ticks manchmal geskippt werden
                 // alle 3000 ticks einen neuen Ball hinzufügen bis 3 existiteren
-                if (((timer.getTicks() * (deltaTime / 10)) % 3000 < 5) && (ghostList.Count < 10))
+                if (((timer.getTicks() * (deltaTime / 10)) % 3000 < 5) && (ghostList.Count < 5))
                 {
-                    int i = gRandom.Next(2);
+                    int i = gRandom.Next(3);
                     ghostList.Add(new Ghost(ghostTexture, i));
                 }
 
@@ -923,15 +935,23 @@ namespace PongGame
                        temp = true;
                     }
 
+                    if (ghosts.posX < hitZone.x)
+                    {
+                        p2counter++;
+                        knightTexture = (LTexture)knightAnimList[2];
+                        playerKnight.updateKnightTexture();
+                        ghosts.posX = SCREEN_WIDTH;
+                    }
+
                 }
 
-                if (!temp)
+                if (!temp && ghostList.Count == 5)
                 {
-                    gameover = true;
+                    paused = true;
                     changeText(alertTextTexture1, "YOU WIN");
                 }
 
-                if (playerKnight.endofAnimation)
+                if (playerKnight.endofAnimation && !paused && !gameover)
                 {
                     // 3 = Idle
                     playerKnight.activAttack = false;
@@ -1005,7 +1025,7 @@ namespace PongGame
 
                     playerKnight.updateKnightTexture();
 
-                    int i = gRandom.Next(2);
+                    int i = gRandom.Next(3);
                     ghostList.Add(new Ghost(ghostTexture, i));
 
                     ballList.Add(new Ball(ballTexture));

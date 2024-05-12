@@ -81,8 +81,7 @@ namespace PongGame
 
         public void render()
         {
-            Console.WriteLine(frame);
-            Console.WriteLine(anzahlFrames);
+            
             //Animation Speed
             if (frameTicker >= 0.5)
                 {
