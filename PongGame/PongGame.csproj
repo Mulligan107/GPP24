@@ -48,6 +48,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sdl\SDL2.cs" />
     <Compile Include="Sdl\SDL2_image.cs" />
+    <Compile Include="Sdl\SDL2_mixer.cs" />
     <Compile Include="Sdl\SDL2_ttf.cs" />
     <Compile Include="src\Ball.cs" />
     <Compile Include="src\Ghost.cs" />
@@ -102,6 +103,8 @@
     <Content Include="SDL2_ttf.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="sounds\8bit_Forest.mp3" />
+    <Content Include="sounds\8bit_Forest.wav" />
     <Content Include="sounds\boing.mp3" />
     <Content Include="sounds\boing.wav" />
     <Content Include="zlib1.dll">

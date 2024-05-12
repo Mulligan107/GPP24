@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Media;
 using System.Collections;
 using System.Globalization;
 using System.IO;
@@ -60,6 +59,8 @@ namespace PongGame
         public static ArrayList ballList = new ArrayList();
         public static ArrayList ghostList = new ArrayList();
 
+        //The music that will be played
+        private static IntPtr _Music = IntPtr.Zero;
 
         //The window we'll be rendering to
         public static IntPtr gWindow = IntPtr.Zero;
@@ -196,7 +197,15 @@ namespace PongGame
         {
             //Loading success flag
             bool success = true;
-
+            
+            //Load music
+            _Music = SDL_mixer.Mix_LoadWAV("sounds/8bit_Forest.wav");
+            if (_Music == IntPtr.Zero)
+            {
+                Console.WriteLine("Failed to load! {0}", SDL.SDL_GetError());
+                success = false;
+            }
+            
             if (!gBarTexture.loadFromFile("imgs/padleSpriteSheet.png"))
             {
                 Console.WriteLine("Failed to load!");
@@ -262,6 +271,15 @@ namespace PongGame
             return success;
         }
 
+        public static void loadMusic()
+        {
+            //If there is no music playing
+            if (SDL_mixer.Mix_PlayingMusic() == 0)
+            {
+                //Play the music
+                SDL_mixer.Mix_PlayMusic(_Music, -1);
+            }
+        }
         public static void gameReset()
         {
             p1counter = 0;
@@ -282,6 +300,10 @@ namespace PongGame
                 ballsy.gDotTexture.free();
             }
 
+            //Free the music
+            SDL_mixer.Mix_FreeMusic(_Music);
+            _Music = IntPtr.Zero;
+            
             gBarTexture.free();
 
             //Free loaded images
@@ -722,6 +744,8 @@ namespace PongGame
             //(Re-)Set point counter and timer
             gameReset();
 
+            loadMusic();
+            
             // er kennt den Pfad nicht`?
             // ToDo: SoundPlayer soundPlayer = new SoundPlayer("sounds/boing.wav");
 
