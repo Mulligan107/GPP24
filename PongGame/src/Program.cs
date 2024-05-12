@@ -138,6 +138,7 @@ namespace PongGame
 
                     ALT_SCREEN_WIDTH = (int)(MAX_SCREEN_WIDTH * 0.75);
                     ALT_SCREEN_HEIGHT = (int)(MAX_SCREEN_HEIGHT * 0.75);
+
                 }
                 else
                 {
@@ -234,7 +235,7 @@ namespace PongGame
                 success = false;
             }
 
-            if (!ghostTexture.loadFromFile("imgs/ghostSpriteSheet.png"))
+            if (!ghostTexture.loadFromFile("imgs/ghostSpriteSheet0.png"))
             {
                 Console.WriteLine("Failed to load!");
                 success = false;
@@ -255,14 +256,6 @@ namespace PongGame
             if (!pannelBackgroundTexture.loadFromFile("imgs/Green.png"))
             {
                 Console.WriteLine("Failed to load!");
-                success = false;
-            }
-
-            IntPtr ghostSurface = SDL_image.IMG_Load("imgs/ghostSpriteSheet.png");
-            if (ghostSurface == IntPtr.Zero)
-            {
-                Console.WriteLine("Unable to load image {0}! SDL Error: {1}", "imgs/ghostSpriteSheet.png",
-                    SDL.SDL_GetError());
                 success = false;
             }
 
@@ -614,6 +607,8 @@ namespace PongGame
                             ghostys.posY = (float)ghostys.ghostRelativePosY * SCREEN_WIDTH;
                         }
 
+                        pannelH = calcPannelH();
+
                     }
 
                     if (e.key.keysym.sym == SDL.SDL_Keycode.SDLK_r)
@@ -623,6 +618,9 @@ namespace PongGame
 
                         ballList.Clear();
                         //ballList.Add(new Ball());
+
+                        ghostList.Clear();
+                        ghostList.Add(new Ghost(ghostTexture));
 
                         gameReset();
 
@@ -721,6 +719,7 @@ namespace PongGame
 
         static void drawBackground()
         {
+            pannelH = calcPannelH();
             byte alpha;
             if (paused)
             {
@@ -733,6 +732,7 @@ namespace PongGame
             //Clear screen
             SDL.SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, alpha);
             SDL.SDL_RenderClear(gRenderer);
+            
 
             for (int j = 0; j < SCREEN_HEIGHT; j += backgroundTexture.getHeight())
             {
@@ -742,15 +742,33 @@ namespace PongGame
                     backgroundTexture.setAlpha(alpha);
                 }
             }
+            int counterJ = 0;
+            int counterI = 0;
 
-            for (int j = 10; j < pannelH; j += pannelBackgroundTexture.getHeight())
+            for (int j = 10; j < SCREEN_HEIGHT / 5; j += pannelBackgroundTexture.getHeight())
             {
+                counterI = 0;
                 for (int i = 11; i < SCREEN_WIDTH - 15; i += pannelBackgroundTexture.getWidth())
                 {
                     pannelBackgroundTexture.render(i, j);
                     pannelBackgroundTexture.setAlpha(alpha);
+                    counterI++;
                 }
+                counterJ++;
             }
+
+            
+
+            //Render black outlined pannel  i = wanddicke
+            for (int i = 0; i < 5; i++)
+            {
+                var outlineRect = new SDL.SDL_Rect
+                { x = 5 + i, y = 5 + i, w = pannelBackgroundTexture.getWidth() * counterI, h = pannelBackgroundTexture.getHeight() * counterJ};
+                SDL.SDL_SetRenderDrawColor(gRenderer, 0x00, 0x00, 0x00, alpha);
+                SDL.SDL_RenderDrawRect(gRenderer, ref outlineRect);
+            }
+
+            
 
             /*
             //Begrenzung
@@ -759,28 +777,29 @@ namespace PongGame
             SDL.SDL_RenderFillRect(gRenderer, ref blackline);
             */
 
-            var dotline = new SDL.SDL_Rect { x = SCREEN_WIDTH / 2, y = 0, w = 2, h = 8 };
+            var dotline = new SDL.SDL_Rect { x = SCREEN_WIDTH / 2, y = pannelH + 5, w = 2, h = 8 };
             SDL.SDL_SetRenderDrawColor(gRenderer, 155, 155, 155, alpha);
-            for (dotline.y = pannelH; dotline.y < SCREEN_HEIGHT; dotline.y += 10)
+            for (dotline.y = pannelH + 5; dotline.y < SCREEN_HEIGHT; dotline.y += 10)
             {
                 SDL.SDL_RenderFillRect(gRenderer, ref dotline);
             }
 
-            //Render black outlined pannel  i = wanddicke
-            for (int i = 0; i < 5; i++)
-            {
-                var outlineRect = new SDL.SDL_Rect
-                    { x = 5 + i, y = 5 + i, w = (SCREEN_WIDTH - 10) - i * 2, h = (pannelH) - i * 2 };
-                SDL.SDL_SetRenderDrawColor(gRenderer, 0x00, 0x00, 0x00, alpha);
-                SDL.SDL_RenderDrawRect(gRenderer, ref outlineRect);
-            }
+            
 
 
             changeText(_TextTexture, Convert.ToString(p1counter + " : " + p2counter));
             //Render current frame TEXT
-            _TextTexture.render(((SCREEN_WIDTH / 2) - (_TextTexture.GetWidth() / 2)), pannelH + 5);
+            _TextTexture.render(((SCREEN_WIDTH / 2) - (_TextTexture.GetWidth() / 2)), pannelH + 15);
 
+            for (int i = 0; i < 5; i++)
+            {
+                SDL.SDL_Rect pannelRect = new SDL.SDL_Rect { x = 10 + 200 + i, y = 10 + i, w = (SCREEN_WIDTH/10) - i * 2, h = pannelH - 10 - i * 2};
+                SDL.SDL_SetRenderDrawColor(Program.gRenderer, 0xFF, 0x00, 0x00, 0xFF);
+                SDL.SDL_RenderDrawRect(Program.gRenderer, ref pannelRect); //TestFeld
+            }
 
+            
+             
 
         }
 
@@ -824,6 +843,24 @@ namespace PongGame
             }
         }
 
+        public static int calcPannelH()
+        {
+            int counterJ = 0;
+            int counterI = 0;
+
+            for (int j = 10; j < SCREEN_HEIGHT/5; j += pannelBackgroundTexture.getHeight())
+            {
+                counterI = 0;
+                for (int i = 11; i < SCREEN_WIDTH - 15; i += pannelBackgroundTexture.getWidth())
+                {
+                    counterI++;
+                }
+                counterJ++;
+            }
+
+            return (pannelBackgroundTexture.getHeight() * counterJ);
+        }
+
         static int Main(string[] args)
         {
             SDL.SDL_SetHint(SDL.SDL_HINT_WINDOWS_DISABLE_THREAD_NAMING, "1");
@@ -832,6 +869,8 @@ namespace PongGame
 
             //(Re-)Set point counter and timer
             gameReset();
+
+            
 
             //Start up SDL and create window
             var success = Init();
@@ -850,9 +889,11 @@ namespace PongGame
                 }
                 else
                 {
+                    pannelH = calcPannelH() + 10;
+
                     playMusic();
                     
-                    ghostList.Add(new Ghost(ghostTexture,ghostSurface));
+                    ghostList.Add(new Ghost(ghostTexture));
 
                     ballList.Add(new Ball(ballTexture));
 
@@ -878,7 +919,7 @@ namespace PongGame
                         //Update nach deltaTime?
                         updateGame(elapsed);
 
-                       // createButton();
+                        // createButton();
                         drawBackground();
 
                         if (paused)

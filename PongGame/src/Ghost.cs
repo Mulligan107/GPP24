@@ -36,7 +36,6 @@ namespace PongGame
         public bool alive = true;
 
         private static LTexture ghostTexture = new LTexture();
-        public static IntPtr ghostSurface;
 
         //Current animation frame
         public double frameTicker;
@@ -47,10 +46,9 @@ namespace PongGame
         private static readonly SDL.SDL_Rect[] _SpriteClips = new SDL.SDL_Rect[ANIMATION_FRAMES];
 
 
-        public Ghost(LTexture texture, IntPtr surface)
+        public Ghost(LTexture texture)
         {
             ghostTexture = texture;
-            ghostSurface = surface;
 
             if (ghostTexture == null)
             {
@@ -59,6 +57,7 @@ namespace PongGame
             }
 
             //Set sprite clips
+            //Ghost 1
             _SpriteClips[0].x = 0;
             _SpriteClips[0].y = 0;
             _SpriteClips[0].w = 94;
@@ -66,8 +65,33 @@ namespace PongGame
 
             _SpriteClips[1].x = 94;
             _SpriteClips[1].y = 0;
-            _SpriteClips[1].w = 94;
+            _SpriteClips[1].w = 90;
             _SpriteClips[1].h = 143;
+
+            //Ghost 2
+            _SpriteClips[2].x = 184;
+            _SpriteClips[2].y = 0;
+            _SpriteClips[2].w = 94;
+            _SpriteClips[2].h = 143;
+
+            _SpriteClips[3].x = 278;
+            _SpriteClips[3].y = 0;
+            _SpriteClips[3].w = 90;
+            _SpriteClips[3].h = 143;
+
+            //Ghost 3
+            //Set sprite clips
+            _SpriteClips[4].x = 368;
+            _SpriteClips[4].y = 0;
+            _SpriteClips[4].w = 94;
+            _SpriteClips[4].h = 143;
+
+            _SpriteClips[5].x = 462;
+            _SpriteClips[5].y = 0;
+            _SpriteClips[5].w = 90;
+            _SpriteClips[5].h = 143;
+
+
 
         }
         public void move(double deltaTime)
