@@ -54,7 +54,11 @@
     <Compile Include="Sdl\SDL2_ttf.cs" />
     <Compile Include="src\Ball.cs" />
     <Compile Include="src\Ghost.cs" />
+<<<<<<< Updated upstream
     <Compile Include="src\HighScoreManager.cs" />
+=======
+    <Compile Include="src\Knight.cs" />
+>>>>>>> Stashed changes
     <Compile Include="src\LTexture.cs" />
     <Compile Include="src\LTimer.cs" />
     <Compile Include="src\Paddle.cs" />
@@ -89,6 +93,18 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="imgs\player.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="imgs\_Attack2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="imgs\_DeathNoMovement.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="imgs\_Hit.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="imgs\_Idle.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="libfreetype-6.dll">
