@@ -89,7 +89,7 @@ namespace PongGame
                 startPos((Program.SCREEN_WIDTH / 2) , (Program.SCREEN_HEIGHT / 2) + Program.pannelH);
                 vectorX = getRandomVector();
                 vectorY = getRandomVector();
-                Program.p1counter++;
+                Program.p2counter++;
                 changeColor();
             }
 
@@ -100,7 +100,7 @@ namespace PongGame
                 startPos((Program.SCREEN_WIDTH / 2), (Program.SCREEN_HEIGHT / 2) + Program.pannelH);
                 vectorX = getRandomVector();
                 vectorY = getRandomVector();
-                Program.p2counter++;
+                Program.p1counter++;
                 changeColor();
             }
 

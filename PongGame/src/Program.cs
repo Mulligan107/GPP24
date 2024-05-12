@@ -109,7 +109,8 @@ namespace PongGame
         public static Paddle player = new Paddle(gBarTexture);
         public static Paddle enemy = new Paddle(gBarTexture);
 
-
+        static HighScoreManager highScoreManager = new HighScoreManager();
+        
         private static bool Init()
         {
             //Initialization flag
@@ -492,6 +493,8 @@ namespace PongGame
                 //User requests quit via closing the window or pressing esc
                 if (e.type == SDL.SDL_EventType.SDL_QUIT || e.key.keysym.sym == SDL.SDL_Keycode.SDLK_ESCAPE)
                 {
+                    highScoreManager.CheckScore(p1counter);
+                    highScoreManager.SaveHighScore();
                     quit = true;
                 }
 
@@ -613,6 +616,8 @@ namespace PongGame
 
                     if (e.key.keysym.sym == SDL.SDL_Keycode.SDLK_r)
                     {
+                        highScoreManager.CheckScore(p1counter);
+                        highScoreManager.SaveHighScore();
                         player.startPos(20, pannelH);
                         enemy.startPos(SCREEN_WIDTH - 40, pannelH);
 
@@ -806,13 +811,13 @@ namespace PongGame
         static void updateGame(double deltaTime)
         {
             
-
-
             //Gameover abfrage
-            if (p1counter >= 3)
+            if (p2counter >= 3)
             {
                 paused = true;
                 gameover = true;
+                highScoreManager.CheckScore(p1counter);
+                highScoreManager.SaveHighScore();
             }
 
             if (!paused)

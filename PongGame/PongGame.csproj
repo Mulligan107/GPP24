@@ -54,6 +54,7 @@
     <Compile Include="Sdl\SDL2_ttf.cs" />
     <Compile Include="src\Ball.cs" />
     <Compile Include="src\Ghost.cs" />
+    <Compile Include="src\HighScoreManager.cs" />
     <Compile Include="src\LTexture.cs" />
     <Compile Include="src\LTimer.cs" />
     <Compile Include="src\Paddle.cs" />
