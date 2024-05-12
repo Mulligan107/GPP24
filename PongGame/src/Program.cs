@@ -90,6 +90,7 @@ namespace PongGame
         public static LTexture backgroundTexture = new LTexture();
         public static LTexture pannelBackgroundTexture = new LTexture();
 
+        public static SDL.SDL_Rect hitZone = new SDL.SDL_Rect();
 
         //Rendered texture
         private static readonly LTexture _ScoreTextTexture = new LTexture();
@@ -710,7 +711,7 @@ namespace PongGame
                     // Tasten 1,2,3 für ändern der Farbe
                     if (e.key.keysym.sym == SDL.SDL_Keycode.SDLK_1)
                     {
-                        player.color = 0;
+                        player.color = 0; 
                     }
 
                     if (e.key.keysym.sym == SDL.SDL_Keycode.SDLK_2)
@@ -843,6 +844,7 @@ namespace PongGame
                 SDL.SDL_Rect pannelRect = new SDL.SDL_Rect { x = 10 + 200 + i, y = 10 + i, w = (SCREEN_WIDTH/10) - i * 2, h = pannelH - 10 - i * 2};
                 SDL.SDL_SetRenderDrawColor(Program.gRenderer, 0xFF, 0x00, 0x00, 0xFF);
                 SDL.SDL_RenderDrawRect(Program.gRenderer, ref pannelRect); //TestFeld
+                hitZone = pannelRect;
             }
 
             
@@ -862,6 +864,8 @@ namespace PongGame
                 highScoreManager.SaveHighScore();
             }
 
+            
+
             if (!paused)
             {
                 // < 2 statt == 0 weil ticks manchmal geskippt werden
@@ -871,25 +875,69 @@ namespace PongGame
                     ballList.Add(new Ball(ballTexture));
                 }
 
+                // < 2 statt == 0 weil ticks manchmal geskippt werden
+                // alle 3000 ticks einen neuen Ball hinzufügen bis 3 existiteren
+                if (((timer.getTicks() * (deltaTime / 10)) % 3000 < 5) && (ghostList.Count < 10))
+                {
+                    int i = gRandom.Next(2);
+                    ghostList.Add(new Ghost(ghostTexture, i));
+                }
+
                 foreach (Ball ballsy in ballList)
                 {
                     collCheck(player, ballsy);
                     collCheck(enemy, ballsy);
                     ballsy.move(deltaTime);
                 }
-
+                var temp = false;
                 foreach (Ghost ghosts in ghostList)
                 {
+                    if (ghosts.alive && ghosts.color == player.color)
+                    {
+                        
+                        if (ghosts.posX > hitZone.x && ghosts.posX < (hitZone.x + hitZone.w) && !playerKnight.endofAnimation &&
+                            !playerKnight.activAttack)
+                        {
+                            playerKnight.activAttack = true;
+                            knightTexture = (LTexture)knightAnimList[0];
+                            playerKnight.updateKnightTexture();
+                            ghosts.alive = false;
+                            
+                        }
+                    }
                     ghosts.frameTicker += (deltaTime / 1000);
                     ghosts.move(deltaTime / 10);
+
+                    if (ghosts.alive)
+                    {
+                       temp = true;
+                    }
+
                 }
 
-                playerKnight.frameTicker += (deltaTime / 500);
+                if (!temp)
+                {
+                    gameover = true;
+                    changeText(alertTextTexture1, "YOU WIN");
+                }
+
+                if (playerKnight.endofAnimation)
+                {
+                    // 3 = Idle
+                    playerKnight.activAttack = false;
+                    knightTexture = (LTexture)knightAnimList[3];
+                    playerKnight.updateKnightTexture();
+                }
+
+                playerKnight.frameTicker += (deltaTime / 200);
 
 
                 //Move the player
                 player.move(deltaTime);
                 enemy.moveEnemy(deltaTime);
+
+
+
             }
         }
 
@@ -947,8 +995,8 @@ namespace PongGame
 
                     playerKnight.updateKnightTexture();
 
-                    
-                    ghostList.Add(new Ghost(ghostTexture));
+                    int i = gRandom.Next(2);
+                    ghostList.Add(new Ghost(ghostTexture, i));
 
                     ballList.Add(new Ball(ballTexture));
 
