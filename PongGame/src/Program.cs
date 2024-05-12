@@ -644,6 +644,11 @@ namespace PongGame
 
                     }
 
+                    if (e.key.keysym.sym == SDL.SDL_Keycode.SDLK_m)
+                    {
+                        playMusic();
+                    }
+                    
                     if (e.key.keysym.sym == SDL.SDL_Keycode.SDLK_r)
                     {
                         highScoreManager.CheckScore(p1counter);
