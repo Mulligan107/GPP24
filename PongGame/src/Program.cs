@@ -689,7 +689,7 @@ namespace PongGame
                         {
                             case false:
                                 paused = true;
-                                playMusic();
+                                SDL_mixer.Mix_PauseMusic();
                                 gBarTexture.setAlpha(180);
                                 _ScoreTextTexture.setAlpha(180);
                                 ghostTexture.setAlpha(180);
