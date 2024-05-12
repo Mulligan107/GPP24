@@ -666,7 +666,8 @@ namespace PongGame
                         }
 
                         ghostList.Clear();
-                        ghostList.Add(new Ghost(ghostTexture));
+                        int i = gRandom.Next(2);
+                        ghostList.Add(new Ghost(ghostTexture, i));
 
                         gameReset();
 

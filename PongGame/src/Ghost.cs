@@ -92,7 +92,7 @@ namespace PongGame
             _SpriteClips[5].w = 90;
             _SpriteClips[5].h = 143;
 
-
+            color = 0; //entfernen
 
         }
         public void move(double deltaTime)
