@@ -61,6 +61,9 @@ namespace PongGame
 
         //The music that will be played
         private static IntPtr _Music = IntPtr.Zero;
+        
+        //The sound effects that will be used
+        private static IntPtr _Boing = IntPtr.Zero;
 
         //The window we'll be rendering to
         public static IntPtr gWindow = IntPtr.Zero;
@@ -213,6 +216,18 @@ namespace PongGame
                 success = false;
             }
             
+            if (!File.Exists("sounds/8bit_Boing.wav"))
+            {
+                Console.WriteLine("File does not exist");
+            }
+            //Load sound effects
+            _Boing = SDL_mixer.Mix_LoadWAV("sounds/8bit_Boing.wav");
+            if (_Boing == IntPtr.Zero)
+            {
+                Console.WriteLine("Failed to load! {0}", SDL.SDL_GetError());
+                success = false;
+            }
+            
             if (!gBarTexture.loadFromFile("imgs/padleSpriteSheet.png"))
             {
                 Console.WriteLine("Failed to load!");
@@ -323,6 +338,10 @@ namespace PongGame
                 ballsy.gDotTexture.free();
             }
 
+            //Free the sound effects
+            SDL_mixer.Mix_FreeChunk(_Boing);
+            _Boing = IntPtr.Zero;
+            
             //Free the music
             SDL_mixer.Mix_FreeMusic(_Music);
             _Music = IntPtr.Zero;
@@ -372,6 +391,7 @@ namespace PongGame
             {
                 if (player.color == ball.letzteFarbe) //3 zum testen
                 {
+                    SDL_mixer.Mix_PlayChannel(-1, _Boing, 0);
                     //Paddle ist 200 Lang
                     double aufschlagsPunkt = ball.mPosY - paddle.mPosY;
 
@@ -401,7 +421,7 @@ namespace PongGame
                     }
 
                     ball.mPosX += 5;
-                    ball.vectorX = vecX;
+                    ball.vectorX = vecX; 
                     ball.vectorY = vecY;
 
                     ball.changeColor();
@@ -413,6 +433,7 @@ namespace PongGame
             {
                 if (player.color == ball.letzteFarbe || paddle == enemy) //3 zum testen
                 {
+                    SDL_mixer.Mix_PlayChannel(-1, _Boing, 0);
                     ball.changeDir(0);
                     ball.changeColor();
                     ball.mPosX -= 5;
@@ -591,6 +612,7 @@ namespace PongGame
                         {
                             case false:
                                 paused = true;
+                                playMusic();
                                 gBarTexture.setAlpha(180);
                                 _TextTexture.setAlpha(180);
 
@@ -604,6 +626,7 @@ namespace PongGame
 
                             case true:
                                 paused = false;
+                                playMusic();
                                 gBarTexture.setAlpha(0xFF);
                                 _TextTexture.setAlpha(0xFF);
 
@@ -764,9 +787,6 @@ namespace PongGame
 
             //(Re-)Set point counter and timer
             gameReset();
-            
-            // er kennt den Pfad nicht`?
-            // ToDo: SoundPlayer soundPlayer = new SoundPlayer("sounds/boing.wav");
 
             //Start up SDL and create window
             var success = Init();
