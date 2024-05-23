@@ -52,8 +52,17 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Sdl\SDL2_ttf.cs" />
+    <Compile Include="src\BackgroundObject.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="src\Entity.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="src\LTexture.cs" />
     <Compile Include="src\LTimer.cs" />
+    <Compile Include="src\Player.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="src\Program.cs" />
   </ItemGroup>
   <ItemGroup>

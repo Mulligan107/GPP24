@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Globalization;
-using System.IO;
-using System.Runtime.InteropServices;
 using System.Threading;
 using SDL2;
 
@@ -21,9 +19,6 @@ namespace ShooterGame
         public static int ALT_SCREEN_HEIGHT;
         public static int SCREEN_WIDTH;
         public static int SCREEN_HEIGHT;
-
-        public static double scaling;
-
 
         //Screen size mode
         public static bool isFullScreen = true;
@@ -243,6 +238,7 @@ namespace ShooterGame
                 else
                 {
                     double previous = 0.0;
+                    BackgroundObject bgo = new BackgroundObject();
 
                     //While application is running
                     while (!quit)
@@ -255,6 +251,11 @@ namespace ShooterGame
                             elapsed = 5.0;
                         }
                         handleUserInput();
+
+                        
+                        bgo.setBGColor();
+
+
                         //Update screen
                         SDL.SDL_RenderPresent(gRenderer);
                     }
