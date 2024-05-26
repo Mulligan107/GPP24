@@ -3,7 +3,7 @@ using SDL2;
 
 namespace ShooterGame
 {
-    public class Entity
+    class Entity
     {
         public float width;
         public float height;
@@ -16,9 +16,9 @@ namespace ShooterGame
 
         public float speed;
 
-        public bool alive = true;
+        public float lives;
 
-        private static LTexture texture = new LTexture();
+        public bool alive = true;
 
         public Entity()
         {
@@ -35,18 +35,28 @@ namespace ShooterGame
             alive = false;
         }
 
-        private static void setTexture(LTexture tex)
+        public void hit()
         {
-            texture = tex;
+            lives += lives - 1;
+            if (lives < 0)
+            {
+                kill();
+            }
         }
 
-        public void render()
-        {   
+        public void render(LTexture tex)
+        {
             if (alive)
             {
-                texture.render(((int)System.Math.Floor(posX)), (int)System.Math.Floor(posY));
+                tex.render(((int)System.Math.Floor(posX)), (int)System.Math.Floor(posY));
             }
             
+        }
+
+        public void spawn(float x, float y)
+        {
+            posX = x; 
+            posY = y; 
         }
 
     }

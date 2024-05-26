@@ -77,8 +77,6 @@ namespace ShooterGame
             return mTexture != IntPtr.Zero;
         }
 
-        
-
         //Deallocates texture
         public void free()
         {

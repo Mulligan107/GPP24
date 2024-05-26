@@ -136,14 +136,6 @@ namespace ShooterGame
         }
 
 
-        static bool LoadMedia()
-        {
-            //Loading success flag
-            bool success = true;
-
-            return success;
-        }
-
         /**
          * Free media and shut down SDL
          */
@@ -228,8 +220,8 @@ namespace ShooterGame
             }
             else
             {
-                //Load media
-                success = LoadMedia();
+                FileHandler fileHandler = new FileHandler();
+                success = fileHandler.getStatus();
 
                 if (success == false)
                 {
@@ -239,6 +231,10 @@ namespace ShooterGame
                 {
                     double previous = 0.0;
                     BackgroundObject bgo = new BackgroundObject();
+
+                    bgo.setBGColor();
+
+                    Player arno = new Player(fileHandler.getTexture("Ritter1"));
 
                     //While application is running
                     while (!quit)
@@ -250,12 +246,15 @@ namespace ShooterGame
                         {
                             elapsed = 5.0;
                         }
+                        ////////////////////////////////////// TEST AREA
                         handleUserInput();
 
                         
-                        bgo.setBGColor();
+                        
 
 
+
+                        /////////////////////////////////////// TEST AREA
                         //Update screen
                         SDL.SDL_RenderPresent(gRenderer);
                     }
