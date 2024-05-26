@@ -37,10 +37,11 @@ namespace ShooterGame
 
         public static Random gRandom = new Random();
 
-        public static bool quit = false;
+        public static ArrayList bulletList = new ArrayList();
 
-        //Event handler
-        static SDL.SDL_Event e;
+        public static LTexture bulletText = new LTexture();
+
+        public static bool quit = false;
 
         private static bool Init()
         {
@@ -154,56 +155,46 @@ namespace ShooterGame
             SDL.SDL_Quit();
         }
 
-
-        static void handleUserInput()
+        public static void changeWindowSize()
         {
-            while (SDL.SDL_PollEvent(out e) != 0)
+            // Change screen size
+            isFullScreen = !isFullScreen;
+            if (isFullScreen)
             {
+                SCREEN_WIDTH = MAX_SCREEN_WIDTH;
+                SCREEN_HEIGHT = MAX_SCREEN_HEIGHT;
 
-                //User requests quit via closing the window or pressing esc
-                if (e.type == SDL.SDL_EventType.SDL_QUIT || e.key.keysym.sym == SDL.SDL_Keycode.SDLK_ESCAPE)
-                {
-                    quit = true;
-                }
+                // Set the window to fullscreen
+                SDL.SDL_SetWindowFullscreen(gWindow,
+                    (int)SDL.SDL_WindowFlags.SDL_WINDOW_FULLSCREEN_DESKTOP);
 
-                //Switch screen size mode if 'F' key was pressed
-                if (e.type == SDL.SDL_EventType.SDL_KEYDOWN) //ToDo könnte ein switch case sein
-                {
-                    // Change screen size
-                    if (e.key.keysym.sym == SDL.SDL_Keycode.SDLK_f)
-                    {
-                        // Change screen size
-                        isFullScreen = !isFullScreen;
-                        if (isFullScreen)
-                        {
-                            SCREEN_WIDTH = MAX_SCREEN_WIDTH;
-                            SCREEN_HEIGHT = MAX_SCREEN_HEIGHT;
-
-                            // Set the window to fullscreen
-                            SDL.SDL_SetWindowFullscreen(gWindow,
-                                (int)SDL.SDL_WindowFlags.SDL_WINDOW_FULLSCREEN_DESKTOP);
-
-                        }
-
-                        else
-                        {
-                            SCREEN_WIDTH = ALT_SCREEN_WIDTH;
-                            SCREEN_HEIGHT = ALT_SCREEN_HEIGHT;
-
-                            // calculate the middle of screen
-                            int windowPosX = (MAX_SCREEN_WIDTH - ALT_SCREEN_WIDTH) / 2;
-                            int windowPosY = (MAX_SCREEN_HEIGHT - ALT_SCREEN_HEIGHT) / 2;
-
-                            // Set the window position
-                            SDL.SDL_SetWindowPosition(gWindow, windowPosX, windowPosY);
-
-                            SDL.SDL_SetWindowFullscreen(gWindow, (int)SDL.SDL_WindowFlags.SDL_WINDOW_RESIZABLE);
-                        }
-
-                        SDL.SDL_SetWindowSize(gWindow, SCREEN_WIDTH, SCREEN_HEIGHT);
-                    }
-                }
             }
+
+            else
+            {
+                SCREEN_WIDTH = ALT_SCREEN_WIDTH;
+                SCREEN_HEIGHT = ALT_SCREEN_HEIGHT;
+
+                // calculate the middle of screen
+                int windowPosX = (MAX_SCREEN_WIDTH - ALT_SCREEN_WIDTH) / 2;
+                int windowPosY = (MAX_SCREEN_HEIGHT - ALT_SCREEN_HEIGHT) / 2;
+
+                // Set the window position
+                SDL.SDL_SetWindowPosition(gWindow, windowPosX, windowPosY);
+
+                SDL.SDL_SetWindowFullscreen(gWindow, (int)SDL.SDL_WindowFlags.SDL_WINDOW_RESIZABLE);
+            }
+
+            SDL.SDL_SetWindowSize(gWindow, SCREEN_WIDTH, SCREEN_HEIGHT);
+        }
+
+        public static void addBullet(float vx , float vy)
+        {
+           Bullet bill = new Bullet(bulletText);
+           bill.vecX = vx; 
+           bill.vecY = vy;
+           bill.spawn((Program.SCREEN_WIDTH / 2), Program.SCREEN_HEIGHT / 2);
+           bulletList.Add(bill);
         }
 
         static int Main(string[] args)
@@ -229,32 +220,46 @@ namespace ShooterGame
                 }
                 else
                 {
-                    double previous = 0.0;
+                    float previous = 0;
+
+                    ////////////////////////////////////// TEST AREA
                     BackgroundObject bgo = new BackgroundObject();
 
                     bgo.setBGColor();
 
-                    Player arno = new Player(fileHandler.getTexture("Ritter1"));
+                    Player arno = new Player(fileHandler.getTexture("hamter"), fileHandler.getTexture("hamter"));
+                    Bullet bb = new Bullet(fileHandler.getTexture("hamter"));
+                    bulletText = fileHandler.getTexture("hamter");
+                    ////////////////////////////////////// TEST AREA
+                    bulletList.Add(bb);
 
                     //While application is running
                     while (!quit)
                     {
-                        double current = timer.getTicks();
-                        double elapsed = current - previous;
+                        SDL.SDL_RenderClear(gRenderer);
+
+
+                        float current = timer.getTicks();
+                        float elapsed = current - previous;
                         previous = current;
                         if (elapsed < 1.0)
                         {
-                            elapsed = 5.0;
+                            elapsed = 5;
                         }
                         ////////////////////////////////////// TEST AREA
-                        handleUserInput();
+                        InputHandler.handleUserInput();
 
                         
-                        
+                        foreach (Bullet bullet in bulletList)
+                        {
+                            bullet.update(elapsed);
+                        }
+
+                        arno.update(elapsed);
 
 
 
-                        /////////////////////////////////////// TEST AREA
+                        ////////////////////////////////////// TEST AREA
                         //Update screen
                         SDL.SDL_RenderPresent(gRenderer);
                     }

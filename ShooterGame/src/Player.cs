@@ -5,14 +5,27 @@ namespace ShooterGame
 {
     class Player : Entity
     {
-
         
-        public Player(LTexture tex)
-        {
-            spawn(Program.SCREEN_WIDTH / 2, Program.SCREEN_HEIGHT / 2);
-          //  SDL.SDL_Rect pannelRect = new SDL.SDL_Rect { x = 0, y = 0, w = tex.getWidth(), h = tex.getHeight() };
-            render(tex);
+        LTexture bullet;
 
+        public Player(LTexture tex, LTexture bullTex)
+        {
+            lives = 5;
+            spawn((Program.SCREEN_WIDTH / 2) , Program.SCREEN_HEIGHT / 2 );
+            width = 30;
+            height = 30;
+            bullet = bullTex;
+            texture = tex;
+
+        }
+
+        public Bullet shoot(float vecx, float vecy)
+        {
+            Bullet bill = new Bullet(bullet);
+            bill.spawn(posX, posY);
+            bill.vecX = vecx;
+            bill.vecY = vecy;
+            return bill;
         }
 
     }
