@@ -39,8 +39,6 @@ namespace ShooterGame
 
         public static ArrayList entityList = new ArrayList();
 
-        public static LTexture bulletText = new LTexture();
-
         public static bool quit = false;
 
         private static bool Init()
@@ -219,13 +217,9 @@ namespace ShooterGame
                     bgo.setBGColor();
 
                     Player arno = new Player(fileHandler.getTexture("hamter"), fileHandler.getTexture("hamter"));
-                    bulletText = fileHandler.getTexture("hamter");
                     ////////////////////////////////////// TEST AREA
                     ///
                     entityList.Add(arno);
-                    
-
-                    // etityList.Add( arno.shoot( 
                     
 
                     //While application is running
@@ -242,20 +236,29 @@ namespace ShooterGame
                             elapsed = 5;
                         }
                         ////////////////////////////////////// TEST AREA
-                        (int x , int y) = InputHandler.handleUserInput();
-                        if (x + y != 0)
+                        (int x , int y, string command) = InputHandler.handleUserInput();
+                        if (command == "shoot")
                         {
                             entityList.Add(arno.shoot(x, y));
                         }
-
-
-                        
-                        foreach (Entity enti in entityList)
+                        else if(command == "move")
                         {
-                            enti.update(elapsed);
+                            arno.vecX = x;
+                            arno.vecY = y;
                         }
 
 
+                        ArrayList cleardList = new ArrayList();
+                        foreach (Entity enti in entityList)
+                        {
+                            enti.update(elapsed);
+                            if (enti.alive)
+                            {
+                                cleardList.Add(enti);
+                            }
+                        }
+
+                        entityList = cleardList;
 
 
 

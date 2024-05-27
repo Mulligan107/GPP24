@@ -68,6 +68,14 @@ namespace ShooterGame
             move(deltatime);
             destRect = new SDL.SDL_Rect { x = (int)System.Math.Floor(posX), y = (int)System.Math.Floor(posY), w = (int)System.Math.Floor(width), h = (int)System.Math.Floor(height) }; // Skalierung auf dieses Rect
             Console.WriteLine(posX +" "+ posY);
+            if (posX < 0 || posX > Program.SCREEN_WIDTH)
+            {
+                kill();
+            }
+            else if (posY < 0 || posY > Program.SCREEN_HEIGHT)
+            {
+                kill();
+            }
             render();
         }
 

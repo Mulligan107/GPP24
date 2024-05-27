@@ -15,7 +15,7 @@ namespace ShooterGame
         public InputHandler() { 
         }
 
-        public static (int,int) handleUserInput()
+        public static (int,int, string) handleUserInput()
         {
             while (SDL.SDL_PollEvent(out e) != 0)
             {
@@ -41,14 +41,19 @@ namespace ShooterGame
                     //Adjust the velocity
                     switch (e.key.keysym.sym)
                     {
-                        case SDL.SDL_Keycode.SDLK_UP: return (0,-6);
-                        case SDL.SDL_Keycode.SDLK_DOWN: return (0, 6);
-                        case SDL.SDL_Keycode.SDLK_LEFT: return (-6, 0);
-                        case SDL.SDL_Keycode.SDLK_RIGHT: return (6, 0);
+                        case SDL.SDL_Keycode.SDLK_UP: return (0,-8, "shoot");
+                        case SDL.SDL_Keycode.SDLK_DOWN: return (0, 8, "shoot");
+                        case SDL.SDL_Keycode.SDLK_LEFT: return (-8, 0, "shoot");
+                        case SDL.SDL_Keycode.SDLK_RIGHT: return (8, 0, "shoot");
+                        case SDL.SDL_Keycode.SDLK_w: return (0, -4, "move");
+                        case SDL.SDL_Keycode.SDLK_s: return (0, 4, "move");
+                        case SDL.SDL_Keycode.SDLK_a: return (-4, 0, "move");
+                        case SDL.SDL_Keycode.SDLK_d: return (4, 0, "move");
+
                     }
                 }
             }
-            return (0,0);
+            return (0,0,"noAction");
         }
     }
 
