@@ -39,16 +39,6 @@ namespace ShooterGame
             alive = false;
         }
 
-        public void hit()
-        {
-            lives += lives - 1;
-            if (lives < 0)
-            {
-                kill();
-            }
-        }
-
-
         public void render()
         {
             if (alive)
@@ -67,7 +57,6 @@ namespace ShooterGame
         {
             move(deltatime);
             destRect = new SDL.SDL_Rect { x = (int)System.Math.Floor(posX), y = (int)System.Math.Floor(posY), w = (int)System.Math.Floor(width), h = (int)System.Math.Floor(height) }; // Skalierung auf dieses Rect
-            Console.WriteLine(posX +" "+ posY);
             if (posX < 0 || posX > Program.SCREEN_WIDTH)
             {
                 kill();

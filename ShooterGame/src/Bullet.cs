@@ -3,14 +3,13 @@ using SDL2;
 
 namespace ShooterGame
 {
-    class Bullet : Entity
+    class Bullet : LivingEntity
     {
         public Bullet(LTexture tex)
         {
-            lives = 1;
             width = 15;
             height = 15;
-
+            lives = 1;
             texture = tex;
             
             vecX = -3; 

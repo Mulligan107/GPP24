@@ -5,7 +5,7 @@ using System.Threading;
 using SDL2;
 
 /*
-
+TODO - Entity aufsplitten interactable, hit usw.
 
  */
 namespace ShooterGame
@@ -217,9 +217,12 @@ namespace ShooterGame
                     bgo.setBGColor();
 
                     Player arno = new Player(fileHandler.getTexture("hamter"), fileHandler.getTexture("hamter"));
+                    Enemy benno = new Enemy(fileHandler.getTexture("hamter"));
                     ////////////////////////////////////// TEST AREA
                     ///
                     entityList.Add(arno);
+                    entityList.Add(benno);
+                    
                     
 
                     //While application is running
@@ -247,19 +250,15 @@ namespace ShooterGame
                             arno.vecY = y;
                         }
 
+                        entityList = CollisionHandler.checkCollision(entityList);
 
-                        ArrayList cleardList = new ArrayList();
                         foreach (Entity enti in entityList)
                         {
                             enti.update(elapsed);
-                            if (enti.alive)
-                            {
-                                cleardList.Add(enti);
-                            }
+                            
                         }
 
-                        entityList = cleardList;
-
+                        
 
 
                         ////////////////////////////////////// TEST AREA

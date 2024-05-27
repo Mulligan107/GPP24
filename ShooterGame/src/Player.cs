@@ -3,7 +3,7 @@ using SDL2;
 
 namespace ShooterGame
 {
-    class Player : Entity
+    class Player : LivingEntity
     {
         
         LTexture bullet;
@@ -14,6 +14,7 @@ namespace ShooterGame
             spawn((Program.SCREEN_WIDTH / 2) , Program.SCREEN_HEIGHT / 2 );
             width = 30;
             height = 30;
+            friendly = true;
             bullet = bullTex;
             texture = tex;
 
@@ -25,6 +26,7 @@ namespace ShooterGame
             bill.spawn(posX, posY);
             bill.vecX = vecx;
             bill.vecY = vecy;
+            bill.friendly = true;
             return bill;
         }
 

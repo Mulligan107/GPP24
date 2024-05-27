@@ -70,6 +70,10 @@
     <Compile Include="src\BackgroundObject.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="src\CollisionHandler.cs" />
+    <Compile Include="src\LivingEntity.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="src\Entity.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
