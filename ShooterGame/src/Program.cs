@@ -37,7 +37,7 @@ namespace ShooterGame
 
         public static Random gRandom = new Random();
 
-        public static ArrayList bulletList = new ArrayList();
+        public static ArrayList entityList = new ArrayList();
 
         public static LTexture bulletText = new LTexture();
 
@@ -188,15 +188,6 @@ namespace ShooterGame
             SDL.SDL_SetWindowSize(gWindow, SCREEN_WIDTH, SCREEN_HEIGHT);
         }
 
-        public static void addBullet(float vx , float vy)
-        {
-           Bullet bill = new Bullet(bulletText);
-           bill.vecX = vx; 
-           bill.vecY = vy;
-           bill.spawn((Program.SCREEN_WIDTH / 2), Program.SCREEN_HEIGHT / 2);
-           bulletList.Add(bill);
-        }
-
         static int Main(string[] args)
         {
             SDL.SDL_SetHint(SDL.SDL_HINT_WINDOWS_DISABLE_THREAD_NAMING, "1");
@@ -228,10 +219,14 @@ namespace ShooterGame
                     bgo.setBGColor();
 
                     Player arno = new Player(fileHandler.getTexture("hamter"), fileHandler.getTexture("hamter"));
-                    Bullet bb = new Bullet(fileHandler.getTexture("hamter"));
                     bulletText = fileHandler.getTexture("hamter");
                     ////////////////////////////////////// TEST AREA
-                    bulletList.Add(bb);
+                    ///
+                    entityList.Add(arno);
+                    
+
+                    // etityList.Add( arno.shoot( 
+                    
 
                     //While application is running
                     while (!quit)
@@ -247,15 +242,20 @@ namespace ShooterGame
                             elapsed = 5;
                         }
                         ////////////////////////////////////// TEST AREA
-                        InputHandler.handleUserInput();
-
-                        
-                        foreach (Bullet bullet in bulletList)
+                        (int x , int y) = InputHandler.handleUserInput();
+                        if (x + y != 0)
                         {
-                            bullet.update(elapsed);
+                            entityList.Add(arno.shoot(x, y));
                         }
 
-                        arno.update(elapsed);
+
+                        
+                        foreach (Entity enti in entityList)
+                        {
+                            enti.update(elapsed);
+                        }
+
+
 
 
 

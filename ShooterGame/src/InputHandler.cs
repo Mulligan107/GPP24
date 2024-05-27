@@ -15,7 +15,7 @@ namespace ShooterGame
         public InputHandler() { 
         }
 
-        public static void handleUserInput()
+        public static (int,int) handleUserInput()
         {
             while (SDL.SDL_PollEvent(out e) != 0)
             {
@@ -41,13 +41,14 @@ namespace ShooterGame
                     //Adjust the velocity
                     switch (e.key.keysym.sym)
                     {
-                        case SDL.SDL_Keycode.SDLK_UP: Program.addBullet(0,-6); break;
-                        case SDL.SDL_Keycode.SDLK_DOWN: Program.addBullet(0, 6); break;
-                        case SDL.SDL_Keycode.SDLK_LEFT: Program.addBullet(-6, 0); break;
-                        case SDL.SDL_Keycode.SDLK_RIGHT: Program.addBullet(6, 0); break;
+                        case SDL.SDL_Keycode.SDLK_UP: return (0,-6);
+                        case SDL.SDL_Keycode.SDLK_DOWN: return (0, 6);
+                        case SDL.SDL_Keycode.SDLK_LEFT: return (-6, 0);
+                        case SDL.SDL_Keycode.SDLK_RIGHT: return (6, 0);
                     }
                 }
             }
+            return (0,0);
         }
     }
 
