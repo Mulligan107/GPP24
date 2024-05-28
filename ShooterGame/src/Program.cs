@@ -192,6 +192,12 @@ namespace ShooterGame
             Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
             Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
 
+            while (true)
+            {
+                Menu.penisVerlaengern();
+            }
+            /*
+
             //Start up SDL and create window
             var success = Init();
             if (success == false)
@@ -229,7 +235,6 @@ namespace ShooterGame
                     while (!quit)
                     {
                         SDL.SDL_RenderClear(gRenderer);
-
 
                         float current = timer.getTicks();
                         float elapsed = current - previous;
@@ -273,7 +278,7 @@ namespace ShooterGame
 
             if (success == false)
                 Console.ReadLine();
-
+*/
             return 0;
         }
     }
