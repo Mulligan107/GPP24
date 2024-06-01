@@ -211,24 +211,12 @@ namespace ShooterGame
                     Console.WriteLine("Failed to load media!");
                 }
                 else
-                {
-                    // Load the textures for the menu items
-                    IntPtr startTexture = SDL_image.IMG_LoadTexture(gRenderer, "imgs/start.png");
-                    IntPtr settingsTexture = SDL_image.IMG_LoadTexture(gRenderer, "imgs/settings.png");
-                    IntPtr quitTexture = SDL_image.IMG_LoadTexture(gRenderer, "imgs/quit.png");
-
-                    // Create the menu items with their positions
-                    MenuItem startItem = new MenuItem("Start", () => { /* code to start the game */ }, startTexture, new SDL.SDL_Rect { x = 100, y = 100, w = 200, h = 50 });
-                    MenuItem settingsItem = new MenuItem("Settings", () => { /* code to open settings */ }, settingsTexture, new SDL.SDL_Rect { x = 100, y = 200, w = 200, h = 50 });
-                    MenuItem quitItem = new MenuItem("Quit", () => { /* code to quit the game */ }, quitTexture, new SDL.SDL_Rect { x = 100, y = 300, w = 200, h = 50 });
-
+                {  
                     // Add the menu items to the menu
-                    Menu mainMenu = new Menu();
-                    mainMenu.AddMenuItem(startItem);
-                    mainMenu.AddMenuItem(settingsItem);
-                    mainMenu.AddMenuItem(quitItem);
-
-                    InputHandler.mainMenu = mainMenu; // Add this line to set the mainMenu field in the InputHandler class
+                    Menu mainMenu = new Menu(gRenderer);
+                    // Set the mainMenu field in the InputHandler class, so that it can be accessed when handling user input
+                    InputHandler.mainMenu = mainMenu; 
+                    
                     float previous = 0;
 
                     ////////////////////////////////////// TEST AREA
@@ -248,7 +236,17 @@ namespace ShooterGame
                     //While application is running
                     while (!quit)
                     {
+                        // Set the draw color to black
+                        SDL.SDL_SetRenderDrawColor(gRenderer, 0x00, 0x00, 0x00, 0xFF);
+
+                        // Clear the current rendering target with the drawing color
                         SDL.SDL_RenderClear(gRenderer);
+
+                        // Render the menu when the game is in the Menu state
+                        if (CurrentState == GameState.Menu)
+                        {
+                            mainMenu.Render(gRenderer);
+                        }
 
 
                         float current = timer.getTicks();

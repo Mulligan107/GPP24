@@ -24,9 +24,13 @@ namespace ShooterGame
     {
         private List<MenuItem> menuItems = new List<MenuItem>();
         private int selectedIndex = 0;
+        private IntPtr renderer; // Add this line to store the renderer as a class member
+
         
         public Menu(IntPtr renderer)
         {
+            this.renderer = renderer; // Add this line to store the renderer
+            
             // Load the textures for the menu items
             IntPtr startTexture = SDL_image.IMG_LoadTexture(renderer, "imgs/start.png");
             IntPtr settingsTexture = SDL_image.IMG_LoadTexture(renderer, "imgs/settings.png");
@@ -67,7 +71,8 @@ namespace ShooterGame
         {
             for (int i = 0; i < menuItems.Count; i++)
             {
-                SDL.SDL_RenderCopy(renderer, menuItems[i].Texture, IntPtr.Zero, ref menuItems[i].Position);
+                SDL.SDL_Rect position = menuItems[i].Position; // Create a local copy of the Position
+                SDL.SDL_RenderCopy(renderer, menuItems[i].Texture, IntPtr.Zero, ref position);
             }
         }
     }
