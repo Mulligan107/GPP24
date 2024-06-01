@@ -236,16 +236,23 @@ namespace ShooterGame
                     //While application is running
                     while (!quit)
                     {
-                        // Set the draw color to black
-                        SDL.SDL_SetRenderDrawColor(gRenderer, 0x00, 0x00, 0x00, 0xFF);
-
-                        // Clear the current rendering target with the drawing color
-                        SDL.SDL_RenderClear(gRenderer);
-
-                        // Render the menu when the game is in the Menu state
-                        if (CurrentState == GameState.Menu)
+                        switch (CurrentState)
                         {
-                            mainMenu.Render(gRenderer);
+                            case GameState.Menu:
+                                // Set the mainMenu field in the InputHandler class, so that it can be accessed when handling user input
+                                InputHandler.mainMenu = mainMenu;
+                                // Set the draw color to black
+                                SDL.SDL_SetRenderDrawColor(gRenderer, 0x00, 0x00, 0x00, 0xFF);
+                                // Clear the current rendering target with the drawing color
+                                SDL.SDL_RenderClear(gRenderer);
+                                
+                                mainMenu.Render(gRenderer);
+                                
+                                break;
+                            case GameState.InGame:
+                                // Set the mainMenu field in the InputHandler class, so that it can be accessed when handling user input
+                                InputHandler.mainMenu = null;
+                                break;
                         }
 
 
