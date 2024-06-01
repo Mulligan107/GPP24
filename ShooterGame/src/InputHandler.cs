@@ -11,6 +11,8 @@ namespace ShooterGame
     {
         //Event handler
         static SDL.SDL_Event e;
+        public static Menu mainMenu; // Add this line to have a reference to the menu
+
 
         public InputHandler() { 
         }
@@ -35,8 +37,28 @@ namespace ShooterGame
                         Program.changeWindowSize();
                     }
                 }
+
+                if (Program.CurrentState == GameState.Menu)
+                {
+                    if (e.type == SDL.SDL_EventType.SDL_KEYDOWN)
+                    {
+                        switch (e.key.keysym.sym)
+                        {
+                            case SDL.SDL_Keycode.SDLK_UP:
+                                mainMenu.SelectPreviousItem();
+                                break;
+                            case SDL.SDL_Keycode.SDLK_DOWN:
+                                mainMenu.SelectNextItem();
+                                break;
+                            case SDL.SDL_Keycode.SDLK_RETURN:
+                                mainMenu.ExecuteSelectedItem();
+                                break;
+                        }
+                    }
+                }
+                
                 //If a key was pressed
-                if (e.type == SDL.SDL_EventType.SDL_KEYDOWN && e.key.repeat == 0)
+                if (e.type == SDL.SDL_EventType.SDL_KEYDOWN && e.key.repeat == 0 && Program.CurrentState == GameState.InGame)
                 {
                     //Adjust the velocity
                     switch (e.key.keysym.sym)

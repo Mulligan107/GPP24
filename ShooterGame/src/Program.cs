@@ -12,6 +12,9 @@ namespace ShooterGame
 {
     class Program
     {
+        //Game state
+        public static GameState CurrentState = GameState.Menu;
+        
         //Screen dimension constants
         public static int MAX_SCREEN_WIDTH;
         public static int MAX_SCREEN_HEIGHT;
@@ -40,7 +43,7 @@ namespace ShooterGame
         public static ArrayList entityList = new ArrayList();
 
         public static bool quit = false;
-
+        
         private static bool Init()
         {
             //Initialization flag
@@ -209,6 +212,23 @@ namespace ShooterGame
                 }
                 else
                 {
+                    // Load the textures for the menu items
+                    IntPtr startTexture = SDL_image.IMG_LoadTexture(gRenderer, "imgs/start.png");
+                    IntPtr settingsTexture = SDL_image.IMG_LoadTexture(gRenderer, "imgs/settings.png");
+                    IntPtr quitTexture = SDL_image.IMG_LoadTexture(gRenderer, "imgs/quit.png");
+
+                    // Create the menu items with their positions
+                    MenuItem startItem = new MenuItem("Start", () => { /* code to start the game */ }, startTexture, new SDL.SDL_Rect { x = 100, y = 100, w = 200, h = 50 });
+                    MenuItem settingsItem = new MenuItem("Settings", () => { /* code to open settings */ }, settingsTexture, new SDL.SDL_Rect { x = 100, y = 200, w = 200, h = 50 });
+                    MenuItem quitItem = new MenuItem("Quit", () => { /* code to quit the game */ }, quitTexture, new SDL.SDL_Rect { x = 100, y = 300, w = 200, h = 50 });
+
+                    // Add the menu items to the menu
+                    Menu mainMenu = new Menu();
+                    mainMenu.AddMenuItem(startItem);
+                    mainMenu.AddMenuItem(settingsItem);
+                    mainMenu.AddMenuItem(quitItem);
+
+                    InputHandler.mainMenu = mainMenu; // Add this line to set the mainMenu field in the InputHandler class
                     float previous = 0;
 
                     ////////////////////////////////////// TEST AREA
@@ -238,6 +258,7 @@ namespace ShooterGame
                         {
                             elapsed = 5;
                         }
+                        
                         ////////////////////////////////////// TEST AREA
                         (int x , int y, string command) = InputHandler.handleUserInput();
                         if (command == "shoot")
