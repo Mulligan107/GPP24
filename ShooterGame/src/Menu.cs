@@ -24,14 +24,13 @@ namespace ShooterGame
 
     public class Menu
     {
-        private List<MenuItem> menuItems = new List<MenuItem>();
+        public List<MenuItem> menuItems = new List<MenuItem>();
         private int selectedIndex = 0;
         private IntPtr renderer; 
 
         
         public Menu(IntPtr renderer)
         {
-            this.renderer = renderer; // Add this line to store the renderer
             
             // Load the textures for the menu items
             IntPtr startTexture = SDL_image.IMG_LoadTexture(renderer, "imgs/start.png");
@@ -39,9 +38,22 @@ namespace ShooterGame
             IntPtr quitTexture = SDL_image.IMG_LoadTexture(renderer, "imgs/quit.png");
 
             // Create the menu items with their positions
-            MenuItem startItem = new MenuItem("Start", () => { /* code to start the game */ }, startTexture, new SDL.SDL_Rect { x = 100, y = 100, w = 200, h = 50 }, new SDL.SDL_Color { r = 255, g = 255, b = 0, a = 255});
-            MenuItem settingsItem = new MenuItem("Settings", () => { /* code to open settings */ }, settingsTexture, new SDL.SDL_Rect { x = 100, y = 200, w = 200, h = 50 }, new SDL.SDL_Color { r = 255, g = 255, b = 0, a = 255});
-            MenuItem quitItem = new MenuItem("Quit", () => { /* code to quit the game */ }, quitTexture, new SDL.SDL_Rect { x = 100, y = 300, w = 200, h = 50 }, new SDL.SDL_Color { r = 255, g = 255, b = 0, a = 255});
+            MenuItem startItem = new MenuItem("Start", () => 
+                { 
+                    Program.CurrentState = GameState.InGame; 
+                    SDL.SDL_SetRenderDrawColor(Program.gRenderer, 0xFF, 0xFF, 0xFF, 0xFF); // Set the draw color to white
+                    SDL.SDL_RenderClear(Program.gRenderer); // Clear the current rendering target with the drawing color
+                }, 
+                startTexture, new SDL.SDL_Rect { x = 100, y = 100, w = 200, h = 50 }, new SDL.SDL_Color { r = 255, g = 255, b = 0, a = 255});
+            MenuItem settingsItem = new MenuItem("Settings", () =>
+                {
+                     /* code to open settings */
+                }, settingsTexture, new SDL.SDL_Rect { x = 100, y = 200, w = 200, h = 50 }, new SDL.SDL_Color { r = 255, g = 255, b = 0, a = 255});
+            MenuItem quitItem = new MenuItem("Quit", () =>
+            {
+                Program.Close();
+                Environment.Exit(0);
+            }, quitTexture, new SDL.SDL_Rect { x = 100, y = 300, w = 200, h = 50 }, new SDL.SDL_Color { r = 255, g = 255, b = 0, a = 255});
 
             // Add the menu items to the menu
             AddMenuItem(startItem);

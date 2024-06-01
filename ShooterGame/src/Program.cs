@@ -14,6 +14,8 @@ namespace ShooterGame
     {
         //Game state
         public static GameState CurrentState = GameState.Menu;
+        public static Menu mainMenu { get; set; } 
+
         
         //Screen dimension constants
         public static int MAX_SCREEN_WIDTH;
@@ -141,8 +143,14 @@ namespace ShooterGame
         /**
          * Free media and shut down SDL
          */
-        private static void Close()
+        public static void Close()
         {
+            // Free the textures of the menu items
+            foreach (MenuItem menuItem in mainMenu.menuItems)
+            {
+                SDL.SDL_DestroyTexture(menuItem.Texture);
+            }
+            
             //Destroy window
             SDL.SDL_DestroyRenderer(gRenderer);
             SDL.SDL_DestroyWindow(gWindow);
@@ -236,6 +244,8 @@ namespace ShooterGame
                     //While application is running
                     while (!quit)
                     {
+                        SDL.SDL_RenderClear(gRenderer);
+                        
                         switch (CurrentState)
                         {
                             case GameState.Menu:
