@@ -235,7 +235,7 @@ namespace ShooterGame
                     Player arno = new Player(fileHandler.getTexture("hamter"), fileHandler.getTexture("hamter"));
                     Enemy benno = new Enemy(fileHandler.getTexture("hamter"));
                     ////////////////////////////////////// TEST AREA
-                    ///
+                    
                     entityList.Add(arno);
                     entityList.Add(benno);
                     
@@ -245,6 +245,14 @@ namespace ShooterGame
                     while (!quit)
                     {
                         SDL.SDL_RenderClear(gRenderer);
+                        
+                        float current = timer.getTicks();
+                        float elapsed = current - previous;
+                        previous = current;
+                        if (elapsed < 1.0)
+                        {
+                            elapsed = 5;
+                        }
                         
                         switch (CurrentState)
                         {
@@ -259,22 +267,26 @@ namespace ShooterGame
                                 mainMenu.Render(gRenderer);
                                 
                                 break;
+                            
                             case GameState.InGame:
                                 // Set the mainMenu field in the InputHandler class, so that it can be accessed when handling user input
                                 InputHandler.mainMenu = null;
+                                
+                                entityList = CollisionHandler.checkCollision(entityList);
+
+                                foreach (Entity enti in entityList)
+                                {
+                                    enti.update(elapsed);
+                                }
+                                
                                 break;
-                        }
-
-
-                        float current = timer.getTicks();
-                        float elapsed = current - previous;
-                        previous = current;
-                        if (elapsed < 1.0)
-                        {
-                            elapsed = 5;
+                            
+                            case GameState.Paused:
+                                break;
                         }
                         
                         ////////////////////////////////////// TEST AREA
+                        
                         (int x , int y, string command) = InputHandler.handleUserInput();
                         if (command == "shoot")
                         {
@@ -285,19 +297,7 @@ namespace ShooterGame
                             arno.vecX = x;
                             arno.vecY = y;
                         }
-
-                        entityList = CollisionHandler.checkCollision(entityList);
-
-                        foreach (Entity enti in entityList)
-                        {
-                            enti.update(elapsed);
-                            
-                        }
-
                         
-
-
-                        ////////////////////////////////////// TEST AREA
                         //Update screen
                         SDL.SDL_RenderPresent(gRenderer);
                     }

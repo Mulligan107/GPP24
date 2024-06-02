@@ -41,7 +41,7 @@ namespace ShooterGame
             MenuItem startItem = new MenuItem("Start", () => 
                 { 
                     Program.CurrentState = GameState.InGame; 
-                    SDL.SDL_SetRenderDrawColor(Program.gRenderer, 0xFF, 0xFF, 0xFF, 0xFF); // Set the draw color to white
+                    SDL.SDL_SetRenderDrawColor(Program.gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
                     SDL.SDL_RenderClear(Program.gRenderer); // Clear the current rendering target with the drawing color
                 }, 
                 startTexture, new SDL.SDL_Rect { x = 100, y = 100, w = 200, h = 50 }, new SDL.SDL_Color { r = 255, g = 255, b = 0, a = 255});
