@@ -5,6 +5,6 @@ namespace ShooterGame
         Menu,
         InGame,
         Paused,
-        // Add more states as needed
+        LevelSelect,
     }
 }

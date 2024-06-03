@@ -16,6 +16,8 @@ namespace ShooterGame
         public static GameState CurrentState = GameState.Menu;
         public static Menu mainMenu { get; set; } 
 
+        // Current level
+        public static int CurrentLevel { get; set; }
         
         //Screen dimension constants
         public static int MAX_SCREEN_WIDTH;
@@ -266,6 +268,18 @@ namespace ShooterGame
                                 
                                 mainMenu.Render(gRenderer);
                                 
+                                break;
+                            
+                            case GameState.LevelSelect:
+                                // Set the mainMenu field in the InputHandler class, so that it can be accessed when handling user input
+                                InputHandler.mainMenu = mainMenu;
+                                // Set the draw color to black
+                                SDL.SDL_SetRenderDrawColor(gRenderer, 0x00, 0x00, 0x00, 0xFF);
+                                // Clear the current rendering target with the drawing color
+                                SDL.SDL_RenderClear(gRenderer);
+
+                                Program.mainMenu.Render(gRenderer);
+
                                 break;
                             
                             case GameState.InGame:

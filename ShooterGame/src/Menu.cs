@@ -21,7 +21,37 @@ namespace ShooterGame
             SelectedColor = selectedColor;
         }
     }
+    
+    public class LevelSelectMenu : Menu
+    {
+        public LevelSelectMenu(IntPtr renderer) : base(renderer)
+        {
+            // Load the textures for the level items
+            IntPtr level1Texture = SDL_image.IMG_LoadTexture(renderer, "imgs/level1.png");
+            IntPtr level2Texture = SDL_image.IMG_LoadTexture(renderer, "imgs/level2.png");
+            // Add more levels as needed
 
+            // Create the level items with their positions
+            MenuItem level1Item = new MenuItem("Level 1", () => 
+                { 
+                    Program.CurrentState = GameState.InGame; 
+                    Program.CurrentLevel = 1; // Set the current level to 1
+                }, 
+                level1Texture, new SDL.SDL_Rect { x = 400, y = 100, w = 200, h = 50 }, new SDL.SDL_Color { r = 255, g = 255, b = 0, a = 255});
+            MenuItem level2Item = new MenuItem("Level 2", () =>
+            {
+                Program.CurrentState = GameState.InGame;
+                Program.CurrentLevel = 2; // Set the current level to 2
+            }, level2Texture, new SDL.SDL_Rect { x = 400, y = 200, w = 200, h = 50 }, new SDL.SDL_Color { r = 255, g = 255, b = 0, a = 255});
+            // Add more levels as needed
+
+            // Add the level items to the menu
+            AddMenuItem(level1Item);
+            AddMenuItem(level2Item);
+            // Add more levels as needed
+        }
+    }
+    
     public class Menu
     {
         public List<MenuItem> menuItems = new List<MenuItem>();
@@ -37,14 +67,15 @@ namespace ShooterGame
             IntPtr settingsTexture = SDL_image.IMG_LoadTexture(renderer, "imgs/settings.png");
             IntPtr quitTexture = SDL_image.IMG_LoadTexture(renderer, "imgs/quit.png");
 
-            // Create the menu items with their positions
-            MenuItem startItem = new MenuItem("Start", () => 
-                { 
-                    Program.CurrentState = GameState.InGame; 
+            MenuItem startItem = new MenuItem("Start", () =>
+                {
+                    Program.CurrentState = GameState.LevelSelect;
+                    Program.mainMenu = new LevelSelectMenu(Program.gRenderer);
+                    Program.mainMenu.selectedIndex = 0; // Reset the selected index
                     SDL.SDL_SetRenderDrawColor(Program.gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
                     SDL.SDL_RenderClear(Program.gRenderer); // Clear the current rendering target with the drawing color
-                }, 
-                startTexture, new SDL.SDL_Rect { x = 100, y = 100, w = 200, h = 50 }, new SDL.SDL_Color { r = 255, g = 255, b = 0, a = 255});
+                },
+                startTexture, new SDL.SDL_Rect { x = 100, y = 100, w = 200, h = 50 }, new SDL.SDL_Color { r = 255, g = 255, b = 0, a = 255}); 
             MenuItem settingsItem = new MenuItem("Settings", () =>
                 {
                      /* code to open settings */
