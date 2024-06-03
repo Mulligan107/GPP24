@@ -12,12 +12,12 @@ namespace ShooterGame
         public Enemy(List<LTexture> textureList)
         {
             
-            lives = 4;
+            lives = 2;
             this.textureList = textureList;
             
-            width = 30 * s;
-            height = 30 * s;
-            angle = 90;
+            width = 90 * s;
+            height = 90 * s;
+            angle = -90;
             texture = textureList[0];
             onSpawn();
             
@@ -27,7 +27,9 @@ namespace ShooterGame
         public void onSpawn()
         {
             repeats = 3;
-            setupAnimation(4, 1);
+            animationCounter = 0;
+            choosenAnim = 1;
+            setupAnimation(4);
             spawn((Program.SCREEN_WIDTH / 2) * 1.5, Program.SCREEN_HEIGHT / 2);
         }
 

@@ -22,6 +22,7 @@ namespace ShooterGame
         public double speed = 1;
 
         public double lives;
+        public bool iframe;
 
         public bool alive = true;
 
@@ -43,12 +44,15 @@ namespace ShooterGame
         public int frame;
         public static int anzahlFrames;
         public int repeats;
+        public int choosenAnim;
+        public int animationSpeed = 1;
 
 
         public bool startAnimation;
 
         public Entity()
         {
+            
         }
 
         public void move(double deltaTime)
@@ -66,18 +70,22 @@ namespace ShooterGame
         {
             if (alive)
             {
+                Console.WriteLine(choosenAnim);
+                //Rendert Basis Texture unter Schild
+                if(choosenAnim == 3) {
+                    SDL.SDL_RenderCopyEx(Program.gRenderer, textureList[0].getTexture(), ref sorRect, ref destRect, angle, IntPtr.Zero, SDL.SDL_RendererFlip.SDL_FLIP_NONE);
+                }
                 SDL.SDL_RenderCopyEx(Program.gRenderer, texture.getTexture() , ref sorRect, ref destRect, angle, IntPtr.Zero, SDL.SDL_RendererFlip.SDL_FLIP_NONE);
                // tex.render(((int)System.Math.Floor(posX)), (int)System.Math.Floor(posY));
             }
             
         }
 
-        public void setupAnimation(int anzahlFrames , int chooseAnim)
+        public void setupAnimation(int anzahlFrames)
         {
-            
             if (textureList != null) //TODO ändern, 2 ist wenn die Liste eine Deathanimation hat
             {
-                texture = textureList[chooseAnim];
+                texture = textureList[choosenAnim];
                 _SpriteClips = new SDL.SDL_Rect[anzahlFrames];
                 //Set sprite clips
 
@@ -90,20 +98,24 @@ namespace ShooterGame
                 }
                 frame = 0;
                 frameTicker = 0;
-                startAnimation = true;
             }
+            else
+            {
+                kill(); //TODO ist für Bullets, ändern
+            }
+
+            startAnimation = true;
         }
 
 
         public void update(double deltatime)
         {
             move(deltatime);
-            
+
             destRect = new SDL.SDL_Rect { x = (int)System.Math.Floor(posX), y = (int)System.Math.Floor(posY), w = (int)System.Math.Floor(width), h = (int)System.Math.Floor(height) }; // Skalierung auf dieses Rect
             if (startAnimation && repeats > animationCounter)
             {
-
-                frameTicker += deltatime/10;
+                frameTicker += deltatime/10 * animationSpeed;
                     if (frameTicker > 2) { 
                         if (frame < _SpriteClips.Length)
                         {
@@ -113,7 +125,11 @@ namespace ShooterGame
                         {
                             frame = 0;
                             animationCounter++;
-                            //startAnimation = false;
+                            iframe = false;
+                            if (choosenAnim == 2)
+                            {
+                                kill();
+                            }
                         }
                         frame++;
                         frameTicker = 0;
@@ -122,6 +138,7 @@ namespace ShooterGame
             }
             else
             {
+                startAnimation = false;
                 if (textureList != null) //TODO Klassen ändern das sie immer Listen haben
                 {
                     texture = textureList[0];

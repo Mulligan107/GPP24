@@ -9,11 +9,8 @@ namespace ShooterGame
         {
             width = 15 * s;
             height = 15 * s;
-            lives = 1;
+            lives = 0;
             texture = tex;
-            
-            vecX = -3; 
-            vecY = 0;
 
         }
 

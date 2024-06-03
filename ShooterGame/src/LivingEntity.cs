@@ -5,8 +5,8 @@ namespace ShooterGame
 {
     class LivingEntity : Entity
     {
-        public float lives;
         public bool friendly = false;
+
 
         public LivingEntity()
         {
@@ -22,15 +22,29 @@ namespace ShooterGame
 
         public void hit()
         {
-            Console.WriteLine("Lives befor: " + lives);
-            lives = lives - 1;
-            if (lives < 0)
+            if (!iframe)
             {
-                setupAnimation(8, 2);
-                repeats = 1;
-                kill();
+                iframe = true;
+                Console.WriteLine("Lives befor: " + lives);
+                lives = lives - 1;
+                if (lives < 0)
+                {
+                    choosenAnim = 2;
+                    setupAnimation(9);
+                    repeats = 1;
+                    animationCounter = 0;
+                    animationSpeed = 2;
+                }
+                else
+                {
+                    choosenAnim = 3;
+                    setupAnimation(10);
+                    repeats = 1;
+                    animationCounter = 0;
+                    animationSpeed = 1;
+                }
+                Console.WriteLine("Lives after: " + lives);
             }
-            Console.WriteLine("Lives after: " + lives);
         }
 
     }

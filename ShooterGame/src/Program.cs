@@ -223,9 +223,10 @@ namespace ShooterGame
 
                     Player arno = new Player(fileHandler.getTexture("hamter"), fileHandler.getTexture("hamter"));
                     List<String> list = new List<String>();
-                    list.Add("Fighter");
+                    list.Add("Fighterrand");
                     list.Add("Ray");
                     list.Add("FighterDeath");
+                    list.Add("FighterShield");
                     Enemy benno = new Enemy(fileHandler.getTextureList(list)); // Vielleicht in Filehandler packen
                     ////////////////////////////////////// TEST AREA
                     ///
