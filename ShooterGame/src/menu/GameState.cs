@@ -5,6 +5,10 @@ namespace ShooterGame
         MAIN_MENU,
         IN_GAME,
         PAUSED,
-        LEVEL_SELECT
+        LEVEL_SELECT,
+        SETTINGS,
+        GAME_OVER,
+        WIN,
+        INSTRUCTIONS
     }
 }

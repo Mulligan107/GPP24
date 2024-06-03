@@ -257,23 +257,11 @@ namespace ShooterGame
                         switch (CurrentState)
                         {
                             case GameState.MAIN_MENU:
-                                // Set the draw color to black
-                                SDL.SDL_SetRenderDrawColor(gRenderer, 0x00, 0x00, 0x00, 0xFF);
-                                // Clear the current rendering target with the drawing color
-                                SDL.SDL_RenderClear(gRenderer);
-                                
+                            case GameState.LEVEL_SELECT:
                                 mainMenu.Render(gRenderer);
-                                
                                 break;
                             
-                            case GameState.LEVEL_SELECT:
-                                // Set the draw color to black
-                                SDL.SDL_SetRenderDrawColor(gRenderer, 0x00, 0x00, 0x00, 0xFF);
-                                // Clear the current rendering target with the drawing color
-                                SDL.SDL_RenderClear(gRenderer);
-
-                                Program.mainMenu.Render(gRenderer);
-
+                            case GameState.INSTRUCTIONS:
                                 break;
                             
                             case GameState.IN_GAME:
@@ -291,6 +279,16 @@ namespace ShooterGame
                             
                             case GameState.PAUSED:
                                 break;
+                            
+                            case GameState.SETTINGS:
+                                break;
+                            
+                            case GameState.GAME_OVER:
+                                break;
+                            
+                            case GameState.WIN:
+                                break;
+                            
                         }
                         
                         ////////////////////////////////////// TEST AREA
