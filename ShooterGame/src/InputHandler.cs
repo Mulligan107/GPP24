@@ -37,7 +37,7 @@ namespace ShooterGame
                     }
                 }
 
-                if (Program.CurrentState == GameState.Menu || Program.CurrentState == GameState.LevelSelect)
+                if (Program.CurrentState == GameState.MAIN_MENU || Program.CurrentState == GameState.LEVEL_SELECT)
                 {
                     if (e.type == SDL.SDL_EventType.SDL_KEYDOWN)
                     {
@@ -57,7 +57,7 @@ namespace ShooterGame
                 }
                 
                 //If a key was pressed
-                if (e.type == SDL.SDL_EventType.SDL_KEYDOWN && e.key.repeat == 0 && Program.CurrentState == GameState.InGame)
+                if (e.type == SDL.SDL_EventType.SDL_KEYDOWN && e.key.repeat == 0 && Program.CurrentState == GameState.IN_GAME)
                 {
                     //Adjust the velocity
                     switch (e.key.keysym.sym)

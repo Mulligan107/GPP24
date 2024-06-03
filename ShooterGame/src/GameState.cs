@@ -2,9 +2,9 @@ namespace ShooterGame
 {
     public enum GameState
     {
-        Menu,
-        InGame,
-        Paused,
-        LevelSelect,
+        MAIN_MENU,
+        IN_GAME,
+        PAUSED,
+        LEVEL_SELECT
     }
 }

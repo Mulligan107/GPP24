@@ -13,7 +13,7 @@ namespace ShooterGame
     class Program
     {
         //Game state
-        public static GameState CurrentState = GameState.Menu;
+        public static GameState CurrentState = GameState.MAIN_MENU;
         public static Menu mainMenu { get; set; } 
 
         // Current level
@@ -256,7 +256,7 @@ namespace ShooterGame
                         
                         switch (CurrentState)
                         {
-                            case GameState.Menu:
+                            case GameState.MAIN_MENU:
                                 // Set the draw color to black
                                 SDL.SDL_SetRenderDrawColor(gRenderer, 0x00, 0x00, 0x00, 0xFF);
                                 // Clear the current rendering target with the drawing color
@@ -266,7 +266,7 @@ namespace ShooterGame
                                 
                                 break;
                             
-                            case GameState.LevelSelect:
+                            case GameState.LEVEL_SELECT:
                                 // Set the draw color to black
                                 SDL.SDL_SetRenderDrawColor(gRenderer, 0x00, 0x00, 0x00, 0xFF);
                                 // Clear the current rendering target with the drawing color
@@ -276,7 +276,7 @@ namespace ShooterGame
 
                                 break;
                             
-                            case GameState.InGame:
+                            case GameState.IN_GAME:
                                 // Set the mainMenu field in the InputHandler class, so that it can be accessed when handling user input
                                 mainMenu = null;
                                 
@@ -289,7 +289,7 @@ namespace ShooterGame
                                 
                                 break;
                             
-                            case GameState.Paused:
+                            case GameState.PAUSED:
                                 break;
                         }
                         
