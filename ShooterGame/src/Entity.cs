@@ -25,10 +25,20 @@ namespace ShooterGame
 
         public LTexture texture;
 
+        public SDL.SDL_Rect sorRect;
         public SDL.SDL_Rect destRect;
+        private static SDL.SDL_Rect[] _SpriteClips;
+
+        //Current animation frame
+        public double frameTicker;
+        public int frame;
+        public static int anzahlFrames;
+
+        public bool startAnimation;
 
         public Entity()
         {
+
         }
 
         public void move(double deltaTime)
@@ -46,20 +56,41 @@ namespace ShooterGame
         {
             if (alive)
             {
-                SDL.SDL_Rect sorRect = new SDL.SDL_Rect { x = 0, y = 0, w = texture.getWidth(), h = texture.getHeight() };
-                destRect = new SDL.SDL_Rect { x = (int)System.Math.Floor(posX), y = (int)System.Math.Floor(posY), w = (int)System.Math.Floor(width), h = (int)System.Math.Floor(height) }; // Skalierung auf dieses Rect
-
-
                 SDL.SDL_RenderCopy(Program.gRenderer, texture.getTexture() , ref sorRect, ref destRect);
                // tex.render(((int)System.Math.Floor(posX)), (int)System.Math.Floor(posY));
             }
             
         }
 
+        public void setupAnimation(int anzahlFrames , LTexture tex)
+        {
+            texture = tex;
+            _SpriteClips = new SDL.SDL_Rect[anzahlFrames];
+            //Set sprite clips
+
+            for (int i = 0; i < anzahlFrames; i++)
+            {
+
+                _SpriteClips[i].x = 0 + ((texture.getWidth() / anzahlFrames) * i);
+                _SpriteClips[i].y = 0;
+                _SpriteClips[i].w = texture.getWidth()/anzahlFrames;
+                _SpriteClips[i].h = texture.getHeight();
+            }
+            frame = 0;
+            frameTicker = 0;
+            startAnimation = true;
+            
+        }
+
         public void update(double deltatime)
         {
             move(deltatime);
+            sorRect = new SDL.SDL_Rect { x = 0, y = 0, w = texture.getWidth(), h = texture.getHeight() };
             destRect = new SDL.SDL_Rect { x = (int)System.Math.Floor(posX), y = (int)System.Math.Floor(posY), w = (int)System.Math.Floor(width), h = (int)System.Math.Floor(height) }; // Skalierung auf dieses Rect
+            if (startAnimation)
+            {
+                sorRect = _SpriteClips[frame];
+            }
             render();
         }
 
