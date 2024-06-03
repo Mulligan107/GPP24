@@ -215,14 +215,23 @@ namespace ShooterGame
                     double previous = 0;
 
                     ////////////////////////////////////// TEST AREA
-                    BackgroundObject bgo = new BackgroundObject(fileHandler.getTexture("NebulaBlue"));
-                    bgo.posX = 0;
-                    BackgroundObject bgo2 = bgo.copy(SCREEN_WIDTH * 2);
+                    List<String> list = new List<String>();
+                    list.Add("NebulaBlue");
+                    list.Add("Stars");
+                    BackgroundObject bgo = new BackgroundObject(fileHandler.getTextureList(list));
+                    
+                    BackgroundObject bgo2 = bgo.copy(SCREEN_WIDTH * 2, 0, 1);
+                    BackgroundObject bgoStars = bgo.copy(0, 1, 2);
+                    BackgroundObject bgoStars2 = bgo.copy(SCREEN_WIDTH * 2, 1, 2);
                     bgList.Add(bgo);
                     bgList.Add(bgo2);
+                    bgList.Add(bgoStars);
+                    bgList.Add(bgoStars2);
+
+                    list.Clear();
 
                     Player arno = new Player(fileHandler.getTexture("hamter"), fileHandler.getTexture("hamter"));
-                    List<String> list = new List<String>();
+                    
                     list.Add("Fighterrand");
                     list.Add("Ray");
                     list.Add("FighterDeath");

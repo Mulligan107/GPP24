@@ -7,13 +7,15 @@ namespace ShooterGame
 {
     class BackgroundObject : Entity
     {
-        public static ArrayList bgList = new ArrayList();
-        public BackgroundObject(LTexture tex)
+        public List<LTexture> bgList;
+        public BackgroundObject(List<LTexture> list)
         {
-            texture = tex;
+            posX = 0;
+            bgList = list;
+            texture = bgList[0];
             height = Program.SCREEN_HEIGHT * 2;
             width = Program.SCREEN_WIDTH * 2;
-            vecX = -2 * s;
+            vecX = -1 * s;
 
         }
 
@@ -32,10 +34,12 @@ namespace ShooterGame
             }
         }
 
-        public BackgroundObject copy(double pos)
+        public BackgroundObject copy(double pos, int chooseTexture, double speed)
         {
-            BackgroundObject bg = new BackgroundObject(texture);
+            BackgroundObject bg = new BackgroundObject(bgList);
+            bg.texture = bgList[chooseTexture];
             bg.posX = pos;
+            bg.vecX *= speed;
             return bg;
         }
     }
