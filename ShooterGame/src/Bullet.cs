@@ -7,8 +7,8 @@ namespace ShooterGame
     {
         public Bullet(LTexture tex)
         {
-            width = 15;
-            height = 15;
+            width = 15 * s;
+            height = 15 * s;
             lives = 1;
             texture = tex;
             

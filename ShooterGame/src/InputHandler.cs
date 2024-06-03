@@ -15,7 +15,7 @@ namespace ShooterGame
         public InputHandler() { 
         }
 
-        public static (int,int, string) handleUserInput()
+        public static (double,double, string) handleUserInput()
         {
             while (SDL.SDL_PollEvent(out e) != 0)
             {
@@ -38,17 +38,20 @@ namespace ShooterGame
                 //If a key was pressed
                 if (e.type == SDL.SDL_EventType.SDL_KEYDOWN && e.key.repeat == 0)
                 {
+                    double s = Program.SCREEN_WIDTH / Program.SCREEN_HEIGHT;
+                    double bulletspeed = 20;
+                    double movementspeed = 8;
                     //Adjust the velocity
                     switch (e.key.keysym.sym)
                     {
-                        case SDL.SDL_Keycode.SDLK_UP: return (0,-8, "shoot");
-                        case SDL.SDL_Keycode.SDLK_DOWN: return (0, 8, "shoot");
-                        case SDL.SDL_Keycode.SDLK_LEFT: return (-8, 0, "shoot");
-                        case SDL.SDL_Keycode.SDLK_RIGHT: return (8, 0, "shoot");
-                        case SDL.SDL_Keycode.SDLK_w: return (0, -4, "move");
-                        case SDL.SDL_Keycode.SDLK_s: return (0, 4, "move");
-                        case SDL.SDL_Keycode.SDLK_a: return (-4, 0, "move");
-                        case SDL.SDL_Keycode.SDLK_d: return (4, 0, "move");
+                        case SDL.SDL_Keycode.SDLK_UP: return (0, (-bulletspeed * s), "shoot");
+                        case SDL.SDL_Keycode.SDLK_DOWN: return (0, bulletspeed * s, "shoot");
+                        case SDL.SDL_Keycode.SDLK_LEFT: return (-bulletspeed * s, 0, "shoot");
+                        case SDL.SDL_Keycode.SDLK_RIGHT: return (bulletspeed * s, 0, "shoot");
+                        case SDL.SDL_Keycode.SDLK_w: return (0, -movementspeed * s, "move");
+                        case SDL.SDL_Keycode.SDLK_s: return (0, movementspeed * s, "move");
+                        case SDL.SDL_Keycode.SDLK_a: return (-movementspeed * s, 0, "move");
+                        case SDL.SDL_Keycode.SDLK_d: return (movementspeed * s, 0, "move");
 
                     }
                 }

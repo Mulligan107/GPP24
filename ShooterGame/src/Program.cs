@@ -38,6 +38,7 @@ namespace ShooterGame
         public static Random gRandom = new Random();
 
         public static ArrayList entityList = new ArrayList();
+        public static ArrayList bgList = new ArrayList();
 
         public static bool quit = false;
 
@@ -209,12 +210,14 @@ namespace ShooterGame
                 }
                 else
                 {
-                    float previous = 0;
+                    double previous = 0;
 
                     ////////////////////////////////////// TEST AREA
-                    BackgroundObject bgo = new BackgroundObject();
-
-                    bgo.setBGColor();
+                    BackgroundObject bgo = new BackgroundObject(fileHandler.getTexture("NebulaBlue"));
+                    bgo.posX = 0;
+                    BackgroundObject bgo2 = bgo.copy(SCREEN_WIDTH * 2);
+                    bgList.Add(bgo);
+                    bgList.Add(bgo2);
 
                     Player arno = new Player(fileHandler.getTexture("hamter"), fileHandler.getTexture("hamter"));
                     Enemy benno = new Enemy(fileHandler.getTexture("hamter"));
@@ -231,15 +234,15 @@ namespace ShooterGame
                         SDL.SDL_RenderClear(gRenderer);
 
 
-                        float current = timer.getTicks();
-                        float elapsed = current - previous;
+                        double current = timer.getTicks();
+                        double elapsed = current - previous;
                         previous = current;
                         if (elapsed < 1.0)
                         {
                             elapsed = 5;
                         }
                         ////////////////////////////////////// TEST AREA
-                        (int x , int y, string command) = InputHandler.handleUserInput();
+                        (double x , double y, string command) = InputHandler.handleUserInput();
                         if (command == "shoot")
                         {
                             entityList.Add(arno.shoot(x, y));
@@ -252,13 +255,18 @@ namespace ShooterGame
 
                         entityList = CollisionHandler.checkCollision(entityList);
 
+                        foreach (BackgroundObject backgroundObject in bgList) {
+                            backgroundObject.checkOutOfBounds();
+                            backgroundObject.update(elapsed);
+                        }
+
+
                         foreach (Entity enti in entityList)
                         {
                             enti.update(elapsed);
-                            
                         }
-
                         
+
 
 
                         ////////////////////////////////////// TEST AREA

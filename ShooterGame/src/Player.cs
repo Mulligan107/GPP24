@@ -12,15 +12,15 @@ namespace ShooterGame
         {
             lives = 5;
             spawn((Program.SCREEN_WIDTH / 2) , Program.SCREEN_HEIGHT / 2 );
-            width = 30;
-            height = 30;
+            width = 30 * s;
+            height = 30 * s;
             friendly = true;
             bullet = bullTex;
             texture = tex;
 
         }
 
-        public Bullet shoot(float vecx, float vecy)
+        public Bullet shoot(double vecx, double vecy)
         {
             Bullet bill = new Bullet(bullet);
             bill.spawn(posX, posY);

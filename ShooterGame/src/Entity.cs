@@ -1,24 +1,27 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using SDL2;
 
 namespace ShooterGame
 {
-    class Entity
+    class Entity : ICloneable
     {
-        public float width;
-        public float height;
+        public double width;
+        public double height;
 
-        public float posX;
-        public float posY;
+        public double posX;
+        public double posY;
 
-        public float vecX = 0;
-        public float vecY = 0;
+        public double vecX = 0;
+        public double vecY = 0;
 
-        public float speed = 1;
+        public double speed = 1;
 
-        public float lives;
+        public double lives;
 
         public bool alive = true;
+
+        public double s = Program.SCREEN_WIDTH / Program.SCREEN_HEIGHT;
 
         public LTexture texture;
 
@@ -28,7 +31,7 @@ namespace ShooterGame
         {
         }
 
-        public void move(float deltaTime)
+        public void move(double deltaTime)
         {
             posX += vecX * (deltaTime / 10) * speed;
             posY += vecY * (deltaTime / 10) * speed;
@@ -53,27 +56,23 @@ namespace ShooterGame
             
         }
 
-        public void update(float deltatime)
+        public void update(double deltatime)
         {
             move(deltatime);
             destRect = new SDL.SDL_Rect { x = (int)System.Math.Floor(posX), y = (int)System.Math.Floor(posY), w = (int)System.Math.Floor(width), h = (int)System.Math.Floor(height) }; // Skalierung auf dieses Rect
-            if (posX < 0 || posX > Program.SCREEN_WIDTH)
-            {
-                kill();
-            }
-            else if (posY < 0 || posY > Program.SCREEN_HEIGHT)
-            {
-                kill();
-            }
             render();
         }
 
-        public void spawn(float x, float y)
+        public void spawn(double x, double y)
         {
             posX = x; 
             posY = y; 
         }
 
+        public object Clone()
+        {
+           return this.MemberwiseClone();
+        }
     }
 
 }
