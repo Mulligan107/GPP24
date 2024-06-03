@@ -225,6 +225,7 @@ namespace ShooterGame
                     List<String> list = new List<String>();
                     list.Add("Fighter");
                     list.Add("Ray");
+                    list.Add("FighterDeath");
                     Enemy benno = new Enemy(fileHandler.getTextureList(list)); // Vielleicht in Filehandler packen
                     ////////////////////////////////////// TEST AREA
                     ///

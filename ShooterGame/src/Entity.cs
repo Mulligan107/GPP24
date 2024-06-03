@@ -17,6 +17,8 @@ namespace ShooterGame
         public double vecX = 0;
         public double vecY = 0;
 
+        public double angle;
+
         public double speed = 1;
 
         public double lives;
@@ -64,7 +66,7 @@ namespace ShooterGame
         {
             if (alive)
             {
-                SDL.SDL_RenderCopy(Program.gRenderer, texture.getTexture() , ref sorRect, ref destRect);
+                SDL.SDL_RenderCopyEx(Program.gRenderer, texture.getTexture() , ref sorRect, ref destRect, angle, IntPtr.Zero, SDL.SDL_RendererFlip.SDL_FLIP_NONE);
                // tex.render(((int)System.Math.Floor(posX)), (int)System.Math.Floor(posY));
             }
             
@@ -72,21 +74,24 @@ namespace ShooterGame
 
         public void setupAnimation(int anzahlFrames , int chooseAnim)
         {
-            texture = textureList[chooseAnim];
-            _SpriteClips = new SDL.SDL_Rect[anzahlFrames];
-            //Set sprite clips
-
-            for (int i = 0; i < anzahlFrames; i++)
-            {
-                _SpriteClips[i].x = 0 + ((texture.getWidth() / anzahlFrames) * i);
-                _SpriteClips[i].y = 0;
-                _SpriteClips[i].w = texture.getWidth()/anzahlFrames;
-                _SpriteClips[i].h = texture.getHeight();
-            }
-            frame = 0;
-            frameTicker = 0;
-            startAnimation = true;
             
+            if (textureList != null) //TODO ändern, 2 ist wenn die Liste eine Deathanimation hat
+            {
+                texture = textureList[chooseAnim];
+                _SpriteClips = new SDL.SDL_Rect[anzahlFrames];
+                //Set sprite clips
+
+                for (int i = 0; i < anzahlFrames; i++)
+                {
+                    _SpriteClips[i].x = 0 + ((texture.getWidth() / anzahlFrames) * i);
+                    _SpriteClips[i].y = 0;
+                    _SpriteClips[i].w = texture.getWidth() / anzahlFrames;
+                    _SpriteClips[i].h = texture.getHeight();
+                }
+                frame = 0;
+                frameTicker = 0;
+                startAnimation = true;
+            }
         }
 
 

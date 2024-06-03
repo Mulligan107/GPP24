@@ -26,6 +26,8 @@ namespace ShooterGame
             lives = lives - 1;
             if (lives < 0)
             {
+                setupAnimation(8, 2);
+                repeats = 1;
                 kill();
             }
             Console.WriteLine("Lives after: " + lives);

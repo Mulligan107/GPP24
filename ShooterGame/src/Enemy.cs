@@ -17,6 +17,7 @@ namespace ShooterGame
             
             width = 30 * s;
             height = 30 * s;
+            angle = 90;
             texture = textureList[0];
             onSpawn();
             
