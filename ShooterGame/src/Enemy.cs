@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using SDL2;
 
 namespace ShooterGame
@@ -7,16 +8,26 @@ namespace ShooterGame
     {
 
         
-        public Enemy(LTexture tex)
+        
+        public Enemy(List<LTexture> textureList)
         {
             
             lives = 4;
-            spawn((Program.SCREEN_WIDTH / 8) , Program.SCREEN_HEIGHT / 2 );
+            this.textureList = textureList;
+            
             width = 30 * s;
             height = 30 * s;
-            texture = tex;
+            texture = textureList[0];
+            onSpawn();
+            
             //   render(tex);
+        }
 
+        public void onSpawn()
+        {
+            repeats = 3;
+            setupAnimation(4, 1);
+            spawn((Program.SCREEN_WIDTH / 2) * 1.5, Program.SCREEN_HEIGHT / 2);
         }
 
     }

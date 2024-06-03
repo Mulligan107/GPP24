@@ -44,6 +44,16 @@ namespace ShooterGame
             return textureMap["imgs/" + title + ".png"];
         }
 
+        public List<LTexture> getTextureList(List<String> texureNames)
+        {
+            List<LTexture> textureList = new List<LTexture>();
+            foreach (String texureName in texureNames)
+            {
+                textureList.Add(getTexture(texureName));
+            }
+            return textureList;
+        }
+
         public bool getStatus()
         {
             return success;

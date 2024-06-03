@@ -99,6 +99,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="imgs\Fighter.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="imgs\hamter.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

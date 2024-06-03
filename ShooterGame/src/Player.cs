@@ -10,6 +10,7 @@ namespace ShooterGame
 
         public Player(LTexture tex, LTexture bullTex)
         {
+            
             lives = 5;
             spawn((Program.SCREEN_WIDTH / 2) , Program.SCREEN_HEIGHT / 2 );
             width = 30 * s;

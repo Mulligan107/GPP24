@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using SDL2;
 
@@ -25,6 +27,11 @@ namespace ShooterGame
 
         public LTexture texture;
 
+        public List<LTexture> textureList;
+
+
+        public int animationCounter;
+
         public SDL.SDL_Rect sorRect;
         public SDL.SDL_Rect destRect;
         private static SDL.SDL_Rect[] _SpriteClips;
@@ -33,12 +40,13 @@ namespace ShooterGame
         public double frameTicker;
         public int frame;
         public static int anzahlFrames;
+        public int repeats;
+
 
         public bool startAnimation;
 
         public Entity()
         {
-
         }
 
         public void move(double deltaTime)
@@ -62,15 +70,14 @@ namespace ShooterGame
             
         }
 
-        public void setupAnimation(int anzahlFrames , LTexture tex)
+        public void setupAnimation(int anzahlFrames , int chooseAnim)
         {
-            texture = tex;
+            texture = textureList[chooseAnim];
             _SpriteClips = new SDL.SDL_Rect[anzahlFrames];
             //Set sprite clips
 
             for (int i = 0; i < anzahlFrames; i++)
             {
-
                 _SpriteClips[i].x = 0 + ((texture.getWidth() / anzahlFrames) * i);
                 _SpriteClips[i].y = 0;
                 _SpriteClips[i].w = texture.getWidth()/anzahlFrames;
@@ -82,14 +89,40 @@ namespace ShooterGame
             
         }
 
+
         public void update(double deltatime)
         {
             move(deltatime);
-            sorRect = new SDL.SDL_Rect { x = 0, y = 0, w = texture.getWidth(), h = texture.getHeight() };
+            
             destRect = new SDL.SDL_Rect { x = (int)System.Math.Floor(posX), y = (int)System.Math.Floor(posY), w = (int)System.Math.Floor(width), h = (int)System.Math.Floor(height) }; // Skalierung auf dieses Rect
-            if (startAnimation)
+            if (startAnimation && repeats > animationCounter)
             {
-                sorRect = _SpriteClips[frame];
+
+                frameTicker += deltatime/10;
+                    if (frameTicker > 2) { 
+                        if (frame < _SpriteClips.Length)
+                        {
+                            sorRect = _SpriteClips[frame];
+                        }
+                        else
+                        {
+                            frame = 0;
+                            animationCounter++;
+                            //startAnimation = false;
+                        }
+                        frame++;
+                        frameTicker = 0;
+                    }
+
+            }
+            else
+            {
+                if (textureList != null) //TODO Klassen ändern das sie immer Listen haben
+                {
+                    texture = textureList[0];
+                }
+                
+                sorRect = new SDL.SDL_Rect { x = 0, y = 0, w = texture.getWidth(), h = texture.getHeight() };
             }
             render();
         }

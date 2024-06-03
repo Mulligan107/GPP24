@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using SDL2;
@@ -184,6 +185,7 @@ namespace ShooterGame
                 SDL.SDL_SetWindowFullscreen(gWindow, (int)SDL.SDL_WindowFlags.SDL_WINDOW_RESIZABLE);
             }
 
+
             SDL.SDL_SetWindowSize(gWindow, SCREEN_WIDTH, SCREEN_HEIGHT);
         }
 
@@ -220,7 +222,10 @@ namespace ShooterGame
                     bgList.Add(bgo2);
 
                     Player arno = new Player(fileHandler.getTexture("hamter"), fileHandler.getTexture("hamter"));
-                    Enemy benno = new Enemy(fileHandler.getTexture("hamter"));
+                    List<String> list = new List<String>();
+                    list.Add("Fighter");
+                    list.Add("Ray");
+                    Enemy benno = new Enemy(fileHandler.getTextureList(list)); // Vielleicht in Filehandler packen
                     ////////////////////////////////////// TEST AREA
                     ///
                     entityList.Add(arno);
