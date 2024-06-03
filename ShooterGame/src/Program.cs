@@ -223,9 +223,7 @@ namespace ShooterGame
                 else
                 {  
                     // Add the menu items to the menu
-                    Menu mainMenu = new Menu(gRenderer);
-                    // Set the mainMenu field in the InputHandler class, so that it can be accessed when handling user input
-                    InputHandler.mainMenu = mainMenu; 
+                    mainMenu = new Menu(gRenderer);
                     
                     float previous = 0;
 
@@ -259,8 +257,6 @@ namespace ShooterGame
                         switch (CurrentState)
                         {
                             case GameState.Menu:
-                                // Set the mainMenu field in the InputHandler class, so that it can be accessed when handling user input
-                                InputHandler.mainMenu = mainMenu;
                                 // Set the draw color to black
                                 SDL.SDL_SetRenderDrawColor(gRenderer, 0x00, 0x00, 0x00, 0xFF);
                                 // Clear the current rendering target with the drawing color
@@ -271,8 +267,6 @@ namespace ShooterGame
                                 break;
                             
                             case GameState.LevelSelect:
-                                // Set the mainMenu field in the InputHandler class, so that it can be accessed when handling user input
-                                InputHandler.mainMenu = mainMenu;
                                 // Set the draw color to black
                                 SDL.SDL_SetRenderDrawColor(gRenderer, 0x00, 0x00, 0x00, 0xFF);
                                 // Clear the current rendering target with the drawing color
@@ -284,7 +278,7 @@ namespace ShooterGame
                             
                             case GameState.InGame:
                                 // Set the mainMenu field in the InputHandler class, so that it can be accessed when handling user input
-                                InputHandler.mainMenu = null;
+                                mainMenu = null;
                                 
                                 entityList = CollisionHandler.checkCollision(entityList);
 

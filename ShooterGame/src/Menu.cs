@@ -26,6 +26,8 @@ namespace ShooterGame
     {
         public LevelSelectMenu(IntPtr renderer) : base(renderer)
         {
+            menuItems = new List<MenuItem>();
+            
             // Load the textures for the level items
             IntPtr level1Texture = SDL_image.IMG_LoadTexture(renderer, "imgs/menu/level1.png");
             IntPtr level2Texture = SDL_image.IMG_LoadTexture(renderer, "imgs/menu/level2.png");
@@ -69,6 +71,10 @@ namespace ShooterGame
             AddMenuItem(level2Item);
             AddMenuItem(level3Item);
             AddMenuItem(backItem);
+            foreach (var menuItem in menuItems)
+            {
+             System.Console.WriteLine(menuItem.Label);   
+            }
             // Add more levels as needed
         }
     }
@@ -82,6 +88,7 @@ namespace ShooterGame
         
         public Menu(IntPtr renderer)
         {
+            menuItems = new List<MenuItem>();
             
             // Load the textures for the menu items
             IntPtr startTexture = SDL_image.IMG_LoadTexture(renderer, "imgs/menu/start.png");
@@ -91,7 +98,7 @@ namespace ShooterGame
             MenuItem startItem = new MenuItem("Start", () =>
                 {
                     Program.CurrentState = GameState.LevelSelect;
-                    Program.mainMenu = new LevelSelectMenu(Program.gRenderer);
+                    Program.mainMenu = new LevelSelectMenu(renderer);
                     Program.mainMenu.selectedIndex = 0; // Reset the selected index
                     SDL.SDL_SetRenderDrawColor(Program.gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
                     SDL.SDL_RenderClear(Program.gRenderer); // Clear the current rendering target with the drawing color
@@ -121,11 +128,13 @@ namespace ShooterGame
         public void SelectNextItem()
         {
             selectedIndex = (selectedIndex + 1) % menuItems.Count;
+            System.Console.WriteLine((selectedIndex + 1) + "/" + menuItems.Count);
         }
 
         public void SelectPreviousItem()
         {
             selectedIndex = (selectedIndex - 1 + menuItems.Count) % menuItems.Count;
+            System.Console.WriteLine((selectedIndex + 1) + "/" + menuItems.Count);
         }
 
         public void ExecuteSelectedItem()

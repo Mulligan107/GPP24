@@ -11,7 +11,6 @@ namespace ShooterGame
     {
         //Event handler
         static SDL.SDL_Event e;
-        public static Menu mainMenu; // Add this line to have a reference to the menu
 
 
         public InputHandler() { 
@@ -38,20 +37,20 @@ namespace ShooterGame
                     }
                 }
 
-                if (Program.CurrentState == GameState.Menu)
+                if (Program.CurrentState == GameState.Menu || Program.CurrentState == GameState.LevelSelect)
                 {
                     if (e.type == SDL.SDL_EventType.SDL_KEYDOWN)
                     {
                         switch (e.key.keysym.sym)
                         {
                             case SDL.SDL_Keycode.SDLK_UP:
-                                mainMenu.SelectPreviousItem();
+                                Program.mainMenu.SelectPreviousItem();
                                 break;
                             case SDL.SDL_Keycode.SDLK_DOWN:
-                                mainMenu.SelectNextItem();
+                                Program.mainMenu.SelectNextItem();
                                 break;
                             case SDL.SDL_Keycode.SDLK_RETURN:
-                                mainMenu.ExecuteSelectedItem();
+                                Program.mainMenu.ExecuteSelectedItem();
                                 break;
                         }
                     }
