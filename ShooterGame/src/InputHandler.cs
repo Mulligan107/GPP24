@@ -37,7 +37,7 @@ namespace ShooterGame
                     }
                 }
 
-                if (Program.CurrentState == GameState.MAIN_MENU || Program.CurrentState == GameState.LEVEL_SELECT)
+                if (Program.CurrentState == GameState.MAIN_MENU || Program.CurrentState == GameState.LEVEL_SELECT || Program.CurrentState == GameState.SETTINGS)
                 {
                     if (e.type == SDL.SDL_EventType.SDL_KEYDOWN)
                     {

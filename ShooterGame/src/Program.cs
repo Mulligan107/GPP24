@@ -261,6 +261,10 @@ namespace ShooterGame
                                 mainMenu.Render(gRenderer);
                                 break;
                             
+                            case GameState.SETTINGS:
+                                mainMenu.Render(gRenderer);
+                                break;
+                            
                             case GameState.INSTRUCTIONS:
                                 break;
                             
@@ -278,9 +282,6 @@ namespace ShooterGame
                                 break;
                             
                             case GameState.PAUSED:
-                                break;
-                            
-                            case GameState.SETTINGS:
                                 break;
                             
                             case GameState.GAME_OVER:

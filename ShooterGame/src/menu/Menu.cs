@@ -30,14 +30,16 @@ namespace ShooterGame
                     Program.CurrentState = GameState.LEVEL_SELECT;
                     Program.mainMenu = new LevelSelectMenu(renderer);
                     Program.mainMenu.selectedIndex = 0; // Reset the selected index
-                    SDL.SDL_SetRenderDrawColor(Program.gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
                     SDL.SDL_RenderClear(Program.gRenderer); // Clear the current rendering target with the drawing color
                 },
                 startTexture, new SDL.SDL_Rect { x = (Program.SCREEN_WIDTH - itemWidth) / 2, y = itemHeight, w = itemWidth, h = 50 }, new SDL.SDL_Color { r = 0, g = 255, b = 0, a = 255});
             
             MenuItem settingsItem = new MenuItem("Settings", () =>
                 {
-                     //TODO: Implement settings menu
+                    Program.CurrentState = GameState.SETTINGS;
+                    Program.mainMenu = new SettingsMenu(renderer);
+                    Program.mainMenu.selectedIndex = 0; // Reset the selected index
+                    SDL.SDL_RenderClear(Program.gRenderer); // Clear the current rendering target with the drawing color
                 }, 
                 settingsTexture, new SDL.SDL_Rect { x = (Program.SCREEN_WIDTH - itemWidth) / 2, y = 2 * itemHeight, w = itemWidth, h = 50 }, new SDL.SDL_Color { r = 255, g = 255, b = 0, a = 255});
             
@@ -62,11 +64,14 @@ namespace ShooterGame
         public void SelectNextItem()
         {
             selectedIndex = (selectedIndex + 1) % menuItems.Count;
+            System.Console.WriteLine(selectedIndex +1 + "/" + menuItems.Count);
         }
 
         public void SelectPreviousItem()
         {
             selectedIndex = (selectedIndex - 1 + menuItems.Count) % menuItems.Count;
+            System.Console.WriteLine(selectedIndex +1 + "/" + menuItems.Count);
+
         }
 
         public void ExecuteSelectedItem()
