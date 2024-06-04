@@ -226,12 +226,15 @@ namespace ShooterGame
                     bgList.Add(bgo);
                     bgList.Add(bgo2);
                     bgList.Add(bgoStars);
-                    bgList.Add(bgoStars2);
+                    bgList.Add(bgoStars2);  //TODO in BGO reinstopfen
 
                     list.Clear();
 
-                    Player arno = new Player(fileHandler.getTexture("hamter"), fileHandler.getTexture("hamter"));
-                    
+                    list.Add("PlayerShip");
+                    list.Add("Bullet");
+                    Player arno = new Player(fileHandler.getTextureList(list));
+                    list.Clear();
+
                     list.Add("Fighterrand");
                     list.Add("Ray");
                     list.Add("FighterDeath");
@@ -258,15 +261,16 @@ namespace ShooterGame
                             elapsed = 5;
                         }
                         ////////////////////////////////////// TEST AREA
-                        (double x , double y, string command) = InputHandler.handleUserInput();
+                        (double x , double y, int direction, string command) = InputHandler.handleUserInput();
                         if (command == "shoot")
                         {
-                            entityList.Add(arno.shoot(x, y));
+                            entityList.Add(arno.shoot(x, y, direction));
                         }
                         else if(command == "move")
                         {
                             arno.vecX = x;
                             arno.vecY = y;
+                            arno.angle = direction;
                         }
 
                         entityList = CollisionHandler.checkCollision(entityList);
