@@ -15,7 +15,7 @@ namespace ShooterGame
         public InputHandler() { 
         }
 
-        public static (double,double, string) handleUserInput()
+        public static (double, double, int ,string) handleUserInput()
         {
             while (SDL.SDL_PollEvent(out e) != 0)
             {
@@ -44,19 +44,19 @@ namespace ShooterGame
                     //Adjust the velocity
                     switch (e.key.keysym.sym)
                     {
-                        case SDL.SDL_Keycode.SDLK_UP: return (0, (-bulletspeed * s), "shoot");
-                        case SDL.SDL_Keycode.SDLK_DOWN: return (0, bulletspeed * s, "shoot");
-                        case SDL.SDL_Keycode.SDLK_LEFT: return (-bulletspeed * s, 0, "shoot");
-                        case SDL.SDL_Keycode.SDLK_RIGHT: return (bulletspeed * s, 0, "shoot");
-                        case SDL.SDL_Keycode.SDLK_w: return (0, -movementspeed * s, "move");
-                        case SDL.SDL_Keycode.SDLK_s: return (0, movementspeed * s, "move");
-                        case SDL.SDL_Keycode.SDLK_a: return (-movementspeed * s, 0, "move");
-                        case SDL.SDL_Keycode.SDLK_d: return (movementspeed * s, 0, "move");
+                        case SDL.SDL_Keycode.SDLK_UP: return (0, (-bulletspeed * s),0, "shoot");
+                        case SDL.SDL_Keycode.SDLK_DOWN: return (0, bulletspeed * s, 180, "shoot");
+                        case SDL.SDL_Keycode.SDLK_LEFT: return (-bulletspeed * s, 0,-90, "shoot");
+                        case SDL.SDL_Keycode.SDLK_RIGHT: return (bulletspeed * s, 0,90, "shoot");
+                        case SDL.SDL_Keycode.SDLK_w: return (0, -movementspeed * s,0, "move");
+                        case SDL.SDL_Keycode.SDLK_s: return (0, movementspeed * s, 180, "move");
+                        case SDL.SDL_Keycode.SDLK_a: return (-movementspeed * s, 0, -90, "move");
+                        case SDL.SDL_Keycode.SDLK_d: return (movementspeed * s, 0, 90, "move");
 
                     }
                 }
             }
-            return (0,0,"noAction");
+            return (0, 0, 0, "noAction");
         }
     }
 
