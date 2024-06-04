@@ -42,6 +42,7 @@ namespace ShooterGame
         public static ArrayList bgList = new ArrayList();
 
         public static bool quit = false;
+        public static bool reset = false;
 
         private static bool Init()
         {
@@ -212,86 +213,91 @@ namespace ShooterGame
                 }
                 else
                 {
-                    double previous = 0;
-
-                    ////////////////////////////////////// TEST AREA
-                    List<String> list = new List<String>();
-                    list.Add("NebulaBlue");
-                    list.Add("Stars");
-                    BackgroundObject bgo = new BackgroundObject(fileHandler.getTextureList(list));
-                    
-                    BackgroundObject bgo2 = bgo.copy(SCREEN_WIDTH * 2, 0, 1);
-                    BackgroundObject bgoStars = bgo.copy(0, 1, 2);
-                    BackgroundObject bgoStars2 = bgo.copy(SCREEN_WIDTH * 2, 1, 2);
-                    bgList.Add(bgo);
-                    bgList.Add(bgo2);
-                    bgList.Add(bgoStars);
-                    bgList.Add(bgoStars2);  //TODO in BGO reinstopfen
-
-                    list.Clear();
-
-                    list.Add("PlayerShip");
-                    list.Add("Bullet");
-                    Player arno = new Player(fileHandler.getTextureList(list));
-                    list.Clear();
-
-                    list.Add("Fighterrand");
-                    list.Add("Ray");
-                    list.Add("FighterDeath");
-                    list.Add("FighterShield");
-                    Enemy benno = new Enemy(fileHandler.getTextureList(list)); // Vielleicht in Filehandler packen
-                    ////////////////////////////////////// TEST AREA
-                    ///
-                    entityList.Add(arno);
-                    entityList.Add(benno);
-                    
-                    
-
-                    //While application is running
                     while (!quit)
                     {
-                        SDL.SDL_RenderClear(gRenderer);
-
-
-                        double current = timer.getTicks();
-                        double elapsed = current - previous;
-                        previous = current;
-                        if (elapsed < 1.0)
-                        {
-                            elapsed = 5;
-                        }
-                        ////////////////////////////////////// TEST AREA
-                        (double x , double y, int direction, string command) = InputHandler.handleUserInput();
-                        if (command == "shoot")
-                        {
-                            entityList.Add(arno.shoot(x, y, direction));
-                        }
-                        else if(command == "move")
-                        {
-                            arno.vecX = x;
-                            arno.vecY = y;
-                            arno.angle = direction;
-                        }
-
-                        entityList = CollisionHandler.checkCollision(entityList);
-
-                        foreach (BackgroundObject backgroundObject in bgList) {
-                            backgroundObject.checkOutOfBounds();
-                            backgroundObject.update(elapsed);
-                        }
-
-
-                        foreach (Entity enti in entityList)
-                        {
-                            enti.update(elapsed);
-                        }
-                        
-
-
+                        double previous = 0;
 
                         ////////////////////////////////////// TEST AREA
-                        //Update screen
-                        SDL.SDL_RenderPresent(gRenderer);
+                        ///
+                        reset = false;
+                        bgList.Clear();
+                        entityList.Clear();
+
+                        List<String> list = new List<String>();
+                        list.Add("NebulaBlue");
+                        list.Add("Stars");
+                        BackgroundObject bgo = new BackgroundObject(fileHandler.getTextureList(list));
+
+                        BackgroundObject bgo2 = bgo.copy(SCREEN_WIDTH * 2, 0, 1);
+                        BackgroundObject bgoStars = bgo.copy(0, 1, 2);
+                        BackgroundObject bgoStars2 = bgo.copy(SCREEN_WIDTH * 2, 1, 2);
+                        bgList.Add(bgo);
+                        bgList.Add(bgo2);
+                        bgList.Add(bgoStars);
+                        bgList.Add(bgoStars2);  //TODO in BGO reinstopfen
+
+                        list.Clear();
+
+                        list.Add("PlayerShip");
+                        list.Add("Bullet");
+                        Player arno = new Player(fileHandler.getTextureList(list));
+                        list.Clear();
+
+                        list.Add("Fighterrand");
+                        list.Add("Ray");
+                        list.Add("FighterDeath");
+                        list.Add("FighterShield");
+                        Enemy benno = new Enemy(fileHandler.getTextureList(list)); // Vielleicht in Filehandler packen
+                        list.Clear();                                                        ////////////////////////////////////// TEST AREA
+                        ///
+                        entityList.Add(arno);
+                        entityList.Add(benno);
+
+
+
+                        //While application is running
+                        while (!reset)
+                        {
+                            SDL.SDL_RenderClear(gRenderer);
+
+                            double current = timer.getTicks();
+                            double elapsed = current - previous;
+                            previous = current;
+                            if (elapsed < 1.0)
+                            {
+                                elapsed = 5;
+                            }
+                            ////////////////////////////////////// TEST AREA
+                            (double x, double y, int direction, string command) = InputHandler.handleUserInput();
+                            if (command == "shoot")
+                            {
+                                entityList.Add(arno.shoot(x, y, direction));
+                            }
+                            else if (command == "move")
+                            {
+                                arno.vecX = x;
+                                arno.vecY = y;
+                                arno.angle = direction;
+                            }
+
+                            entityList = CollisionHandler.checkCollision(entityList);
+
+                            foreach (BackgroundObject backgroundObject in bgList)
+                            {
+                                backgroundObject.checkOutOfBounds();
+                                backgroundObject.update(elapsed);
+                            }
+
+
+                            foreach (Entity enti in entityList)
+                            {
+                                enti.update(elapsed);
+                            }
+
+                            ////////////////////////////////////// TEST AREA
+                            //Update screen
+                            SDL.SDL_RenderPresent(gRenderer);
+                        }
                     }
                 }
             }

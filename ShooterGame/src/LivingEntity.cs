@@ -10,14 +10,7 @@ namespace ShooterGame
 
         public LivingEntity()
         {
-            if (posX < -100 || posX > Program.SCREEN_WIDTH + 100)
-            {
-                kill();
-            }
-            else if (posY < -100 || posY > Program.SCREEN_HEIGHT + 100)
-            {
-                kill();
-            }
+            
         }
 
         public void hit()

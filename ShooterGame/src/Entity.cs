@@ -65,6 +65,17 @@ namespace ShooterGame
         {
             alive = false;
         }
+        public void killOutOfBounds()
+        {
+            if (posX < -100 || posX > Program.SCREEN_WIDTH + 100)
+            {
+                kill();
+            }
+            else if (posY < -100 || posY > Program.SCREEN_HEIGHT + 100)
+            {
+                kill();
+            }
+        }
 
         public void render()
         {
@@ -134,7 +145,7 @@ namespace ShooterGame
                         frame++;
                         frameTicker = 0;
                     }
-
+                killOutOfBounds(); // Muss hier sein weil BGO keine Animation hat
             }
             else
             {
