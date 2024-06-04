@@ -81,7 +81,6 @@ namespace ShooterGame
         {
             if (alive)
             {
-                Console.WriteLine(choosenAnim);
                 //Rendert Basis Texture unter Schild
                 if(choosenAnim == 3) {
                     SDL.SDL_RenderCopyEx(Program.gRenderer, textureList[0].getTexture(), ref sorRect, ref destRect, angle, IntPtr.Zero, SDL.SDL_RendererFlip.SDL_FLIP_NONE);

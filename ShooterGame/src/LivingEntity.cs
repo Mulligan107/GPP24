@@ -22,19 +22,25 @@ namespace ShooterGame
                 lives = lives - 1;
                 if (lives < 0)
                 {
-                    choosenAnim = 2;
-                    setupAnimation(9);
-                    repeats = 1;
-                    animationCounter = 0;
-                    animationSpeed = 2;
+                    if (!friendly)
+                    {
+                        choosenAnim = 2;
+                        setupAnimation(9);
+                        repeats = 1;
+                        animationCounter = 0;
+                        animationSpeed = 2;
+                    }
                 }
                 else
                 {
-                    choosenAnim = 3;
-                    setupAnimation(10);
-                    repeats = 1;
-                    animationCounter = 0;
-                    animationSpeed = 1;
+                    if (!friendly)
+                    {
+                        choosenAnim = 3;
+                        setupAnimation(10);
+                        repeats = 1;
+                        animationCounter = 0;
+                        animationSpeed = 4;
+                    }   
                 }
                 Console.WriteLine("Lives after: " + lives);
             }

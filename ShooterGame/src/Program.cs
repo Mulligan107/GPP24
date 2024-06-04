@@ -248,10 +248,15 @@ namespace ShooterGame
                         list.Add("FighterDeath");
                         list.Add("FighterShield");
                         Enemy benno = new Enemy(fileHandler.getTextureList(list)); // Vielleicht in Filehandler packen
-                        list.Clear();                                                        ////////////////////////////////////// TEST AREA
+                        Enemy benno2 = new Enemy(fileHandler.getTextureList(list));
+                        list.Clear();                                                        
+                        ////////////////////////////////////// TEST AREA
                         ///
                         entityList.Add(arno);
                         entityList.Add(benno);
+
+                        benno2.posY = benno2.posY - SCREEN_HEIGHT / 4;
+                        entityList.Add(benno2);
 
 
 

@@ -32,7 +32,6 @@ namespace ShooterGame
                     success = false;
                     break;
                 }
-                Console.WriteLine(file);
                 textureMap[file] = texture;
                // Console.WriteLine(file);
             }
