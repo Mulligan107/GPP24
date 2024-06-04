@@ -19,6 +19,11 @@ namespace ShooterGame
             IntPtr startTexture = SDL_image.IMG_LoadTexture(renderer, "imgs/menu/start.png");
             IntPtr settingsTexture = SDL_image.IMG_LoadTexture(renderer, "imgs/menu/settings.png");
             IntPtr quitTexture = SDL_image.IMG_LoadTexture(renderer, "imgs//menu/quit.png");
+            
+            // Calculate the height for each menu item
+            int itemHeight = Program.SCREEN_HEIGHT / 4; // Divide by the number of menu items
+            int itemWidth = 200;
+
 
             MenuItem startItem = new MenuItem("Start", () =>
                 {
@@ -28,16 +33,20 @@ namespace ShooterGame
                     SDL.SDL_SetRenderDrawColor(Program.gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
                     SDL.SDL_RenderClear(Program.gRenderer); // Clear the current rendering target with the drawing color
                 },
-                startTexture, new SDL.SDL_Rect { x = 100, y = 100, w = 200, h = 50 }, new SDL.SDL_Color { r = 255, g = 255, b = 0, a = 255}); 
+                startTexture, new SDL.SDL_Rect { x = (Program.SCREEN_WIDTH - itemWidth) / 2, y = itemHeight, w = itemWidth, h = 50 }, new SDL.SDL_Color { r = 0, g = 255, b = 0, a = 255});
+            
             MenuItem settingsItem = new MenuItem("Settings", () =>
                 {
-                     /* code to open settings */
-                }, settingsTexture, new SDL.SDL_Rect { x = 100, y = 200, w = 200, h = 50 }, new SDL.SDL_Color { r = 255, g = 255, b = 0, a = 255});
+                     //TODO: Implement settings menu
+                }, 
+                settingsTexture, new SDL.SDL_Rect { x = (Program.SCREEN_WIDTH - itemWidth) / 2, y = 2 * itemHeight, w = itemWidth, h = 50 }, new SDL.SDL_Color { r = 255, g = 255, b = 0, a = 255});
+            
             MenuItem quitItem = new MenuItem("Quit", () =>
-            {
+                {
                 Program.Close();
                 Environment.Exit(0);
-            }, quitTexture, new SDL.SDL_Rect { x = 100, y = 300, w = 200, h = 50 }, new SDL.SDL_Color { r = 255, g = 255, b = 0, a = 255});
+                }, 
+                quitTexture, new SDL.SDL_Rect { x = (Program.SCREEN_WIDTH - itemWidth) / 2, y = 3 * itemHeight, w = itemWidth, h = 50 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255});
 
             // Add the menu items to the menu
             AddMenuItem(startItem);

@@ -16,27 +16,31 @@ namespace ShooterGame
             IntPtr level3Texture = SDL_image.IMG_LoadTexture(renderer, "imgs/menu/level3.png");
             IntPtr backTexture = SDL_image.IMG_LoadTexture(renderer, "imgs/menu/Back.png");
 
+            // Calculate the height for each menu item
+            int itemHeight = Program.SCREEN_HEIGHT / 5; // Divide by the number of menu items +1 
+            int itemWidth = 200;
+            
             // Create the level items with their positions
             MenuItem level1Item = new MenuItem("Level 1", () => 
                 { 
                     Program.CurrentState = GameState.IN_GAME; 
                     Program.CurrentLevel = 1; // Set the current level to 1
                 }, 
-                level1Texture, new SDL.SDL_Rect { x = 100, y = 100, w = 200, h = 50 }, new SDL.SDL_Color { r = 255, g = 255, b = 0, a = 255});
+                level1Texture, new SDL.SDL_Rect { x = (Program.SCREEN_WIDTH - itemWidth) / 2, y = itemHeight, w = itemWidth, h = 50 }, new SDL.SDL_Color { r = 255, g = 255, b = 0, a = 255});
             
             MenuItem level2Item = new MenuItem("Level 2", () =>
                 {
                 Program.CurrentState = GameState.IN_GAME;
                 Program.CurrentLevel = 2; // Set the current level to 2
                 }, 
-                level2Texture, new SDL.SDL_Rect { x = 100, y = 200, w = 200, h = 50 }, new SDL.SDL_Color { r = 255, g = 255, b = 0, a = 255});
+                level2Texture, new SDL.SDL_Rect { x = (Program.SCREEN_WIDTH - itemWidth) / 2, y = 2 * itemHeight, w = itemWidth, h = 50 }, new SDL.SDL_Color { r = 255, g = 255, b = 0, a = 255});
             
             MenuItem level3Item = new MenuItem("Level 3", () =>
                 {
                 Program.CurrentState = GameState.IN_GAME;
                 Program.CurrentLevel = 3; // Set the current level to 3
                 },
-                level3Texture, new SDL.SDL_Rect { x = 100, y = 300, w = 200, h = 50 }, new SDL.SDL_Color { r = 255, g = 255, b = 0, a = 255});
+                level3Texture, new SDL.SDL_Rect { x = (Program.SCREEN_WIDTH - itemWidth) / 2, y = 3 * itemHeight, w = itemWidth, h = 50 }, new SDL.SDL_Color { r = 255, g = 255, b = 0, a = 255});
             
             MenuItem backItem = new MenuItem("Back", () =>
                 {
@@ -45,8 +49,7 @@ namespace ShooterGame
                 SDL.SDL_SetRenderDrawColor(Program.gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
                 SDL.SDL_RenderClear(Program.gRenderer); // Clear the current rendering target with the drawing color
                 }, 
-                backTexture, new SDL.SDL_Rect { x = 100, y = 400, w = 200, h = 50 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255});
-            // Add more levels as needed
+                backTexture, new SDL.SDL_Rect { x = (Program.SCREEN_WIDTH - itemWidth) / 2, y = 4 * itemHeight, w = itemWidth, h = 50 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255});
 
             // Add the level items to the menu
             AddMenuItem(level1Item);
