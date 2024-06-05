@@ -14,7 +14,7 @@ namespace ShooterGame
     {
         //Game state
         public static GameState CurrentState = GameState.MAIN_MENU;
-        public static Menu mainMenu { get; set; } 
+        public static Menu VisibleMenu { get; set; } 
 
         // Current level
         public static int CurrentLevel { get; set; }
@@ -220,7 +220,7 @@ namespace ShooterGame
                 else
                 {  
                     // Add the menu items to the menu
-                    mainMenu = new MainMenu(gRenderer);
+                    VisibleMenu = new MainMenu(gRenderer);
                     
                     float previous = 0;
 
@@ -256,7 +256,7 @@ namespace ShooterGame
                             case GameState.MAIN_MENU:
                             case GameState.LEVEL_SELECT:
                             case GameState.SETTINGS:
-                                mainMenu.Render(gRenderer);
+                                VisibleMenu?.Render(gRenderer);
                                 break;
                             
                             case GameState.INSTRUCTIONS:
@@ -264,7 +264,7 @@ namespace ShooterGame
                             
                             case GameState.IN_GAME:
                                 // Set the mainMenu field in the InputHandler class, so that it can be accessed when handling user input
-                                mainMenu = null;
+                                VisibleMenu = null;
                                 
                                 entityList = CollisionHandler.checkCollision(entityList);
 

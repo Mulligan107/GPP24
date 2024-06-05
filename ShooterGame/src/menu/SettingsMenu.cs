@@ -24,7 +24,7 @@ namespace ShooterGame
             MenuItem backItem = new MenuItem("Back", () =>
                 {
                     Program.CurrentState = GameState.MAIN_MENU;
-                    Program.mainMenu = new MainMenu(renderer);
+                    Program.VisibleMenu = new MainMenu(renderer);
                     SDL.SDL_SetRenderDrawColor(Program.gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
                     SDL.SDL_RenderClear(Program.gRenderer); // Clear the current rendering target with the drawing color
                 },

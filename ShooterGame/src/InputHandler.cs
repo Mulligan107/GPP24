@@ -44,13 +44,13 @@ namespace ShooterGame
                         switch (e.key.keysym.sym)
                         {
                             case SDL.SDL_Keycode.SDLK_UP:
-                                Program.mainMenu.SelectPreviousItem();
+                                Program.VisibleMenu.SelectPreviousItem();
                                 break;
                             case SDL.SDL_Keycode.SDLK_DOWN:
-                                Program.mainMenu.SelectNextItem();
+                                Program.VisibleMenu.SelectNextItem();
                                 break;
                             case SDL.SDL_Keycode.SDLK_RETURN:
-                                Program.mainMenu.ExecuteSelectedItem();
+                                Program.VisibleMenu.ExecuteSelectedItem();
                                 break;
                         }
                     }

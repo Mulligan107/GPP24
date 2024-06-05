@@ -14,8 +14,8 @@ namespace ShooterGame
             MenuItem startItem = new MenuItem("Start", () =>
                 {
                     Program.CurrentState = GameState.LEVEL_SELECT;
-                    Program.mainMenu = new LevelSelectMenu(renderer);
-                    Program.mainMenu.SelectedIndex = 0; // Reset the selected index
+                    Program.VisibleMenu = new LevelSelectMenu(renderer);
+                    Program.VisibleMenu.SelectedIndex = 0; // Reset the selected index
                     SDL.SDL_RenderClear(Program.gRenderer); // Clear the current rendering target with the drawing color
                 },
                 "Start", "lazy.ttf", new SDL.SDL_Rect { x = Program.SCREEN_WIDTH / 2, y = itemHeight, w = itemWidth, h = 50 }, new SDL.SDL_Color { r = 0, g = 255, b = 0, a = 255 });
@@ -23,8 +23,8 @@ namespace ShooterGame
             MenuItem settingsItem = new MenuItem("Settings", () =>
                 {
                     Program.CurrentState = GameState.SETTINGS;
-                    Program.mainMenu = new SettingsMenu(renderer);
-                    Program.mainMenu.SelectedIndex = 0; // Reset the selected index
+                    Program.VisibleMenu = new SettingsMenu(renderer);
+                    Program.VisibleMenu.SelectedIndex = 0; // Reset the selected index
                     SDL.SDL_RenderClear(Program.gRenderer); // Clear the current rendering target with the drawing color
                 },
                 "Settings", "lazy.ttf", new SDL.SDL_Rect { x = Program.SCREEN_WIDTH / 2, y = 2 * itemHeight, w = itemWidth, h = 50 }, new SDL.SDL_Color { r = 255, g = 255, b = 0, a = 255 });
