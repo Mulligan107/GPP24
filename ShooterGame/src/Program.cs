@@ -220,7 +220,7 @@ namespace ShooterGame
                 else
                 {  
                     // Add the menu items to the menu
-                    mainMenu = new Menu(gRenderer);
+                    mainMenu = new MainMenu(gRenderer);
                     
                     float previous = 0;
 

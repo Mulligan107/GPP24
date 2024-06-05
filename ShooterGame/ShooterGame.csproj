@@ -89,6 +89,7 @@
     </Compile>
     <Compile Include="src\menu\GameState.cs" />
     <Compile Include="src\menu\LevelSelectMenu.cs" />
+    <Compile Include="src\menu\MainMenu.cs" />
     <Compile Include="src\menu\Menu.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
