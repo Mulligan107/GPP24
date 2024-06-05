@@ -37,8 +37,10 @@ namespace ShooterGame
 
         public override void Render(IntPtr renderer)
         {
-            // Implement the specific rendering for the settings menu
-            // You can use the DisplayText method from the Menu class to display the menu items
+            var titlePosition = new Vector2D { X = Program.SCREEN_WIDTH / 2, Y = Program.SCREEN_HEIGHT / 8 }; // Adjust the Y value as needed
+            var titleColor = new SDL.SDL_Color { r = 0, g = 0, b = 0, a = 255 }; // White color
+            DisplayText("Settings", titlePosition, 250, "lazy.ttf", renderer, titleColor); // Adjust the width as needed
+
             for (var i = 0; i < MenuItems.Count; i++)
             {
                 var position = MenuItems[i].Position;

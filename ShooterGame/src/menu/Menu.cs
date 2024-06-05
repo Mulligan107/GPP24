@@ -23,13 +23,13 @@ namespace ShooterGame
         public void SelectNextItem()
         {
             SelectedIndex = (SelectedIndex + 1) % MenuItems.Count;
-            System.Console.WriteLine(SelectedIndex +1 + "/" + MenuItems.Count);
+            System.Console.WriteLine("Selected Menu Item: " + (SelectedIndex + 1) + ", " + "Out of: " + MenuItems.Count);
         }
 
         public void SelectPreviousItem()
         {
             SelectedIndex = (SelectedIndex - 1 + MenuItems.Count) % MenuItems.Count;
-            System.Console.WriteLine(SelectedIndex +1 + "/" + MenuItems.Count);
+            System.Console.WriteLine("Selected Menu Item: " + (SelectedIndex + 1) + " / " + "Out of " + MenuItems.Count);
         }
 
         public void ExecuteSelectedItem()
@@ -58,6 +58,23 @@ namespace ShooterGame
             SDL.SDL_DestroyTexture(texture);
             SDL.SDL_FreeSurface(surfaceMessage);
             SDL_ttf.TTF_CloseFont(font);
+        }
+        
+        public void UpdateMenuItemPositions()
+        {
+            var menuItemSpacing = Program.SCREEN_HEIGHT / (MenuItems.Count + 1);
+            var itemWidth = 200;
+
+            for (var i = 0; i < MenuItems.Count; i++)
+            {
+                MenuItems[i].Position = new SDL.SDL_Rect
+                {
+                    x = Program.SCREEN_WIDTH / 2,
+                    y = (i + 1) * menuItemSpacing,
+                    w = itemWidth,
+                    h = 50
+                };
+            }
         }
     }
 }

@@ -36,7 +36,7 @@ namespace ShooterGame
             var level3Item = new MenuItem("Level 3", () =>
                 {
                     Program.CurrentState = GameState.IN_GAME;
-                    Program.CurrentLevel = 3; // Set the current level to 3
+                    Program.CurrentLevel = 3; 
                 },
                 "Level 3", "lazy.ttf",
                 new SDL.SDL_Rect { x = Program.SCREEN_WIDTH / 2, y = 3 * menuItemSpacing, w = itemWidth, h = 50 },
@@ -63,8 +63,10 @@ namespace ShooterGame
 
         public override void Render(IntPtr renderer)
         {
-            // Implement the specific rendering for the settings menu
-            // You can use the DisplayText method from the Menu class to display the menu items
+            var titlePosition = new Vector2D { X = Program.SCREEN_WIDTH / 2, Y = Program.SCREEN_HEIGHT / 8 }; // Adjust the Y value as needed
+            var titleColor = new SDL.SDL_Color { r = 0, g = 0, b = 0, a = 255 }; // White color
+            DisplayText("Level Selection", titlePosition, 300, "lazy.ttf", renderer, titleColor); // Adjust the width as needed
+
             for (var i = 0; i < MenuItems.Count; i++)
             {
                 var position = MenuItems[i].Position;

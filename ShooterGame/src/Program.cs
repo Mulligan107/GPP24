@@ -194,6 +194,9 @@ namespace ShooterGame
             }
 
             SDL.SDL_SetWindowSize(gWindow, SCREEN_WIDTH, SCREEN_HEIGHT);
+            
+            // Update the positions of the menu items
+            VisibleMenu?.UpdateMenuItemPositions();
         }
 
         static int Main(string[] args)

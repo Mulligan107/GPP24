@@ -15,7 +15,6 @@ namespace ShooterGame
                 {
                     Program.CurrentState = GameState.LEVEL_SELECT;
                     Program.VisibleMenu = new LevelSelectMenu(renderer);
-                    Program.VisibleMenu.SelectedIndex = 0; // Reset the selected index
                     SDL.SDL_RenderClear(Program.gRenderer); // Clear the current rendering target with the drawing color
                 },
                 "Start", "lazy.ttf",
@@ -26,7 +25,6 @@ namespace ShooterGame
                 {
                     Program.CurrentState = GameState.SETTINGS;
                     Program.VisibleMenu = new SettingsMenu(renderer);
-                    Program.VisibleMenu.SelectedIndex = 0;
                     SDL.SDL_RenderClear(Program.gRenderer);
                 },
                 "Settings", "lazy.ttf",
@@ -50,6 +48,11 @@ namespace ShooterGame
 
         public override void Render(IntPtr renderer)
         {
+            // Display the title
+            var titlePosition = new Vector2D { X = Program.SCREEN_WIDTH / 2, Y = Program.SCREEN_HEIGHT / 8 }; // Adjust the Y value as needed
+            var titleColor = new SDL.SDL_Color { r = 0, g = 0, b = 0, a = 255 }; // White color
+            DisplayText("This is a very amusing game", titlePosition, 500, "lazy.ttf", renderer, titleColor); // Adjust the width as needed
+
             for (var i = 0; i < MenuItems.Count; i++)
             {
                 var position = MenuItems[i].Position;
