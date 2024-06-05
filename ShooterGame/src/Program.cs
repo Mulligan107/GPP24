@@ -147,11 +147,8 @@ namespace ShooterGame
          */
         public static void Close()
         {
-            // Free the textures of the menu items
-            foreach (MenuItem menuItem in mainMenu.menuItems)
-            {
-                SDL.SDL_DestroyTexture(menuItem.Texture);
-            }
+            SDL_ttf.TTF_CloseFont(Font);
+            Font = IntPtr.Zero;
             
             //Destroy window
             SDL.SDL_DestroyRenderer(gRenderer);
@@ -258,9 +255,6 @@ namespace ShooterGame
                         {
                             case GameState.MAIN_MENU:
                             case GameState.LEVEL_SELECT:
-                                mainMenu.Render(gRenderer);
-                                break;
-                            
                             case GameState.SETTINGS:
                                 mainMenu.Render(gRenderer);
                                 break;
