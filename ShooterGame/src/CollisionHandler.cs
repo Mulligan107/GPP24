@@ -41,11 +41,10 @@ namespace ShooterGame
                 {
                     newList.Add(enti);
                 }
+                
             }
             return newList;
         }
-
-
 
 
     }
