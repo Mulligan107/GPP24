@@ -13,6 +13,13 @@ namespace ShooterGame
 {
     class Program
     {
+        //Game state
+        public static GameState CurrentState = GameState.MAIN_MENU;
+        public static Menu VisibleMenu { get; set; } 
+
+        // Current level
+        public static int CurrentLevel { get; set; }
+        
         //Screen dimension constants
         public static int MAX_SCREEN_WIDTH;
         public static int MAX_SCREEN_HEIGHT;
@@ -141,8 +148,11 @@ namespace ShooterGame
         /**
          * Free media and shut down SDL
          */
-        private static void Close()
+        public static void Close()
         {
+            SDL_ttf.TTF_CloseFont(Font);
+            Font = IntPtr.Zero;
+            
             //Destroy window
             SDL.SDL_DestroyRenderer(gRenderer);
             SDL.SDL_DestroyWindow(gWindow);
@@ -188,6 +198,9 @@ namespace ShooterGame
 
 
             SDL.SDL_SetWindowSize(gWindow, SCREEN_WIDTH, SCREEN_HEIGHT);
+            
+            // Update the positions of the menu items
+            VisibleMenu?.UpdateMenuItemPositions();
         }
 
         static int Main(string[] args)
@@ -213,6 +226,9 @@ namespace ShooterGame
                 }
                 else
                 {
+                    // Add the menu items to the menu
+                    VisibleMenu = new MainMenu(gRenderer);
+                    
                     while (!quit)
                     {
                         double previous = 0;
@@ -272,6 +288,49 @@ namespace ShooterGame
                             {
                                 elapsed = 5;
                             }
+                            
+                            switch (CurrentState)
+                            {
+                                case GameState.MAIN_MENU:
+                                case GameState.LEVEL_SELECT:
+                                case GameState.SETTINGS:
+                                    VisibleMenu?.Render(gRenderer);
+                                    break;
+                            
+                                case GameState.INSTRUCTIONS:
+                                    break;
+                            
+                                case GameState.IN_GAME:
+                                    // Set the mainMenu field in the InputHandler class, so that it can be accessed when handling user input
+                                    VisibleMenu = null;
+                                
+                                    entityList = CollisionHandler.checkCollision(entityList);
+
+                                    foreach (BackgroundObject backgroundObject in bgList)
+                                    {
+                                        backgroundObject.checkOutOfBounds();
+                                        backgroundObject.update(elapsed);
+                                    }
+
+
+                                    foreach (Entity enti in entityList)
+                                    {
+                                        enti.update(elapsed);
+                                    }
+                                
+                                    break;
+                            
+                                case GameState.PAUSED:
+                                    break;
+                            
+                                case GameState.GAME_OVER:
+                                    break;
+                            
+                                case GameState.WIN:
+                                    break;
+                            
+                            }
+                            
                             ////////////////////////////////////// TEST AREA
                             (double x, double y, int direction, string command) = InputHandler.handleUserInput();
                             if (command == "shoot")
@@ -283,20 +342,6 @@ namespace ShooterGame
                                 arno.vecX = x;
                                 arno.vecY = y;
                                 arno.angle = direction;
-                            }
-
-                            entityList = CollisionHandler.checkCollision(entityList);
-
-                            foreach (BackgroundObject backgroundObject in bgList)
-                            {
-                                backgroundObject.checkOutOfBounds();
-                                backgroundObject.update(elapsed);
-                            }
-
-
-                            foreach (Entity enti in entityList)
-                            {
-                                enti.update(elapsed);
                             }
 
                             ////////////////////////////////////// TEST AREA

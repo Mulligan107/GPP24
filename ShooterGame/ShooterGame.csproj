@@ -87,6 +87,14 @@
     <Compile Include="src\Bullet.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="src\menu\GameState.cs" />
+    <Compile Include="src\menu\LevelSelectMenu.cs" />
+    <Compile Include="src\menu\MainMenu.cs" />
+    <Compile Include="src\menu\Menu.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="src\menu\MenuItem.cs" />
+    <Compile Include="src\menu\SettingsMenu.cs" />
     <Compile Include="src\Player.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
@@ -117,6 +125,27 @@
     <Content Include="imgs\hamter.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+      <Content Include="imgs\Menu\Back.png">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Include="imgs\Menu\Level1.png">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Include="imgs\Menu\Level2.png">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Include="imgs\Menu\Level3.png">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Include="imgs\Menu\quit.png">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Include="imgs\Menu\settings.png">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Include="imgs\Menu\start.png">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
     <Content Include="imgs\NebulaBlue.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -156,6 +185,9 @@
     <Content Include="SDL2_ttf.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="sounds\bloop.mp3" />
+    <Content Include="sounds\lofi.mp3" />
+    <Content Include="sounds\wilhelm.mp3" />
     <Content Include="zlib1.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

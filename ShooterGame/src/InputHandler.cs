@@ -44,8 +44,27 @@ namespace ShooterGame
                     }
                 }
 
+                if (Program.CurrentState != GameState.IN_GAME)
+                {
+                    if (e.type == SDL.SDL_EventType.SDL_KEYDOWN)
+                    {
+                        switch (e.key.keysym.sym)
+                        {
+                            case SDL.SDL_Keycode.SDLK_UP:
+                                Program.VisibleMenu.SelectPreviousItem();
+                                break;
+                            case SDL.SDL_Keycode.SDLK_DOWN:
+                                Program.VisibleMenu.SelectNextItem();
+                                break;
+                            case SDL.SDL_Keycode.SDLK_RETURN:
+                                Program.VisibleMenu.ExecuteSelectedItem();
+                                break;
+                        }
+                    }
+                }
+                
                 //If a key was pressed
-                if (e.type == SDL.SDL_EventType.SDL_KEYDOWN && e.key.repeat == 0)
+                if (e.type == SDL.SDL_EventType.SDL_KEYDOWN && e.key.repeat == 0 && Program.CurrentState == GameState.IN_GAME)
                 {
                     double s = Program.SCREEN_WIDTH / Program.SCREEN_HEIGHT;
                     double bulletspeed = 20;
