@@ -5,22 +5,45 @@ namespace ShooterGame
 {
     class LivingEntity : Entity
     {
-        public float lives;
         public bool friendly = false;
+
 
         public LivingEntity()
         {
+            
         }
 
         public void hit()
         {
-            Console.WriteLine("Lives befor: " + lives);
-            lives = lives - 1;
-            if (lives < 0)
+            if (!iframe)
             {
-                kill();
+                iframe = true;
+                Console.WriteLine("Lives befor: " + lives);
+                lives = lives - 1;
+                if (lives < 0)
+                {
+                    if (!friendly)
+                    {
+                        choosenAnim = 2;
+                        setupAnimation(9);
+                        repeats = 1;
+                        animationCounter = 0;
+                        animationSpeed = 2;
+                    }
+                }
+                else
+                {
+                    if (!friendly)
+                    {
+                        choosenAnim = 3;
+                        setupAnimation(10);
+                        repeats = 1;
+                        animationCounter = 0;
+                        animationSpeed = 4;
+                    }   
+                }
+                Console.WriteLine("Lives after: " + lives);
             }
-            Console.WriteLine("Lives after: " + lives);
         }
 
     }
