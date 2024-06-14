@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ShooterGame.ShooterGame;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace ShooterGame
@@ -32,6 +33,16 @@ namespace ShooterGame
                 if (e.type == SDL.SDL_EventType.SDL_QUIT || e.key.keysym.sym == SDL.SDL_Keycode.SDLK_r)
                 {
                     Program.reset = true;
+                }
+                
+                //User requests pause via pressing 'p'
+                if (e.key.keysym.sym == SDL.SDL_Keycode.SDLK_p)
+                {
+                    if (Program.CurrentState == GameState.IN_GAME)
+                    {
+                        Program.CurrentState = GameState.PAUSED;
+                        Program.VisibleMenu = new PauseMenu(Program.gRenderer);
+                    }
                 }
 
                 //Switch screen size mode if 'F' key was pressed

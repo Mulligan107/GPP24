@@ -295,6 +295,7 @@ namespace ShooterGame
                                 case GameState.LEVEL_SELECT:
                                 case GameState.SETTINGS:
                                 case GameState.INSTRUCTIONS:
+                                case GameState.PAUSED:
                                     VisibleMenu?.Render(gRenderer);
                                     break;
                             
@@ -316,9 +317,6 @@ namespace ShooterGame
                                         enti.update(elapsed);
                                     }
                                 
-                                    break;
-                            
-                                case GameState.PAUSED:
                                     break;
                             
                                 case GameState.GAME_OVER:
