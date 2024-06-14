@@ -41,7 +41,7 @@ namespace ShooterGame
         
         public void DisplayText(string scoreText, Vector2D position, int textWidth, string fonttext, IntPtr renderer, SDL.SDL_Color color)
         {
-            IntPtr font = SDL_ttf.TTF_OpenFont(fonttext, 20);
+            IntPtr font = SDL_ttf.TTF_OpenFont(fonttext, 60);
 
             IntPtr surfaceMessage = SDL_ttf.TTF_RenderText_Solid(font, scoreText, color);
             IntPtr texture = SDL.SDL_CreateTextureFromSurface(renderer, surfaceMessage);

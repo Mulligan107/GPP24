@@ -294,10 +294,8 @@ namespace ShooterGame
                                 case GameState.MAIN_MENU:
                                 case GameState.LEVEL_SELECT:
                                 case GameState.SETTINGS:
-                                    VisibleMenu?.Render(gRenderer);
-                                    break;
-                            
                                 case GameState.INSTRUCTIONS:
+                                    VisibleMenu?.Render(gRenderer);
                                     break;
                             
                                 case GameState.IN_GAME:

@@ -1,5 +1,6 @@
 ﻿using System;
 using SDL2;
+using ShooterGame.ShooterGame;
 
 namespace ShooterGame
 {
@@ -8,7 +9,7 @@ namespace ShooterGame
         public MainMenu(IntPtr renderer) : base(renderer)
         {
             // Calculate the height for each menu item
-            var menuItemSpacing = Program.SCREEN_HEIGHT / 4; // Divide by the number of menu items + 1
+            var menuItemSpacing = Program.SCREEN_HEIGHT / 5; // Divide by the number of menu items + 1
             var itemWidth = 200;
 
             var startItem = new MenuItem("Start", () =>
@@ -30,6 +31,16 @@ namespace ShooterGame
                 "Settings", "lazy.ttf",
                 new SDL.SDL_Rect { x = Program.SCREEN_WIDTH / 2, y = 2 * menuItemSpacing, w = itemWidth, h = 50 },
                 new SDL.SDL_Color { r = 255, g = 255, b = 0, a = 255 });
+            
+            var instructionsItem = new MenuItem("Instructions", () =>
+                {
+                    Program.CurrentState = GameState.INSTRUCTIONS;
+                    Program.VisibleMenu = new InstructionsMenu(renderer);
+                    SDL.SDL_RenderClear(Program.gRenderer);
+                },
+                "Instructions", "lazy.ttf",
+                new SDL.SDL_Rect { x = Program.SCREEN_WIDTH / 2, y = 3 * menuItemSpacing, w = itemWidth, h = 50 },
+                new SDL.SDL_Color { r = 0, g = 0, b = 255, a = 255 });
 
             var quitItem = new MenuItem("Quit", () =>
                 {
@@ -37,12 +48,13 @@ namespace ShooterGame
                     Environment.Exit(0);
                 },
                 "Quit", "lazy.ttf",
-                new SDL.SDL_Rect { x = Program.SCREEN_WIDTH / 2, y = 3 * menuItemSpacing, w = itemWidth, h = 50 },
+                new SDL.SDL_Rect { x = Program.SCREEN_WIDTH / 2, y = 4 * menuItemSpacing, w = itemWidth, h = 50 },
                 new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 });
 
             // Add the menu items to the menu
             AddMenuItem(startItem);
             AddMenuItem(settingsItem);
+            AddMenuItem(instructionsItem);
             AddMenuItem(quitItem);
         }
 

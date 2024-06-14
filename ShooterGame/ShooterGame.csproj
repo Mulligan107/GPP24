@@ -88,6 +88,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="src\menu\GameState.cs" />
+    <Compile Include="src\menu\InstructionsMenu.cs" />
     <Compile Include="src\menu\LevelSelectMenu.cs" />
     <Compile Include="src\menu\MainMenu.cs" />
     <Compile Include="src\menu\Menu.cs">
@@ -171,6 +172,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="libpng16-16.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MegaManFont.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="SDL2.dll">
