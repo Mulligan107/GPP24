@@ -57,7 +57,7 @@ namespace ShooterGame
             bool success = true;
 
             //Initialize SDL
-            if (SDL.SDL_Init(SDL.SDL_INIT_VIDEO) < 0)
+            if (SDL.SDL_Init(SDL.SDL_INIT_VIDEO | SDL.SDL_INIT_AUDIO) < 0)
             {
                 Console.WriteLine("SDL could not initialize! SDL_Error: {0}", SDL.SDL_GetError());
                 success = false;

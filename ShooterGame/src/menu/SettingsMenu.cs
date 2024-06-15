@@ -11,7 +11,7 @@ namespace ShooterGame
             MenuItems = new List<MenuItem>();
 
             // Calculate the height for each menu item
-            var menuItemSpacing = Program.SCREEN_HEIGHT / 3; // Divide by the number of menu items +1
+            var menuItemSpacing = Program.SCREEN_HEIGHT / 5; // Divide by the number of menu items +1
             var itemWidth = 200;
 
             // Create the settings items with their positions
@@ -19,6 +19,16 @@ namespace ShooterGame
                 "Change Window Size", "lazy.ttf",
                 new SDL.SDL_Rect { x = Program.SCREEN_WIDTH / 2, y = menuItemSpacing, w = itemWidth, h = 50 },
                 new SDL.SDL_Color { r = 255, g = 255, b = 0, a = 255 }); //color when selected
+            
+            var startMusic = new MenuItem("Start Music", () => { SoundHandler.PlayMusic(); },
+                "Start Music", "lazy.ttf",
+                new SDL.SDL_Rect { x = Program.SCREEN_WIDTH / 2, y = 2 * menuItemSpacing, w = itemWidth, h = 50 },
+                new SDL.SDL_Color { r = 255, g = 255, b = 0, a = 255 });
+            
+            var stopMusic = new MenuItem("Stop Music", () => { SoundHandler.StopMusic(); },
+                "Stop Music", "lazy.ttf",
+                new SDL.SDL_Rect { x = Program.SCREEN_WIDTH / 2, y = 3 * menuItemSpacing, w = itemWidth, h = 50 },
+                new SDL.SDL_Color { r = 255, g = 255, b = 0, a = 255 });
 
             var backItem = new MenuItem("Back", () =>
                 {
@@ -28,10 +38,12 @@ namespace ShooterGame
                     SDL.SDL_RenderClear(Program.gRenderer); // Clear the current rendering target with the drawing color
                 },
                 "Back", "lazy.ttf",
-                new SDL.SDL_Rect { x = Program.SCREEN_WIDTH / 2, y = 2 * menuItemSpacing, w = itemWidth, h = 50 },
+                new SDL.SDL_Rect { x = Program.SCREEN_WIDTH / 2, y = 4 * menuItemSpacing, w = itemWidth, h = 50 },
                 new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 });
 
             AddMenuItem(changeWindowSizeItem);
+            AddMenuItem(startMusic);
+            AddMenuItem(stopMusic);
             AddMenuItem(backItem);
         }
 
