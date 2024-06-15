@@ -16,9 +16,6 @@ namespace ShooterGame
         //Game state
         public static GameState CurrentState = GameState.MAIN_MENU;
         public static Menu VisibleMenu { get; set; } 
-
-        // Current level
-        public static int CurrentLevel { get; set; }
         
         //Screen dimension constants
         public static int MAX_SCREEN_WIDTH;
@@ -152,6 +149,8 @@ namespace ShooterGame
         {
             SDL_ttf.TTF_CloseFont(Font);
             Font = IntPtr.Zero;
+            
+            SoundHandler.Close();
             
             //Destroy window
             SDL.SDL_DestroyRenderer(gRenderer);

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using SDL2;
+using ShooterGame.level;
 
 namespace ShooterGame
 {
@@ -18,7 +19,7 @@ namespace ShooterGame
             var level1Item = new MenuItem("Level 1", () =>
                 {
                     Program.CurrentState = GameState.IN_GAME;
-                    Program.CurrentLevel = 1;
+                    LevelManager.CurrentLevel = 1;
                 },
                 "Level 1", "lazy.ttf",
                 new SDL.SDL_Rect { x = Program.SCREEN_WIDTH / 2, y = menuItemSpacing, w = itemWidth, h = 50 },
@@ -27,7 +28,7 @@ namespace ShooterGame
             var level2Item = new MenuItem("Level 2", () =>
                 {
                     Program.CurrentState = GameState.IN_GAME;
-                    Program.CurrentLevel = 2;
+                    LevelManager.CurrentLevel = 2;
                 },
                 "Level 2", "lazy.ttf",
                 new SDL.SDL_Rect { x = Program.SCREEN_WIDTH / 2, y = 2 * menuItemSpacing, w = itemWidth, h = 50 },
@@ -36,7 +37,7 @@ namespace ShooterGame
             var level3Item = new MenuItem("Level 3", () =>
                 {
                     Program.CurrentState = GameState.IN_GAME;
-                    Program.CurrentLevel = 3; 
+                    LevelManager.CurrentLevel = 3; 
                 },
                 "Level 3", "lazy.ttf",
                 new SDL.SDL_Rect { x = Program.SCREEN_WIDTH / 2, y = 3 * menuItemSpacing, w = itemWidth, h = 50 },
@@ -58,7 +59,6 @@ namespace ShooterGame
             AddMenuItem(level2Item);
             AddMenuItem(level3Item);
             AddMenuItem(backItem);
-            // Add more levels as needed
         }
 
         public override void Render(IntPtr renderer)
