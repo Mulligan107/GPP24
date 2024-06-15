@@ -220,6 +220,8 @@ namespace ShooterGame
                 FileHandler fileHandler = new FileHandler();
                 success = fileHandler.getStatus();
 
+                SoundHandler.LoadMedia();
+
                 if (success == false)
                 {
                     Console.WriteLine("Failed to load media!");
