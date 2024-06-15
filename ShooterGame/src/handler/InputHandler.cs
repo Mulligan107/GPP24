@@ -85,7 +85,7 @@ namespace ShooterGame
                 {
                     double s = Program.SCREEN_WIDTH / Program.SCREEN_HEIGHT;
                     double bulletspeed = 20;
-                    double movementspeed = 8;
+                    double movementspeed = 32;
                     //Adjust the velocity
                     switch (e.key.keysym.sym)
                     {

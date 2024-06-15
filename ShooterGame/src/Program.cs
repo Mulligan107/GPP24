@@ -257,14 +257,14 @@ namespace ShooterGame
                         list.Clear();
 
                         list.Add("PlayerShip");
-                        list.Add("Bullet");
+                        list.Add("Bullet_move");
                         Player arno = new Player(fileHandler.getTextureList(list));
                         list.Clear();
 
                         list.Add("Fighterrand");
-                        list.Add("Ray");
-                        list.Add("FighterDeath");
-                        list.Add("FighterShield");
+                        list.Add("Ray_spawn");
+                        list.Add("Fighter_death");
+                        list.Add("Fighter_shield");
                         Enemy benno = new Enemy(fileHandler.getTextureList(list)); // Vielleicht in Filehandler packen
                         Enemy benno2 = new Enemy(fileHandler.getTextureList(list));
                         list.Clear();                                                        

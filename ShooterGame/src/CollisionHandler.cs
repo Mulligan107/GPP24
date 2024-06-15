@@ -15,14 +15,18 @@ namespace ShooterGame
         public CollisionHandler() { 
         }
 
-        public static ArrayList checkCollision(ArrayList entityLsit)
+        public static ArrayList checkCollision(ArrayList entityList)
         {
             ArrayList newList = new ArrayList();
 
-            foreach (LivingEntity enti in entityLsit)
+            for (int i = 0; i < entityList.Count; i++)
             {
-                foreach (LivingEntity counterEnti in entityLsit)
+                LivingEntity enti = (LivingEntity)entityList[i];
+
+                for (int j = i+1; j < entityList.Count; j++) // Verhindert Doppelte Abfrage
                 {
+                    LivingEntity counterEnti = (LivingEntity)entityList[j];
+
                     if (enti != counterEnti && enti.alive && counterEnti.alive)
                     {
                         

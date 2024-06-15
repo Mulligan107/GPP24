@@ -20,26 +20,31 @@ namespace ShooterGame
             friendly = true;
             textureList = list;
             texture = list[0];
-            
 
+
+
+        }
+
+        public override void move(double deltaTime)
+        {
+            if (posX > 0 || posX < Program.SCREEN_WIDTH && posY > 0 || posY < Program.SCREEN_HEIGHT) //begrenzung für Spieler, nur im Fenster bewegen
+            {
+                vecX = vecX * 0.925;
+                vecY = vecY * 0.925;
+                posX += vecX * (deltaTime / 10) * speed;
+                posY += vecY * (deltaTime / 10) * speed;
+            }
+            
         }
 
         public Bullet shoot(double vecx, double vecy, int direction)
         {
-            Bullet bill = new Bullet(textureList[1]);
+            Bullet bill = new Bullet(textureList);
+            bill.spawn(posX , posY);
             bill.angle = direction;
-            bill.textureList = textureList;
-            bill.textureList.Add(texture);
-            bill.textureList.Add(texture);
-            bill.spawn(posX, posY);
             bill.vecX = vecx;
             bill.vecY = vecy;
             bill.friendly = true;
-            bill.choosenAnim = 1;
-            bill.setupAnimation(4);
-            bill.repeats = 999;
-            bill.animationCounter = 0;
-            bill.animationSpeed = 1;
             return bill;
         }
 

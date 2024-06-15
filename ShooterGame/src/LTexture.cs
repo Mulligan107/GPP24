@@ -5,8 +5,18 @@ using SDL2;
 namespace ShooterGame
 {
     //Texture wrapper class
-    class LTexture
+    class LTexture : ICloneable
     {
+        
+        //The actual hardware texture
+        private IntPtr mTexture;
+
+        //Image dimensions
+        private int mWidth;
+
+        private int mHeight;
+
+        private String mTextureName;
 
         //Initializes variables
         public LTexture()
@@ -15,6 +25,7 @@ namespace ShooterGame
             mTexture = IntPtr.Zero;
             mWidth = 0;
             mHeight = 0;
+            
         }
 
         //Deallocates memory
@@ -38,7 +49,7 @@ namespace ShooterGame
         {
             //Get rid of preexisting texture
             free();
-
+            mTextureName = path;
             //The final texture
             IntPtr newTexture = IntPtr.Zero;
 
@@ -89,7 +100,12 @@ namespace ShooterGame
                 mHeight = 0;
             }
         }
+        
 
+        public object Clone()
+        {
+            return this.MemberwiseClone();
+        }
         public void setColor(byte red, byte green, byte blue)
         {
             //Modulate texture
@@ -151,14 +167,12 @@ namespace ShooterGame
         {
             return mTexture;
         }
+        public String getName()
+        {
+            return mTextureName;
+        }
 
-        //The actual hardware texture
-        private IntPtr mTexture;
-
-        //Image dimensions
-        private int mWidth;
-
-        private int mHeight;
+ 
 
         public bool loadFromRenderedText(string textureText, SDL.SDL_Color textColor)
         {
