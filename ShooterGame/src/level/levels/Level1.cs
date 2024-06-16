@@ -163,7 +163,7 @@ namespace ShooterGame.level.levels
             }
 
 
-            if (_cycles == 800 && !_eventFlag.ToString().Equals("scouts"))
+            if (_cycles == 800 && !_eventFlag.ToString().Equals("Scouts"))
             {
                 _counter = 0;
                 _cycles = 0;
