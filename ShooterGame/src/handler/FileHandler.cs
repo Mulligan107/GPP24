@@ -36,6 +36,7 @@ namespace ShooterGame
                 Console.WriteLine(file);
             }
         }
+        
         public List<LTexture> getFighter()
         {
             List<String> list = new List<String>();

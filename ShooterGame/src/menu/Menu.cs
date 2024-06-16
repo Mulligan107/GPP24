@@ -23,13 +23,13 @@ namespace ShooterGame
         public void SelectNextItem()
         {
             SelectedIndex = (SelectedIndex + 1) % MenuItems.Count;
-            System.Console.WriteLine("Selected Menu Item: " + (SelectedIndex + 1) + ", " + "Out of: " + MenuItems.Count);
+            //System.Console.WriteLine("Selected Menu Item: " + (SelectedIndex + 1) + ", " + "Out of: " + MenuItems.Count);
         }
 
         public void SelectPreviousItem()
         {
             SelectedIndex = (SelectedIndex - 1 + MenuItems.Count) % MenuItems.Count;
-            System.Console.WriteLine("Selected Menu Item: " + (SelectedIndex + 1) + " / " + "Out of " + MenuItems.Count);
+            //System.Console.WriteLine("Selected Menu Item: " + (SelectedIndex + 1) + " / " + "Out of " + MenuItems.Count);
         }
 
         public void ExecuteSelectedItem()

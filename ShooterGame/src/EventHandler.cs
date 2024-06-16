@@ -34,9 +34,7 @@ namespace ShooterGame.src
         public void timedEvent(double deltatime, FileHandler fileHandler)
         {
             cycles++;
-
-
-
+            
             // SPAWNING
             switch (eventFlag)
             {

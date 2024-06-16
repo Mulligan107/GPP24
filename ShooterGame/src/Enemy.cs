@@ -73,6 +73,8 @@ namespace ShooterGame
             bill.vecY = 0;
             bill.friendly = false;
             Program.entityList.Add(bill);
+            
+            SoundHandler.PlaySound(5);
         }
     }
 }

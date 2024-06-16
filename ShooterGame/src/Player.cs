@@ -37,6 +37,8 @@ namespace ShooterGame
                 lives = lives - 1;
                 lifes = lives;
 
+                SoundHandler.PlaySound(6);
+                
                 animationHelper(1, 1, "shield");
                 checkLives();
                 ScoreUI.IncreaseScore(-100);

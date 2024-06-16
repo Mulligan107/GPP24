@@ -73,7 +73,7 @@ namespace ShooterGame.src
                     
                     TotalEnemies--;
 
-                    //   SoundHandler.PlaySound(1);  TODO - ERSETZEN fucking earrape
+                    SoundHandler.PlaySound(3);
 
                     ScoreUI.IncreaseScore(100);
 
