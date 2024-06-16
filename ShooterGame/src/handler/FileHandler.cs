@@ -64,6 +64,17 @@ namespace ShooterGame
             list.Add("Dread\\Ray");
             return getTextureList(list);
         }
+        public List<LTexture> getSentry()
+        {
+            List<String> list = new List<String>();
+            list.Add("Sentry\\Sentry");
+            list.Add("Sentry\\Sentry_spawn");
+            list.Add("Sentry\\Sentry_death");
+            list.Add("Sentry\\Sentryshield");
+            list.Add("Sentry\\Sentry_bullet");
+
+            return getTextureList(list);
+        }
 
         public LTexture getTexture(string title)
         {

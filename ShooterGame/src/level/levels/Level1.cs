@@ -135,7 +135,7 @@ namespace ShooterGame.level.levels
 
             Console.WriteLine(Enemy.TotalEnemies);
 
-            if (cycles > 800 && Enemy.TotalEnemies == 0)
+            if (cycles > 800 && Enemy.TotalEnemies == 0 && !eventFlag.ToString().Equals("Over"))
             {
                 eventFlag = Level1.Event.Dreadnaught;
                 cycles = 0;

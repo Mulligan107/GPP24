@@ -72,6 +72,7 @@
     </Compile>
     <Compile Include="src\CollisionHandler.cs" />
     <Compile Include="src\Enemies\Dread.cs" />
+    <Compile Include="src\Enemies\Sentry.cs" />
     <Compile Include="src\Enemies\Scout.cs" />
     <Compile Include="src\EventHandler.cs" />
     <Compile Include="src\Enemies\Fighter.cs" />
@@ -202,6 +203,21 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="imgs\Scout\Scout_death.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="imgs\Sentry\Sentry_shield.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="imgs\Sentry\Sentry_bullet.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="imgs\Sentry\Sentry_spawn.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="imgs\Sentry\Sentry.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="imgs\Sentry\Sentry_death.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="imgs\spacebg.png">
