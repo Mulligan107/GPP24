@@ -22,7 +22,6 @@ namespace ShooterGame
             animationFlag = "move";
             startAnimation = true;
 
-
         }
 
         public override void hit()

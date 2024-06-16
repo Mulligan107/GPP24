@@ -111,6 +111,11 @@ namespace ShooterGame.src
                         levi.bulletFan();
                         levi.timeAlive = 0;
                     }
+
+                    if (cycles == 800)
+                    {
+                        levi.vecY = -3;
+                    }
                 }
             }
 

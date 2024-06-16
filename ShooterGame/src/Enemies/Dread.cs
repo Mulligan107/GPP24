@@ -59,7 +59,7 @@ namespace ShooterGame.src
                 posX = Program.SCREEN_WIDTH;
                 posY += Program.SCREEN_HEIGHT/10;
             }
-            if (posY > Program.SCREEN_HEIGHT + height)
+            if (posY > Program.SCREEN_HEIGHT + height)+
             {
                 posY = height * 2;
             }
@@ -71,7 +71,16 @@ namespace ShooterGame.src
             {
                 vecX = 0;
             }
-            
+
+            if (posY > (Program.SCREEN_HEIGHT - height)){
+                vecY = -3;
+            }
+            if (posY < (height))
+            {
+                vecY = +3;
+            }
+
+
         }
 
         public override void onSpawn()
