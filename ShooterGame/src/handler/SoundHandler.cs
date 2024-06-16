@@ -12,7 +12,7 @@ namespace ShooterGame
         private static IntPtr _music = IntPtr.Zero;
         
         // Set the volume for sound effects and music
-        private static int _soundVolume = 1; // 0 -> 128
+        public static int SoundVolume = 0; // 0 -> 128
         private static int _musicVolume = 4; 
         
         public static bool LoadMedia()
@@ -29,7 +29,7 @@ namespace ShooterGame
             }
             else
             {
-                SDL_mixer.Mix_VolumeChunk(Sounds[0], _soundVolume);
+                SDL_mixer.Mix_VolumeChunk(Sounds[0], SoundVolume);
             }
 
             Sounds[1] = SDL_mixer.Mix_LoadWAV("sounds/buttons/button_back.wav");
@@ -40,7 +40,7 @@ namespace ShooterGame
             }
             else
             {
-                SDL_mixer.Mix_VolumeChunk(Sounds[1], _soundVolume);
+                SDL_mixer.Mix_VolumeChunk(Sounds[1], SoundVolume);
             }
             
             Sounds[2] = SDL_mixer.Mix_LoadWAV("sounds/buttons/button_next.wav");
@@ -51,7 +51,7 @@ namespace ShooterGame
             }
             else
             {
-                SDL_mixer.Mix_VolumeChunk(Sounds[2], _soundVolume);
+                SDL_mixer.Mix_VolumeChunk(Sounds[2], SoundVolume);
             }
             
             Sounds[3] = SDL_mixer.Mix_LoadWAV("sounds/enemy/enemy_explode.wav");
@@ -62,7 +62,7 @@ namespace ShooterGame
             }
             else
             {
-                SDL_mixer.Mix_VolumeChunk(Sounds[3], _soundVolume);
+                SDL_mixer.Mix_VolumeChunk(Sounds[3], SoundVolume);
             }
             
             Sounds[4] = SDL_mixer.Mix_LoadWAV("sounds/enemy/enemy_hit.wav");
@@ -73,7 +73,7 @@ namespace ShooterGame
             }
             else
             {
-                SDL_mixer.Mix_VolumeChunk(Sounds[4], _soundVolume);
+                SDL_mixer.Mix_VolumeChunk(Sounds[4], SoundVolume);
             }
             
             Sounds[5] = SDL_mixer.Mix_LoadWAV("sounds/enemy/enemy_shoot_laser.wav");
@@ -84,7 +84,7 @@ namespace ShooterGame
             }
             else
             {
-                SDL_mixer.Mix_VolumeChunk(Sounds[5], _soundVolume);
+                SDL_mixer.Mix_VolumeChunk(Sounds[5], SoundVolume);
             }
             
             Sounds[6] = SDL_mixer.Mix_LoadWAV("sounds/player/player_hit.wav");
@@ -95,7 +95,7 @@ namespace ShooterGame
             }
             else
             {
-                SDL_mixer.Mix_VolumeChunk(Sounds[6], _soundVolume);
+                SDL_mixer.Mix_VolumeChunk(Sounds[6], SoundVolume);
             }
             
             Sounds[7] = SDL_mixer.Mix_LoadWAV("sounds/player/player_shoot1.wav");
@@ -106,7 +106,7 @@ namespace ShooterGame
             }
             else
             {
-                SDL_mixer.Mix_VolumeChunk(Sounds[7], _soundVolume);
+                SDL_mixer.Mix_VolumeChunk(Sounds[7], SoundVolume);
             }
             
             Sounds[8] = SDL_mixer.Mix_LoadWAV("sounds/enemy/enemy_shoot_laser_2.wav");
@@ -117,7 +117,7 @@ namespace ShooterGame
             }
             else
             {
-                SDL_mixer.Mix_VolumeChunk(Sounds[8], _soundVolume);
+                SDL_mixer.Mix_VolumeChunk(Sounds[8], SoundVolume);
             }
             
             Sounds[9] = SDL_mixer.Mix_LoadWAV("sounds/enemy/enemy_shoot_laser_3.wav");
@@ -128,7 +128,7 @@ namespace ShooterGame
             }
             else
             {
-                SDL_mixer.Mix_VolumeChunk(Sounds[9], _soundVolume);
+                SDL_mixer.Mix_VolumeChunk(Sounds[9], SoundVolume);
             }
             
             
