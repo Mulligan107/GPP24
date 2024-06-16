@@ -60,7 +60,7 @@ namespace ShooterGame
                 {
                     animationHelper(1,2,"death");
                     
-                    SoundHandler.PlaySound(1);
+                 //   SoundHandler.PlaySound(1);  TODO - ERSETZEN fucking earrape
                     
                     ScoreUI.IncreaseScore(100);
         

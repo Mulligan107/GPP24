@@ -35,9 +35,9 @@ namespace ShooterGame
                 if (lives < 0) // DEATH
                 {
                     //animationHelper(1,2,"death");
-                    
-                    SoundHandler.PlaySound(1);
-        
+
+                    // SoundHandler.PlaySound(1);    TODO - ERSETZEN fucking earrape
+
                 }
                 else // HIT
                 {

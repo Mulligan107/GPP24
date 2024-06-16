@@ -223,6 +223,7 @@ namespace ShooterGame
                 success = fileHandler.getStatus();
 
                 SoundHandler.LoadMedia();
+                ScoreUI.LoadHighscore();
 
                 EventTimer eventTimer = new EventTimer();
 

@@ -11,7 +11,7 @@ namespace ShooterGame.ui
 
         public ScoreUI()
         {
-            LoadHighscore();
+            LoadHighscore();       
         }
 
         public static void IncreaseScore(int increment)
@@ -31,18 +31,24 @@ namespace ShooterGame.ui
             }
             catch (Exception ex)
             {
+                File.AppendAllText(filePath, Score.ToString());
                 Console.WriteLine("Error saving highscore: " + ex.Message);
             }
         }
 
-        private static void LoadHighscore()
+        public static void LoadHighscore()
         {
+            
             try
             {
                 if (File.Exists(filePath))
                 {
                     string scoreText = File.ReadAllText(filePath);
-                    Score = int.Parse(scoreText);
+                    Score = 0;
+                }else
+                {
+                    File.AppendText(filePath);
+                    Score = 0;
                 }
             }
             catch (Exception ex)
