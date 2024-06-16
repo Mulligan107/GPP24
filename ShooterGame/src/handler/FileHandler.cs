@@ -55,6 +55,16 @@ namespace ShooterGame
             return getTextureList(list);
         }
 
+        public List<LTexture> getDread()
+        {
+            List<String> list = new List<String>();
+            list.Add("Dread\\Dread");
+            list.Add("Dread\\Dread_shield");
+            list.Add("Dread\\Dread_death");
+            list.Add("Dread\\Dread_bullet");
+            list.Add("Dread\\Ray");
+            return getTextureList(list);
+        }
 
         public LTexture getTexture(string title)
         {
