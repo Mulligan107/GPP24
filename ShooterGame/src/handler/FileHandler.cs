@@ -70,7 +70,7 @@ namespace ShooterGame
             list.Add("Sentry\\Sentry");
             list.Add("Sentry\\Sentry_spawn");
             list.Add("Sentry\\Sentry_death");
-            list.Add("Sentry\\Sentryshield");
+            list.Add("Sentry\\Sentry_shield");
             list.Add("Sentry\\Sentry_bullet");
 
             return getTextureList(list);

@@ -9,7 +9,9 @@ namespace ShooterGame.src
 {
     class Sentry : Enemy
     {
-        double sinValue = 0;
+
+        double tempvecX;
+        double tempvecY;
 
         public Sentry(List<LTexture> textureList) : base(textureList)
         {
@@ -23,7 +25,7 @@ namespace ShooterGame.src
             overTexture = textureList[3];
             overTexture.setColor(255, 0, 0);
             setupAnimation(4, "spawn", textureList[1]);
-            setupAnimation(7, "death", textureList[2]);
+            setupAnimation(8, "death", textureList[2]);
             setupAnimation(20, "shield", textureList[3]); //TODO Automatisieren
 
 
@@ -32,8 +34,15 @@ namespace ShooterGame.src
 
         public override void movementPattern()
         {
-            sinValue += (0.05); // länge der Amplitude
-            vecY = Math.Sin(sinValue);
+            Player pepe = (Player)Program.entityList[0];
+            tempvecX = pepe.posX - posX;
+            tempvecY = pepe.posY - posY;
+            double angleToXAxis = Math.Atan2(tempvecY, tempvecX);
+
+            double angleToVertical = Math.PI / 2 - angleToXAxis;
+            double angleToVerticalInDegrees = angleToVertical * (180 / Math.PI);
+
+            angle = -angleToVerticalInDegrees + 180;
         }
 
         public override void onSpawn()
@@ -67,6 +76,30 @@ namespace ShooterGame.src
                 }
 
             }
+        }
+        public override void shootTarget()
+        {
+            Random rand = new Random();
+            int randomIndex = rand.Next(0, 3);
+            int[] soundIndices = { 5, 8, 9 };
+            int soundToPlay = soundIndices[randomIndex];
+            tempvecY *= 0.02 * this.s;
+            tempvecX *= 0.02 * this.s;
+
+            List<LTexture> list = new List<LTexture>();
+            list.Add(textureList[4]); // ANGEPASST AN FIGHTER
+            list.Add(textureList[4]);
+            Bullet bill = new Bullet(list, 10);
+            bill.texture.setColor(255, 0, 0);
+            double s = Program.SCREEN_WIDTH / Program.SCREEN_HEIGHT;
+            bill.spawn(posX + width / 4, posY + height / 4);
+            bill.angle = -90;
+            bill.vecX = tempvecX * s;
+            bill.vecY = tempvecY;
+            bill.friendly = false;
+            Program.entityList.Add(bill);
+
+            SoundHandler.PlaySound(soundToPlay);
         }
     }
 }

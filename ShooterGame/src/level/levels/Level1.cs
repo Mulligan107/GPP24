@@ -80,8 +80,33 @@ namespace ShooterGame.level.levels
                         Dread andre = new Dread(fileHandler.getDread());
                         andre.hit();
                         entityList.Add(andre);
+                        
+                    }
+                    if (counter < 5)
+                    {   
+                        Sentry senni = new Sentry(fileHandler.getSentry());
+                        switch (counter){
+                            case 1:
+                                senni.spawn(Program.SCREEN_WIDTH - senni.width - 100 * senni.s, Program.SCREEN_HEIGHT - senni.height - 100 * senni.s);
+                                break;
+                            case 2:
+                                senni.spawn(Program.SCREEN_WIDTH - senni.width - 100 * senni.s, senni.height + 100 * senni.s);
+                                break;
+                            case 3:
+                                senni.spawn(senni.width + 100 * senni.s, senni.height + 100 * senni.s);
+                                break;
+                            case 4:
+                                senni.spawn(senni.width + 100 * senni.s, Program.SCREEN_HEIGHT - senni.height - 100 * senni.s);
+                                break;
+                        }
+                        entityList.Add(senni);
+
+                    }
+                    else
+                    {
                         eventFlag = Level1.Event.Over;
                     }
+
                         
                     break;
             }
@@ -115,6 +140,16 @@ namespace ShooterGame.level.levels
                     if (cycles == 800)
                     {
                         levi.vecY = -3;
+                    }
+                }
+                if (levi.GetType().Name.Equals("Sentry"))
+                {
+                    levi.timeAlive++;
+
+                    if (levi.timeAlive > 200)
+                    {
+                        levi.shootTarget();
+                        levi.timeAlive = 0;
                     }
                 }
             }
