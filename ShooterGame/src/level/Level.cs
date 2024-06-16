@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Net;
 
@@ -8,10 +9,8 @@ namespace ShooterGame.level
         public Level()
         {
         }
-        
+    
         public abstract void Load();
-
-        // Update the level
-        public abstract void Update(double elapsed);
+        public abstract void RunLevelLogic(double deltatime, FileHandler fileHandler, ArrayList entityList);
     }
 }

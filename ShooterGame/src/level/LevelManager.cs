@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using ShooterGame.level.levels;
 
@@ -16,6 +17,11 @@ namespace ShooterGame.level
             // levels.Add(new Level2());
             // levels.Add(new Level3());
             // ...
+        }
+        
+        public static void RunCurrentLevelLogic(double deltatime, FileHandler fileHandler, ArrayList entityList)
+        {
+            GetCurrentLevel().RunLevelLogic(deltatime, fileHandler, entityList);
         }
 
         public static Level GetCurrentLevel()

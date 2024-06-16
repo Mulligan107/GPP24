@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using SDL2;
+using ShooterGame.level;
 using ShooterGame.src;
 using ShooterGame.ui;
 
@@ -225,7 +226,7 @@ namespace ShooterGame
                 SoundHandler.LoadMedia();
                 ScoreUI.LoadHighscore();
 
-                src.EventHandler eventTimer = new src.EventHandler();
+                src.EventHandler eventHandler = new src.EventHandler();
 
                 if (success == false)
                 {
@@ -233,6 +234,7 @@ namespace ShooterGame
                 }
                 else
                 {
+                    LevelManager.LoadLevels();
                     // Add the menu items to the menu
                     VisibleMenu = new MainMenu(gRenderer);
                     
@@ -321,9 +323,11 @@ namespace ShooterGame
                                     {
                                         enti.update(elapsed);
                                     }
-
-                                    eventTimer.updateList(entityList);
-                                    eventTimer.timedEvent(elapsed, fileHandler);
+                                    
+                                    LevelManager.RunCurrentLevelLogic(elapsed, fileHandler, entityList);
+                                    
+                                    // eventHandler.updateList(entityList);
+                                    // eventHandler.timedEvent(elapsed, fileHandler);
 
                                     break;
                             

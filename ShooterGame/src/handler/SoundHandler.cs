@@ -186,12 +186,12 @@ namespace ShooterGame
         public static void Close()
         {
             // Free the sound effects
-            for (int i = 0; i < sounds.Length; i++)
+            for (int i = 0; i < Sounds.Length; i++)
             {
-                if (sounds[i] != IntPtr.Zero)
+                if (Sounds[i] != IntPtr.Zero)
                 {
-                    SDL_mixer.Mix_FreeChunk(sounds[i]);
-                    sounds[i] = IntPtr.Zero;
+                    SDL_mixer.Mix_FreeChunk(Sounds[i]);
+                    Sounds[i] = IntPtr.Zero;
                 }
             }
 

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ShooterGame
 {
-    class FileHandler
+    public class FileHandler
     {
         private bool success = true;
 
