@@ -21,9 +21,11 @@ namespace ShooterGame.level.levels
             Over
         }
         
-        public override void Load()
+        public override void Reset()
         {
             cycles = 0;
+            counter = 0;
+            eventFlag = Event.Idle;
         }
 
         public override void RunLevelLogic(double deltatime, FileHandler fileHandler, ArrayList entityList)
@@ -43,8 +45,8 @@ namespace ShooterGame.level.levels
                         erni.timeAlive = random.Next(0, 80);
                         entityList.Add(erni);
                     }
-
                     break;
+                
                 case Level1.Event.Scouts:
 
                     if (cycles % 20 == 0 && counter < 60)
@@ -176,7 +178,6 @@ namespace ShooterGame.level.levels
                 cycles = 0;
                 counter = 0;
             }
-
         }
     }
 }

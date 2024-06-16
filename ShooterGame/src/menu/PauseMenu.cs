@@ -1,3 +1,5 @@
+using ShooterGame.level;
+
 namespace ShooterGame
 {
     using System;
@@ -23,6 +25,8 @@ namespace ShooterGame
             var mainMenuItem = new MenuItem("Main Menu", () =>
                 {
                     Program.reset = true;
+                    
+                    LevelManager.ResetStats();
                     
                     Program.CurrentState = GameState.MAIN_MENU;
                     Program.VisibleMenu = new MainMenu(renderer);

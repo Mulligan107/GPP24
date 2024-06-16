@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ShooterGame.level;
 using ShooterGame.ShooterGame;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -53,6 +54,7 @@ namespace ShooterGame
                 if (_e.type == SDL.SDL_EventType.SDL_QUIT || _e.key.keysym.sym == SDL.SDL_Keycode.SDLK_r)
                 {
                     Program.reset = true;
+                    LevelManager.ResetStats();
                 }
                 
                 //User requests pause via pressing 'p'

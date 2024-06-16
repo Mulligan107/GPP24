@@ -9,8 +9,7 @@ namespace ShooterGame.level
         public Level()
         {
         }
-    
-        public abstract void Load();
+        public abstract void Reset();
         public abstract void RunLevelLogic(double deltatime, FileHandler fileHandler, ArrayList entityList);
     }
 }

@@ -9,12 +9,19 @@ namespace ShooterGame.ui
         public static int Score { get; private set; }
         public static int TargetScore { get; private set; }
         public static int PreviousScore { get; private set; } // New variable to store the previous score
-        private static string filePath = "highscore.txt"; // File to store the highscore
+        private static string _fileHighScore = "highscore.txt"; // File to store the highscore
 
 
         public ScoreUI()
         {
             LoadHighscore();
+        }
+        
+        public static void ResetScore()
+        {
+            Score = 0;
+            TargetScore = 0;
+            PreviousScore = 0;
         }
 
         public static void IncreaseScore(int increment)
@@ -42,14 +49,14 @@ namespace ShooterGame.ui
         {
             try
             {
-                if (Score > int.Parse(File.ReadAllText(filePath)))
+                if (Score > int.Parse(File.ReadAllText(_fileHighScore)))
                 {
-                    File.WriteAllText(filePath, Score.ToString());
+                    File.WriteAllText(_fileHighScore, Score.ToString());
                 }
             }
             catch (Exception ex)
             {
-                File.AppendAllText(filePath, Score.ToString());
+                File.AppendAllText(_fileHighScore, Score.ToString());
                 Console.WriteLine("Error saving highscore: " + ex.Message);
             }
         }
@@ -59,13 +66,13 @@ namespace ShooterGame.ui
             
             try
             {
-                if (File.Exists(filePath))
+                if (File.Exists(_fileHighScore))
                 {
-                    string scoreText = File.ReadAllText(filePath);
+                    string scoreText = File.ReadAllText(_fileHighScore);
                     Score = 0;
                 }else
                 {
-                    File.AppendText(filePath);
+                    File.AppendText(_fileHighScore);
                     Score = 0;
                 }
             }
@@ -78,7 +85,7 @@ namespace ShooterGame.ui
         public static void DisplayHighscore(IntPtr renderer)
         {
             var scoreText = "Score: " + Score;
-            var highscoreText = "Highscore: " + File.ReadAllText(filePath);
+            var highscoreText = "Highscore: " + File.ReadAllText(_fileHighScore);
             var position = new Vector2D { X = 10, Y = 10 }; // Top left corner
             var textWidth = 200;
             var fonttext = "lazy.ttf";
