@@ -15,8 +15,8 @@ namespace ShooterGame
             lives = 5;
             lifes = lives;
             spawn((Program.SCREEN_WIDTH / 2) , Program.SCREEN_HEIGHT / 2 );
-            width = 90 * s;
-            height = 90 * s;
+            width = 60 * s;
+            height = 60 * s;
             angle = 90;
             friendly = true;
             textureList = list;
@@ -64,7 +64,7 @@ namespace ShooterGame
         public Bullet shoot(double vecx, double vecy, int direction)
         {
             Bullet bill = new Bullet(textureList,4);
-            bill.spawn(posX + width/4 , posY + height/4);
+            bill.spawn(posX + width/8 , posY + height/8);
             bill.angle = direction;
             bill.vecX = vecx;
             bill.vecY = vecy;

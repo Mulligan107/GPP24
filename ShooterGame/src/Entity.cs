@@ -111,7 +111,7 @@ namespace ShooterGame
                     choosenTexture = texture;
                 }
                 ///// DEBUG HIBOX
-                /*
+                
                 SDL.SDL_Rect debugSourceRect = hitbox;
                 debugSourceRect.h += 5;
                 debugSourceRect.w += 5;
@@ -119,7 +119,7 @@ namespace ShooterGame
                 SDL.SDL_SetRenderDrawColor(Program.gRenderer, 255, 0, 0, 255); // Red color for the border
                 SDL.SDL_RenderDrawRect(Program.gRenderer, ref debugSourceRect);
                 SDL.SDL_SetRenderDrawColor(Program.gRenderer, 255, 255, 255, 255); // Red color for the border
-                */
+                
 
 
 

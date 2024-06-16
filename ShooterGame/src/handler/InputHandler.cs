@@ -66,14 +66,14 @@ namespace ShooterGame
                 }
 
                 //Switch screen size mode if 'F' key was pressed
-                // if (e.type == SDL.SDL_EventType.SDL_KEYDOWN) //ToDo könnte ein switch case sein
-                // {
-                //     // Change screen size
-                //     if (e.key.keysym.sym == SDL.SDL_Keycode.SDLK_f)
-                //     {
-                //         Program.changeWindowSize();
-                //     }
-                // }
+                 if (_e.type == SDL.SDL_EventType.SDL_KEYDOWN) //ToDo könnte ein switch case sein
+                 {
+                    // Change screen size
+                    if (_e.key.keysym.sym == SDL.SDL_Keycode.SDLK_f)
+                    {
+                        Program.changeWindowSize();
+                     }
+                 }
 
                 if (Program.CurrentState != GameState.IN_GAME)
                 {
@@ -109,10 +109,6 @@ namespace ShooterGame
                         case SDL.SDL_Keycode.SDLK_DOWN: return (0, bulletspeed * s, 180, "shoot");
                         case SDL.SDL_Keycode.SDLK_LEFT: return (-bulletspeed * s, 0,-90, "shoot");
                         case SDL.SDL_Keycode.SDLK_RIGHT: return (bulletspeed * s, 0, 90, "shoot");
-                        // case SDL.SDL_Keycode.SDLK_w: return (0, -movementspeed * s, 90, "move");
-                        // case SDL.SDL_Keycode.SDLK_s: return (0, movementspeed * s, 90, "move");
-                        // case SDL.SDL_Keycode.SDLK_a: return (-movementspeed * s, 0, 90, "move");
-                        // case SDL.SDL_Keycode.SDLK_d: return (movementspeed * s, 0, 90, "move"); //Keine Rotation für das Schiff
                 
                     }
                 }
@@ -137,11 +133,6 @@ namespace ShooterGame
             if (pressedKeys.Contains(SDL.SDL_Keycode.SDLK_a)) return (-movementspeed * s, 0, 90, "move");
             if (pressedKeys.Contains(SDL.SDL_Keycode.SDLK_d)) return (movementspeed * s, 0, 90, "move");
 
-            // // Check for shooting keys and return corresponding command
-            // if (pressedKeys.Contains(SDL.SDL_Keycode.SDLK_UP)) return (0, -bulletspeed * s, 0, "shoot");
-            // if (pressedKeys.Contains(SDL.SDL_Keycode.SDLK_DOWN)) return (0, bulletspeed * s, 180, "shoot");
-            // if (pressedKeys.Contains(SDL.SDL_Keycode.SDLK_LEFT)) return (-bulletspeed * s, 0, -90, "shoot");
-            // if (pressedKeys.Contains(SDL.SDL_Keycode.SDLK_RIGHT)) return (bulletspeed * s, 0, 90, "shoot");
 
             return (0, 0, 0, "noAction");
         }

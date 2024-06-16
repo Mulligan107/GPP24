@@ -9,10 +9,11 @@ namespace ShooterGame.src
 {
     class Scout : Enemy
     {
+
+        double s =  Program.SCREEN_WIDTH/Program.SCREEN_HEIGHT;
         double sinValue = 0;
-        double radiusX = 5.0; 
-        double radiusY = 1.0; 
-        double boxLength = 5 * Program.SCREEN_WIDTH/Program.SCREEN_HEIGHT;
+        double radiusX = 20.0;
+        double radiusY = 5.0;
 
         public Scout(List<LTexture> textureList) : base(textureList)
         {
@@ -31,28 +32,26 @@ namespace ShooterGame.src
 
         public override void movementPattern()
         {
+
             /*
-            sinValue -= (0.05);
+            sinValue -= (0.025);
             angle = (180 / Math.PI) * (sinValue) + 75;
-            vecX = radiusX * Math.Cos(sinValue);
-            vecY = radiusY * Math.Sin(sinValue);
+            vecX = radiusX * s * Math.Cos(sinValue);
+            vecY = radiusY * s * Math.Sin(sinValue);
             */
-            speed = 10;
-            vecX = -5;
+            sinValue -= (0.05);
+            vecY = radiusY * s * Math.Sin(sinValue);
+            vecX = -8;
 
-            if (posX < Program.SCREEN_WIDTH / 8 && posY > Program.SCREEN_HEIGHT - Program.SCREEN_HEIGHT / 8) {
-                vecX = 0;
-                vecY = +5;   
-            }
-
-            if (posY < Program.SCREEN_HEIGHT / 8)
+            if (posX < -width)
             {
-                vecX = +5;
-                vecY = 0;
+                posX = Program.SCREEN_WIDTH;
+                posY += Program.SCREEN_HEIGHT/10;
             }
-
-           
-
+            if (posY > Program.SCREEN_HEIGHT + height)
+            {
+                posY = height * 2;
+            }
         }
 
         public override void onSpawn()

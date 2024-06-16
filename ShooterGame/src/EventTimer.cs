@@ -20,7 +20,8 @@ namespace ShooterGame.src
         {
             Idle,
             Fighterrow,
-            Scouts
+            Scouts,
+            Over
         }
 
 
@@ -34,25 +35,51 @@ namespace ShooterGame.src
         {
             cycles++;
 
+
+
             // SPAWNING
-            if (cycles % 20 == 0 && eventFlag.ToString().Equals("Fighterrow") && counter < 10)
+            switch (eventFlag)
             {
-                counter++;
-                Fighter erni = new Fighter(fileHandler.getFighter());
-                erni.posX = Program.SCREEN_WIDTH - (Program.SCREEN_WIDTH / 10);
-                erni.posY = Program.SCREEN_HEIGHT - (Program.SCREEN_HEIGHT / 18) - ((Program.SCREEN_HEIGHT / 11) * (cycles / 20));
-                erni.timeAlive = random.Next(0,80);
-                entityList.Add(erni);
+                case Event.Fighterrow:
+                    if (cycles % 20 == 0 && counter < 10)
+                    {
+                        counter++;
+                        Fighter erni = new Fighter(fileHandler.getFighter());
+                        erni.posX = Program.SCREEN_WIDTH - (Program.SCREEN_WIDTH / 10);
+                        erni.posY = Program.SCREEN_HEIGHT - (Program.SCREEN_HEIGHT / 18) - ((Program.SCREEN_HEIGHT / 11) * (cycles / 20));
+                        erni.timeAlive = random.Next(0, 80);
+                        entityList.Add(erni);
+                    }
+
+                    break;
+                case Event.Scouts:
+
+                    if (cycles % 20 == 0 && counter < 60)
+                    {
+                        counter++;
+                        Console.WriteLine(counter);
+                        Scout scott = new Scout(fileHandler.getScout());
+                        var x = 1;
+                        if (counter < 20)
+                        {
+                            x = 0;
+                        }
+                        if (counter < 40 && counter > 20)
+                        {
+                            x = 2;
+                        }
+                        if (counter < 60 && counter > 40)
+                        {
+                            x = 4;
+                        }
+
+                        scott.spawn(Program.SCREEN_WIDTH, (Program.SCREEN_HEIGHT / 4) + (Program.SCREEN_HEIGHT / 7) * x);
+                        entityList.Add(scott);
+
+                    }
+                    break;
             }
 
-            if (eventFlag.ToString().Equals("Scouts"))
-            {
-                Scout scott = new Scout(fileHandler.getScout());
-                scott.spawn(Program.SCREEN_WIDTH/2, Program.SCREEN_HEIGHT/2);
-                entityList.Add(scott);
-              
-                eventFlag = Event.Idle;
-            }
 
             // SHOOTING
             ArrayList entitiesToProcess = new ArrayList(entityList);
@@ -71,7 +98,7 @@ namespace ShooterGame.src
                 }
             }
 
-            if (cycles == 200 && !eventFlag.ToString().Equals("Fighterrow"))
+            if (cycles == 200 && eventFlag.ToString().Equals("Idle"))
             {
                 eventFlag = Event.Fighterrow;
                 cycles = 0;
@@ -80,6 +107,8 @@ namespace ShooterGame.src
 
             if (cycles == 200 && !eventFlag.ToString().Equals("Scouts"))
             {
+                counter = 0;
+                cycles = 0;
                 eventFlag = Event.Scouts;
             }
 
