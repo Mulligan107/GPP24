@@ -138,6 +138,10 @@ namespace ShooterGame
             animationMap.Add(name, _SpriteClips); 
         }
 
+        public virtual void shootEnemy(double delta)
+        {
+
+        }
 
         public void handleAnimation(double deltatime, string flag)
         {

@@ -32,7 +32,7 @@ namespace ShooterGame
                         
                        
                         if (SDL.SDL_HasIntersection(ref enti.destRect, ref counterEnti.destRect) == SDL.SDL_bool.SDL_TRUE 
-                            && (!enti.friendly || !counterEnti.friendly) ) //Hitten wen Hitboxen überschneiden und beide nicht friendly sind
+                            && (enti.friendly && !counterEnti.friendly || !enti.friendly && counterEnti.friendly) ) //Hitten wen Hitboxen überschneiden und beide nicht friendly sind
                         {
                             Console.WriteLine("HIT _________________________");
                             enti.hit();

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using SDL2;
+using ShooterGame.src;
 
 /*
 TODO - Entity aufsplitten interactable, hit usw.
@@ -222,6 +223,8 @@ namespace ShooterGame
 
                 SoundHandler.LoadMedia();
 
+                EventTimer eventTimer = new EventTimer();
+
                 if (success == false)
                 {
                     Console.WriteLine("Failed to load media!");
@@ -265,6 +268,7 @@ namespace ShooterGame
                         list.Add("Ray_spawn");
                         list.Add("Fighter_death");
                         list.Add("Fighter_shield");
+                        list.Add("Bullet_move");
                         Enemy benno = new Enemy(fileHandler.getTextureList(list)); // Vielleicht in Filehandler packen
                         Enemy benno2 = new Enemy(fileHandler.getTextureList(list));
                         list.Clear();                                                        
@@ -341,6 +345,9 @@ namespace ShooterGame
                                 arno.vecY = y;
                                 arno.angle = direction;
                             }
+
+                            eventTimer.updateList(entityList);
+                            eventTimer.timedEvent(elapsed);
 
                             ////////////////////////////////////// TEST AREA
                             //Update screen

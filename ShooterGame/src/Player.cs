@@ -40,6 +40,7 @@ namespace ShooterGame
         public Bullet shoot(double vecx, double vecy, int direction)
         {
             Bullet bill = new Bullet(textureList);
+            bill.texture.setColor(255,255,255);
             bill.spawn(posX + width/4 , posY + height/4);
             bill.angle = direction;
             bill.vecX = vecx;

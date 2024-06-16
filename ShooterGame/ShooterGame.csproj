@@ -71,6 +71,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="src\CollisionHandler.cs" />
+    <Compile Include="src\EventTimer.cs" />
     <Compile Include="src\handler\FileHandler.cs" />
     <Compile Include="src\handler\InputHandler.cs" />
     <Compile Include="src\handler\SoundHandler.cs" />

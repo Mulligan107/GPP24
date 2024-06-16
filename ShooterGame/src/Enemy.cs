@@ -26,21 +26,27 @@ namespace ShooterGame
 
 
             onSpawn();
-            setupOverAnimateion();
             
             //   render(tex);
         }
 
         public void onSpawn()
         {
-            startAnimation = true;
-            repeats = 3;
-            animationCounter = 0;
-            frame = 0;
-            frameTicker = 0;
-            animationFlag = "spawn";
+            animationHelper(3, 1, "spawn");
 
             spawn((Program.SCREEN_WIDTH / 2) * 1.5, Program.SCREEN_HEIGHT / 2);
+        }
+
+        public void animationHelper(int reps, int aniSpeed, string flag)
+        {
+            startAnimation = true;
+            frame = 0;
+            frameTicker = 0;
+            animationCounter = 0;
+            repeats = reps;
+            animationSpeed = aniSpeed;
+            animationFlag = flag;
+
         }
 
         public override void hit()
@@ -48,33 +54,35 @@ namespace ShooterGame
             if (!iframe)
             {
                 iframe = true;
-                startAnimation = true;
-                frame = 0;
-                frameTicker = 0;
+                
 
                 lives = lives - 1;
 
                 if (lives < 0) // DEATH
                 {
-                    repeats = 1;
-                    animationCounter = 0;
-                    animationSpeed = 2;
-                    animationFlag = "death";
+                    animationHelper(1,2,"death");
                 }
                 else // HIT
                 {
-                    repeats = 3;
-                    animationCounter = 0;
-                    animationSpeed = 4;
-                    animationFlag = "shield";
+                    animationHelper(3, 4, "shield");
                 }
                 Console.WriteLine("Lives after: " + lives);
             }
         }
 
-        public void setupOverAnimateion()
+        public override void shootEnemy()
         {
-            
+            List<LTexture> list = new List<LTexture>();
+            list.Add(textureList[4]);
+            list.Add(textureList[4]);
+            Bullet bill = new Bullet(list);
+            double s = Program.SCREEN_WIDTH / Program.SCREEN_HEIGHT;
+            bill.spawn(posX + width / 4, posY + height / 4);
+            bill.angle = -90;
+            bill.vecX = -15 * s;
+            bill.vecY = 0;
+            bill.friendly = false;
+            Program.entityList.Add(bill);
         }
     }
 }
