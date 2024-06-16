@@ -47,6 +47,12 @@ namespace ShooterGame.src
                         erni.posY = Program.SCREEN_HEIGHT - (Program.SCREEN_HEIGHT / 18) - ((Program.SCREEN_HEIGHT / 11) * (cycles / 20));
                         erni.timeAlive = random.Next(0, 80);
                         entityList.Add(erni);
+                        if (counter == 1)
+                        {
+                            Dread andre = new Dread(fileHandler.getDread());
+                            andre.hit();
+                            entityList.Add(andre);    
+                        }
                     }
 
                     break;
@@ -94,16 +100,31 @@ namespace ShooterGame.src
                     }
 
                 }
+                if (levi.GetType().Name.Equals("Dread"))
+                {
+                    levi.timeAlive++;
+
+                    if (levi.timeAlive > 200)
+                    {
+                        levi.bulletFan();
+                        levi.timeAlive = 0;
+                    }
+
+                    if (cycles == 800)
+                    {
+                        levi.vecY = -3;
+                    }
+                }
             }
 
-            if (cycles == 200 && eventFlag.ToString().Equals("Idle"))
+            if (cycles == 500 && eventFlag.ToString().Equals("Idle"))
             {
                 eventFlag = Event.Fighterrow;
                 cycles = 0;
             }
 
 
-            if (cycles == 200 && !eventFlag.ToString().Equals("Scouts"))
+            if (cycles == 800 && !eventFlag.ToString().Equals("Scouts"))
             {
                 counter = 0;
                 cycles = 0;

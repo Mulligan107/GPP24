@@ -52,6 +52,7 @@ namespace ShooterGame
 
         public static bool quit = false;
         public static bool reset = false;
+        public static bool debugMode = false;
 
         private static bool Init()
         {

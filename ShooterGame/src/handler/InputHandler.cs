@@ -65,8 +65,22 @@ namespace ShooterGame
                     }
                 }
 
+                //DEBUGMODE
+                if (_e.key.keysym.sym == SDL.SDL_Keycode.SDLK_j && _e.type == SDL.SDL_EventType.SDL_KEYDOWN)
+                {
+                    if (!Program.debugMode)
+                    {
+                        Program.debugMode = true;
+                    }
+                    else
+                    {
+                        Program.debugMode = false;
+                    }
+                }
+
+
                 //Switch screen size mode if 'F' key was pressed
-                 if (_e.type == SDL.SDL_EventType.SDL_KEYDOWN) //ToDo könnte ein switch case sein
+                if (_e.type == SDL.SDL_EventType.SDL_KEYDOWN) //ToDo könnte ein switch case sein
                  {
                     // Change screen size
                     if (_e.key.keysym.sym == SDL.SDL_Keycode.SDLK_f)
