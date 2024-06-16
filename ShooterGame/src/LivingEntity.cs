@@ -18,6 +18,7 @@ namespace ShooterGame
 
         public virtual void bulletFan() { }
         public virtual void shootTarget() { }
+        public virtual void deathray() { }
     }
 
 }

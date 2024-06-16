@@ -76,6 +76,17 @@ namespace ShooterGame
             return getTextureList(list);
         }
 
+        public List<LTexture> getLasership()
+        {
+            List<String> list = new List<String>();
+            list.Add("Lasership\\Lasership");
+            list.Add("Lasership\\Lasership_death");
+            list.Add("Lasership\\Lasership_shield");
+            list.Add("Lasership\\Lasership_bullet");
+
+            return getTextureList(list);
+        }
+
         public LTexture getTexture(string title)
         {
            // Console.WriteLine(textureMap.Count);

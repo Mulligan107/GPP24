@@ -71,6 +71,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="src\CollisionHandler.cs" />
+    <Compile Include="src\Enemies\Lasership.cs" />
     <Compile Include="src\Enemies\Dread.cs" />
     <Compile Include="src\Enemies\Sentry.cs" />
     <Compile Include="src\Enemies\Scout.cs" />
@@ -159,6 +160,18 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="imgs\hamter.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="imgs\Lasership\Lasership.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="imgs\Lasership\Lasership_death.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="imgs\Lasership\Lasership_shield.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="imgs\Lasership\Lasership_bullet.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="imgs\Menu\Back.png">

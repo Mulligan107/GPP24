@@ -44,6 +44,12 @@ namespace ShooterGame.level.levels
                         erni.posY = Program.SCREEN_HEIGHT - (Program.SCREEN_HEIGHT / 18) - ((Program.SCREEN_HEIGHT / 11) * (_cycles / 20));
                         erni.timeAlive = _random.Next(0, 80);
                         entityList.Add(erni);
+                        if (_counter == 1)
+                        {
+                            Lasership lesar = new Lasership(fileHandler.getLasership());
+                            lesar.spawn(Program.SCREEN_HEIGHT/2, Program.SCREEN_HEIGHT/2);
+                            entityList.Add(lesar);
+                        }
                     }
                     break;
                 
@@ -154,16 +160,26 @@ namespace ShooterGame.level.levels
                         levi.timeAlive = 0;
                     }
                 }
+                if (levi.GetType().Name.Equals("Lasership"))
+                {
+                    levi.timeAlive++;
+
+                    if (levi.timeAlive > 5)
+                    {
+                        levi.deathray();
+                        levi.timeAlive = 0;
+                    }
+                }
             }
 
-            if (_cycles == 500 && _eventFlag.ToString().Equals("Idle"))
+            if (_cycles == 500 && _eventFlag.ToString().Equals("IDLE"))
             {
                 _eventFlag = Level1.Event.FIGHTERROW;
                 _cycles = 0;
             }
 
 
-            if (_cycles == 800 && !_eventFlag.ToString().Equals("Scouts"))
+            if (_cycles == 800 && !_eventFlag.ToString().Equals("SCOUTS"))
             {
                 _counter = 0;
                 _cycles = 0;
@@ -172,14 +188,14 @@ namespace ShooterGame.level.levels
 
             Console.WriteLine(Enemy.TotalEnemies);
 
-            if (_cycles > 800 && Enemy.TotalEnemies == 0 && !_eventFlag.ToString().Equals("Over"))
+            if (_cycles > 800 && Enemy.TotalEnemies == 0 && !_eventFlag.ToString().Equals("OVER"))
             {
                 _eventFlag = Level1.Event.DREADNAUGHT;
                 _cycles = 0;
                 _counter = 0;
             }
             
-            if (Enemy.TotalEnemies == 0 && _eventFlag.ToString().Equals("Over"))
+            if (Enemy.TotalEnemies == 0 && _eventFlag.ToString().Equals("OVER"))
             {
                 //Program.level = 2;
             }
