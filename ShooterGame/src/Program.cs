@@ -314,8 +314,8 @@ namespace ShooterGame
                                         backgroundObject.update(elapsed);
                                     }
                                     
-                                    Highscore.DisplayHighscore(gRenderer);
-
+                                    ScoreUI.DisplayHighscore(gRenderer);
+                                    LifeUI.DisplayLives(gRenderer);
 
                                     foreach (Entity enti in entityList)
                                     {

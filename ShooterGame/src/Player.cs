@@ -8,11 +8,12 @@ namespace ShooterGame
 {
     class Player : LivingEntity
     {
-
+        public static double lifes;
 
         public Player(List<LTexture> list)
         {
             lives = 5;
+            lifes = lives;
             spawn((Program.SCREEN_WIDTH / 2) , Program.SCREEN_HEIGHT / 2 );
             width = 90 * s;
             height = 90 * s;
@@ -29,19 +30,20 @@ namespace ShooterGame
                 iframe = true;
                 
                 lives = lives - 1;
+                lifes = lives;
 
                 if (lives < 0) // DEATH
                 {
                     //animationHelper(1,2,"death");
                     
                     SoundHandler.PlaySound(1);
-                    
-                    Highscore.IncreaseScore(100);
         
                 }
                 else // HIT
                 {
                     //animationHelper(3, 4, "shield");
+                    
+                    ScoreUI.IncreaseScore(-100);
                 }
                 Console.WriteLine("Lives after: " + lives);
             }

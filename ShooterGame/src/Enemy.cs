@@ -62,7 +62,7 @@ namespace ShooterGame
                     
                     SoundHandler.PlaySound(1);
                     
-                    Highscore.IncreaseScore(100);
+                    ScoreUI.IncreaseScore(100);
         
                 }
                 else // HIT

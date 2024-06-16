@@ -4,12 +4,12 @@ using SDL2;
 
 namespace ShooterGame.ui
 {
-    public class Highscore
+    public class ScoreUI
     {
         public static int Score { get; private set; }
         private static string filePath = "highscore.txt"; // File to store the highscore
 
-        public Highscore()
+        public ScoreUI()
         {
             LoadHighscore();
         }
