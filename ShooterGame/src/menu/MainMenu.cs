@@ -76,8 +76,8 @@ namespace ShooterGame
             
             // Display the title
             var titlePosition = new Vector2D { X = Program.SCREEN_WIDTH / 2, Y = Program.SCREEN_HEIGHT / 10 }; // Adjust the Y value as needed
-            var titleColor = new SDL.SDL_Color { r = 0, g = 0, b = 0, a = 255 }; // White color
-            DisplayText("This is a very amusing game", titlePosition, 500, "lazy.ttf", renderer, titleColor); // Adjust the width as needed
+            var titleColor = new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 };
+            DisplayText("Space Hell DELUXE", titlePosition, 500, "lazy.ttf", renderer, titleColor); // Adjust the width as needed
 
             
             for (var i = 0; i < MenuItems.Count; i++)
