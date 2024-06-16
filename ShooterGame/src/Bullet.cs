@@ -6,7 +6,7 @@ namespace ShooterGame
 {
     class Bullet : LivingEntity
     {
-        public Bullet(List<LTexture> textureList)
+        public Bullet(List<LTexture> textureList, int frames)
         {
             width = 45 * s;
             height = 45 * s;
@@ -15,7 +15,7 @@ namespace ShooterGame
             this.textureList = textureList;
             texture = textureList[1];
 
-            setupAnimation(4, "move", texture);
+            setupAnimation(frames, "move", texture);
             repeats = 999;
             animationCounter = 0;
             animationSpeed = 1;

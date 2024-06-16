@@ -268,7 +268,7 @@ namespace ShooterGame
                         list.Add("Ray_spawn");
                         list.Add("Fighter_death");
                         list.Add("Fighter_shield");
-                        list.Add("Bullet_move");
+                        list.Add("Fighter_bullet");
                         Enemy benno = new Enemy(fileHandler.getTextureList(list)); // Vielleicht in Filehandler packen
                         Enemy benno2 = new Enemy(fileHandler.getTextureList(list));
                         list.Clear();                                                        

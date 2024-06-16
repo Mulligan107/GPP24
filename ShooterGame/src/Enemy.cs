@@ -75,7 +75,8 @@ namespace ShooterGame
             List<LTexture> list = new List<LTexture>();
             list.Add(textureList[4]);
             list.Add(textureList[4]);
-            Bullet bill = new Bullet(list);
+            Bullet bill = new Bullet(list, 10);
+            bill.texture.setColor(255,0,0);
             double s = Program.SCREEN_WIDTH / Program.SCREEN_HEIGHT;
             bill.spawn(posX + width / 4, posY + height / 4);
             bill.angle = -90;
