@@ -8,24 +8,24 @@ namespace ShooterGame.level.levels
     {
         double _cycles = 0;
         int _counter = 0;
-        Event _eventFlag = Event.IDLE;
+        Event _eventFlag = Event.Idle;
         Random _random = new Random();
         public static ArrayList EntityList = new ArrayList();
 
         enum Event
         {
-            IDLE,
-            FIGHTERROW,
-            SCOUTS,
-            DREADNAUGHT,
-            OVER
+            Idle,
+            Fighterrow,
+            Scouts,
+            Dreadnaught,
+            Over
         }
         
         public override void Reset()
         {
             _cycles = 0;
             _counter = 0;
-            _eventFlag = Event.IDLE;
+            _eventFlag = Event.Idle;
         }
 
         public override void RunLevelLogic(double deltatime, FileHandler fileHandler, ArrayList entityList)
@@ -35,7 +35,7 @@ namespace ShooterGame.level.levels
             // SPAWNING
             switch (_eventFlag)
             {
-                case Level1.Event.FIGHTERROW:
+                case Level1.Event.Fighterrow:
                     if (_cycles % 20 == 0 && _counter < 10)
                     {
                         _counter++;
@@ -47,7 +47,7 @@ namespace ShooterGame.level.levels
                     }
                     break;
                 
-                case Level1.Event.SCOUTS:
+                case Level1.Event.Scouts:
 
                     if (_cycles % 20 == 0 && _counter < 60)
                     {
@@ -74,7 +74,7 @@ namespace ShooterGame.level.levels
                     }
                     break;
 
-                case Level1.Event.DREADNAUGHT:
+                case Level1.Event.Dreadnaught:
                         _counter++;
                     
                     if (_counter == 1)
@@ -106,7 +106,7 @@ namespace ShooterGame.level.levels
                     }
                     else
                     {
-                        _eventFlag = Level1.Event.OVER;
+                        _eventFlag = Level1.Event.Over;
                     }
 
                         
@@ -158,30 +158,31 @@ namespace ShooterGame.level.levels
 
             if (_cycles == 500 && _eventFlag.ToString().Equals("Idle"))
             {
-                _eventFlag = Level1.Event.FIGHTERROW;
+                _eventFlag = Level1.Event.Fighterrow;
                 _cycles = 0;
             }
 
 
-            if (_cycles == 800 && !_eventFlag.ToString().Equals("Scouts"))
+            if (_cycles == 800 && !_eventFlag.ToString().Equals("scouts"))
             {
                 _counter = 0;
                 _cycles = 0;
-                _eventFlag = Level1.Event.SCOUTS;
+                _eventFlag = Level1.Event.Scouts;
             }
 
             Console.WriteLine(Enemy.TotalEnemies);
 
             if (_cycles > 800 && Enemy.TotalEnemies == 0 && !_eventFlag.ToString().Equals("Over"))
             {
-                _eventFlag = Level1.Event.DREADNAUGHT;
+                _eventFlag = Level1.Event.Dreadnaught;
                 _cycles = 0;
                 _counter = 0;
             }
             
             if (Enemy.TotalEnemies == 0 && _eventFlag.ToString().Equals("Over"))
             {
-                //Program.level = 2;
+                Program.CurrentState = GameState.WIN;
+                Program.VisibleMenu = new WinMenu(Program.gRenderer);
             }
         }
     }

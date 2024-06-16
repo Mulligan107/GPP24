@@ -19,6 +19,18 @@ namespace ShooterGame.level
             _levels.Add(new Level3());
         }
         
+        public static void AdvanceToNextLevel()
+        {
+            if (CurrentLevel < _levels.Count - 1)
+            {
+                CurrentLevel++;
+            }
+            else
+            {
+                Console.WriteLine("You have completed all levels!");
+            }
+        }
+        
         public static void RunCurrentLevelLogic(double deltatime, FileHandler fileHandler, ArrayList entityList)
         {
             GetCurrentLevel().RunLevelLogic(deltatime, fileHandler, entityList);

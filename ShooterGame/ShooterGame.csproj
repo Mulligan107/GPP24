@@ -67,15 +67,30 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Sdl\SDL2_ttf.cs" />
-    <Compile Include="src\BackgroundObject.cs">
+    <Compile Include="src\enteties\Bullet.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="src\CollisionHandler.cs" />
-    <Compile Include="src\Enemies\Dread.cs" />
-    <Compile Include="src\Enemies\Sentry.cs" />
-    <Compile Include="src\Enemies\Scout.cs" />
-    <Compile Include="src\EventHandler.cs" />
-    <Compile Include="src\Enemies\Fighter.cs" />
+    <Compile Include="src\enteties\Enemies\Dread.cs" />
+    <Compile Include="src\enteties\Enemies\Fighter.cs" />
+    <Compile Include="src\enteties\Enemies\Scout.cs" />
+    <Compile Include="src\enteties\Enemies\Sentry.cs" />
+    <Compile Include="src\enteties\Enemy.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="src\enteties\Entity.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="src\enteties\LivingEntity.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="src\enteties\Player.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="src\essentials\CollisionHandler.cs" />
+    <Compile Include="src\essentials\LTexture.cs" />
+    <Compile Include="src\essentials\LTimer.cs" />
+    <Compile Include="src\essentials\Program.cs" />
+    <Compile Include="src\handler\EventHandler.cs" />
     <Compile Include="src\handler\FileHandler.cs" />
     <Compile Include="src\handler\InputHandler.cs" />
     <Compile Include="src\handler\SoundHandler.cs" />
@@ -84,18 +99,7 @@
     <Compile Include="src\level\levels\Level1.cs" />
     <Compile Include="src\level\levels\Level2.cs" />
     <Compile Include="src\level\levels\Level3.cs" />
-    <Compile Include="src\LivingEntity.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="src\Entity.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="src\LTexture.cs" />
-    <Compile Include="src\LTimer.cs" />
-    <Compile Include="src\Enemy.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="src\Bullet.cs">
+    <Compile Include="src\menu\BackgroundObject.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="src\menu\GameOverMenu.cs" />
@@ -110,10 +114,6 @@
     <Compile Include="src\menu\PauseMenu.cs" />
     <Compile Include="src\menu\SettingsMenu.cs" />
     <Compile Include="src\menu\WinMenu.cs" />
-    <Compile Include="src\Player.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="src\Program.cs" />
     <Compile Include="src\ui\EnemyAmountUI.cs" />
     <Compile Include="src\ui\ScoreUI.cs" />
     <Compile Include="src\ui\LifeUI.cs" />
