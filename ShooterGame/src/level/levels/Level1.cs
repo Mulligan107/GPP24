@@ -172,7 +172,7 @@ namespace ShooterGame.level.levels
                 }
             }
 
-            if (_cycles == 500 && _eventFlag.ToString().Equals("IDLE"))
+            if (_cycles == 500 && _eventFlag.ToString().Equals("Idle"))
             {
                 _eventFlag = Level1.Event.Fighterrow;
                 _cycles = 0;
@@ -188,14 +188,14 @@ namespace ShooterGame.level.levels
 
             Console.WriteLine(Enemy.TotalEnemies);
 
-            if (_cycles > 800 && Enemy.TotalEnemies == 0 && !_eventFlag.ToString().Equals("OVER"))
+            if (_cycles > 800 && Enemy.TotalEnemies == 0 && !_eventFlag.ToString().Equals("Over"))
             {
                 _eventFlag = Level1.Event.Dreadnaught;
                 _cycles = 0;
                 _counter = 0;
             }
             
-            if (Enemy.TotalEnemies == 0 && _eventFlag.ToString().Equals("OVER"))
+            if (Enemy.TotalEnemies == 0 && _eventFlag.ToString().Equals("Over"))
             {
                 Program.CurrentState = GameState.WIN;
                 Program.VisibleMenu = new WinMenu(Program.gRenderer);
