@@ -21,6 +21,7 @@ namespace ShooterGame.src
             Idle,
             Fighterrow,
             Scouts,
+            Dreadnaught,
             Over
         }
 
@@ -47,12 +48,6 @@ namespace ShooterGame.src
                         erni.posY = Program.SCREEN_HEIGHT - (Program.SCREEN_HEIGHT / 18) - ((Program.SCREEN_HEIGHT / 11) * (cycles / 20));
                         erni.timeAlive = random.Next(0, 80);
                         entityList.Add(erni);
-                        if (counter == 1)
-                        {
-                            Dread andre = new Dread(fileHandler.getDread());
-                            andre.hit();
-                            entityList.Add(andre);    
-                        }
                     }
 
                     break;
@@ -81,6 +76,19 @@ namespace ShooterGame.src
                         entityList.Add(scott);
 
                     }
+                    break;
+
+                case Event.Dreadnaught:
+                        counter++;
+                    
+                    if (counter == 1)
+                    {
+                        Dread andre = new Dread(fileHandler.getDread());
+                        andre.hit();
+                        entityList.Add(andre);
+                        eventFlag = Event.Over;
+                    }
+                        
                     break;
             }
 
@@ -129,6 +137,15 @@ namespace ShooterGame.src
                 counter = 0;
                 cycles = 0;
                 eventFlag = Event.Scouts;
+            }
+
+            Console.WriteLine(Enemy.TotalEnemies);
+
+            if (cycles > 800 && Enemy.TotalEnemies == 0)
+            {
+                eventFlag = Event.Dreadnaught;
+                cycles = 0;
+                counter = 0;
             }
 
         }
