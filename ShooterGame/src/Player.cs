@@ -21,36 +21,53 @@ namespace ShooterGame
             friendly = true;
             textureList = list;
             texture = list[0];
+            overTexture = list[2];
+            overTexture.setColor(0, 255, 0);
+            setupAnimation(10, "shield", list[2]);
+            checkLives();
+            
         }
-        
+
         public override void hit()
         {
             if (!iframe)
             {
                 iframe = true;
-                
+
                 lives = lives - 1;
                 lifes = lives;
 
-                if (lives < 0) // DEATH
-                {
-                    //animationHelper(1,2,"death");
+                SoundHandler.PlaySound(6);
+                
+                animationHelper(1, 1, "shield");
+                checkLives();
+                ScoreUI.IncreaseScore(-100);
 
-                    // SoundHandler.PlaySound(1);    TODO - ERSETZEN fucking earrape
-
-                }
-                else // HIT
-                {
-                    //animationHelper(3, 4, "shield");
-                    
-                    ScoreUI.IncreaseScore(-100);
-                }
-                Console.WriteLine("Lives after: " + lives);
+            }
+        
+        }
+        
+        public void checkLives()
+        {
+            switch (lives)
+            {
+                case 0:
+                    //TODO GAMEOVER
+                    break;
+                case 1:
+                    this.texture = textureList[5];
+                    break;
+                case 2:
+                    this.texture = textureList[4];
+                    break;
+                case 3:
+                    this.texture = textureList[3];
+                    break;
             }
         }
-
         public override void move(double deltaTime)
         {
+            checkLives();
             if (posX > 0 || posX < Program.SCREEN_WIDTH && posY > 0 || posY < Program.SCREEN_HEIGHT) //begrenzung für Spieler, nur im Fenster bewegen TODO bringt nix
             {
                 vecX = vecX * 0.925;

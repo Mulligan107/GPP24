@@ -65,8 +65,22 @@ namespace ShooterGame
                     }
                 }
 
+                //DEBUGMODE
+                if (_e.key.keysym.sym == SDL.SDL_Keycode.SDLK_j && _e.type == SDL.SDL_EventType.SDL_KEYDOWN)
+                {
+                    if (!Program.debugMode)
+                    {
+                        Program.debugMode = true;
+                    }
+                    else
+                    {
+                        Program.debugMode = false;
+                    }
+                }
+
+
                 //Switch screen size mode if 'F' key was pressed
-                 if (_e.type == SDL.SDL_EventType.SDL_KEYDOWN) //ToDo könnte ein switch case sein
+                if (_e.type == SDL.SDL_EventType.SDL_KEYDOWN) //ToDo könnte ein switch case sein
                  {
                     // Change screen size
                     if (_e.key.keysym.sym == SDL.SDL_Keycode.SDLK_f)
@@ -83,11 +97,11 @@ namespace ShooterGame
                         {
                             case SDL.SDL_Keycode.SDLK_UP:
                                 Program.VisibleMenu.SelectPreviousItem();
-                                SoundHandler.PlaySound(0);
+                                SoundHandler.PlaySound(1);
                                 break;
                             case SDL.SDL_Keycode.SDLK_DOWN:
                                 Program.VisibleMenu.SelectNextItem();
-                                SoundHandler.PlaySound(0);
+                                SoundHandler.PlaySound(2);
                                 break;
                             case SDL.SDL_Keycode.SDLK_RETURN:
                                 Program.VisibleMenu.ExecuteSelectedItem();
@@ -105,10 +119,18 @@ namespace ShooterGame
                     //Adjust the velocity
                     switch (_e.key.keysym.sym)
                     {
-                        case SDL.SDL_Keycode.SDLK_UP: return (0, (-bulletspeed * s),0, "shoot");
-                        case SDL.SDL_Keycode.SDLK_DOWN: return (0, bulletspeed * s, 180, "shoot");
-                        case SDL.SDL_Keycode.SDLK_LEFT: return (-bulletspeed * s, 0,-90, "shoot");
-                        case SDL.SDL_Keycode.SDLK_RIGHT: return (bulletspeed * s, 0, 90, "shoot");
+                        case SDL.SDL_Keycode.SDLK_UP: 
+                            SoundHandler.PlaySound(7);
+                            return (0, (-bulletspeed * s) ,0, "shoot");
+                        case SDL.SDL_Keycode.SDLK_DOWN: 
+                            SoundHandler.PlaySound(7);
+                            return (0, bulletspeed * s, 180, "shoot");
+                        case SDL.SDL_Keycode.SDLK_LEFT: 
+                            SoundHandler.PlaySound(7);
+                            return (-bulletspeed * s, 0,-90, "shoot");
+                        case SDL.SDL_Keycode.SDLK_RIGHT: 
+                            SoundHandler.PlaySound(7);
+                            return (bulletspeed * s, 0, 90, "shoot");
                 
                     }
                 }

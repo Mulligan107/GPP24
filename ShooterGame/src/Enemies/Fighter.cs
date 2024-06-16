@@ -21,6 +21,7 @@ namespace ShooterGame.src
             angle = -90;
             texture = textureList[0];
             overTexture = textureList[3];
+            overTexture.setColor(255, 0, 0);
             setupAnimation(4, "spawn", textureList[1]);
             setupAnimation(9, "death", textureList[2]);
             setupAnimation(10, "shield", textureList[3]); //TODO Automatisieren
@@ -53,16 +54,18 @@ namespace ShooterGame.src
                 {
                     animationHelper(1, 2, "death");
 
-                    //   SoundHandler.PlaySound(1);  TODO - ERSETZEN fucking earrape
+                    TotalEnemies--;
 
                     ScoreUI.IncreaseScore(100);
 
                 }
                 else // HIT
                 {
+                    SoundHandler.PlaySound(4);
+                    
                     animationHelper(3, 4, "shield");
                 }
-                Console.WriteLine("Lives after: " + lives);
+
             }
         }
     }

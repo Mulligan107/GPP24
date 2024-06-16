@@ -110,17 +110,17 @@ namespace ShooterGame
                 {
                     choosenTexture = texture;
                 }
-                ///// DEBUG HIBOX
                 
-                SDL.SDL_Rect debugSourceRect = hitbox;
-                debugSourceRect.h += 5;
-                debugSourceRect.w += 5;
+                if (Program.debugMode)
+                {
+                    SDL.SDL_Rect debugSourceRect = hitbox;
+                    debugSourceRect.h += 5;
+                    debugSourceRect.w += 5;
 
-                SDL.SDL_SetRenderDrawColor(Program.gRenderer, 255, 0, 0, 255); // Red color for the border
-                SDL.SDL_RenderDrawRect(Program.gRenderer, ref debugSourceRect);
-                SDL.SDL_SetRenderDrawColor(Program.gRenderer, 255, 255, 255, 255); // Red color for the border
-                
-
+                    SDL.SDL_SetRenderDrawColor(Program.gRenderer, 255, 0, 0, 255); // Red color for the border
+                    SDL.SDL_RenderDrawRect(Program.gRenderer, ref debugSourceRect);
+                    SDL.SDL_SetRenderDrawColor(Program.gRenderer, 255, 255, 255, 255); // Red color for the border
+                }
 
 
                 SDL.SDL_RenderCopyEx(Program.gRenderer, choosenTexture.getTexture() , ref sourceRect, ref destRect, angle, IntPtr.Zero, SDL.SDL_RendererFlip.SDL_FLIP_NONE);
@@ -133,6 +133,17 @@ namespace ShooterGame
                 // tex.render(((int)System.Math.Floor(posX)), (int)System.Math.Floor(posY));
             }
             
+        }
+        public void animationHelper(int reps, int aniSpeed, string flag)
+        {
+            startAnimation = true;
+            frame = 0;
+            frameTicker = 0;
+            animationCounter = 0;
+            repeats = reps;
+            animationSpeed = aniSpeed;
+            animationFlag = flag;
+
         }
 
         public void setupAnimation(int anzahlFrames, string name, LTexture parameterTexture)
