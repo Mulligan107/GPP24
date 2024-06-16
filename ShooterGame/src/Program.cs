@@ -264,14 +264,10 @@ namespace ShooterGame
                         Player arno = new Player(fileHandler.getTextureList(list));
                         list.Clear();
 
-                        list.Add("Fighterrand");
-                        list.Add("Ray_spawn");
-                        list.Add("Fighter_death");
-                        list.Add("Fighter_shield");
-                        list.Add("Fighter_bullet");
-                        Enemy benno = new Enemy(fileHandler.getTextureList(list)); // Vielleicht in Filehandler packen
-                        Enemy benno2 = new Enemy(fileHandler.getTextureList(list));
-                        list.Clear();                                                        
+
+                        Enemy benno = new Enemy(fileHandler.getFighter()); // Vielleicht in Filehandler packen
+                        Enemy benno2 = new Enemy(fileHandler.getFighter());
+                                                        
                         ////////////////////////////////////// TEST AREA
                         ///
                         entityList.Add(arno);
@@ -347,7 +343,7 @@ namespace ShooterGame
                             }
 
                             eventTimer.updateList(entityList);
-                            eventTimer.timedEvent(elapsed);
+                            eventTimer.timedEvent(elapsed,fileHandler);
 
                             ////////////////////////////////////// TEST AREA
                             //Update screen

@@ -27,7 +27,7 @@ namespace ShooterGame
 
         public override void move(double deltaTime)
         {
-            if (posX > 0 || posX < Program.SCREEN_WIDTH && posY > 0 || posY < Program.SCREEN_HEIGHT) //begrenzung für Spieler, nur im Fenster bewegen
+            if (posX > 0 || posX < Program.SCREEN_WIDTH && posY > 0 || posY < Program.SCREEN_HEIGHT) //begrenzung für Spieler, nur im Fenster bewegen TODO bringt nix
             {
                 vecX = vecX * 0.925;
                 vecY = vecY * 0.925;

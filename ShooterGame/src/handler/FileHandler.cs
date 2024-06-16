@@ -36,7 +36,16 @@ namespace ShooterGame
                // Console.WriteLine(file);
             }
         }
-
+        public List<LTexture> getFighter()
+        {
+            List<String> list = new List<String>();
+            list.Add("Fighterrand");
+            list.Add("Ray_spawn");
+            list.Add("Fighter_death");
+            list.Add("Fighter_shield");
+            list.Add("Fighter_bullet");
+            return getTextureList(list);
+        }
         public LTexture getTexture(string title)
         {
            // Console.WriteLine(textureMap.Count);
