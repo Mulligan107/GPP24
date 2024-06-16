@@ -301,7 +301,6 @@ namespace ShooterGame
                                     break;
                             
                                 case GameState.IN_GAME:
-                                    // Set the mainMenu field in the InputHandler class, so that it can be accessed when handling user input
                                     VisibleMenu = null;
                                     
                                     entityList = CollisionHandler.checkCollision(entityList);
@@ -334,9 +333,11 @@ namespace ShooterGame
                                     break;
                             
                                 case GameState.GAME_OVER:
+                                    //ToDo Game Over Screen and logic
                                     break;
                             
                                 case GameState.WIN:
+                                    //ToDo Win Screen and logic
                                     break;
                             
                             }
