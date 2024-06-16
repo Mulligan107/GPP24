@@ -26,6 +26,7 @@ namespace ShooterGame
         public virtual void onSpawn()
         {
             animationHelper(3, 1, "spawn");
+            iframe = true;
 
             spawn((Program.SCREEN_WIDTH / 2) * 1.5, Program.SCREEN_HEIGHT / 2);
         }

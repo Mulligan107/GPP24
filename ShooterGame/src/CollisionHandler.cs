@@ -31,7 +31,8 @@ namespace ShooterGame
                     {
 
                         if (SDL.SDL_HasIntersection(ref enti.hitbox, ref counterEnti.hitbox) == SDL.SDL_bool.SDL_TRUE 
-                            && (enti.friendly && !counterEnti.friendly || !enti.friendly && counterEnti.friendly) ) //Hitten wen Hitboxen überschneiden und beide nicht friendly sind
+                            && (enti.friendly && !counterEnti.friendly || !enti.friendly && counterEnti.friendly
+                            && !enti.animationFlag.Equals("death")) ) //Hitten wen Hitboxen überschneiden und beide nicht friendly sind
                         {
                             if (enti.GetType().Name.Equals("Bullet") && counterEnti.GetType().Name.Equals("Bullet"))
                             {

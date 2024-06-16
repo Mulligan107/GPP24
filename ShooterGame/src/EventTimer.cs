@@ -32,7 +32,7 @@ namespace ShooterGame.src
                 Fighter erni = new Fighter(fileHandler.getFighter());
                 erni.posX = Program.SCREEN_WIDTH - (Program.SCREEN_WIDTH / 10);
                 erni.posY = Program.SCREEN_HEIGHT - (Program.SCREEN_HEIGHT / 18) - ((Program.SCREEN_HEIGHT / 11) * (cycles / 20));
-                erni.timeAlive = random.Next(0,150);
+                erni.timeAlive = random.Next(0,80);
                 entityList.Add(erni);
             }
 
@@ -44,7 +44,7 @@ namespace ShooterGame.src
                 {
                     levi.timeAlive++;
 
-                    if (levi.timeAlive > 100)
+                    if (levi.timeAlive > 100 && !levi.iframe)
                     {
                         levi.shootEnemy();
                         levi.timeAlive = 0;
