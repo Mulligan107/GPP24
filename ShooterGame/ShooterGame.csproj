@@ -96,6 +96,7 @@
     <Compile Include="src\Bullet.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="src\menu\GameOverMenu.cs" />
     <Compile Include="src\menu\GameState.cs" />
     <Compile Include="src\menu\InstructionsMenu.cs" />
     <Compile Include="src\menu\LevelSelectMenu.cs" />
@@ -106,6 +107,7 @@
     <Compile Include="src\menu\MenuItem.cs" />
     <Compile Include="src\menu\PauseMenu.cs" />
     <Compile Include="src\menu\SettingsMenu.cs" />
+    <Compile Include="src\menu\WinMenu.cs" />
     <Compile Include="src\Player.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>

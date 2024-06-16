@@ -40,7 +40,7 @@ namespace ShooterGame
         public override void Render(IntPtr renderer)
         {
             var titlePosition = new Vector2D { X = Program.SCREEN_WIDTH / 2, Y = Program.SCREEN_HEIGHT / 8 };
-            var titleColor = new SDL.SDL_Color { r = 0, g = 0, b = 0, a = 255 }; // White color
+            var titleColor = new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }; // White color
 
             DisplayText("Instructions", titlePosition, 250, "lazy.ttf", renderer, titleColor);
 

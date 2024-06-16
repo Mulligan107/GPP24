@@ -12,7 +12,7 @@ namespace ShooterGame
 
         public Player(List<LTexture> list)
         {
-            lives = 5;
+            lives = 10;
             lifes = lives;
             spawn((Program.SCREEN_WIDTH / 2) , Program.SCREEN_HEIGHT / 2 );
             width = 60 * s;
@@ -52,7 +52,8 @@ namespace ShooterGame
             switch (lives)
             {
                 case 0:
-                    //TODO GAMEOVER
+                    Program.CurrentState = GameState.GAME_OVER;
+                    Program.VisibleMenu = new GameOverMenu(Program.gRenderer);
                     break;
                 case 1:
                     this.texture = textureList[5];

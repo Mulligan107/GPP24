@@ -297,6 +297,7 @@ namespace ShooterGame
                                 case GameState.SETTINGS:
                                 case GameState.INSTRUCTIONS:
                                 case GameState.PAUSED:
+                                case GameState.GAME_OVER:
                                     
                                     foreach (BackgroundObject backgroundObject in bgList)
                                     {
@@ -336,10 +337,6 @@ namespace ShooterGame
                                     // eventHandler.updateList(entityList);
                                     // eventHandler.timedEvent(elapsed, fileHandler);
 
-                                    break;
-                            
-                                case GameState.GAME_OVER:
-                                    //ToDo Game Over Screen and logic
                                     break;
                             
                                 case GameState.WIN:
