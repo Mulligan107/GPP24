@@ -20,6 +20,7 @@ namespace ShooterGame
                 {
                     Program.CurrentState = GameState.IN_GAME;
                     LevelManager.CurrentLevel = 0;
+                    LevelManager.ResetStats();
                 },
                 "Level 1", "lazy.ttf",
                 new SDL.SDL_Rect { x = Program.SCREEN_WIDTH / 2, y = menuItemSpacing, w = itemWidth, h = 50 },
@@ -29,6 +30,7 @@ namespace ShooterGame
                 {
                     Program.CurrentState = GameState.IN_GAME;
                     LevelManager.CurrentLevel = 1;
+                    LevelManager.ResetStats();
                 },
                 "Level 2", "lazy.ttf",
                 new SDL.SDL_Rect { x = Program.SCREEN_WIDTH / 2, y = 2 * menuItemSpacing, w = itemWidth, h = 50 },
@@ -38,6 +40,7 @@ namespace ShooterGame
                 {
                     Program.CurrentState = GameState.IN_GAME;
                     LevelManager.CurrentLevel = 2; 
+                    LevelManager.ResetStats();
                 },
                 "Level 3", "lazy.ttf",
                 new SDL.SDL_Rect { x = Program.SCREEN_WIDTH / 2, y = 3 * menuItemSpacing, w = itemWidth, h = 50 },

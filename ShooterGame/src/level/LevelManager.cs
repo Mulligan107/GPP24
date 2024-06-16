@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using ShooterGame.level.levels;
+using ShooterGame.ui;
 
 namespace ShooterGame.level
 {
@@ -21,6 +22,17 @@ namespace ShooterGame.level
         public static void RunCurrentLevelLogic(double deltatime, FileHandler fileHandler, ArrayList entityList)
         {
             GetCurrentLevel().RunLevelLogic(deltatime, fileHandler, entityList);
+        }
+        
+        public static void ResetStats()
+        {
+            ScoreUI.ResetScore();
+            Enemy.TotalEnemies = 0;
+            
+            foreach (Level level in _levels)
+            {
+                GetCurrentLevel().Reset();
+            }
         }
 
         public static Level GetCurrentLevel()

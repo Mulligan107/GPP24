@@ -8,7 +8,7 @@ namespace ShooterGame
 {
     class Enemy : LivingEntity
     {
-        public static int TotalEnemies { get; protected set; }
+        public static int TotalEnemies { get; set; }
 
         public Enemy(List<LTexture> textureList)
         {

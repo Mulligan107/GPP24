@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using SDL2;
+using ShooterGame.level;
 using ShooterGame.ui;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -52,8 +53,10 @@ namespace ShooterGame
             switch (lives)
             {
                 case 0:
+                    LevelManager.ResetStats();
                     Program.CurrentState = GameState.GAME_OVER;
                     Program.VisibleMenu = new GameOverMenu(Program.gRenderer);
+                    ScoreUI.ResetScore();
                     break;
                 case 1:
                     this.texture = textureList[5];
