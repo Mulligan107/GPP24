@@ -226,7 +226,7 @@ namespace ShooterGame
                 SoundHandler.LoadMedia();
                 ScoreUI.LoadHighscore();
 
-                src.EventHandler eventHandler = new src.EventHandler();
+                //src.EventHandler eventHandler = new src.EventHandler();
 
                 if (success == false)
                 {
@@ -297,6 +297,13 @@ namespace ShooterGame
                                 case GameState.SETTINGS:
                                 case GameState.INSTRUCTIONS:
                                 case GameState.PAUSED:
+                                    
+                                    foreach (BackgroundObject backgroundObject in bgList)
+                                    {
+                                        backgroundObject.checkOutOfBounds();
+                                        backgroundObject.update(elapsed);
+                                    }
+                                    
                                     VisibleMenu?.Render(gRenderer);
                                     break;
                             

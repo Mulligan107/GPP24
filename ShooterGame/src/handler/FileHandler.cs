@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ShooterGame
 {
+    //WIRD NICHT MEHR GENUTZT WAR DIE GRUNDLEGENDE LOGIK FÜR LEVEL1
+    
     public class FileHandler
     {
         private bool success = true;

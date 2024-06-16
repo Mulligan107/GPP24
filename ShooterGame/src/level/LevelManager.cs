@@ -14,9 +14,8 @@ namespace ShooterGame.level
         public static void LoadLevels()
         {
             _levels.Add(new Level1());
-            // levels.Add(new Level2());
-            // levels.Add(new Level3());
-            // ...
+            //_levels.Add(new Level2());
+            //_levels.Add(new Level3());
         }
         
         public static void RunCurrentLevelLogic(double deltatime, FileHandler fileHandler, ArrayList entityList)

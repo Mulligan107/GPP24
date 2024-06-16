@@ -1,8 +1,6 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using ShooterGame.src;
-using EventHandler = ShooterGame.src.EventHandler;
 
 namespace ShooterGame.level.levels
 {
