@@ -21,6 +21,7 @@ namespace ShooterGame.src
             angle = -90;
             texture = textureList[0];
             overTexture = textureList[3];
+            overTexture.setColor(255, 0, 0);
             setupAnimation(4, "spawn", textureList[1]);
             setupAnimation(9, "death", textureList[2]);
             setupAnimation(10, "shield", textureList[3]); //TODO Automatisieren

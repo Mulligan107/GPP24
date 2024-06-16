@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using SDL2;
 using ShooterGame.ui;
@@ -62,7 +63,7 @@ namespace ShooterGame
         public override void shootEnemy()
         {
             List<LTexture> list = new List<LTexture>();
-            list.Add(textureList[4]);
+            list.Add(textureList[4]); // ANGEPASST AN FIGHTER
             list.Add(textureList[4]);
             Bullet bill = new Bullet(list, 10);
             bill.texture.setColor(255,0,0);
@@ -74,6 +75,35 @@ namespace ShooterGame
             bill.friendly = false;
             Program.entityList.Add(bill);
         }
+
+        public override void bulletFan()
+        {
+            double start = -5;
+            double end = 5;
+            int numSteps = 8;
+
+            for (int i = 1; i < numSteps+1; i++)
+            {
+                Console.WriteLine(i);
+                List<LTexture> list = new List<LTexture>();
+                list.Add(textureList[3]); //ANGEPASST AN DREAD
+                list.Add(textureList[3]);
+
+                double stepSize = (end - start) / (numSteps - 1);
+
+                Bullet bill = new Bullet(list, 10);
+                bill.texture.setColor(255, 0, 0);
+                double s = Program.SCREEN_WIDTH / Program.SCREEN_HEIGHT;
+                bill.spawn(posX + width / 4, posY + height / 4);
+                bill.angle = -90;
+                bill.speed = 0.5;
+                bill.vecX = -15 * s;
+                bill.vecY = (start + i) * stepSize * s;
+                bill.friendly = false;
+                Program.entityList.Add(bill);
+            }
+        }
+
     }
 }
 

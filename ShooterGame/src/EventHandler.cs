@@ -52,6 +52,7 @@ namespace ShooterGame.src
                         if (counter == 1)
                         {
                             Dread andre = new Dread(fileHandler.getDread());
+                            andre.hit();
                             entityList.Add(andre);    
                         }
                     }
@@ -100,6 +101,16 @@ namespace ShooterGame.src
                         levi.timeAlive = 0;
                     }
 
+                }
+                if (levi.GetType().Name.Equals("Dread"))
+                {
+                    levi.timeAlive++;
+
+                    if (levi.timeAlive > 200)
+                    {
+                        levi.bulletFan();
+                        levi.timeAlive = 0;
+                    }
                 }
             }
 

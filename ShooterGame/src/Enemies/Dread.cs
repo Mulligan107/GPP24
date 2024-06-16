@@ -10,7 +10,6 @@ namespace ShooterGame.src
     class Dread : Enemy
     {
 
-        double s =  Program.SCREEN_WIDTH/Program.SCREEN_HEIGHT;
         double sinValue = 0;
         double radiusX = 20.0;
         double radiusY = 5.0;
@@ -25,7 +24,7 @@ namespace ShooterGame.src
             list.Add("Dread\\Ray");
              */
 
-            lives = 3;
+            lives = 4;
             this.textureList = textureList;
             friendly = false;
             width = 200 * s;
@@ -33,6 +32,7 @@ namespace ShooterGame.src
             angle = -90;
             texture = textureList[0];
             overTexture = textureList[1];
+            overTexture.setColor(255, 0, 0);
             setupAnimation(20, "shield", textureList[1]);
             setupAnimation(12, "death", textureList[2]);
             
@@ -65,7 +65,7 @@ namespace ShooterGame.src
             }
             */
             if (posX > (Program.SCREEN_WIDTH/8) * 7 ) {
-                vecX = -10;
+                vecX = -8;
             }
             else
             {
@@ -87,26 +87,18 @@ namespace ShooterGame.src
 
                 lives = lives - 1;
 
-                if (!iframe)
+                if (lives < 0) // DEATH
                 {
-                    iframe = true;
+                    animationHelper(1, 2, "death");
 
-                    lives = lives - 1;
+                    TotalEnemies--;
+                    //   SoundHandler.PlaySound(1);  TODO - ERSETZEN fucking earrape
+                    ScoreUI.IncreaseScore(100);
 
-                    if (lives < 0) // DEATH
-                    {
-                        animationHelper(1, 2, "death");
-
-                        TotalEnemies--;
-                        //   SoundHandler.PlaySound(1);  TODO - ERSETZEN fucking earrape
-                        ScoreUI.IncreaseScore(100);
-
-                    }
-                    else // HIT
-                    {
-                        animationHelper(3, 4, "shield");
-                    }
-
+                }
+                else // HIT
+                {
+                    animationHelper(20, 4, "shield");
                 }
             }
         }
