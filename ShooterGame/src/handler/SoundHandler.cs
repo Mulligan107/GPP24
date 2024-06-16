@@ -6,10 +6,14 @@ namespace ShooterGame
     public class SoundHandler
     {
         //The sound effects that will be used
-        public static IntPtr[] sounds = new IntPtr[8];
+        public static IntPtr[] Sounds = new IntPtr[10]; //TODO - Automatisieren
 
         //The music that will be played
         private static IntPtr _music = IntPtr.Zero;
+        
+        // Set the volume for sound effects and music
+        private static int _soundVolume = 1; // 0 -> 128
+        private static int _musicVolume = 4; 
         
         public static bool LoadMedia()
         {
@@ -17,61 +21,116 @@ namespace ShooterGame
             bool success = true;
 
             //Load sound effects
-            sounds[0] = SDL_mixer.Mix_LoadWAV("sounds/buttons/button.wav");
-            if (sounds[0] == IntPtr.Zero)
+            Sounds[0] = SDL_mixer.Mix_LoadWAV("sounds/buttons/button.wav");
+            if (Sounds[0] == IntPtr.Zero)
             {
                 Console.WriteLine("Failed to load button.wav! {0}", SDL.SDL_GetError());
                 success = false;
             }
+            else
+            {
+                SDL_mixer.Mix_VolumeChunk(Sounds[0], _soundVolume);
+            }
 
-            sounds[1] = SDL_mixer.Mix_LoadWAV("sounds/buttons/button_back.wav");
-            if (sounds[1] == IntPtr.Zero)
+            Sounds[1] = SDL_mixer.Mix_LoadWAV("sounds/buttons/button_back.wav");
+            if (Sounds[1] == IntPtr.Zero)
             {
                 Console.WriteLine("Failed to load button_back.wav! {0}", SDL.SDL_GetError());
                 success = false;
             }
+            else
+            {
+                SDL_mixer.Mix_VolumeChunk(Sounds[1], _soundVolume);
+            }
             
-            sounds[2] = SDL_mixer.Mix_LoadWAV("sounds/buttons/button_next.wav");
-            if (sounds[2] == IntPtr.Zero)
+            Sounds[2] = SDL_mixer.Mix_LoadWAV("sounds/buttons/button_next.wav");
+            if (Sounds[2] == IntPtr.Zero)
             {
                 Console.WriteLine("Failed to load button_next.wav! {0}", SDL.SDL_GetError());
                 success = false;
             }
+            else
+            {
+                SDL_mixer.Mix_VolumeChunk(Sounds[2], _soundVolume);
+            }
             
-            sounds[3] = SDL_mixer.Mix_LoadWAV("sounds/enemy/enemy_explode.wav");
-            if (sounds[3] == IntPtr.Zero)
+            Sounds[3] = SDL_mixer.Mix_LoadWAV("sounds/enemy/enemy_explode.wav");
+            if (Sounds[3] == IntPtr.Zero)
             {
                 Console.WriteLine("Failed to load enemy_explode.wav! {0}", SDL.SDL_GetError());
                 success = false;
             }
+            else
+            {
+                SDL_mixer.Mix_VolumeChunk(Sounds[3], _soundVolume);
+            }
             
-            sounds[4] = SDL_mixer.Mix_LoadWAV("sounds/enemy/enemy_hit.wav");
-            if (sounds[4] == IntPtr.Zero)
+            Sounds[4] = SDL_mixer.Mix_LoadWAV("sounds/enemy/enemy_hit.wav");
+            if (Sounds[4] == IntPtr.Zero)
             {
                 Console.WriteLine("Failed to load player_hit.wav! {0}", SDL.SDL_GetError());
                 success = false;
             }
+            else
+            {
+                SDL_mixer.Mix_VolumeChunk(Sounds[4], _soundVolume);
+            }
             
-            sounds[5] = SDL_mixer.Mix_LoadWAV("sounds/enemy/enemy_shoot_laser.wav");
-            if (sounds[5] == IntPtr.Zero)
+            Sounds[5] = SDL_mixer.Mix_LoadWAV("sounds/enemy/enemy_shoot_laser.wav");
+            if (Sounds[5] == IntPtr.Zero)
             {
                 Console.WriteLine("Failed to load enemy_shoot_laser.wav! {0}", SDL.SDL_GetError());
                 success = false;
             }
+            else
+            {
+                SDL_mixer.Mix_VolumeChunk(Sounds[5], _soundVolume);
+            }
             
-            sounds[6] = SDL_mixer.Mix_LoadWAV("sounds/player/player_hit.wav");
-            if (sounds[6] == IntPtr.Zero)
+            Sounds[6] = SDL_mixer.Mix_LoadWAV("sounds/player/player_hit.wav");
+            if (Sounds[6] == IntPtr.Zero)
             {
                 Console.WriteLine("Failed to load player_explode.wav! {0}", SDL.SDL_GetError());
                 success = false;
             }
+            else
+            {
+                SDL_mixer.Mix_VolumeChunk(Sounds[6], _soundVolume);
+            }
             
-            sounds[7] = SDL_mixer.Mix_LoadWAV("sounds/player/player_shoot1.wav");
-            if (sounds[7] == IntPtr.Zero)
+            Sounds[7] = SDL_mixer.Mix_LoadWAV("sounds/player/player_shoot1.wav");
+            if (Sounds[7] == IntPtr.Zero)
             {
                 Console.WriteLine("Failed to load player_shoot1.wav! {0}", SDL.SDL_GetError());
                 success = false;
             }
+            else
+            {
+                SDL_mixer.Mix_VolumeChunk(Sounds[7], _soundVolume);
+            }
+            
+            Sounds[8] = SDL_mixer.Mix_LoadWAV("sounds/enemy/enemy_shoot_laser_2.wav");
+            if (Sounds[8] == IntPtr.Zero)
+            {
+                Console.WriteLine("Failed to load enemy_shoot_laser_2.wav! {0}", SDL.SDL_GetError());
+                success = false;
+            }
+            else
+            {
+                SDL_mixer.Mix_VolumeChunk(Sounds[8], _soundVolume);
+            }
+            
+            Sounds[9] = SDL_mixer.Mix_LoadWAV("sounds/enemy/enemy_shoot_laser_3.wav");
+            if (Sounds[9] == IntPtr.Zero)
+            {
+                Console.WriteLine("Failed to load enemy_shoot_laser_3.wav! {0}", SDL.SDL_GetError());
+                success = false;
+            }
+            else
+            {
+                SDL_mixer.Mix_VolumeChunk(Sounds[9], _soundVolume);
+            }
+            
             
             //Load music
             _music = SDL_mixer.Mix_LoadMUS("sounds/music/menu_music.wav");
@@ -80,15 +139,19 @@ namespace ShooterGame
                 Console.WriteLine("Failed to load lofi.wav! {0}", SDL.SDL_GetError());
                 success = false;
             }
+            else
+            {
+                SDL_mixer.Mix_VolumeMusic(_musicVolume);
+            }
 
             return success;
         }
 
         public static void PlaySound(int soundIndex)
         {
-            if (soundIndex >= 0 && soundIndex < sounds.Length)
+            if (soundIndex >= 0 && soundIndex < Sounds.Length)
             {
-                SDL_mixer.Mix_PlayChannel(-1, sounds[soundIndex], 0);
+                SDL_mixer.Mix_PlayChannel(-1, Sounds[soundIndex], 0);
             }
             else
             {

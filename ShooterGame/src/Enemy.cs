@@ -61,6 +61,11 @@ namespace ShooterGame
 
         public override void shootEnemy()
         {
+            Random rand = new Random();
+            int randomIndex = rand.Next(0, 3);
+            int[] soundIndices = {5, 8, 9};
+            int soundToPlay = soundIndices[randomIndex];
+            
             List<LTexture> list = new List<LTexture>();
             list.Add(textureList[4]);
             list.Add(textureList[4]);
@@ -74,7 +79,7 @@ namespace ShooterGame
             bill.friendly = false;
             Program.entityList.Add(bill);
             
-            SoundHandler.PlaySound(5);
+            SoundHandler.PlaySound(soundToPlay);
         }
     }
 }
