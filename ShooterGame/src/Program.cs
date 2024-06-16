@@ -305,7 +305,9 @@ namespace ShooterGame
                                         backgroundObject.update(elapsed);
                                     }
                                     
+                                    ScoreUI.Update();
                                     ScoreUI.DisplayHighscore(gRenderer);
+                                    
                                     LifeUI.DisplayLives(gRenderer);
 
                                     foreach (Entity enti in entityList)
