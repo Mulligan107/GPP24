@@ -30,17 +30,6 @@ namespace ShooterGame
             spawn((Program.SCREEN_WIDTH / 2) * 1.5, Program.SCREEN_HEIGHT / 2);
         }
 
-        public void animationHelper(int reps, int aniSpeed, string flag)
-        {
-            startAnimation = true;
-            frame = 0;
-            frameTicker = 0;
-            animationCounter = 0;
-            repeats = reps;
-            animationSpeed = aniSpeed;
-            animationFlag = flag;
-
-        }
 
         public override void hit()
         {

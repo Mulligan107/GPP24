@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ShooterGame.src
 {
-    class EventTimer
+    class EventHandler
     {
         double cycles = 0;
         int counter = 0;
@@ -26,7 +26,7 @@ namespace ShooterGame.src
 
 
 
-        public EventTimer() {
+        public EventHandler() {
             cycles = 0;
         }
 

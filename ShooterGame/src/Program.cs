@@ -225,7 +225,7 @@ namespace ShooterGame
                 SoundHandler.LoadMedia();
                 ScoreUI.LoadHighscore();
 
-                EventTimer eventTimer = new EventTimer();
+                src.EventHandler eventTimer = new src.EventHandler();
 
                 if (success == false)
                 {
@@ -263,6 +263,10 @@ namespace ShooterGame
 
                         list.Add("PlayerShip");
                         list.Add("Bullet_move");
+                        list.Add("Player_shield");
+                        list.Add("Player_dmg1");
+                        list.Add("Player_dmg2");
+                        list.Add("Player_dmg3");
                         Player arno = new Player(fileHandler.getTextureList(list));
                         list.Clear();
                                                         
