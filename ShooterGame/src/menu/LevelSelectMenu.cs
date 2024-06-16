@@ -19,7 +19,7 @@ namespace ShooterGame
             var level1Item = new MenuItem("Level 1", () =>
                 {
                     Program.CurrentState = GameState.IN_GAME;
-                    LevelManager.CurrentLevel = 1;
+                    LevelManager.CurrentLevel = 0;
                 },
                 "Level 1", "lazy.ttf",
                 new SDL.SDL_Rect { x = Program.SCREEN_WIDTH / 2, y = menuItemSpacing, w = itemWidth, h = 50 },
@@ -28,7 +28,7 @@ namespace ShooterGame
             var level2Item = new MenuItem("Level 2", () =>
                 {
                     Program.CurrentState = GameState.IN_GAME;
-                    LevelManager.CurrentLevel = 2;
+                    LevelManager.CurrentLevel = 1;
                 },
                 "Level 2", "lazy.ttf",
                 new SDL.SDL_Rect { x = Program.SCREEN_WIDTH / 2, y = 2 * menuItemSpacing, w = itemWidth, h = 50 },
@@ -37,7 +37,7 @@ namespace ShooterGame
             var level3Item = new MenuItem("Level 3", () =>
                 {
                     Program.CurrentState = GameState.IN_GAME;
-                    LevelManager.CurrentLevel = 3; 
+                    LevelManager.CurrentLevel = 2; 
                 },
                 "Level 3", "lazy.ttf",
                 new SDL.SDL_Rect { x = Program.SCREEN_WIDTH / 2, y = 3 * menuItemSpacing, w = itemWidth, h = 50 },
