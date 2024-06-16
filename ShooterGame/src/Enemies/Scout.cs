@@ -70,6 +70,8 @@ namespace ShooterGame.src
                 if (lives < 0) // DEATH
                 {
                     animationHelper(1, 2, "death"); // REPS, SPEED, FLAG
+                    
+                    TotalEnemies--;
 
                     //   SoundHandler.PlaySound(1);  TODO - ERSETZEN fucking earrape
 
