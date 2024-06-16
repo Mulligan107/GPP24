@@ -6,64 +6,64 @@ namespace ShooterGame.level.levels
 {
     public class Level1 : Level
     {
-        double cycles = 0;
-        int counter = 0;
-        Event eventFlag = Event.Idle;
-        Random random = new Random();
-        public static ArrayList entityList = new ArrayList();
+        double _cycles = 0;
+        int _counter = 0;
+        Event _eventFlag = Event.IDLE;
+        Random _random = new Random();
+        public static ArrayList EntityList = new ArrayList();
 
         enum Event
         {
-            Idle,
-            Fighterrow,
-            Scouts,
-            Dreadnaught,
-            Over
+            IDLE,
+            FIGHTERROW,
+            SCOUTS,
+            DREADNAUGHT,
+            OVER
         }
         
         public override void Reset()
         {
-            cycles = 0;
-            counter = 0;
-            eventFlag = Event.Idle;
+            _cycles = 0;
+            _counter = 0;
+            _eventFlag = Event.IDLE;
         }
 
         public override void RunLevelLogic(double deltatime, FileHandler fileHandler, ArrayList entityList)
         {
-            cycles++;
+            _cycles++;
             
             // SPAWNING
-            switch (eventFlag)
+            switch (_eventFlag)
             {
-                case Level1.Event.Fighterrow:
-                    if (cycles % 20 == 0 && counter < 10)
+                case Level1.Event.FIGHTERROW:
+                    if (_cycles % 20 == 0 && _counter < 10)
                     {
-                        counter++;
+                        _counter++;
                         Fighter erni = new Fighter(fileHandler.getFighter());
                         erni.posX = Program.SCREEN_WIDTH - (Program.SCREEN_WIDTH / 10);
-                        erni.posY = Program.SCREEN_HEIGHT - (Program.SCREEN_HEIGHT / 18) - ((Program.SCREEN_HEIGHT / 11) * (cycles / 20));
-                        erni.timeAlive = random.Next(0, 80);
+                        erni.posY = Program.SCREEN_HEIGHT - (Program.SCREEN_HEIGHT / 18) - ((Program.SCREEN_HEIGHT / 11) * (_cycles / 20));
+                        erni.timeAlive = _random.Next(0, 80);
                         entityList.Add(erni);
                     }
                     break;
                 
-                case Level1.Event.Scouts:
+                case Level1.Event.SCOUTS:
 
-                    if (cycles % 20 == 0 && counter < 60)
+                    if (_cycles % 20 == 0 && _counter < 60)
                     {
-                        counter++;
-                        Console.WriteLine(counter);
+                        _counter++;
+                        Console.WriteLine(_counter);
                         Scout scott = new Scout(fileHandler.getScout());
                         var x = 1;
-                        if (counter < 20)
+                        if (_counter < 20)
                         {
                             x = 0;
                         }
-                        if (counter < 40 && counter > 20)
+                        if (_counter < 40 && _counter > 20)
                         {
                             x = 2;
                         }
-                        if (counter < 60 && counter > 40)
+                        if (_counter < 60 && _counter > 40)
                         {
                             x = 4;
                         }
@@ -74,20 +74,20 @@ namespace ShooterGame.level.levels
                     }
                     break;
 
-                case Level1.Event.Dreadnaught:
-                        counter++;
+                case Level1.Event.DREADNAUGHT:
+                        _counter++;
                     
-                    if (counter == 1)
+                    if (_counter == 1)
                     {
                         Dread andre = new Dread(fileHandler.getDread());
                         andre.hit();
                         entityList.Add(andre);
                         
                     }
-                    if (counter < 5)
+                    if (_counter < 5)
                     {   
                         Sentry senni = new Sentry(fileHandler.getSentry());
-                        switch (counter){
+                        switch (_counter){
                             case 1:
                                 senni.spawn(Program.SCREEN_WIDTH - senni.width - 100 * senni.s, Program.SCREEN_HEIGHT - senni.height - 100 * senni.s);
                                 break;
@@ -106,7 +106,7 @@ namespace ShooterGame.level.levels
                     }
                     else
                     {
-                        eventFlag = Level1.Event.Over;
+                        _eventFlag = Level1.Event.OVER;
                     }
 
                         
@@ -139,7 +139,7 @@ namespace ShooterGame.level.levels
                         levi.timeAlive = 0;
                     }
 
-                    if (cycles == 800)
+                    if (_cycles == 800)
                     {
                         levi.vecY = -3;
                     }
@@ -156,27 +156,32 @@ namespace ShooterGame.level.levels
                 }
             }
 
-            if (cycles == 500 && eventFlag.ToString().Equals("Idle"))
+            if (_cycles == 500 && _eventFlag.ToString().Equals("Idle"))
             {
-                eventFlag = Level1.Event.Fighterrow;
-                cycles = 0;
+                _eventFlag = Level1.Event.FIGHTERROW;
+                _cycles = 0;
             }
 
 
-            if (cycles == 800 && !eventFlag.ToString().Equals("Scouts"))
+            if (_cycles == 800 && !_eventFlag.ToString().Equals("Scouts"))
             {
-                counter = 0;
-                cycles = 0;
-                eventFlag = Level1.Event.Scouts;
+                _counter = 0;
+                _cycles = 0;
+                _eventFlag = Level1.Event.SCOUTS;
             }
 
             Console.WriteLine(Enemy.TotalEnemies);
 
-            if (cycles > 800 && Enemy.TotalEnemies == 0 && !eventFlag.ToString().Equals("Over"))
+            if (_cycles > 800 && Enemy.TotalEnemies == 0 && !_eventFlag.ToString().Equals("Over"))
             {
-                eventFlag = Level1.Event.Dreadnaught;
-                cycles = 0;
-                counter = 0;
+                _eventFlag = Level1.Event.DREADNAUGHT;
+                _cycles = 0;
+                _counter = 0;
+            }
+            
+            if (Enemy.TotalEnemies == 0 && _eventFlag.ToString().Equals("Over"))
+            {
+                //Program.level = 2;
             }
         }
     }
