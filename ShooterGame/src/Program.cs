@@ -308,6 +308,9 @@ namespace ShooterGame
                                     ScoreUI.Update();
                                     ScoreUI.DisplayHighscore(gRenderer);
                                     
+                                    EnemyAmountUI.DisplayEnemyCount(gRenderer);
+
+                                    
                                     LifeUI.DisplayLives(gRenderer);
 
                                     foreach (Entity enti in entityList)

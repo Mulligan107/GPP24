@@ -7,8 +7,11 @@ namespace ShooterGame
 {
     class Enemy : LivingEntity
     {
+        public static int TotalEnemies { get; protected set; }
+
         public Enemy(List<LTexture> textureList)
         {
+            TotalEnemies++;
             onSpawn();
         }
         public override void move(double deltaTime)

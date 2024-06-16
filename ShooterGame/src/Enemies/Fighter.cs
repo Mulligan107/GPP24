@@ -52,6 +52,8 @@ namespace ShooterGame.src
                 if (lives < 0) // DEATH
                 {
                     animationHelper(1, 2, "death");
+                    
+                    TotalEnemies--;
 
                     //   SoundHandler.PlaySound(1);  TODO - ERSETZEN fucking earrape
 

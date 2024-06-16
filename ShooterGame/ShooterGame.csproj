@@ -105,6 +105,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="src\Program.cs" />
+    <Compile Include="src\ui\EnemyAmountUI.cs" />
     <Compile Include="src\ui\ScoreUI.cs" />
     <Compile Include="src\ui\LifeUI.cs" />
   </ItemGroup>

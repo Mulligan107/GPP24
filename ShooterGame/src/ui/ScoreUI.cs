@@ -30,11 +30,11 @@ namespace ShooterGame.ui
 
             if (Score < TargetScore)
             {
-                Score++;
+                Score = Score + 5;
             }
             else if (Score > TargetScore)
             {
-                Score--;
+                Score = Score - 5;
             }
         }
 
