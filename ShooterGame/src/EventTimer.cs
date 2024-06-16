@@ -23,33 +23,42 @@ namespace ShooterGame.src
         public void timedEvent(double deltatime, FileHandler fileHandler)
         {
             cycles++;
-            
+
             if (cycles % 20 == 0 && eventFlag && counter < 10)
             {
                 counter++;
                 Enemy erni = new Enemy(fileHandler.getFighter());
                 erni.posX = Program.SCREEN_WIDTH - (Program.SCREEN_WIDTH / 10);
-                erni.posY = Program.SCREEN_HEIGHT - (Program.SCREEN_HEIGHT / 18) - ((Program.SCREEN_HEIGHT / 11)*(cycles/20));
+                erni.posY = Program.SCREEN_HEIGHT - (Program.SCREEN_HEIGHT / 18) - ((Program.SCREEN_HEIGHT / 11) * (cycles / 20));
                 entityList.Add(erni);
             }
+
+            ArrayList entitiesToProcess = new ArrayList(entityList);
+
+            foreach (LivingEntity levi in entitiesToProcess)
+            {
+                if (levi.GetType().Name.Equals("Enemy"))
+                {
+                    levi.timeAlive++;
+
+                    if (levi.timeAlive > 100)
+                    {
+                        levi.shootEnemy();
+                        levi.timeAlive = 0;
+                    }
+
+                }
+            }
+
             if (cycles > 200)
             {
-                ArrayList entitiesToProcess = new ArrayList(entityList);
-
-                foreach (LivingEntity levi in entitiesToProcess)
-                {
-                    if (levi.GetType().Name.Equals("Enemy"))
-                    {
-                        levi.timeAlive = cycles;
-                        levi.shootEnemy();
-                    }
-                }
                 eventFlag = true;
                 cycles = 0;
             }
-
+                
         }
 
+   
         public void updateList(ArrayList enti)
         {
             entityList = enti;

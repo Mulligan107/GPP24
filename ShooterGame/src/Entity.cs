@@ -42,6 +42,7 @@ namespace ShooterGame
         public SDL.SDL_Rect sourceRect;
         public SDL.SDL_Rect overSourceRect;
         public SDL.SDL_Rect destRect;
+        public SDL.SDL_Rect hitbox;
 
         Dictionary<string, SDL.SDL_Rect[]> animationMap = new Dictionary<string, SDL.SDL_Rect[]>(); // Dictionary == HashMap, zum Mapping der Animationen
 
@@ -59,6 +60,7 @@ namespace ShooterGame
         public Entity()
         {
             animationMap.Add(animationFlag, null);
+            
         }
 
         public virtual void move(double deltaTime)
@@ -66,6 +68,8 @@ namespace ShooterGame
             posX += vecX * (deltaTime / 10) * speed;
             posY += vecY * (deltaTime / 10) * speed;
         }
+
+
 
         public void kill()
         {
@@ -107,9 +111,19 @@ namespace ShooterGame
                 {
                     choosenTexture = texture;
                 }
+                ///// DEBUG HIBOX
+                /*
+                SDL.SDL_Rect debugSourceRect = hitbox;
+                debugSourceRect.h += 5;
+                debugSourceRect.w += 5;
+
+                SDL.SDL_SetRenderDrawColor(Program.gRenderer, 255, 0, 0, 255); // Red color for the border
+                SDL.SDL_RenderDrawRect(Program.gRenderer, ref debugSourceRect);
+                SDL.SDL_SetRenderDrawColor(Program.gRenderer, 255, 255, 255, 255); // Red color for the border
+                */
 
 
-                
+
                 SDL.SDL_RenderCopyEx(Program.gRenderer, choosenTexture.getTexture() , ref sourceRect, ref destRect, angle, IntPtr.Zero, SDL.SDL_RendererFlip.SDL_FLIP_NONE);
                 //Rendert Basis Texture unter Schild
                 if (iframe && !animationFlag.Equals("death"))
@@ -199,6 +213,8 @@ namespace ShooterGame
             move(deltatime);
 
             destRect = new SDL.SDL_Rect { x = (int)System.Math.Floor(posX), y = (int)System.Math.Floor(posY), w = (int)System.Math.Floor(width), h = (int)System.Math.Floor(height) }; // Skalierung auf dieses Rect
+            hitbox = shrinkRect(ref destRect);
+
             handleAnimation(deltatime, animationFlag);
             render();
         }
@@ -208,6 +224,13 @@ namespace ShooterGame
             posX = x; 
             posY = y; 
         }
+
+        static SDL.SDL_Rect shrinkRect(ref SDL.SDL_Rect rect)
+        {
+            SDL.SDL_Rect shrunkRect = new SDL.SDL_Rect { x = rect.x + rect.w / 4, y = rect.y + rect.h / 4, w = rect.w / 2, h = rect.h / 2 };
+            return shrunkRect;
+        }
+
 
         public object Clone()
         {

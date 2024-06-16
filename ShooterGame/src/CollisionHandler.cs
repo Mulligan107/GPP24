@@ -29,14 +29,21 @@ namespace ShooterGame
 
                     if (enti != counterEnti && enti.alive && counterEnti.alive)
                     {
-                        
-                       
-                        if (SDL.SDL_HasIntersection(ref enti.destRect, ref counterEnti.destRect) == SDL.SDL_bool.SDL_TRUE 
+
+                        if (SDL.SDL_HasIntersection(ref enti.hitbox, ref counterEnti.hitbox) == SDL.SDL_bool.SDL_TRUE 
                             && (enti.friendly && !counterEnti.friendly || !enti.friendly && counterEnti.friendly) ) //Hitten wen Hitboxen überschneiden und beide nicht friendly sind
                         {
-                            Console.WriteLine("HIT _________________________");
-                            enti.hit();
-                            counterEnti.hit();
+                            if (enti.GetType().Name.Equals("Bullet") && counterEnti.GetType().Name.Equals("Bullet"))
+                            {
+
+                            }
+                            else
+                            {
+                                Console.WriteLine(enti.GetType().Name);
+                                enti.hit();
+                                counterEnti.hit();
+                            }
+                            
                         }
                     }
                 }
@@ -48,7 +55,6 @@ namespace ShooterGame
             }
             return newList;
         }
-
 
 
 

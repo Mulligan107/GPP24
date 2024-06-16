@@ -265,18 +265,11 @@ namespace ShooterGame
                         list.Add("Bullet_move");
                         Player arno = new Player(fileHandler.getTextureList(list));
                         list.Clear();
-
-
-                        Enemy benno = new Enemy(fileHandler.getFighter()); // Vielleicht in Filehandler packen
-                        Enemy benno2 = new Enemy(fileHandler.getFighter());
                                                         
                         ////////////////////////////////////// TEST AREA
                         ///
                         entityList.Add(arno);
-                        entityList.Add(benno);
 
-                        benno2.posY = benno2.posY - SCREEN_HEIGHT / 4;
-                        entityList.Add(benno2);
 
 
 
