@@ -267,7 +267,7 @@ namespace ShooterGame
                         list.Clear();
 
 
-                        Enemy benno = new Enemy(fileHandler.getFighter()); // Vielleicht in Filehandler packen
+                        Fighter benno = new Fighter(fileHandler.getFighter()); // Vielleicht in Filehandler packen
 
                                                         
                         ////////////////////////////////////// TEST AREA

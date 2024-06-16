@@ -10,23 +10,7 @@ namespace ShooterGame
         double sinValue = 0;
         public Enemy(List<LTexture> textureList)
         {
-            
-            lives = 2;
-            this.textureList = textureList;
-            friendly = false;
-            width = 90 * s;
-            height = 90 * s;
-            angle = -90;
-            texture = textureList[0];
-            overTexture = textureList[3];
-            setupAnimation(4, "spawn", textureList[1]);
-            setupAnimation(9, "death", textureList[2]);
-            setupAnimation(10, "shield", textureList[3]); //TODO Automatisieren
-
-
             onSpawn();
-            
-            //   render(tex);
         }
         public override void move(double deltaTime)
         {
@@ -35,13 +19,11 @@ namespace ShooterGame
             posY += vecY * (deltaTime / 10) * speed;
         }
 
-        public void movementPattern()
+        public virtual void movementPattern()
         {
-            sinValue += (0.05); // länge der Amplitude
-            vecY = Math.Sin(sinValue);
         }
 
-        public void onSpawn()
+        public virtual void onSpawn()
         {
             animationHelper(3, 1, "spawn");
 
