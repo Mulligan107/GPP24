@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using SDL2;
+using ShooterGame.src;
+using ShooterGame.ui;
 
 /*
 TODO - Entity aufsplitten interactable, hit usw.
@@ -220,6 +222,9 @@ namespace ShooterGame
                 success = fileHandler.getStatus();
 
                 SoundHandler.LoadMedia();
+                ScoreUI.LoadHighscore();
+
+                EventTimer eventTimer = new EventTimer();
 
                 if (success == false)
                 {
@@ -259,22 +264,10 @@ namespace ShooterGame
                         list.Add("Bullet_move");
                         Player arno = new Player(fileHandler.getTextureList(list));
                         list.Clear();
-
-                        list.Add("Fighterrand");
-                        list.Add("Ray_spawn");
-                        list.Add("Fighter_death");
-                        list.Add("Fighter_shield");
-                        Enemy benno = new Enemy(fileHandler.getTextureList(list)); // Vielleicht in Filehandler packen
-                        Enemy benno2 = new Enemy(fileHandler.getTextureList(list));
-                        list.Clear();                                                        
+                                                        
                         ////////////////////////////////////// TEST AREA
                         ///
                         entityList.Add(arno);
-                        entityList.Add(benno);
-
-                        benno2.posY = benno2.posY - SCREEN_HEIGHT / 4;
-                        entityList.Add(benno2);
-
 
 
                         //While application is running
@@ -301,9 +294,8 @@ namespace ShooterGame
                                     break;
                             
                                 case GameState.IN_GAME:
-                                    // Set the mainMenu field in the InputHandler class, so that it can be accessed when handling user input
                                     VisibleMenu = null;
-                                
+                                    
                                     entityList = CollisionHandler.checkCollision(entityList);
 
                                     foreach (BackgroundObject backgroundObject in bgList)
@@ -311,19 +303,28 @@ namespace ShooterGame
                                         backgroundObject.checkOutOfBounds();
                                         backgroundObject.update(elapsed);
                                     }
-
+                                    
+                                    ScoreUI.Update();
+                                    ScoreUI.DisplayHighscore(gRenderer);
+                                    
+                                    LifeUI.DisplayLives(gRenderer);
 
                                     foreach (Entity enti in entityList)
                                     {
                                         enti.update(elapsed);
                                     }
-                                
+
+                                    eventTimer.updateList(entityList);
+                                    eventTimer.timedEvent(elapsed, fileHandler);
+
                                     break;
                             
                                 case GameState.GAME_OVER:
+                                    //ToDo Game Over Screen and logic
                                     break;
                             
                                 case GameState.WIN:
+                                    //ToDo Win Screen and logic
                                     break;
                             
                             }
@@ -340,6 +341,7 @@ namespace ShooterGame
                                 arno.vecY = y;
                                 arno.angle = direction;
                             }
+
 
                             ////////////////////////////////////// TEST AREA
                             //Update screen

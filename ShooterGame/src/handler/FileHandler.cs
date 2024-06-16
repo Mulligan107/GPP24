@@ -21,7 +21,7 @@ namespace ShooterGame
 
         public void loadFiles() // NUR PNG!
         {
-            string[] files = Directory.GetFiles("imgs/"); // Alle Files im Ordner Imgs werden gesucht
+            string[] files = Directory.GetFiles("imgs/", ".",SearchOption.AllDirectories); // Alle Files im Ordner Imgs werden gesucht
 
             foreach (string file in files) //Jede File wird an eine Texture gebunden
             {
@@ -33,9 +33,28 @@ namespace ShooterGame
                     break;
                 }
                 textureMap[file] = texture;
-               // Console.WriteLine(file);
+                Console.WriteLine(file);
             }
         }
+        public List<LTexture> getFighter()
+        {
+            List<String> list = new List<String>();
+            list.Add("Fighter\\Fighterrand");
+            list.Add("Fighter\\Ray_spawn");
+            list.Add("Fighter\\Fighter_death");
+            list.Add("Fighter\\Fighter_shield");
+            list.Add("Fighter\\Fighter_bullet");
+            return getTextureList(list);
+        }
+
+        public List<LTexture> getScout()
+        {
+            List<String> list = new List<String>();
+            list.Add("Scout\\Scout");
+            list.Add("Scout\\Scout_death");
+            return getTextureList(list);
+        }
+
 
         public LTexture getTexture(string title)
         {

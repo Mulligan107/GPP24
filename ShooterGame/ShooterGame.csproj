@@ -71,6 +71,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="src\CollisionHandler.cs" />
+    <Compile Include="src\Enemies\Scout.cs" />
+    <Compile Include="src\EventTimer.cs" />
+    <Compile Include="src\Enemies\Fighter.cs" />
     <Compile Include="src\handler\FileHandler.cs" />
     <Compile Include="src\handler\InputHandler.cs" />
     <Compile Include="src\handler\SoundHandler.cs" />
@@ -105,6 +108,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="src\Program.cs" />
+    <Compile Include="src\ui\ScoreUI.cs" />
+    <Compile Include="src\ui\LifeUI.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -116,16 +121,19 @@
     <Content Include="imgs\Bullet_move.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="imgs\Fighter.png">
+    <Content Include="imgs\Fighter\Fighter.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="imgs\Fighter_death.png">
+    <Content Include="imgs\Fighter\Fighter_death.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="imgs\Fighterrand.png">
+    <Content Include="imgs\Fighter\Fighterrand.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="imgs\Fighter_shield.png">
+    <Content Include="imgs\Fighter\Fighter_shield.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="imgs\Fighter\Fighter_bullet.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="imgs\hamter.png">
@@ -158,7 +166,13 @@
     <Content Include="imgs\PlayerShip.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="imgs\Ray_spawn.png">
+    <Content Include="imgs\Fighter\Ray_spawn.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="imgs\Scout\Scout.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="imgs\Scout\Scout_death.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="imgs\spacebg.png">
@@ -219,6 +233,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

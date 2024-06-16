@@ -22,6 +22,8 @@ namespace ShooterGame
 
             var mainMenuItem = new MenuItem("Main Menu", () =>
                 {
+                    Program.reset = true;
+                    
                     Program.CurrentState = GameState.MAIN_MENU;
                     Program.VisibleMenu = new MainMenu(renderer);
                     SDL.SDL_RenderClear(Program.gRenderer);
