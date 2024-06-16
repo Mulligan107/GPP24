@@ -265,13 +265,17 @@ namespace ShooterGame
                         list.Add("Bullet_move");
                         Player arno = new Player(fileHandler.getTextureList(list));
                         list.Clear();
+
+
+                        Enemy benno = new Enemy(fileHandler.getFighter()); // Vielleicht in Filehandler packen
+
                                                         
                         ////////////////////////////////////// TEST AREA
                         ///
                         entityList.Add(arno);
+                        entityList.Add(benno);
 
-
-
+                        double SinusValue = 0; // länge der Amplitude
 
                         //While application is running
                         while (!reset)
@@ -315,7 +319,18 @@ namespace ShooterGame
                                     {
                                         enti.update(elapsed);
                                     }
-                                
+
+
+                                    SinusValue += (0.05); // länge der Amplitude
+
+                                    //  posY = posY + Math.Sin(SinusValue) * Program.pannelH / 70; // Höhe der Amplitude
+
+                                    benno.vecY = Math.Sin(SinusValue);
+                                    Console.WriteLine(Math.Sin(SinusValue));
+
+                                    eventTimer.updateList(entityList);
+                                    eventTimer.timedEvent(elapsed, fileHandler);
+
                                     break;
                             
                                 case GameState.GAME_OVER:
@@ -339,8 +354,6 @@ namespace ShooterGame
                                 arno.angle = direction;
                             }
 
-                            eventTimer.updateList(entityList);
-                            eventTimer.timedEvent(elapsed,fileHandler);
 
                             ////////////////////////////////////// TEST AREA
                             //Update screen

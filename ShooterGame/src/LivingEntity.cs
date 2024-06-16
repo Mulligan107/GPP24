@@ -16,6 +16,8 @@ namespace ShooterGame
 
         public virtual void shootEnemy() { }
 
+        public virtual void movement() { }
+
     }
 
 }

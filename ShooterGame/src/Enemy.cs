@@ -7,7 +7,7 @@ namespace ShooterGame
 {
     class Enemy : LivingEntity
     {
-        
+        double sinValue = 0;
         public Enemy(List<LTexture> textureList)
         {
             
@@ -27,6 +27,18 @@ namespace ShooterGame
             onSpawn();
             
             //   render(tex);
+        }
+        public override void move(double deltaTime)
+        {
+            movementPattern();
+            posX += vecX * (deltaTime / 10) * speed;
+            posY += vecY * (deltaTime / 10) * speed;
+        }
+
+        public void movementPattern()
+        {
+            sinValue += (0.05); // länge der Amplitude
+            vecY = Math.Sin(sinValue);
         }
 
         public void onSpawn()
