@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using SDL2;
+using ShooterGame.level;
 using ShooterGame.src;
 using ShooterGame.ui;
 
@@ -18,9 +19,6 @@ namespace ShooterGame
         //Game state
         public static GameState CurrentState = GameState.MAIN_MENU;
         public static Menu VisibleMenu { get; set; } 
-
-        // Current level
-        public static int CurrentLevel { get; set; }
         
         //Screen dimension constants
         public static int MAX_SCREEN_WIDTH;
@@ -156,6 +154,8 @@ namespace ShooterGame
             SDL_ttf.TTF_CloseFont(Font);
             Font = IntPtr.Zero;
             
+            SoundHandler.Close();
+            
             //Destroy window
             SDL.SDL_DestroyRenderer(gRenderer);
             SDL.SDL_DestroyWindow(gWindow);
@@ -226,7 +226,7 @@ namespace ShooterGame
                 SoundHandler.LoadMedia();
                 ScoreUI.LoadHighscore();
 
-                src.EventHandler eventTimer = new src.EventHandler();
+                //src.EventHandler eventHandler = new src.EventHandler();
 
                 if (success == false)
                 {
@@ -234,6 +234,7 @@ namespace ShooterGame
                 }
                 else
                 {
+                    LevelManager.LoadLevels();
                     // Add the menu items to the menu
                     VisibleMenu = new MainMenu(gRenderer);
                     
@@ -296,6 +297,13 @@ namespace ShooterGame
                                 case GameState.SETTINGS:
                                 case GameState.INSTRUCTIONS:
                                 case GameState.PAUSED:
+                                    
+                                    foreach (BackgroundObject backgroundObject in bgList)
+                                    {
+                                        backgroundObject.checkOutOfBounds();
+                                        backgroundObject.update(elapsed);
+                                    }
+                                    
                                     VisibleMenu?.Render(gRenderer);
                                     break;
                             
@@ -322,9 +330,11 @@ namespace ShooterGame
                                     {
                                         enti.update(elapsed);
                                     }
-
-                                    eventTimer.updateList(entityList);
-                                    eventTimer.timedEvent(elapsed, fileHandler);
+                                    
+                                    LevelManager.RunCurrentLevelLogic(elapsed, fileHandler, entityList);
+                                    
+                                    // eventHandler.updateList(entityList);
+                                    // eventHandler.timedEvent(elapsed, fileHandler);
 
                                     break;
                             

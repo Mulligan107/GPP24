@@ -5,7 +5,7 @@ using SDL2;
 namespace ShooterGame
 {
     //Texture wrapper class
-    class LTexture : ICloneable
+    public class LTexture : ICloneable
     {
         
         //The actual hardware texture
