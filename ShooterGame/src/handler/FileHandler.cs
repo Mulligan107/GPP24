@@ -46,6 +46,16 @@ namespace ShooterGame
             list.Add("Fighter\\Fighter_bullet");
             return getTextureList(list);
         }
+
+        public List<LTexture> getScout()
+        {
+            List<String> list = new List<String>();
+            list.Add("Scout\\Scout");
+            list.Add("Scout\\Scout_death");
+            return getTextureList(list);
+        }
+
+
         public LTexture getTexture(string title)
         {
            // Console.WriteLine(textureMap.Count);

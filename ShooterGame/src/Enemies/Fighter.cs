@@ -38,7 +38,6 @@ namespace ShooterGame.src
         public override void onSpawn()
         {
             animationHelper(3, 1, "spawn");
-            spawn((Program.SCREEN_WIDTH / 2) * 1.5, Program.SCREEN_HEIGHT / 2);
         }
 
 

@@ -119,7 +119,18 @@ namespace ShooterGame
             }
             // Check for movement keys and return corresponding movement
             double movementspeed = 16;
-            //double bulletspeed = 20;
+
+            if (pressedKeys.Contains(SDL.SDL_Keycode.SDLK_w) &&
+                pressedKeys.Contains(SDL.SDL_Keycode.SDLK_a)) return (-movementspeed * s, -movementspeed * s, 90, "move");
+
+            if (pressedKeys.Contains(SDL.SDL_Keycode.SDLK_w) &&
+                pressedKeys.Contains(SDL.SDL_Keycode.SDLK_d)) return (movementspeed * s, -movementspeed * s, 90, "move");
+
+            if (pressedKeys.Contains(SDL.SDL_Keycode.SDLK_s) &&
+                pressedKeys.Contains(SDL.SDL_Keycode.SDLK_a)) return (-movementspeed * s, movementspeed * s, 90, "move");
+
+            if (pressedKeys.Contains(SDL.SDL_Keycode.SDLK_s) &&
+                pressedKeys.Contains(SDL.SDL_Keycode.SDLK_d)) return (movementspeed * s, movementspeed * s, 90, "move");
 
             if (pressedKeys.Contains(SDL.SDL_Keycode.SDLK_w)) return (0, -movementspeed * s, 90, "move");
             if (pressedKeys.Contains(SDL.SDL_Keycode.SDLK_s)) return (0, movementspeed * s, 90, "move");

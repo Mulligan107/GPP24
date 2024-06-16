@@ -7,7 +7,6 @@ namespace ShooterGame
 {
     class Enemy : LivingEntity
     {
-        double sinValue = 0;
         public Enemy(List<LTexture> textureList)
         {
             onSpawn();

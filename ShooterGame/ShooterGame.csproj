@@ -71,6 +71,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="src\CollisionHandler.cs" />
+    <Compile Include="src\Enemies\Scout.cs" />
     <Compile Include="src\EventTimer.cs" />
     <Compile Include="src\Enemies\Fighter.cs" />
     <Compile Include="src\handler\FileHandler.cs" />
@@ -163,6 +164,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="imgs\Fighter\Ray_spawn.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="imgs\Scout\Scout.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="imgs\Scout\Scout_death.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="imgs\spacebg.png">

@@ -12,13 +12,21 @@ namespace ShooterGame.src
     {
         double cycles = 0;
         int counter = 0;
-        bool eventFlag = false;
+        Event eventFlag = Event.Idle;
         Random random = new Random();
         public static ArrayList entityList = new ArrayList();
+
+        enum Event
+        {
+            Idle,
+            Fighterrow,
+            Scouts
+        }
+
+
+
         public EventTimer() {
             cycles = 0;
-            eventFlag = false;
-
         }
 
 
@@ -26,7 +34,8 @@ namespace ShooterGame.src
         {
             cycles++;
 
-            if (cycles % 20 == 0 && eventFlag && counter < 10)
+            // SPAWNING
+            if (cycles % 20 == 0 && eventFlag.ToString().Equals("Fighterrow") && counter < 10)
             {
                 counter++;
                 Fighter erni = new Fighter(fileHandler.getFighter());
@@ -36,8 +45,17 @@ namespace ShooterGame.src
                 entityList.Add(erni);
             }
 
-            ArrayList entitiesToProcess = new ArrayList(entityList);
+            if (eventFlag.ToString().Equals("Scouts"))
+            {
+                Scout scott = new Scout(fileHandler.getScout());
+                scott.spawn(Program.SCREEN_WIDTH/2, Program.SCREEN_HEIGHT/2);
+                entityList.Add(scott);
+              
+                eventFlag = Event.Idle;
+            }
 
+            // SHOOTING
+            ArrayList entitiesToProcess = new ArrayList(entityList);
             foreach (LivingEntity levi in entitiesToProcess)
             {
                 if (levi.GetType().Name.Equals("Fighter"))
@@ -53,12 +71,18 @@ namespace ShooterGame.src
                 }
             }
 
-            if (cycles > 200)
+            if (cycles == 200 && !eventFlag.ToString().Equals("Fighterrow"))
             {
-                eventFlag = true;
+                eventFlag = Event.Fighterrow;
                 cycles = 0;
             }
-                
+
+
+            if (cycles == 200 && !eventFlag.ToString().Equals("Scouts"))
+            {
+                eventFlag = Event.Scouts;
+            }
+
         }
 
    
