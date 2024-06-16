@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using SDL2;
+using ShooterGame.ui;
 
 namespace ShooterGame
 {
     class Enemy : LivingEntity
     {
-
-        
         
         public Enemy(List<LTexture> textureList)
         {
@@ -55,12 +54,16 @@ namespace ShooterGame
             {
                 iframe = true;
                 
-
                 lives = lives - 1;
 
                 if (lives < 0) // DEATH
                 {
                     animationHelper(1,2,"death");
+                    
+                    SoundHandler.PlaySound(1);
+                    
+                    Highscore.IncreaseScore(100);
+        
                 }
                 else // HIT
                 {

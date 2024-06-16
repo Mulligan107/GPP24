@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Threading;
 using SDL2;
 using ShooterGame.src;
+using ShooterGame.ui;
 
 /*
 TODO - Entity aufsplitten interactable, hit usw.
@@ -304,7 +305,7 @@ namespace ShooterGame
                                 case GameState.IN_GAME:
                                     // Set the mainMenu field in the InputHandler class, so that it can be accessed when handling user input
                                     VisibleMenu = null;
-                                
+                                    
                                     entityList = CollisionHandler.checkCollision(entityList);
 
                                     foreach (BackgroundObject backgroundObject in bgList)
@@ -312,6 +313,8 @@ namespace ShooterGame
                                         backgroundObject.checkOutOfBounds();
                                         backgroundObject.update(elapsed);
                                     }
+                                    
+                                    Highscore.DisplayHighscore(gRenderer);
 
 
                                     foreach (Entity enti in entityList)

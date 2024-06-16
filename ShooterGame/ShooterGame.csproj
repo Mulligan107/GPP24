@@ -103,6 +103,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="src\Program.cs" />
+    <Compile Include="src\ui\Highscore.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

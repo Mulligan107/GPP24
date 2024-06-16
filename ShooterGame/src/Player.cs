@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using SDL2;
+using ShooterGame.ui;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace ShooterGame
@@ -11,7 +12,6 @@ namespace ShooterGame
 
         public Player(List<LTexture> list)
         {
-            
             lives = 5;
             spawn((Program.SCREEN_WIDTH / 2) , Program.SCREEN_HEIGHT / 2 );
             width = 90 * s;
@@ -20,9 +20,31 @@ namespace ShooterGame
             friendly = true;
             textureList = list;
             texture = list[0];
+        }
+        
+        public override void hit()
+        {
+            if (!iframe)
+            {
+                iframe = true;
+                
+                lives = lives - 1;
 
-
-
+                if (lives < 0) // DEATH
+                {
+                    //animationHelper(1,2,"death");
+                    
+                    SoundHandler.PlaySound(1);
+                    
+                    Highscore.IncreaseScore(100);
+        
+                }
+                else // HIT
+                {
+                    //animationHelper(3, 4, "shield");
+                }
+                Console.WriteLine("Lives after: " + lives);
+            }
         }
 
         public override void move(double deltaTime)
