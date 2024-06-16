@@ -21,7 +21,7 @@ namespace ShooterGame
             instructionsTextWASD = "Use arrow keys for shooting and wasd for movement.";
             instructionsTextR = "Press r to reset the level.";
             InstructionsTextP = "Press p to pause the game.";
-            instructionsTextEsc = "Press esc to quit the game or pause.";
+            instructionsTextEsc = "Press esc to quit the game.";
             
             var backItem = new MenuItem("Back", () =>
                 {
@@ -46,7 +46,7 @@ namespace ShooterGame
 
             // Display the instructions text
             var instructionsPosition1 = new Vector2D { X = Program.SCREEN_WIDTH / 2, Y = Program.SCREEN_HEIGHT / 4 };
-            DisplayText(instructionsTextWASD, instructionsPosition1, 400, "lazy.ttf", renderer, titleColor); // Adjust the width as needed
+            DisplayText(instructionsTextWASD, instructionsPosition1, 500, "lazy.ttf", renderer, titleColor); // Adjust the width as needed
 
             var instructionsPosition2 = new Vector2D { X = Program.SCREEN_WIDTH / 2, Y = instructionsPosition1.Y + 100 }; 
             DisplayText(instructionsTextR, instructionsPosition2, 250, "lazy.ttf", renderer, titleColor); 

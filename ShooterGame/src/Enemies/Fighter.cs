@@ -55,12 +55,14 @@ namespace ShooterGame.src
                     animationHelper(1, 2, "death");
 
                     TotalEnemies--;
-                    //   SoundHandler.PlaySound(1);  TODO - ERSETZEN fucking earrape
+
                     ScoreUI.IncreaseScore(100);
 
                 }
                 else // HIT
                 {
+                    SoundHandler.PlaySound(4);
+                    
                     animationHelper(3, 4, "shield");
                 }
 
