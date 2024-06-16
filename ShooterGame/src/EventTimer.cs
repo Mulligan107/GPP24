@@ -13,10 +13,12 @@ namespace ShooterGame.src
         double cycles = 0;
         int counter = 0;
         bool eventFlag = false;
+        Random random = new Random();
         public static ArrayList entityList = new ArrayList();
         public EventTimer() {
             cycles = 0;
             eventFlag = false;
+
         }
 
 
@@ -30,6 +32,7 @@ namespace ShooterGame.src
                 Fighter erni = new Fighter(fileHandler.getFighter());
                 erni.posX = Program.SCREEN_WIDTH - (Program.SCREEN_WIDTH / 10);
                 erni.posY = Program.SCREEN_HEIGHT - (Program.SCREEN_HEIGHT / 18) - ((Program.SCREEN_HEIGHT / 11) * (cycles / 20));
+                erni.timeAlive = random.Next(0,150);
                 entityList.Add(erni);
             }
 
