@@ -45,7 +45,13 @@ namespace ShooterGame
             // Display the title
             var titlePosition = new Vector2D { X = Program.SCREEN_WIDTH / 2, Y = Program.SCREEN_HEIGHT / 8 }; // Adjust the Y value as needed
             var titleColor = new SDL.SDL_Color { r = 0, g = 0, b = 0, a = 255 }; // White color
-            DisplayText("You Win!", titlePosition, 500, "lazy.ttf", renderer, titleColor); // Adjust the width as needed
+            if (LevelManager.CurrentLevel < 2)
+                DisplayText("You won this Level!", titlePosition, 500, "lazy.ttf", renderer, titleColor); // Adjust the width as needed
+            else
+            {
+                DisplayText("You won the Game!", titlePosition, 500, "lazy.ttf", renderer, titleColor); // Adjust the width as needed
+            }
+            
 
             for (var i = 0; i < MenuItems.Count; i++)
             {
