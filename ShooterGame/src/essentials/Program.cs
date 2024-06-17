@@ -353,15 +353,15 @@ namespace ShooterGame
                             }
                             
                             ////////////////////////////////////// TEST AREA
-                            (double x, double y, int direction, string command) = InputHandler.handleUserInput(elapsed);
+                            (double x, double y, int direction, string command) = InputHandler.handleUserInput();
                             if (command == "shoot")
                             {
-                                entityList.Add(arno.shoot(x, y, direction, elapsed));
+                                entityList.Add(arno.shoot(x, y, direction));
                             }
                             else if (command == "move")
                             {
-                                arno.vecX = x ;
-                                arno.vecY = y ;
+                                arno.vecX = x;
+                                arno.vecY = y;
                                 arno.angle = direction;
                             }
 

@@ -24,7 +24,7 @@ namespace ShooterGame
             SoundHandler.LoadMedia();
         }
 
-        public static (double, double, int ,string) handleUserInput(double delta)
+        public static (double, double, int ,string) handleUserInput()
         {
             double s = Program.SCREEN_WIDTH / Program.SCREEN_HEIGHT;
             
@@ -138,7 +138,7 @@ namespace ShooterGame
                 }
             }
             // Check for movement keys and return corresponding movement
-            double movementspeed = 16 * (delta / 10);
+            double movementspeed = 16;
 
             if (pressedKeys.Contains(SDL.SDL_Keycode.SDLK_w) &&
                 pressedKeys.Contains(SDL.SDL_Keycode.SDLK_a)) return (-movementspeed * s, -movementspeed * s, 90, "move");

@@ -30,7 +30,7 @@ namespace ShooterGame.src
             onSpawn();
         }
 
-        public override void movementPattern(double delta)
+        public override void movementPattern()
         {
 
             /*
@@ -39,9 +39,9 @@ namespace ShooterGame.src
             vecX = radiusX * s * Math.Cos(sinValue);
             vecY = radiusY * s * Math.Sin(sinValue);
             */
-            sinValue -= (0.05) * (delta / 10);
-            vecY = radiusY * s * Math.Sin(sinValue) * (delta / 10);
-            vecX = -8 * (delta / 10);
+            sinValue -= (0.05);
+            vecY = radiusY * s * Math.Sin(sinValue);
+            vecX = -8;
 
             if (posX < -width)
             {

@@ -38,12 +38,12 @@ namespace ShooterGame.level.levels
             switch (_eventFlag)
             {
                 case Event.FIGHTER:
-                    if (_cycles % 5 == 0 && _counter < 10)
+                    if (_cycles % 20 == 0 && _counter < 10)
                     {
                         _counter++;
                         Fighter erni = new Fighter(fileHandler.getFighter());
                         erni.posX = Program.SCREEN_WIDTH - (Program.SCREEN_WIDTH / 10);
-                        erni.posY = Program.SCREEN_HEIGHT - (Program.SCREEN_HEIGHT / 18) - ((Program.SCREEN_HEIGHT / 11) * (_cycles / 5));
+                        erni.posY = Program.SCREEN_HEIGHT - (Program.SCREEN_HEIGHT / 18) - ((Program.SCREEN_HEIGHT / 11) * (_cycles / 20));
                         erni.timeAlive = _random.Next(0, 80);
                         entityList.Add(erni);
                     }
@@ -51,7 +51,7 @@ namespace ShooterGame.level.levels
 
                 case Event.SCOUTS:
 
-                    if (_cycles % 5 == 0 && _counter < 60)
+                    if (_cycles % 20 == 0 && _counter < 60)
                     {
                         _counter++;
                         Console.WriteLine(_counter);
@@ -129,7 +129,7 @@ namespace ShooterGame.level.levels
 
                     if (levi.timeAlive > 100 && !levi.iframe)
                     {
-                        levi.shootEnemy(1,deltatime);
+                        levi.shootEnemy(1);
                         levi.timeAlive = 0;
                     }
 
@@ -140,7 +140,7 @@ namespace ShooterGame.level.levels
 
                     if (levi.timeAlive > 200)
                     {
-                        levi.bulletFan(deltatime);
+                        levi.bulletFan();
                         levi.timeAlive = 0;
                     }
 
@@ -155,7 +155,7 @@ namespace ShooterGame.level.levels
 
                     if (levi.timeAlive % 30 == 0)
                     {
-                        levi.shootTarget(deltatime);
+                        levi.shootTarget();
                         if (levi.timeAlive > 200)
                         {
                             levi.timeAlive = 0;
@@ -169,14 +169,14 @@ namespace ShooterGame.level.levels
 
                     if (levi.timeAlive > 10)
                     {
-                        levi.deathray(deltatime);
+                        levi.deathray();
                         levi.timeAlive = 0;
                     }
                 }
             }
 
             // Event transitions
-            if (_eventFlag == Event.IDLE && _cycles >= 125)
+            if (_eventFlag == Event.IDLE && _cycles >= 500)
             {
                 _eventFlag = Event.SCOUTS;
                 _cycles = 0;

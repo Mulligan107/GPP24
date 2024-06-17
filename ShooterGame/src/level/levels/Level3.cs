@@ -37,12 +37,12 @@ namespace ShooterGame.level.levels
             switch (_eventFlag)
             {
                 case Level3.Event.Fighterrow:
-                    if (_cycles % 5 == 0 && _counter < 10)
+                    if (_cycles % 20 == 0 && _counter < 10)
                     {
                         _counter++;
                         Fighter erni = new Fighter(fileHandler.getFighter());
                         erni.posX = Program.SCREEN_WIDTH - (Program.SCREEN_WIDTH / 10);
-                        erni.posY = Program.SCREEN_HEIGHT - (Program.SCREEN_HEIGHT / 18) - ((Program.SCREEN_HEIGHT / 11) * (_cycles / 5));
+                        erni.posY = Program.SCREEN_HEIGHT - (Program.SCREEN_HEIGHT / 18) - ((Program.SCREEN_HEIGHT / 11) * (_cycles / 20));
                         erni.timeAlive = _random.Next(0, 80);
                         entityList.Add(erni);
                     }
@@ -50,7 +50,7 @@ namespace ShooterGame.level.levels
                 
                 case Level3.Event.Scouts:
 
-                    if (_cycles % 5 == 0 && _counter < 60)
+                    if (_cycles % 20 == 0 && _counter < 60)
                     {
                         _counter++;
                         Console.WriteLine(_counter);
@@ -76,7 +76,7 @@ namespace ShooterGame.level.levels
 
                 case Level3.Event.Scouts_D:
 
-                    if (_cycles % 5 == 0 && _counter < 60)
+                    if (_cycles % 20 == 0 && _counter < 60)
                     {
                         _counter++;
                         Console.WriteLine(_counter);
@@ -156,7 +156,7 @@ namespace ShooterGame.level.levels
 
                     if (levi.timeAlive > 100 && !levi.iframe)
                     {
-                        levi.shootEnemy(1, deltatime);
+                        levi.shootEnemy(1);
                         levi.timeAlive = 0;
                     }
 
@@ -167,7 +167,7 @@ namespace ShooterGame.level.levels
 
                     if (levi.timeAlive > 200)
                     {
-                        levi.bulletFan(deltatime);
+                        levi.bulletFan();
                         levi.timeAlive = 0;
                     }
 
@@ -182,26 +182,26 @@ namespace ShooterGame.level.levels
 
                     if (levi.timeAlive > 200)
                     {
-                        levi.shootTarget(deltatime);
+                        levi.shootTarget();
                         levi.timeAlive = 0;
                     }
                 }
             }
 
             // Event transitions
-            if (_eventFlag == Event.Idle && _cycles >= 125)
+            if (_eventFlag == Event.Idle && _cycles >= 500)
             {
                 _eventFlag = Event.Fighterrow;
                 _cycles = 0;
                 _counter = 0;
             }
-            else if (_eventFlag == Event.Fighterrow && _cycles >= 200)
+            else if (_eventFlag == Event.Fighterrow && _cycles >= 800)
             {
                 _eventFlag = Event.Scouts;
                 _cycles = 0;
                 _counter = 0;
             }
-            else if (_eventFlag == Event.Scouts && _cycles >= 200 && Enemy.TotalEnemies == 0)
+            else if (_eventFlag == Event.Scouts && _cycles >= 800 && Enemy.TotalEnemies == 0)
             {
                 _eventFlag = Event.Dreadnaught;
                 _cycles = 0;

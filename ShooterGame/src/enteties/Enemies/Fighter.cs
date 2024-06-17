@@ -30,9 +30,9 @@ namespace ShooterGame.src
             onSpawn();
         }
 
-        public override void movementPattern(double delta)
+        public override void movementPattern()
         {
-            sinValue += (0.05) * (delta / 10); // länge der Amplitude
+            sinValue += (0.05); // länge der Amplitude
             vecY = Math.Sin(sinValue);
         }
 

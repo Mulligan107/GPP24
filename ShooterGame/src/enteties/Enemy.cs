@@ -17,12 +17,12 @@ namespace ShooterGame
         }
         public override void move(double deltaTime)
         {
-            movementPattern(deltaTime);
+            movementPattern();
             posX += vecX * (deltaTime / 10) * speed;
             posY += vecY * (deltaTime / 10) * speed;
         }
 
-        public virtual void movementPattern(double delta)
+        public virtual void movementPattern()
         {
         }
 
@@ -60,7 +60,7 @@ namespace ShooterGame
             }
         }
 
-        public override void shootEnemy(int flipX, double delta)
+        public override void shootEnemy(int flipX)
         {
             Random rand = new Random();
             int randomIndex = rand.Next(0, 3);
@@ -75,7 +75,7 @@ namespace ShooterGame
             double s = Program.SCREEN_WIDTH / Program.SCREEN_HEIGHT;
             bill.spawn(posX + width / 4, posY + height / 4);
             bill.angle = -90;
-            bill.vecX = -15 * s * flipX * (delta / 10);
+            bill.vecX = -15 * s * flipX;
             bill.vecY = 0;
             bill.friendly = false;
             Program.entityList.Add(bill);
@@ -83,7 +83,7 @@ namespace ShooterGame
             SoundHandler.PlaySound(soundToPlay);
         }
 
-        public override void bulletFan(double delta)
+        public override void bulletFan()
         {
             double start = -5;
             double end = 5;
@@ -103,9 +103,9 @@ namespace ShooterGame
                 double s = Program.SCREEN_WIDTH / Program.SCREEN_HEIGHT;
                 bill.spawn(posX + width / 4, posY + height / 4);
                 bill.angle = -90;
-                bill.speed = 0.5 * (delta / 10);
-                bill.vecX = -15 * s * (delta / 10);
-                bill.vecY = (start + i) * stepSize * s * (delta / 10);
+                bill.speed = 0.5;
+                bill.vecX = -15 * s;
+                bill.vecY = (start + i) * stepSize * s;
                 bill.friendly = false;
                 Program.entityList.Add(bill);
             }
