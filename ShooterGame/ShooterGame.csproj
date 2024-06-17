@@ -97,9 +97,9 @@
     <Compile Include="src\handler\SoundHandler.cs" />
     <Compile Include="src\level\Level.cs" />
     <Compile Include="src\level\LevelManager.cs" />
-    <Compile Include="src\level\levels\Level1.cs" />
-    <Compile Include="src\level\levels\Level2.cs" />
     <Compile Include="src\level\levels\Level3.cs" />
+    <Compile Include="src\level\levels\Level2.cs" />
+    <Compile Include="src\level\levels\Level1.cs" />
     <Compile Include="src\menu\BackgroundObject.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>

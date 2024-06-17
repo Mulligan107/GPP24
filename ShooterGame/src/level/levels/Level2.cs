@@ -120,7 +120,7 @@ namespace ShooterGame.level.levels
                         luna.timeAlive = 0;
                         entityList.Add(luna);
                         entityList.Add(lasar);
-                        _eventFlag |= Event.IDLE;
+                        _eventFlag = Event.OVER;
                     }
                     
                     break;
