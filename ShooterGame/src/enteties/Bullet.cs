@@ -26,14 +26,11 @@ namespace ShooterGame
 
         public override void hit()
         {
-            Console.WriteLine("Lives befor: " + lives);
             lives = lives - 1;
             if (lives < 0)
             {
                 kill();
             }
-            Console.WriteLine("Lives after: " + lives);
-            
         }
 
     }

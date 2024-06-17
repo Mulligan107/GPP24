@@ -60,7 +60,7 @@ namespace ShooterGame
             }
         }
 
-        public override void shootEnemy()
+        public override void shootEnemy(int flipX)
         {
             Random rand = new Random();
             int randomIndex = rand.Next(0, 3);
@@ -75,7 +75,7 @@ namespace ShooterGame
             double s = Program.SCREEN_WIDTH / Program.SCREEN_HEIGHT;
             bill.spawn(posX + width / 4, posY + height / 4);
             bill.angle = -90;
-            bill.vecX = -15 * s;
+            bill.vecX = -15 * s * flipX;
             bill.vecY = 0;
             bill.friendly = false;
             Program.entityList.Add(bill);

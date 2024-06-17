@@ -130,7 +130,7 @@ namespace ShooterGame.level.levels
 
                     if (levi.timeAlive > 100 && !levi.iframe)
                     {
-                        levi.shootEnemy();
+                        levi.shootEnemy(1);
                         levi.timeAlive = 0;
                     }
 

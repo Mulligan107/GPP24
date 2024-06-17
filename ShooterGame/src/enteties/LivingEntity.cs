@@ -14,7 +14,7 @@ namespace ShooterGame
 
         public virtual void hit() { }
 
-        public virtual void shootEnemy() { }
+        public virtual void shootEnemy(int flipX) { }
 
         public virtual void bulletFan() { }
         public virtual void shootTarget() { }
