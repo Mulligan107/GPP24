@@ -11,14 +11,19 @@ namespace ShooterGame
             var menuItemSpacing = Program.SCREEN_HEIGHT / 3; // Divide by the number of menu items + 1
             var itemWidth = 200;
 
-            var nextLevelItem = new MenuItem("Next Level", () =>
-                {
-                    LevelManager.AdvanceToNextLevel();
-                    Program.CurrentState = GameState.IN_GAME;
-                },
-                "Next Level", "lazy.ttf",
-                new SDL.SDL_Rect { x = Program.SCREEN_WIDTH / 2, y = menuItemSpacing, w = itemWidth, h = 50 },
-                new SDL.SDL_Color { r = 0, g = 255, b = 0, a = 255 }); //color when selected
+            if (LevelManager.CurrentLevel < 2)
+            {
+                var nextLevelItem = new MenuItem("Next Level", () =>
+                    {
+                        LevelManager.AdvanceToNextLevel();
+                        Program.CurrentState = GameState.IN_GAME;
+                    },
+                    "Next Level", "lazy.ttf",
+                    new SDL.SDL_Rect { x = Program.SCREEN_WIDTH / 2, y = menuItemSpacing, w = itemWidth, h = 50 },
+                    new SDL.SDL_Color { r = 0, g = 255, b = 0, a = 255 }); //color when selected
+
+                AddMenuItem(nextLevelItem);
+            }
 
             var mainMenuItem = new MenuItem("Main Menu", () =>
                 {
@@ -31,8 +36,7 @@ namespace ShooterGame
                 new SDL.SDL_Rect { x = Program.SCREEN_WIDTH / 2, y = 2 * menuItemSpacing, w = itemWidth, h = 50 },
                 new SDL.SDL_Color { r = 255, g = 255, b = 0, a = 255 });
 
-            // Add the menu items to the menu
-            AddMenuItem(nextLevelItem);
+            //nextlevel item init above
             AddMenuItem(mainMenuItem);
         }
 
