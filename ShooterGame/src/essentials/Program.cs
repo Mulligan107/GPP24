@@ -212,6 +212,11 @@ namespace ShooterGame
             Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
             Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
 
+            // Desired frame rate (60 frames per second)
+            const double desiredFrameRate = 60.0;
+            // Desired time per frame (in milliseconds)
+            const double desiredTimePerFrame = 1000.0 / desiredFrameRate;
+            
             //Start up SDL and create window
             var success = Init();
             if (success == false)
@@ -240,7 +245,7 @@ namespace ShooterGame
                     
                     while (!quit)
                     {
-                        double previous = 0;
+                        double previous = timer.getTicks();
 
                         ////////////////////////////////////// TEST AREA
                         ///
@@ -285,10 +290,18 @@ namespace ShooterGame
                             double current = timer.getTicks();
                             double elapsed = current - previous;
                             previous = current;
-                            if (elapsed < 1.0)
+                            
+                            // If the elapsed time is less than the desired time per frame
+                            if (elapsed < desiredTimePerFrame)
                             {
-                                elapsed = 5;
+                                // Delay the game loop by the difference
+                                System.Threading.Thread.Sleep((int)(desiredTimePerFrame - elapsed));
+                                // Update the current and elapsed times
+                                current = timer.getTicks();
+                                elapsed = current - previous;
+                                previous = current;
                             }
+                            
                             elapsed = 8;
                             switch (CurrentState)
                             {
