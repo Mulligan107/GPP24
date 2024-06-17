@@ -6,12 +6,15 @@ namespace ShooterGame
 {
     public class SettingsMenu : Menu
     {
+        private bool _isMusicPlaying;
+        private bool _isSoundMuted = true;
+        
         public SettingsMenu(IntPtr renderer) : base(renderer)
         {
             MenuItems = new List<MenuItem>();
 
             // Calculate the height for each menu item
-            var menuItemSpacing = Program.SCREEN_HEIGHT / 6; // Divide by the number of menu items +1
+            var menuItemSpacing = Program.SCREEN_HEIGHT / 5; // Divide by the number of menu items +1
             var itemWidth = 200;
 
             // Create the settings items with their positions
@@ -20,23 +23,14 @@ namespace ShooterGame
                 new SDL.SDL_Rect { x = Program.SCREEN_WIDTH / 2, y = menuItemSpacing, w = itemWidth, h = 50 },
                 new SDL.SDL_Color { r = 255, g = 255, b = 0, a = 255 }); //color when selected
             
-            var startMusic = new MenuItem("Start Music", () => { SoundHandler.PlayMusic(); },
+            var toggleMusicItem = new MenuItem("Start Music", () => { ToggleMusic(); },
                 "Start Music", "lazy.ttf",
                 new SDL.SDL_Rect { x = Program.SCREEN_WIDTH / 2, y = 2 * menuItemSpacing, w = itemWidth, h = 50 },
                 new SDL.SDL_Color { r = 255, g = 255, b = 0, a = 255 });
             
-            var stopMusic = new MenuItem("Stop Music", () => { SoundHandler.StopMusic(); },
-                "Stop Music", "lazy.ttf",
-                new SDL.SDL_Rect { x = Program.SCREEN_WIDTH / 2, y = 3 * menuItemSpacing, w = itemWidth, h = 50 },
-                new SDL.SDL_Color { r = 255, g = 255, b = 0, a = 255 });
-            
-            var resumeSounds = new MenuItem("Resume Sounds", () =>
-                {
-                    SoundHandler.SoundVolume = 1;
-                    SoundHandler.LoadMedia();
-                },
+            var toggleSoundItem = new MenuItem("Resume Sounds", ToggleSound,
                 "Resume Sounds", "lazy.ttf",
-                new SDL.SDL_Rect { x = Program.SCREEN_WIDTH / 2, y = 4 * menuItemSpacing, w = itemWidth, h = 50 },
+                new SDL.SDL_Rect { x = Program.SCREEN_WIDTH / 2, y = 3 * menuItemSpacing, w = itemWidth, h = 50 },
                 new SDL.SDL_Color { r = 255, g = 255, b = 0, a = 255 });
 
             var backItem = new MenuItem("Back", () =>
@@ -47,14 +41,47 @@ namespace ShooterGame
                     SDL.SDL_RenderClear(Program.gRenderer); // Clear the current rendering target with the drawing color
                 },
                 "Back", "lazy.ttf",
-                new SDL.SDL_Rect { x = Program.SCREEN_WIDTH / 2, y = 5 * menuItemSpacing, w = itemWidth, h = 50 },
+                new SDL.SDL_Rect { x = Program.SCREEN_WIDTH / 2, y = 4 * menuItemSpacing, w = itemWidth, h = 50 },
                 new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 });
 
             AddMenuItem(changeWindowSizeItem);
-            AddMenuItem(startMusic);
-            AddMenuItem(stopMusic);
-            AddMenuItem(resumeSounds);
+            AddMenuItem(toggleMusicItem);
+            AddMenuItem(toggleSoundItem);
             AddMenuItem(backItem);
+        }
+        
+        private void ToggleMusic()
+        {
+            if (_isMusicPlaying)
+            {
+                SoundHandler.StopMusic();
+                _isMusicPlaying = false;
+                MenuItems[1].Text = "Start Music";
+            }
+            else
+            {
+                SoundHandler.PlayMusic();
+                _isMusicPlaying = true;
+                MenuItems[1].Text = "Stop Music";
+            }
+        }
+
+        private void ToggleSound()
+        {
+            if (_isSoundMuted)
+            {
+                SoundHandler.SoundVolume = 1;
+                SoundHandler.LoadMedia();
+                _isSoundMuted = false;
+                MenuItems[2].Text = "Mute Sounds";
+            }
+            else
+            {
+                SoundHandler.SoundVolume = 0;
+                SoundHandler.LoadMedia();
+                _isSoundMuted = true;
+                MenuItems[2].Text = "Resume Sounds";
+            }
         }
 
         public override void Render(IntPtr renderer)
