@@ -14,23 +14,34 @@ namespace ShooterGame
             MenuItems = new List<MenuItem>();
 
             // Calculate the height for each menu item
-            var menuItemSpacing = Program.SCREEN_HEIGHT / 5; // Divide by the number of menu items +1
+            var menuItemSpacing = Program.SCREEN_HEIGHT / 10; 
+            var initialYPosition = Program.SCREEN_HEIGHT / 4; // Adjust this value as needed
             var itemWidth = 200;
 
             // Create the settings items with their positions
             var changeWindowSizeItem = new MenuItem("Change Window Size", () => { Program.changeWindowSize(); },
                 "Change Window Size", "lazy.ttf",
-                new SDL.SDL_Rect { x = Program.SCREEN_WIDTH / 2, y = menuItemSpacing, w = itemWidth, h = 50 },
+                new SDL.SDL_Rect { x = Program.SCREEN_WIDTH / 2, y = initialYPosition, w = itemWidth, h = 50 },
                 new SDL.SDL_Color { r = 255, g = 255, b = 0, a = 255 }); //color when selected
             
             var toggleMusicItem = new MenuItem("Start Music", () => { ToggleMusic(); },
                 "Start Music", "lazy.ttf",
-                new SDL.SDL_Rect { x = Program.SCREEN_WIDTH / 2, y = 2 * menuItemSpacing, w = itemWidth, h = 50 },
+                new SDL.SDL_Rect { x = Program.SCREEN_WIDTH / 2, y = initialYPosition + menuItemSpacing, w = itemWidth, h = 50 },
                 new SDL.SDL_Color { r = 255, g = 255, b = 0, a = 255 });
             
             var toggleSoundItem = new MenuItem("Resume Sounds", ToggleSound,
                 "Resume Sounds", "lazy.ttf",
-                new SDL.SDL_Rect { x = Program.SCREEN_WIDTH / 2, y = 3 * menuItemSpacing, w = itemWidth, h = 50 },
+                new SDL.SDL_Rect { x = Program.SCREEN_WIDTH / 2, y = initialYPosition + 2 * menuItemSpacing, w = itemWidth, h = 50 },
+                new SDL.SDL_Color { r = 255, g = 255, b = 0, a = 255 });
+            
+            var toggleDebugModeItem = new MenuItem("Enable Debug Mode", () => { ToggleDebugMode(); },
+                "Enable Debug Mode", "lazy.ttf",
+                new SDL.SDL_Rect { x = Program.SCREEN_WIDTH / 2, y = initialYPosition + 3 * menuItemSpacing, w = itemWidth, h = 50 },
+                new SDL.SDL_Color { r = 255, g = 255, b = 0, a = 255 });
+            
+            var toggleDifficulty = new MenuItem("Dificulty Toggle", () => { ToggleDifficulty(); },
+                "Medium Difficulty", "lazy.ttf",
+                new SDL.SDL_Rect { x = Program.SCREEN_WIDTH / 2, y = initialYPosition + 4 * menuItemSpacing, w = itemWidth, h = 50 },
                 new SDL.SDL_Color { r = 255, g = 255, b = 0, a = 255 });
 
             var backItem = new MenuItem("Back", () =>
@@ -41,12 +52,14 @@ namespace ShooterGame
                     SDL.SDL_RenderClear(Program.gRenderer); // Clear the current rendering target with the drawing color
                 },
                 "Back", "lazy.ttf",
-                new SDL.SDL_Rect { x = Program.SCREEN_WIDTH / 2, y = 4 * menuItemSpacing, w = itemWidth, h = 50 },
+                new SDL.SDL_Rect { x = Program.SCREEN_WIDTH / 2, y = initialYPosition + 5 * menuItemSpacing, w = itemWidth, h = 50 },
                 new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 });
 
             AddMenuItem(changeWindowSizeItem);
             AddMenuItem(toggleMusicItem);
             AddMenuItem(toggleSoundItem);
+            AddMenuItem(toggleDebugModeItem);
+            AddMenuItem(toggleDifficulty);
             AddMenuItem(backItem);
         }
         
@@ -81,6 +94,43 @@ namespace ShooterGame
                 SoundHandler.LoadMedia();
                 _isSoundMuted = true;
                 MenuItems[2].Text = "Resume Sounds";
+            }
+        }
+        
+        private void ToggleDebugMode()
+        {
+            if (Program.debugMode)
+            {
+                Program.debugMode = false;
+                MenuItems[3].Text = "Enable Debug Mode"; 
+            }
+            else
+            {
+                Program.debugMode = true;
+                MenuItems[3].Text = "Disable Debug Mode"; 
+            }
+        }
+        
+        private void ToggleDifficulty()
+        {
+            // Get the current value of Player.lifes
+            var currentLifes = Player.lifes;
+
+            // Switch between the three difficulty levels
+            if (currentLifes == 100) // Currently easy, switch to medium
+            {
+                Player.lifes = 20;
+                MenuItems[4].Text = "Medium Difficulty";
+            }
+            else if (currentLifes == 20) // Currently medium, switch to hard
+            {
+                Player.lifes = 10;
+                MenuItems[4].Text = "Hard Difficulty";
+            }
+            else // Currently hard, switch to easy
+            {
+                Player.lifes = 100;
+                MenuItems[4].Text = "Easy Difficulty";
             }
         }
 

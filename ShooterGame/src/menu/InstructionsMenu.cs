@@ -7,10 +7,11 @@ namespace ShooterGame
 {
     public class InstructionsMenu : Menu
     {
-        private string instructionsTextWASD;
-        private string instructionsTextR;
-        private string InstructionsTextP;
-        private string instructionsTextEsc;
+        private string _instructionsTextWasd;
+        private string _instructionsTextArrows;
+        private string _instructionsTextR;
+        private string _instructionsTextP;
+        private string _instructionsTextEsc;
         public InstructionsMenu(IntPtr renderer) : base(renderer)
         {
             // Calculate the height for each menu item
@@ -18,10 +19,11 @@ namespace ShooterGame
             var itemWidth = 200;
             
             // Set the instructions text
-            instructionsTextWASD = "Use arrow keys for shooting and wasd for movement.";
-            instructionsTextR = "Press r to reset the level.";
-            InstructionsTextP = "Press p to pause the game.";
-            instructionsTextEsc = "Press esc to quit the game.";
+            _instructionsTextWasd = "Use wasd for movement.";
+            _instructionsTextArrows = "Use arrow keys for shooting.";
+            _instructionsTextR = "Press r to reset the level.";
+            _instructionsTextP = "Press p to pause the game.";
+            _instructionsTextEsc = "Press esc to quit the game.";
             
             var backItem = new MenuItem("Back", () =>
                 {
@@ -46,16 +48,20 @@ namespace ShooterGame
 
             // Display the instructions text
             var instructionsPosition1 = new Vector2D { X = Program.SCREEN_WIDTH / 2, Y = Program.SCREEN_HEIGHT / 4 };
-            DisplayText(instructionsTextWASD, instructionsPosition1, 500, "lazy.ttf", renderer, titleColor); // Adjust the width as needed
-
-            var instructionsPosition2 = new Vector2D { X = Program.SCREEN_WIDTH / 2, Y = instructionsPosition1.Y + 100 }; 
-            DisplayText(instructionsTextR, instructionsPosition2, 250, "lazy.ttf", renderer, titleColor); 
+            DisplayText(_instructionsTextWasd, instructionsPosition1, 300, "lazy.ttf", renderer, titleColor);
             
-            var instructionsPosition3 = new Vector2D { X = Program.SCREEN_WIDTH / 2, Y = instructionsPosition2.Y + 80 };
-            DisplayText(InstructionsTextP, instructionsPosition3, 250, "lazy.ttf", renderer, titleColor);
+            // Display the instructions text
+            var instructionsPosition2 = new Vector2D { X = Program.SCREEN_WIDTH / 2, Y = instructionsPosition1.Y + 80 };
+            DisplayText(_instructionsTextArrows, instructionsPosition2, 300, "lazy.ttf", renderer, titleColor); // Adjust the width as needed
 
-            var instructionsPosition4 = new Vector2D { X = Program.SCREEN_WIDTH / 2, Y = instructionsPosition3.Y + 80 }; 
-            DisplayText(instructionsTextEsc, instructionsPosition4, 300, "lazy.ttf", renderer, titleColor); 
+            var instructionsPosition3 = new Vector2D { X = Program.SCREEN_WIDTH / 2, Y = instructionsPosition2.Y + 80 }; 
+            DisplayText(_instructionsTextR, instructionsPosition3, 250, "lazy.ttf", renderer, titleColor); 
+            
+            var instructionsPosition4 = new Vector2D { X = Program.SCREEN_WIDTH / 2, Y = instructionsPosition3.Y + 80 };
+            DisplayText(_instructionsTextP, instructionsPosition4, 250, "lazy.ttf", renderer, titleColor);
+
+            var instructionsPosition5 = new Vector2D { X = Program.SCREEN_WIDTH / 2, Y = instructionsPosition4.Y + 80 }; 
+            DisplayText(_instructionsTextEsc, instructionsPosition5, 300, "lazy.ttf", renderer, titleColor); 
 
             for (var i = 0; i < MenuItems.Count; i++)
             {
