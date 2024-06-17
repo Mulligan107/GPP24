@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Threading;
 using SDL2;
@@ -19,6 +20,11 @@ namespace ShooterGame
         //Game state
         public static GameState CurrentState = GameState.MAIN_MENU;
         public static Menu VisibleMenu { get; set; } 
+        
+        // Game ticker
+        public static Stopwatch stopwatchTimer = new Stopwatch();
+        public static double secPerTick = 1.0 / Stopwatch.Frequency;
+        public static double targetFPS = 500.0;
         
         //Screen dimension constants
         public static int MAX_SCREEN_WIDTH;
@@ -234,9 +240,12 @@ namespace ShooterGame
                 }
                 else
                 {
+                    stopwatchTimer.Start();
                     LevelManager.LoadLevels();
                     // Add the menu items to the menu
                     VisibleMenu = new MainMenu(gRenderer);
+                    
+                    stopwatchTimer.Start();
                     
                     while (!quit)
                     {
@@ -282,14 +291,16 @@ namespace ShooterGame
                         {
                             SDL.SDL_RenderClear(gRenderer);
 
-                            double current = timer.getTicks();
+                            double current = stopwatchTimer.ElapsedTicks * secPerTick;
                             double elapsed = current - previous;
                             previous = current;
+
+                            // If elapsed is less than 1.0, set it to 5
                             if (elapsed < 1.0)
                             {
                                 elapsed = 5;
                             }
-                            elapsed = 8;
+                            
                             switch (CurrentState)
                             {
                                 case GameState.MAIN_MENU:
@@ -354,6 +365,20 @@ namespace ShooterGame
                                 arno.angle = direction;
                             }
 
+                            // Waste CPU cycles until the next frame
+                            double endTime = previous + 1.0 / targetFPS;
+                            while (current < endTime)
+                            {
+                                int xd;
+                                for(int i = 0; i < 1000; i++)
+                                {
+                                    // Waste some time
+                                    xd = i * i;
+                                    xd = i + xd;
+                                    xd = xd * ((123 + xd) / 3);
+                                }
+                                current = stopwatchTimer.ElapsedTicks * secPerTick;
+                            }
 
                             ////////////////////////////////////// TEST AREA
                             //Update screen
@@ -366,6 +391,8 @@ namespace ShooterGame
             //Free resources and close SDL
             Close();
 
+            stopwatchTimer.Stop();
+            
             if (success == false)
                 Console.ReadLine();
 
