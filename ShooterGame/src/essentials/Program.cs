@@ -240,11 +240,7 @@ namespace ShooterGame
                     
                     while (!quit)
                     {
-                        ulong NOW = SDL.SDL_GetPerformanceCounter();
-                        ulong LAST = 0;
-                        double deltaTime = 0;
-                        double timeScale = 0.65; // Change this value to control the speed, less than 1 to slow down, greater than 1 to speed up
-
+                        double previous = 0;
 
                         ////////////////////////////////////// TEST AREA
                         ///
@@ -286,16 +282,14 @@ namespace ShooterGame
                         {
                             SDL.SDL_RenderClear(gRenderer);
 
-                            // Update the performance counter values
-                            LAST = NOW;
-                            NOW = SDL.SDL_GetPerformanceCounter();
-
-                            // Calculate the elapsed time in milliseconds
-                            deltaTime = ((double)(NOW - LAST) * 1000) / SDL.SDL_GetPerformanceFrequency();
-                            
-                            // Apply the time scale
-                            deltaTime *= timeScale;
-
+                            double current = timer.getTicks();
+                            double elapsed = current - previous;
+                            previous = current;
+                            if (elapsed < 1.0)
+                            {
+                                elapsed = 5;
+                            }
+                            elapsed = 8;
                             switch (CurrentState)
                             {
                                 case GameState.MAIN_MENU:
@@ -309,7 +303,7 @@ namespace ShooterGame
                                     foreach (BackgroundObject backgroundObject in bgList)
                                     {
                                         backgroundObject.checkOutOfBounds();
-                                        backgroundObject.update(deltaTime);
+                                        backgroundObject.update(elapsed);
                                     }
                                     
                                     VisibleMenu?.Render(gRenderer);
@@ -323,7 +317,7 @@ namespace ShooterGame
                                     foreach (BackgroundObject backgroundObject in bgList)
                                     {
                                         backgroundObject.checkOutOfBounds();
-                                        backgroundObject.update(deltaTime);
+                                        backgroundObject.update(elapsed);
                                     }
                                     
                                     ScoreUI.Update();
@@ -336,10 +330,10 @@ namespace ShooterGame
 
                                     foreach (Entity enti in entityList)
                                     {
-                                        enti.update(deltaTime);
+                                        enti.update(elapsed);
                                     }
                                     
-                                    LevelManager.RunCurrentLevelLogic(deltaTime, fileHandler, entityList);
+                                    LevelManager.RunCurrentLevelLogic(elapsed, fileHandler, entityList);
                                     
                                     // eventHandler.updateList(entityList);
                                     // eventHandler.timedEvent(elapsed, fileHandler);
@@ -348,10 +342,10 @@ namespace ShooterGame
                             }
                             
                             ////////////////////////////////////// TEST AREA
-                            (double x, double y, int direction, string command) = InputHandler.handleUserInput(deltaTime);
+                            (double x, double y, int direction, string command) = InputHandler.handleUserInput(elapsed);
                             if (command == "shoot")
                             {
-                                entityList.Add(arno.shoot(x, y, direction, deltaTime));
+                                entityList.Add(arno.shoot(x, y, direction, elapsed));
                             }
                             else if (command == "move")
                             {
