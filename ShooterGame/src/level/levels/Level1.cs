@@ -44,12 +44,6 @@ namespace ShooterGame.level.levels
                         erni.posY = Program.SCREEN_HEIGHT - (Program.SCREEN_HEIGHT / 18) - ((Program.SCREEN_HEIGHT / 11) * (_cycles / 20));
                         erni.timeAlive = _random.Next(0, 80);
                         entityList.Add(erni);
-                        if (_counter == 1)
-                        {
-                            Lasership lesar = new Lasership(fileHandler.getLasership());
-                            lesar.spawn(Program.SCREEN_HEIGHT/2, Program.SCREEN_HEIGHT/2);
-                            entityList.Add(lesar);
-                        }
                     }
                     break;
                 
@@ -157,16 +151,6 @@ namespace ShooterGame.level.levels
                     if (levi.timeAlive > 200)
                     {
                         levi.shootTarget();
-                        levi.timeAlive = 0;
-                    }
-                }
-                if (levi.GetType().Name.Equals("Lasership"))
-                {
-                    levi.timeAlive++;
-
-                    if (levi.timeAlive > 5)
-                    {
-                        levi.deathray();
                         levi.timeAlive = 0;
                     }
                 }
