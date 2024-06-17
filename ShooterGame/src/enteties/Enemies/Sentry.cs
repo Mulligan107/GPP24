@@ -32,7 +32,7 @@ namespace ShooterGame.src
             onSpawn();
         }
 
-        public override void movementPattern()
+        public override void movementPattern(double delta)
         {
             Player pepe = (Player)Program.entityList[0];
             tempvecX = pepe.posX - posX;
@@ -77,7 +77,7 @@ namespace ShooterGame.src
 
             }
         }
-        public override void shootTarget()
+        public override void shootTarget(double delta)
         {
             Random rand = new Random();
             int randomIndex = rand.Next(0, 3);
@@ -94,8 +94,8 @@ namespace ShooterGame.src
             double s = Program.SCREEN_WIDTH / Program.SCREEN_HEIGHT;
             bill.spawn(posX + width / 4, posY + height / 4);
             bill.angle = -90;
-            bill.vecX = tempvecX * s;
-            bill.vecY = tempvecY;
+            bill.vecX = tempvecX * (delta / 10);
+            bill.vecY = tempvecY * (delta / 10);
             bill.friendly = false;
             Program.entityList.Add(bill);
 

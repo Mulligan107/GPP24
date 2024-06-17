@@ -51,7 +51,7 @@ namespace ShooterGame.level.levels
 
                 case Event.SCOUTS:
 
-                    if (_cycles % 20 == 0 && _counter < 60)
+                    if (_cycles % 5 == 0 && _counter < 60)
                     {
                         _counter++;
                         Console.WriteLine(_counter);
@@ -137,7 +137,7 @@ namespace ShooterGame.level.levels
 
                     if (levi.timeAlive > 100 && !levi.iframe)
                     {
-                        levi.shootEnemy(1);
+                        levi.shootEnemy(1, deltatime);
                         levi.timeAlive = 0;
                     }
 
@@ -148,11 +148,11 @@ namespace ShooterGame.level.levels
 
                     if (levi.timeAlive > 200)
                     {
-                        levi.bulletFan();
+                        levi.bulletFan(deltatime);
                         levi.timeAlive = 0;
                     }
 
-                    if (_cycles == 800)
+                    if (_cycles == 200)
                     {
                         levi.vecY = -3;
                     }
@@ -163,7 +163,7 @@ namespace ShooterGame.level.levels
 
                     if (levi.timeAlive % 30 == 0)
                     {
-                        levi.shootTarget();
+                        levi.shootTarget(deltatime);
                         if (levi.timeAlive > 200)
                         {
                             levi.timeAlive = 0;
@@ -177,13 +177,13 @@ namespace ShooterGame.level.levels
 
                     if (levi.timeAlive > 50)
                     {
-                        levi.deathray();
+                        levi.deathray(deltatime);
                         levi.timeAlive = 0;
                     }
                 }
             }
 
-            if (_cycles == 500 && _eventFlag.ToString().Equals("IDLE"))
+            if (_cycles == 125 && _eventFlag.ToString().Equals("IDLE"))
             {
                 _eventFlag = Event.SENTRYS;
                 _cycles = 0;

@@ -14,11 +14,11 @@ namespace ShooterGame
 
         public virtual void hit() { }
 
-        public virtual void shootEnemy(int flipX) { }
+        public virtual void shootEnemy(int flipX, double delta) { }
 
-        public virtual void bulletFan() { }
-        public virtual void shootTarget() { }
-        public virtual void deathray() { }
+        public virtual void bulletFan(double delta) { }
+        public virtual void shootTarget(double delta) { }
+        public virtual void deathray(double delta) { }
     }
 
 }

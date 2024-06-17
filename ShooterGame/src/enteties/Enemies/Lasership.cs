@@ -10,10 +10,6 @@ namespace ShooterGame.src
     class Lasership : Enemy
     {
 
-        double sinValue = 0;
-        double radiusX = 20.0;
-        double radiusY = 5.0;
-
         public Lasership(List<LTexture> textureList) : base(textureList)
         {
             /*
@@ -39,28 +35,8 @@ namespace ShooterGame.src
             onSpawn();
         }
 
-        public override void movementPattern()
+        public override void movementPattern(double delta)
         {
-
-            /*
-            
-            
-            if (posX > (Program.SCREEN_WIDTH/8) * 7 ) {
-                vecX = -8;
-            }
-            else
-            {
-                vecX = 0;
-            }
-
-            if (posY > (Program.SCREEN_HEIGHT - height)){
-                vecY = -3;
-            }
-            if (posY < (height))
-            {
-                vecY = +3;
-            }
-            */
 
         }
 
@@ -93,7 +69,7 @@ namespace ShooterGame.src
             }
         }
 
-        public override void deathray()
+        public override void deathray(double delta)
         {
             List<LTexture> list = new List<LTexture>();
             list.Add(textureList[3]); // ANGEPASST AN LASERSHIP
@@ -103,7 +79,7 @@ namespace ShooterGame.src
             double s = Program.SCREEN_WIDTH / Program.SCREEN_HEIGHT;
             bill.spawn(posX + width / 4, posY + height / 4);
             bill.angle = -90;
-            bill.vecX = -10 * s;
+            bill.vecX = -10 * s * (delta / 10);
             bill.friendly = false;
             Program.entityList.Add(bill);
         }

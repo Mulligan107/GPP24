@@ -89,13 +89,13 @@ namespace ShooterGame
             vecY = vecY * 0.925;
         }
 
-        public Bullet shoot(double vecx, double vecy, int direction)
+        public Bullet shoot(double vecx, double vecy, int direction, double delta)
         {
             Bullet bill = new Bullet(textureList,4);
             bill.spawn(posX + width/8 , posY + height/8);
             bill.angle = direction;
-            bill.vecX = vecx;
-            bill.vecY = vecy;
+            bill.vecX = vecx * (delta / 10);
+            bill.vecY = vecy * (delta / 10);
             bill.friendly = true;
             return bill;
         }

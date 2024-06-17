@@ -103,7 +103,7 @@ namespace ShooterGame.src
 
                     if (levi.timeAlive > 100 && !levi.iframe)
                     {
-                        levi.shootEnemy(1);
+                        levi.shootEnemy(1, deltatime);
                         levi.timeAlive = 0;
                     }
 
@@ -114,7 +114,7 @@ namespace ShooterGame.src
 
                     if (levi.timeAlive > 200)
                     {
-                        levi.bulletFan();
+                        levi.bulletFan(deltatime);
                         levi.timeAlive = 0;
                     }
 

@@ -41,7 +41,7 @@ namespace ShooterGame.src
             onSpawn();
         }
 
-        public override void movementPattern()
+        public override void movementPattern(double delta)
         {
 
             /*
@@ -65,7 +65,7 @@ namespace ShooterGame.src
             }
             */
             if (posX > (Program.SCREEN_WIDTH/8) * 7 ) {
-                vecX = -8;
+                vecX = -8 * (delta/10);
             }
             else
             {
@@ -73,11 +73,11 @@ namespace ShooterGame.src
             }
 
             if (posY > (Program.SCREEN_HEIGHT - height)){
-                vecY = -3;
+                vecY = -3 * (delta / 10);
             }
             if (posY < (height))
             {
-                vecY = +3;
+                vecY = +3 * (delta / 10);
             }
 
 

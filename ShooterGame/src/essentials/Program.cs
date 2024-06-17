@@ -289,7 +289,7 @@ namespace ShooterGame
                             {
                                 elapsed = 5;
                             }
-                            
+                            elapsed = 8;
                             switch (CurrentState)
                             {
                                 case GameState.MAIN_MENU:
@@ -342,15 +342,15 @@ namespace ShooterGame
                             }
                             
                             ////////////////////////////////////// TEST AREA
-                            (double x, double y, int direction, string command) = InputHandler.handleUserInput();
+                            (double x, double y, int direction, string command) = InputHandler.handleUserInput(elapsed);
                             if (command == "shoot")
                             {
-                                entityList.Add(arno.shoot(x, y, direction));
+                                entityList.Add(arno.shoot(x, y, direction, elapsed));
                             }
                             else if (command == "move")
                             {
-                                arno.vecX = x;
-                                arno.vecY = y;
+                                arno.vecX = x ;
+                                arno.vecY = y ;
                                 arno.angle = direction;
                             }
 
