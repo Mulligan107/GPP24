@@ -13,7 +13,7 @@ namespace ShooterGame
 
         public Player(List<LTexture> list)
         {
-            lives = 10;
+            lives = 20;
             lifes = lives;
             spawn((Program.SCREEN_WIDTH / 2) , Program.SCREEN_HEIGHT / 2 );
             width = 60 * s;
@@ -72,14 +72,21 @@ namespace ShooterGame
         public override void move(double deltaTime)
         {
             checkLives();
-            if (posX > 0 || posX < Program.SCREEN_WIDTH && posY > 0 || posY < Program.SCREEN_HEIGHT) //begrenzung für Spieler, nur im Fenster bewegen TODO bringt nix
+            double proposedPosX = posX + vecX * (deltaTime / 10) * speed;
+            double proposedPosY = posY + vecY * (deltaTime / 10) * speed;
+
+            // Check if the proposed position is within the screen boundaries
+            if (proposedPosX >= 0 && proposedPosX <= Program.SCREEN_WIDTH - width)
             {
-                vecX = vecX * 0.925;
-                vecY = vecY * 0.925;
-                posX += vecX * (deltaTime / 10) * speed;
-                posY += vecY * (deltaTime / 10) * speed;
+                posX = proposedPosX;
             }
-            
+            if (proposedPosY >= 0 && proposedPosY <= Program.SCREEN_HEIGHT - height)
+            {
+                posY = proposedPosY;
+            }
+
+            vecX = vecX * 0.925;
+            vecY = vecY * 0.925;
         }
 
         public Bullet shoot(double vecx, double vecy, int direction)

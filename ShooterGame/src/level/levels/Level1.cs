@@ -172,30 +172,34 @@ namespace ShooterGame.level.levels
                 }
             }
 
-            if (_cycles == 500 && _eventFlag.ToString().Equals("Idle"))
+            // Event transitions
+            if (_eventFlag == Event.Idle && _cycles >= 500)
             {
-                _eventFlag = Level1.Event.Fighterrow;
-                _cycles = 0;
-            }
-
-
-            if (_cycles == 800 && !_eventFlag.ToString().Equals("Scouts"))
-            {
-                _counter = 0;
-                _cycles = 0;
-                _eventFlag = Level1.Event.Scouts;
-            }
-
-            Console.WriteLine(Enemy.TotalEnemies);
-
-            if (_cycles > 800 && Enemy.TotalEnemies == 0 && !_eventFlag.ToString().Equals("Over"))
-            {
-                _eventFlag = Level1.Event.Dreadnaught;
+                _eventFlag = Event.Fighterrow;
                 _cycles = 0;
                 _counter = 0;
             }
-            
-            if (Enemy.TotalEnemies == 0 && _eventFlag.ToString().Equals("Over"))
+            else if (_eventFlag == Event.Fighterrow && _cycles >= 800)
+            {
+                _eventFlag = Event.Scouts;
+                _cycles = 0;
+                _counter = 0;
+            }
+            else if (_eventFlag == Event.Scouts && _cycles >= 800 && Enemy.TotalEnemies == 0)
+            {
+                _eventFlag = Event.Dreadnaught;
+                _cycles = 0;
+                _counter = 0;
+            }
+            else if (_eventFlag == Event.Dreadnaught && Enemy.TotalEnemies == 0)
+            {
+                _eventFlag = Event.Over;
+                _cycles = 0;
+                _counter = 0;
+            }
+
+            // Check for win condition
+            if (_eventFlag == Event.Over && Enemy.TotalEnemies == 0)
             {
                 Program.CurrentState = GameState.WIN;
                 Program.VisibleMenu = new WinMenu(Program.gRenderer);
