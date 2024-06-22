@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using SDL2;
-using JumperGame.level;
-using JumperGame.ui;
 
 /*
 TODO - Entity aufsplitten interactable, hit usw.
@@ -15,10 +13,6 @@ namespace JumperGame
 {
     class Program
     {
-        //Game state
-        public static GameState CurrentState = GameState.MAIN_MENU;
-        public static Menu VisibleMenu { get; set; } 
-        
         //Screen dimension constants
         public static int MAX_SCREEN_WIDTH;
         public static int MAX_SCREEN_HEIGHT;
@@ -26,9 +20,6 @@ namespace JumperGame
         public static int ALT_SCREEN_HEIGHT;
         public static int SCREEN_WIDTH;
         public static int SCREEN_HEIGHT;
-
-        //Screen size mode
-        public static bool isFullScreen = true;
 
         //The window we'll be rendering to
         public static IntPtr gWindow = IntPtr.Zero;
@@ -153,7 +144,6 @@ namespace JumperGame
             SDL_ttf.TTF_CloseFont(Font);
             Font = IntPtr.Zero;
             
-            SoundHandler.Close();
             
             //Destroy window
             SDL.SDL_DestroyRenderer(gRenderer);
@@ -168,42 +158,6 @@ namespace JumperGame
             SDL.SDL_Quit();
         }
 
-        public static void changeWindowSize()
-        {
-            // Change screen size
-            isFullScreen = !isFullScreen;
-            if (isFullScreen)
-            {
-                SCREEN_WIDTH = MAX_SCREEN_WIDTH;
-                SCREEN_HEIGHT = MAX_SCREEN_HEIGHT;
-
-                // Set the window to fullscreen
-                SDL.SDL_SetWindowFullscreen(gWindow,
-                    (int)SDL.SDL_WindowFlags.SDL_WINDOW_FULLSCREEN_DESKTOP);
-
-            }
-
-            else
-            {
-                SCREEN_WIDTH = ALT_SCREEN_WIDTH;
-                SCREEN_HEIGHT = ALT_SCREEN_HEIGHT;
-
-                // calculate the middle of screen
-                int windowPosX = (MAX_SCREEN_WIDTH - ALT_SCREEN_WIDTH) / 2;
-                int windowPosY = (MAX_SCREEN_HEIGHT - ALT_SCREEN_HEIGHT) / 2;
-
-                // Set the window position
-                SDL.SDL_SetWindowPosition(gWindow, windowPosX, windowPosY);
-
-                SDL.SDL_SetWindowFullscreen(gWindow, (int)SDL.SDL_WindowFlags.SDL_WINDOW_RESIZABLE);
-            }
-
-
-            SDL.SDL_SetWindowSize(gWindow, SCREEN_WIDTH, SCREEN_HEIGHT);
-            
-            // Update the positions of the menu items
-            VisibleMenu?.UpdateMenuItemPositions();
-        }
 
         static int Main(string[] args)
         {
@@ -219,11 +173,7 @@ namespace JumperGame
             }
             else
             {
-                FileHandler fileHandler = new FileHandler();
-                success = fileHandler.getStatus();
 
-                SoundHandler.LoadMedia();
-                ScoreUI.LoadHighscore();
 
                 //src.EventHandler eventHandler = new src.EventHandler();
 
@@ -233,50 +183,15 @@ namespace JumperGame
                 }
                 else
                 {
-                    LevelManager.LoadLevels();
-                    // Add the menu items to the menu
-                    VisibleMenu = new MainMenu(gRenderer);
                     
+
                     while (!quit)
                     {
                         double previous = 0;
 
-                        ////////////////////////////////////// TEST AREA
-                        ///
                         reset = false;
-                        bgList.Clear();
-                        entityList.Clear();
-
-                        List<String> list = new List<String>();
-                        list.Add("NebulaBlue");
-                        list.Add("Stars");
-                        BackgroundObject bgo = new BackgroundObject(fileHandler.getTextureList(list));
-
-                        BackgroundObject bgo2 = bgo.copy(SCREEN_WIDTH * 2, 0, 1);
-                        BackgroundObject bgoStars = bgo.copy(0, 1, 2);
-                        BackgroundObject bgoStars2 = bgo.copy(SCREEN_WIDTH * 2, 1, 2);
-                        bgList.Add(bgo);
-                        bgList.Add(bgo2);
-                        bgList.Add(bgoStars);
-                        bgList.Add(bgoStars2);  //TODO in BGO reinstopfen
-
-                        list.Clear();
-
-                        list.Add("PlayerShip");
-                        list.Add("Bullet_move");
-                        list.Add("Player_shield");
-                        list.Add("Player_dmg1");
-                        list.Add("Player_dmg2");
-                        list.Add("Player_dmg3");
-                        Player arno = new Player(fileHandler.getTextureList(list));
-                        list.Clear();
-                                                        
-                        ////////////////////////////////////// TEST AREA
-                        ///
-                        entityList.Add(arno);
 
 
-                        //While application is running
                         while (!reset)
                         {
                             SDL.SDL_RenderClear(gRenderer);
@@ -288,74 +203,6 @@ namespace JumperGame
                             {
                                 elapsed = 5;
                             }
-                            elapsed = 8;
-                            switch (CurrentState)
-                            {
-                                case GameState.MAIN_MENU:
-                                case GameState.LEVEL_SELECT:
-                                case GameState.SETTINGS:
-                                case GameState.INSTRUCTIONS:
-                                case GameState.PAUSED:
-                                case GameState.GAME_OVER:
-                                case GameState.WIN:
-                                    
-                                    foreach (BackgroundObject backgroundObject in bgList)
-                                    {
-                                        backgroundObject.checkOutOfBounds();
-                                        backgroundObject.update(elapsed);
-                                    }
-                                    
-                                    VisibleMenu?.Render(gRenderer);
-                                    break;
-                            
-                                case GameState.IN_GAME:
-                                    VisibleMenu = null;
-                                    
-                                    entityList = CollisionHandler.checkCollision(entityList);
-
-                                    foreach (BackgroundObject backgroundObject in bgList)
-                                    {
-                                        backgroundObject.checkOutOfBounds();
-                                        backgroundObject.update(elapsed);
-                                    }
-                                    
-                                    ScoreUI.Update();
-                                    ScoreUI.DisplayHighscore(gRenderer);
-                                    
-                                    EnemyAmountUI.DisplayEnemyCount(gRenderer);
-
-                                    
-                                    LifeUI.DisplayLives(gRenderer);
-
-                                    foreach (Entity enti in entityList)
-                                    {
-                                        enti.update(elapsed);
-                                    }
-                                    
-                                    LevelManager.RunCurrentLevelLogic(elapsed, fileHandler, entityList);
-                                    
-                                    // eventHandler.updateList(entityList);
-                                    // eventHandler.timedEvent(elapsed, fileHandler);
-
-                                    break;
-                            }
-                            
-                            ////////////////////////////////////// TEST AREA
-                            (double x, double y, int direction, string command) = InputHandler.handleUserInput(elapsed);
-                            if (command == "shoot")
-                            {
-                                entityList.Add(arno.shoot(x, y, direction, elapsed));
-                            }
-                            else if (command == "move")
-                            {
-                                arno.vecX = x ;
-                                arno.vecY = y ;
-                                arno.angle = direction;
-                            }
-
-
-                            ////////////////////////////////////// TEST AREA
-                            //Update screen
                             SDL.SDL_RenderPresent(gRenderer);
                         }
                     }

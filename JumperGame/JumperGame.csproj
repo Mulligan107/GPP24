@@ -13,6 +13,7 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -25,7 +26,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -67,57 +67,78 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Sdl\SDL2_ttf.cs" />
-    <Compile Include="src\enteties\Bullet.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="src\enteties\Enemies\Dread.cs" />
-    <Compile Include="src\enteties\Enemies\Fighter.cs" />
-    <Compile Include="src\enteties\Enemies\Lasership.cs" />
-    <Compile Include="src\enteties\Enemies\Scout.cs" />
-    <Compile Include="src\enteties\Enemies\Sentry.cs" />
-    <Compile Include="src\enteties\Enemy.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="src\enteties\Entity.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="src\enteties\LivingEntity.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="src\enteties\Player.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="src\essentials\CollisionHandler.cs" />
+    <Compile Include="src\components\AudioComponent.cs" />
+    <Compile Include="src\components\CollisionsComponent.cs" />
+    <Compile Include="src\components\DrawComponent.cs" />
+    <Compile Include="src\components\GameObjectComponent.cs" />
+    <Compile Include="src\components\InputComponent.cs" />
+    <Compile Include="src\components\LevelComponent.cs" />
+    <Compile Include="src\components\PhysicsComponent.cs" />
+    <Compile Include="src\components\RenderingComponent.cs" />
+    <Compile Include="src\components\ResourceComponent.cs" />
+    <Compile Include="src\components\UiComponent.cs" />
     <Compile Include="src\essentials\LTexture.cs" />
     <Compile Include="src\essentials\LTimer.cs" />
     <Compile Include="src\essentials\Program.cs" />
-    <Compile Include="src\handler\EventHandler.cs" />
-    <Compile Include="src\handler\FileHandler.cs" />
-    <Compile Include="src\handler\InputHandler.cs" />
-    <Compile Include="src\handler\SoundHandler.cs" />
-    <Compile Include="src\level\Level.cs" />
-    <Compile Include="src\level\LevelManager.cs" />
-    <Compile Include="src\level\levels\Level3.cs" />
-    <Compile Include="src\level\levels\Level2.cs" />
-    <Compile Include="src\level\levels\Level1.cs" />
-    <Compile Include="src\menu\BackgroundObject.cs">
+    <Compile Include="oldSrc\enteties\Bullet.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="src\menu\GameOverMenu.cs" />
-    <Compile Include="src\menu\GameState.cs" />
-    <Compile Include="src\menu\InstructionsMenu.cs" />
-    <Compile Include="src\menu\LevelSelectMenu.cs" />
-    <Compile Include="src\menu\MainMenu.cs" />
-    <Compile Include="src\menu\Menu.cs">
+    <Compile Include="oldSrc\enteties\Enemies\Dread.cs" />
+    <Compile Include="oldSrc\enteties\Enemies\Fighter.cs" />
+    <Compile Include="oldSrc\enteties\Enemies\Lasership.cs" />
+    <Compile Include="oldSrc\enteties\Enemies\Scout.cs" />
+    <Compile Include="oldSrc\enteties\Enemies\Sentry.cs" />
+    <Compile Include="oldSrc\enteties\Enemy.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="src\menu\MenuItem.cs" />
-    <Compile Include="src\menu\PauseMenu.cs" />
-    <Compile Include="src\menu\SettingsMenu.cs" />
-    <Compile Include="src\menu\WinMenu.cs" />
-    <Compile Include="src\ui\EnemyAmountUI.cs" />
-    <Compile Include="src\ui\ScoreUI.cs" />
-    <Compile Include="src\ui\LifeUI.cs" />
+    <Compile Include="oldSrc\enteties\Entity.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="oldSrc\enteties\LivingEntity.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="oldSrc\enteties\Player.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="oldSrc\essentials\CollisionHandler.cs" />
+    <Compile Include="oldSrc\essentials\LTexture.cs" />
+    <Compile Include="oldSrc\essentials\LTimer.cs" />
+    <Compile Include="oldSrc\essentials\Program.cs" />
+    <Compile Include="oldSrc\handler\EventHandler.cs" />
+    <Compile Include="oldSrc\handler\FileHandler.cs" />
+    <Compile Include="oldSrc\handler\InputHandler.cs" />
+    <Compile Include="oldSrc\handler\SoundHandler.cs" />
+    <Compile Include="oldSrc\level\Level.cs" />
+    <Compile Include="oldSrc\level\LevelManager.cs" />
+    <Compile Include="oldSrc\level\levels\Level3.cs" />
+    <Compile Include="oldSrc\level\levels\Level2.cs" />
+    <Compile Include="oldSrc\level\levels\Level1.cs" />
+    <Compile Include="oldSrc\menu\BackgroundObject.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="oldSrc\menu\GameOverMenu.cs" />
+    <Compile Include="oldSrc\menu\GameState.cs" />
+    <Compile Include="oldSrc\menu\InstructionsMenu.cs" />
+    <Compile Include="oldSrc\menu\LevelSelectMenu.cs" />
+    <Compile Include="oldSrc\menu\MainMenu.cs" />
+    <Compile Include="oldSrc\menu\Menu.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="oldSrc\menu\MenuItem.cs" />
+    <Compile Include="oldSrc\menu\PauseMenu.cs" />
+    <Compile Include="oldSrc\menu\SettingsMenu.cs" />
+    <Compile Include="oldSrc\menu\WinMenu.cs" />
+    <Compile Include="oldSrc\ui\EnemyAmountUI.cs" />
+    <Compile Include="oldSrc\ui\ScoreUI.cs" />
+    <Compile Include="oldSrc\ui\LifeUI.cs" />
+    <Compile Include="src\manager\AudioManager.cs" />
+    <Compile Include="src\manager\CollisionManager.cs" />
+    <Compile Include="src\manager\DrawManager.cs" />
+    <Compile Include="src\manager\GameObjectManager.cs" />
+    <Compile Include="src\manager\InputManager.cs" />
+    <Compile Include="src\manager\LevelManager.cs" />
+    <Compile Include="src\manager\RescourceManager.cs" />
+    <Compile Include="src\manager\UIManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

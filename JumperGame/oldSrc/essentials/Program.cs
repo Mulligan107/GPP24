@@ -206,7 +206,7 @@ namespace ShooterGame
             VisibleMenu?.UpdateMenuItemPositions();
         }
 
-        static int Main(string[] args)
+        static int Main2(string[] args)
         {
             SDL.SDL_SetHint(SDL.SDL_HINT_WINDOWS_DISABLE_THREAD_NAMING, "1");
             Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
