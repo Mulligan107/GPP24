@@ -137,6 +137,7 @@
     <Compile Include="src\manager\GameObjectManager.cs" />
     <Compile Include="src\manager\InputManager.cs" />
     <Compile Include="src\manager\LevelManager.cs" />
+    <Compile Include="src\manager\RenderManager.cs" />
     <Compile Include="src\manager\RescourceManager.cs" />
     <Compile Include="src\manager\UIManager.cs" />
   </ItemGroup>
