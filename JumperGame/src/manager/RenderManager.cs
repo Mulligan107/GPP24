@@ -4,11 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JumperGame.src.components
+namespace JumperGame.src.manager
 {
-    class RenderingComponent
+    internal class RenderManager
     {
-
-        public RenderingComponent(Componente compi) { }
     }
 }

@@ -10,10 +10,6 @@ namespace ShooterGame.src
     class Dread : Enemy
     {
 
-        double sinValue = 0;
-        double radiusX = 20.0;
-        double radiusY = 5.0;
-
         public Dread(List<LTexture> textureList) : base(textureList)
         {
             /*

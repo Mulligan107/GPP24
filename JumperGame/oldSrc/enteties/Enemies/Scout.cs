@@ -9,10 +9,7 @@ namespace ShooterGame.src
 {
     class Scout : Enemy
     {
-
-        double s =  Program.SCREEN_WIDTH/Program.SCREEN_HEIGHT;
         double sinValue = 0;
-        double radiusX = 20.0;
         double radiusY = 5.0;
 
         public Scout(List<LTexture> textureList) : base(textureList)

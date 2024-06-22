@@ -51,7 +51,7 @@ namespace ShooterGame
         public int frame;
         public static int anzahlFrames;
         public int repeats;
-        public int choosenAnim;
+        public int choosenAnim = 0;
         public int animationSpeed = 1;
 
 
