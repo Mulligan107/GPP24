@@ -8,5 +8,9 @@ namespace JumperGame.src.manager
 {
     internal class GameObjectManager
     {
+        public bool Initialize()
+        {
+            return true; // or false
+        }
     }
 }

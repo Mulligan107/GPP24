@@ -9,6 +9,6 @@ namespace JumperGame.src.components
     class RenderingComponent
     {
 
-        public RenderingComponent(Componente compi) { }
+        public RenderingComponent() { }
     }
 }

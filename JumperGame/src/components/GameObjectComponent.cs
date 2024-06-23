@@ -18,9 +18,7 @@ namespace JumperGame.src.components
 
         internal void AddComponent(Component component)
         {
-            component.GameObjectComponent = this;
+            
         }
-
-
     }
 }
