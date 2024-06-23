@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="16" tileheight="16" infinite="0" nextlayerid="2" nextobjectid="1">
+ <tileset firstgid="1" source="Enviroment.tsx"/>
+ <tileset firstgid="257" source="coin.tsx"/>
+ <layer id="1" name="Tile Layer 1" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJzt0+0JwjAUheGbzBRwABUHUHEAdQNHsCM4gnua/CiEkNQG83EMJ/CQUgK9b6tGRIxnXmYA/uo9S+menK5Sq2VX7HnoHbXff++OEb5Hq9Vi/hG+B1FvSologDl+pWWcjt4z+LbWztpnzrzU0aPxaJ2s88JM/lxTYlb3f4mdr2UT7FfrZt1Xvlst8VlT92s5BLvzWDifmiv3fmmXYHee3vX8+wjnmoIzLTteEaqR2LO/SXW8/ww7sLADCzuwsAMLO7CwAws7sLADCzuwsAMLO7CwAws7sLADy2gdH5aEJTc=
+  </data>
+ </layer>
+</map>
