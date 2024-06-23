@@ -12,7 +12,6 @@ namespace JumperGame.src.components
         PhysicsComponent _physics;
         RenderingComponent _rendering;
         AudioComponent _audio;
-        InputComponent _input;
         CollisionsComponent _collision;
         ResourceComponent _resource;
 

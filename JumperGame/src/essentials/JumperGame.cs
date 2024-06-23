@@ -2,6 +2,7 @@
 using JumperGame.src.components;
 using JumperGame.src.components.testComponents;
 using JumperGame.src.manager;
+using JumperGame.systems;
 using SDL2;
 
 namespace JumperGame
@@ -11,35 +12,48 @@ namespace JumperGame
         private RenderManager _rendering;
         private PhysicsManager _physics;
         private AudioManager _audio;
-        private InputManager _input;
         private GameObjectManager _gameObjectManager;
-        private InputComponent _inputComponent;
+        
+        private ColorComponent _colorComponent;
+        
+        private InputSystem _inputSystem;
+        private ColorSystem _colorSystem;
+        private QuitSystem _quitSystem;
         
         public bool IsRunning;
 
-        public JumperGame(ColorComponent colorComponent)
-        {
-            _rendering = new RenderManager(colorComponent);
-            _physics = new PhysicsManager();
-            _audio = new AudioManager();
-            _input = new InputManager();
-            _gameObjectManager = new GameObjectManager();
-            
-            _inputComponent = new InputComponent(colorComponent, this);
-        }
-        
         static int Main(string[] args)
         {
             ColorComponent colorComponent = new ColorComponent();
+            
             JumperGame game = new JumperGame(colorComponent);
 
             // Start the game loop
             game.Run();
 
-            // Shutdown the game
-            game.Close();
-
             return 0;
+        }
+        
+        public JumperGame(ColorComponent colorComponent)
+        {
+            _colorComponent = colorComponent;
+            
+            _rendering = new RenderManager(_colorComponent);
+            _physics = new PhysicsManager();
+            _audio = new AudioManager();
+            _gameObjectManager = new GameObjectManager();
+            
+            InitializeSystems();
+        }
+        
+        private void InitializeSystems()
+        {
+            _inputSystem = new InputSystem();
+            _colorSystem = new ColorSystem(_colorComponent);
+            _quitSystem = new QuitSystem(this);
+
+            _inputSystem.KeyPressed += _colorSystem.ChangeColor;
+            _inputSystem.GameQuitRequested += _quitSystem.QuitGame;
         }
         
         public bool Initialize()
@@ -48,10 +62,9 @@ namespace JumperGame
             bool isRenderingInitSuccessful = _rendering.Initialize();
             bool isPhysicsInitSuccessful = _physics.Initialize();
             bool isAudioInitSuccessful = _audio.Initialize();
-            bool isInputInitSuccessful = _input.Initialize();
             bool isGameObjectManagerInitSuccessful = _gameObjectManager.Initialize();
             
-            if (!isRenderingInitSuccessful || !isPhysicsInitSuccessful || !isAudioInitSuccessful || !isInputInitSuccessful || !isGameObjectManagerInitSuccessful)
+            if (!isRenderingInitSuccessful || !isPhysicsInitSuccessful || !isAudioInitSuccessful || !isGameObjectManagerInitSuccessful)
             {
                 Console.WriteLine("Failed to initialize the game!");
                 Console.ReadLine();
@@ -76,7 +89,7 @@ namespace JumperGame
                     while (SDL.SDL_PollEvent(out e) != 0)
                     {
                         // Process the input events
-                        _inputComponent.ProcessInput(e);
+                        _inputSystem.ProcessInput(e);
                     }
                     
                     // Update the managers
@@ -87,16 +100,6 @@ namespace JumperGame
                     //_gameObjectManager.Update();
                 }
             }
-        }
-        
-        public void Close()
-        {
-            // Shutdown the managers
-            //_rendering.Close();
-            //_physics.Close();
-            //_audio.Close();
-            //_input.Close();
-            //_gameObjectManager.Close();
         }
     }
 }
