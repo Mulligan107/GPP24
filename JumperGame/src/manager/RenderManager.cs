@@ -37,10 +37,6 @@ namespace JumperGame.src.manager
         
         public void Update()
         {
-            SDL.SDL_SetHint(SDL.SDL_HINT_WINDOWS_DISABLE_THREAD_NAMING, "1");
-            Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
-            Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
-            
             SDL.SDL_RenderClear(gRenderer);
             SDL.SDL_SetRenderDrawColor(gRenderer, _colorComponent.CurrentColor.r, _colorComponent.CurrentColor.g, _colorComponent.CurrentColor.b, _colorComponent.CurrentColor.a);
             SDL.SDL_RenderPresent(gRenderer);
@@ -48,6 +44,10 @@ namespace JumperGame.src.manager
         
         public bool Initialize()
         {
+            SDL.SDL_SetHint(SDL.SDL_HINT_WINDOWS_DISABLE_THREAD_NAMING, "1");
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
+            Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
+            
             //Initialize SDL
             if (SDL.SDL_Init(SDL.SDL_INIT_VIDEO) < 0)
             {
