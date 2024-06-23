@@ -9,6 +9,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using JumperGame.src.components.testComponents;
 using SDL2;
+using System.Text.RegularExpressions;
+using System.Timers;
+using TiledCS;
+using System.Runtime.Remoting.Messaging;
 
 namespace JumperGame.src.manager
 {
@@ -28,18 +32,86 @@ namespace JumperGame.src.manager
         public static IntPtr gWindow = IntPtr.Zero;
         
         private ColorComponent _colorComponent;
+        LTexture tileTexEnvi = new LTexture();
+        LTexture tileTexCoin = new LTexture();
 
-        
+
         public RenderManager(ColorComponent colorComponent)
         {
             _colorComponent = colorComponent;
+            
         }
         
         public void Update()
         {
             SDL.SDL_RenderClear(gRenderer);
             SDL.SDL_SetRenderDrawColor(gRenderer, _colorComponent.CurrentColor.r, _colorComponent.CurrentColor.g, _colorComponent.CurrentColor.b, _colorComponent.CurrentColor.a);
-            SDL.SDL_RenderPresent(gRenderer);
+
+            var map = new TiledMap("src\\worlds\\testWorld.tmx");
+           // var tilesets = map.GetTiledTilesets("src\\tilesets\\"); // DO NOT forget the / at the end
+            var tileLayers = map.Layers.Where(x => x.type == TiledLayerType.TileLayer);
+
+            
+
+            foreach (var layer in tileLayers)
+            {
+                for (var y = 0; y < layer.height; y++)
+                {
+                    for (var x = 0; x < layer.width; x++)
+                    {
+                        var index = (y * layer.width) + x; // Assuming the default render order is used which is from right to bottom
+                        var gid = layer.data[index]; // The tileset tile index
+                        var tileX = (x * map.TileWidth);
+                        var tileY = (y * map.TileHeight);
+
+                        // Gid 0 is used to tell there is no tile set
+                        if (gid == 0)
+                        {
+                            continue;
+                        }
+
+                        // Helper method to fetch the right TieldMapTileset instance. 
+                        // This is a connection object Tiled uses for linking the correct tileset to the gid value using the firstgid property.
+                        var mapTileset = map.GetTiledMapTileset(gid);
+
+                        // Retrieve the actual tileset based on the firstgid property of the connection object we retrieved just now
+                       // var tileset = tilesets[mapTileset.firstgid];
+
+                        // Use the connection object as well as the tileset to figure out the source rectangle.
+                     //   var rect = map.GetSourceRect(mapTileset, tileset, gid);
+
+                        SDL.SDL_Rect destRect = new SDL.SDL_Rect { x = tileX, y = tileY, h = map.TileWidth, w = map.TileWidth };
+
+                        
+
+
+                        if (gid < 257)
+                        {
+                            int fucker = (gid)/16;
+                            
+
+                            int foo = 256 * fucker;
+
+                            SDL.SDL_Rect srcRect = new SDL.SDL_Rect { x = ((gid -1) * 16) - foo, y = fucker * 16 , h = map.TileWidth, w = map.TileWidth };
+                            SDL.SDL_RenderCopy(gRenderer, tileTexEnvi.getTexture(), ref srcRect, ref destRect);
+
+
+
+                           // Console.WriteLine("SRC: " + gid + " " + srcRect.x + " " + srcRect.y + " " + srcRect.h + " " + srcRect.w);
+                           // Console.WriteLine("DEST: " + gid + " " + destRect.x + " " + destRect.y + " " + destRect.h + " " + destRect.w);
+                        }
+                        else
+                        {
+                            SDL.SDL_Rect srcRect = new SDL.SDL_Rect { x = gid -256, y = 0, h = map.TileWidth, w = map.TileWidth };
+                            SDL.SDL_RenderCopy(gRenderer, tileTexCoin.getTexture(), ref srcRect, ref destRect);
+                        }
+
+                        // Render sprite at position tileX, tileY using the rect
+                    }
+                }
+            }
+
+                SDL.SDL_RenderPresent(gRenderer);
         }
         
         public bool Initialize()
@@ -118,6 +190,11 @@ namespace JumperGame.src.manager
                     }
                 }
             }
+
+            tileTexEnvi.loadFromFile("src\\tilesets/world_tileset.png");
+
+            tileTexCoin.loadFromFile("src\\tilesets/coin.png");
+
             return true;
         }
     }

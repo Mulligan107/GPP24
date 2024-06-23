@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using JumperGame.src.manager;
 using SDL2;
 
 namespace JumperGame
@@ -67,7 +68,7 @@ namespace JumperGame
                 SDL.SDL_SetColorKey(loadedSurface, (int)SDL.SDL_bool.SDL_TRUE, SDL.SDL_MapRGB(s.format, 0, 0xFF, 0xFF));
 
                 //Create texture from surface pixels
-                newTexture = SDL.SDL_CreateTextureFromSurface(Program.gRenderer, loadedSurface);
+                newTexture = SDL.SDL_CreateTextureFromSurface(RenderManager.gRenderer, loadedSurface);
                 if (newTexture == IntPtr.Zero)
                 {
                     Console.WriteLine("Unable to create texture from {0}! SDL Error: {1}", path, SDL.SDL_GetError());
@@ -140,11 +141,11 @@ namespace JumperGame
 
                 var myClip = clip.Value;
 
-                SDL.SDL_RenderCopyEx(Program.gRenderer, mTexture, ref myClip, ref renderQuad, angle, ref myCenter, flip);
+                SDL.SDL_RenderCopyEx(RenderManager.gRenderer, mTexture, ref myClip, ref renderQuad, angle, ref myCenter, flip);
                 return;
             }
 
-            SDL.SDL_RenderCopyEx(Program.gRenderer, mTexture, IntPtr.Zero, ref renderQuad, angle, ref myCenter, flip);
+            SDL.SDL_RenderCopyEx(RenderManager.gRenderer, mTexture, IntPtr.Zero, ref renderQuad, angle, ref myCenter, flip);
         }
         public void SetBlendMode(SDL.SDL_BlendMode blending)
         {
@@ -172,40 +173,5 @@ namespace JumperGame
             return mTextureName;
         }
 
- 
-
-        public bool loadFromRenderedText(string textureText, SDL.SDL_Color textColor)
-        {
-            //Get rid of preexisting texture
-            free();
-
-            //Render text surface
-            var textSurface = SDL_ttf.TTF_RenderText_Solid(Program.Font, textureText, textColor);
-            if (textSurface == IntPtr.Zero)
-            {
-                Console.WriteLine("Unable to render text surface! SDL_ttf Error: {0}", SDL.SDL_GetError());
-                return false;
-            }
-
-            //Create texture from surface pixels
-            mTexture = SDL.SDL_CreateTextureFromSurface(Program.gRenderer, textSurface);
-            if (mTexture == IntPtr.Zero)
-            {
-                Console.WriteLine("Unable to create texture from rendered text! SDL Error: {0}", SDL.SDL_GetError());
-                return false;
-            }
-
-            var s = Marshal.PtrToStructure<SDL.SDL_Surface>(textSurface);
-
-            //Get image dimensions
-            mWidth = s.w;
-            mHeight = s.h;
-
-            //Get rid of old surface
-            SDL.SDL_FreeSurface(textSurface);
-
-            //Return success
-            return true;
-        }
     }
 }

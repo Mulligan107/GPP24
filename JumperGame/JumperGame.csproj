@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -80,58 +80,6 @@
     <Compile Include="src\essentials\JumperGame.cs" />
     <Compile Include="src\essentials\LTexture.cs" />
     <Compile Include="src\essentials\LTimer.cs" />
-    <Compile Include="src\essentials\Program.cs" />
-    <Compile Include="oldSrc\enteties\Bullet.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="oldSrc\enteties\Enemies\Dread.cs" />
-    <Compile Include="oldSrc\enteties\Enemies\Fighter.cs" />
-    <Compile Include="oldSrc\enteties\Enemies\Lasership.cs" />
-    <Compile Include="oldSrc\enteties\Enemies\Scout.cs" />
-    <Compile Include="oldSrc\enteties\Enemies\Sentry.cs" />
-    <Compile Include="oldSrc\enteties\Enemy.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="oldSrc\enteties\Entity.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="oldSrc\enteties\LivingEntity.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="oldSrc\enteties\Player.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="oldSrc\essentials\CollisionHandler.cs" />
-    <Compile Include="oldSrc\essentials\LTexture.cs" />
-    <Compile Include="oldSrc\essentials\LTimer.cs" />
-    <Compile Include="oldSrc\essentials\Program.cs" />
-    <Compile Include="oldSrc\handler\EventHandler.cs" />
-    <Compile Include="oldSrc\handler\FileHandler.cs" />
-    <Compile Include="oldSrc\handler\InputHandler.cs" />
-    <Compile Include="oldSrc\handler\SoundHandler.cs" />
-    <Compile Include="oldSrc\level\Level.cs" />
-    <Compile Include="oldSrc\level\LevelManager.cs" />
-    <Compile Include="oldSrc\level\levels\Level3.cs" />
-    <Compile Include="oldSrc\level\levels\Level2.cs" />
-    <Compile Include="oldSrc\level\levels\Level1.cs" />
-    <Compile Include="oldSrc\menu\BackgroundObject.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="oldSrc\menu\GameOverMenu.cs" />
-    <Compile Include="oldSrc\menu\GameState.cs" />
-    <Compile Include="oldSrc\menu\InstructionsMenu.cs" />
-    <Compile Include="oldSrc\menu\LevelSelectMenu.cs" />
-    <Compile Include="oldSrc\menu\MainMenu.cs" />
-    <Compile Include="oldSrc\menu\Menu.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="oldSrc\menu\MenuItem.cs" />
-    <Compile Include="oldSrc\menu\PauseMenu.cs" />
-    <Compile Include="oldSrc\menu\SettingsMenu.cs" />
-    <Compile Include="oldSrc\menu\WinMenu.cs" />
-    <Compile Include="oldSrc\ui\EnemyAmountUI.cs" />
-    <Compile Include="oldSrc\ui\ScoreUI.cs" />
-    <Compile Include="oldSrc\ui\LifeUI.cs" />
     <Compile Include="src\manager\AudioManager.cs" />
     <Compile Include="src\manager\CollisionManager.cs" />
     <Compile Include="src\manager\DrawManager.cs" />
@@ -377,9 +325,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="src\tilesets\coin.tsx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </TypeScriptCompile>
     <TypeScriptCompile Include="src\tilesets\Enviroment.tsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </TypeScriptCompile>
