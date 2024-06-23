@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace JumperGame.src.manager
 {
-    internal class InputManager
+    class InputManager
     {
+        public bool Initialize()
+        {
+            return true; // or false
+        }
     }
 }

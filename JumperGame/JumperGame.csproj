@@ -76,7 +76,9 @@
     <Compile Include="src\components\PhysicsComponent.cs" />
     <Compile Include="src\components\RenderingComponent.cs" />
     <Compile Include="src\components\ResourceComponent.cs" />
+    <Compile Include="src\components\testComponents\ColorComponent.cs" />
     <Compile Include="src\components\UiComponent.cs" />
+    <Compile Include="src\essentials\JumperGame.cs" />
     <Compile Include="src\essentials\LTexture.cs" />
     <Compile Include="src\essentials\LTimer.cs" />
     <Compile Include="src\essentials\Program.cs" />
@@ -134,9 +136,11 @@
     <Compile Include="src\manager\AudioManager.cs" />
     <Compile Include="src\manager\CollisionManager.cs" />
     <Compile Include="src\manager\DrawManager.cs" />
+    <Compile Include="src\manager\FontManager.cs" />
     <Compile Include="src\manager\GameObjectManager.cs" />
     <Compile Include="src\manager\InputManager.cs" />
     <Compile Include="src\manager\LevelManager.cs" />
+    <Compile Include="src\manager\PhysicsManager.cs" />
     <Compile Include="src\manager\RenderManager.cs" />
     <Compile Include="src\manager\RescourceManager.cs" />
     <Compile Include="src\manager\UIManager.cs" />
