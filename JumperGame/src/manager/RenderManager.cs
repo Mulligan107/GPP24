@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using JumperGame.src.components.testComponents;
 using SDL2;
 
 namespace JumperGame.src.manager
@@ -25,6 +26,25 @@ namespace JumperGame.src.manager
         public static IntPtr gRenderer = IntPtr.Zero;
         //The window we'll be rendering to
         public static IntPtr gWindow = IntPtr.Zero;
+        
+        private ColorComponent _colorComponent;
+
+        
+        public RenderManager(ColorComponent colorComponent)
+        {
+            _colorComponent = colorComponent;
+        }
+        
+        public void Update()
+        {
+            SDL.SDL_SetHint(SDL.SDL_HINT_WINDOWS_DISABLE_THREAD_NAMING, "1");
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
+            Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
+            
+            SDL.SDL_RenderClear(gRenderer);
+            SDL.SDL_SetRenderDrawColor(gRenderer, _colorComponent.CurrentColor.r, _colorComponent.CurrentColor.g, _colorComponent.CurrentColor.b, _colorComponent.CurrentColor.a);
+            SDL.SDL_RenderPresent(gRenderer);
+        }
         
         public bool Initialize()
         {
@@ -99,17 +119,6 @@ namespace JumperGame.src.manager
                 }
             }
             return true;
-        }
-        
-        public void Update()
-        {
-            SDL.SDL_SetHint(SDL.SDL_HINT_WINDOWS_DISABLE_THREAD_NAMING, "1");
-            Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
-            Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
-            
-            SDL.SDL_RenderClear(gRenderer);
-            SDL.SDL_SetRenderDrawColor(gRenderer, 255, 0, 0, 255);
-            SDL.SDL_RenderPresent(gRenderer);
         }
     }
 }

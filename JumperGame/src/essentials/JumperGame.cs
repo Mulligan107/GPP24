@@ -1,21 +1,38 @@
 ﻿using System;
 using JumperGame.src.components;
+using JumperGame.src.components.testComponents;
 using JumperGame.src.manager;
+using SDL2;
 
 namespace JumperGame
 {
     public class JumperGame
     {
-        private RenderManager _rendering = new RenderManager();
-        private PhysicsManager _physics = new PhysicsManager();
-        private AudioManager _audio = new AudioManager();
-        private InputManager _input = new InputManager();
-        private GameObjectManager _gameObjectManager = new GameObjectManager();
+        private RenderManager _rendering;
+        private PhysicsManager _physics;
+        private AudioManager _audio;
+        private InputManager _input;
+        private GameObjectManager _gameObjectManager;
+        private InputComponent _inputComponent;
+        
+        public bool IsRunning;
+
+        public JumperGame(ColorComponent colorComponent)
+        {
+            _rendering = new RenderManager(colorComponent);
+            _physics = new PhysicsManager();
+            _audio = new AudioManager();
+            _input = new InputManager();
+            _gameObjectManager = new GameObjectManager();
+            
+            _inputComponent = new InputComponent(colorComponent, this);
+        }
         
         static int Main(string[] args)
         {
-            JumperGame game = new JumperGame();
-            
+            ColorComponent colorComponent = new ColorComponent();
+            JumperGame game = new JumperGame(colorComponent);
+
             // Start the game loop
             game.Run();
 
@@ -42,16 +59,26 @@ namespace JumperGame
             }
 
             // If all initializations were successful, return true
+            
             return true;
         }
         
         public void Run()
         {
+            IsRunning = true;
+            
             // Run the game loop
             if (Initialize())
             {
-                while (true)
+                SDL.SDL_Event e;
+                while (IsRunning)
                 {
+                    while (SDL.SDL_PollEvent(out e) != 0)
+                    {
+                        // Process the input events
+                        _inputComponent.ProcessInput(e);
+                    }
+                    
                     // Update the managers
                     _rendering.Update();
                     //_physics.Update();

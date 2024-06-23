@@ -76,6 +76,7 @@
     <Compile Include="src\components\PhysicsComponent.cs" />
     <Compile Include="src\components\RenderingComponent.cs" />
     <Compile Include="src\components\ResourceComponent.cs" />
+    <Compile Include="src\components\testComponents\ColorComponent.cs" />
     <Compile Include="src\components\UiComponent.cs" />
     <Compile Include="src\essentials\JumperGame.cs" />
     <Compile Include="src\essentials\LTexture.cs" />
