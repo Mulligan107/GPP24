@@ -789,7 +789,6 @@ namespace TiledCSPlus
         /// <returns>A dictionary where the key represents the firstGid of the associated TiledMapTileset and the value the TiledTileset object</returns>
         public Dictionary<int, TiledTileset> GetTiledTilesets(string src)
         {
-            Console.WriteLine(src);
             var tilesets = new Dictionary<int, TiledTileset>();
             var info = new FileInfo(src);
             var srcFolder = info.Directory;

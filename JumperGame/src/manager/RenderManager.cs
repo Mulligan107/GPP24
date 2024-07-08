@@ -89,7 +89,19 @@ namespace JumperGame.src.manager
 
                         SDL.SDL_Rect srcRect = new SDL.SDL_Rect { x = rect.X, y = rect.Y , h = rect.Height, w = rect.Width };
 
-                        SDL.SDL_RenderCopy(gRenderer, tileTexEnvi.getTexture(), ref srcRect, ref destRect);
+
+                        //Console.WriteLine(tileset.Name + ": X: " + rect.X + " Y: " + rect.Y+ " W: " + rect.Width + " H : " + rect.Height);
+
+                        switch (tileset.Name)
+                        {
+                            case "Enviroment":
+                                SDL.SDL_RenderCopy(gRenderer, tileTexEnvi.getTexture(), ref srcRect, ref destRect);
+                                break;
+                            case "coin":
+                                SDL.SDL_RenderCopy(gRenderer, tileTexCoin.getTexture(), ref srcRect, ref destRect);
+                                break;
+                        }
+
                         //SDL.SDL_RenderCopy(gRenderer, tileTexCoin.getTexture(), ref srcRect, ref destRect);
 
                         // Render sprite at position tileX, tileY using the rect
