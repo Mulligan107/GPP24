@@ -74,13 +74,24 @@ namespace JumperGame
         public void Run()
         {
             IsRunning = true;
-    
+          
+            var timerStart = SDL.SDL_GetPerformanceCounter() / (double)SDL.SDL_GetPerformanceFrequency();
+            var timerNew = timerStart;
+          
             // Run the game loop
             if (InitializeSdl())
             {
                 SDL.SDL_Event e;
                 while (IsRunning)
                 {
+
+                    var timerCurrent = SDL.SDL_GetPerformanceCounter() / (double)SDL.SDL_GetPerformanceFrequency();
+                    timerCurrent = timerCurrent- timerStart;
+
+                    var deltaTime = (SDL.SDL_GetPerformanceCounter() - timerNew) / (double)SDL.SDL_GetPerformanceFrequency();
+                    timerNew = SDL.SDL_GetPerformanceCounter();
+
+
                     while (SDL.SDL_PollEvent(out e) != 0)
                     {
                         // Process the input events
@@ -91,7 +102,7 @@ namespace JumperGame
                     var entities = _entitySystem.GetAllEntities();
 
                     // Update the managers
-                    _rendering.Update();
+                    _rendering.Update(deltaTime, timerCurrent);
                     _physicsSystem.Update(entities/*, deltaTime*/);
                     
                     //_entitySystem.Update(deltaTime);

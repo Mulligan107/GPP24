@@ -4,7 +4,13 @@ namespace JumperGame.src.components.testComponents
 {
     public class ColorComponent
     {
-        public SDL.SDL_Color CurrentColor { get; set; }
+       
+
+        public SDL.SDL_Color CurrentColor {
+            
+            get;
+            set; 
+        }
 
     }
 }

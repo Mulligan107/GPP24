@@ -1,4 +1,4 @@
-﻿using JumperGame.src.components;
+﻿using JumperGame;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,6 +12,7 @@ using SDL2;
 using System.Text.RegularExpressions;
 using System.Timers;
 using TiledCSPlus;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace JumperGame.src.manager
 {
@@ -31,23 +32,28 @@ namespace JumperGame.src.manager
         public static IntPtr gWindow = IntPtr.Zero;
         
         private ColorComponent _colorComponent;
+
         LTexture tileTexEnvi = new LTexture();
         LTexture tileTexCoin = new LTexture();
 
+        LTexture timerTexture = new LTexture();
+
+        public static IntPtr Font = IntPtr.Zero;
 
         public RenderManager(ColorComponent colorComponent)
         {
             _colorComponent = colorComponent;
-            
+            _colorComponent.CurrentColor = new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 };
+
         }
         
-        public void Update()
+        public void Update(double dt, double timeElapsed)
         {
             SDL.SDL_RenderClear(gRenderer);
             SDL.SDL_SetRenderDrawColor(gRenderer, _colorComponent.CurrentColor.r, _colorComponent.CurrentColor.g, _colorComponent.CurrentColor.b, _colorComponent.CurrentColor.a);
 
             var map = new TiledMap("src\\worlds\\testWorld.tmx");
-            var tilesets = map.GetTiledTilesets("src/worlds/"); // DO NOT forget the / at the end
+            var tilesets = map.GetTiledTilesets("src/tilesets/"); // DO NOT forget the / at the end
             var tileLayers = map.Layers.Where(x => x.Type == TiledLayerType.TileLayer);
 
             
@@ -74,45 +80,40 @@ namespace JumperGame.src.manager
                         var mapTileset = map.GetTiledMapTileset(gid);
 
                         // Retrieve the actual tileset based on the firstgid property of the connection object we retrieved just now
-                       // var tileset = tilesets[mapTileset.firstgid];
+                        var tileset = tilesets[mapTileset.FirstGid];
 
                         // Use the connection object as well as the tileset to figure out the source rectangle.
-                     //   var rect = map.GetSourceRect(mapTileset, tileset, gid);
+                        var rect = map.GetSourceRect(mapTileset, tileset, gid);
 
                         SDL.SDL_Rect destRect = new SDL.SDL_Rect { x = tileX, y = tileY, h = map.TileWidth, w = map.TileWidth };
 
-                        
+                        SDL.SDL_Rect srcRect = new SDL.SDL_Rect { x = rect.X, y = rect.Y , h = rect.Height, w = rect.Width };
 
-
-                        if (gid < 257)
-                        {
-                            int fucker = (gid)/16;
-                            
-
-                            int foo = 256 * fucker; //kekw
-
-                            SDL.SDL_Rect srcRect = new SDL.SDL_Rect { x = ((gid -1) * 16) - foo, y = fucker * 16 , h = map.TileWidth, w = map.TileWidth };
-                            SDL.SDL_RenderCopy(gRenderer, tileTexEnvi.getTexture(), ref srcRect, ref destRect);
-
-
-
-                           // Console.WriteLine("SRC: " + gid + " " + srcRect.x + " " + srcRect.y + " " + srcRect.h + " " + srcRect.w);
-                           // Console.WriteLine("DEST: " + gid + " " + destRect.x + " " + destRect.y + " " + destRect.h + " " + destRect.w);
-                        }
-                        else
-                        {
-                            SDL.SDL_Rect srcRect = new SDL.SDL_Rect { x = gid -256, y = 0, h = map.TileWidth, w = map.TileWidth };
-                            SDL.SDL_RenderCopy(gRenderer, tileTexCoin.getTexture(), ref srcRect, ref destRect);
-                        }
+                        SDL.SDL_RenderCopy(gRenderer, tileTexEnvi.getTexture(), ref srcRect, ref destRect);
+                        //SDL.SDL_RenderCopy(gRenderer, tileTexCoin.getTexture(), ref srcRect, ref destRect);
 
                         // Render sprite at position tileX, tileY using the rect
                     }
                 }
             }
 
-                SDL.SDL_RenderPresent(gRenderer);
+            timerTexture = changeText(timerTexture,"Delta: " + dt.ToString("F3") + "\n Timer: " + timeElapsed.ToString("F3"));
+
+
+
+            timerTexture.render(10,10);
+
+            
+            SDL.SDL_RenderPresent(gRenderer);
         }
-        
+
+
+        static LTexture changeText(LTexture Ltex, String text)
+        {
+            Ltex.loadFromRenderedText(text, new SDL.SDL_Color());
+            return Ltex;
+        }
+
         public bool Initialize()
         {
             SDL.SDL_SetHint(SDL.SDL_HINT_WINDOWS_DISABLE_THREAD_NAMING, "1");
@@ -186,12 +187,19 @@ namespace JumperGame.src.manager
                                 SDL.SDL_GetError());
                             return false;
                         }
+
+                        //Initialize SDL_ttf
+                        if (SDL_ttf.TTF_Init() == -1)
+                        {
+                            Console.WriteLine("SDL_ttf could not initialize! SDL_ttf Error: {0}", SDL.SDL_GetError());
+                            return false;
+                        }
                     }
                 }
             }
 
             tileTexEnvi.loadFromFile("src\\tilesets/world_tileset.png");
-
+            Font = SDL_ttf.TTF_OpenFont("lazy.ttf", 28);
             tileTexCoin.loadFromFile("src\\tilesets/coin.png");
 
             return true;

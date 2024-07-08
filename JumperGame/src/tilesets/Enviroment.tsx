@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tileset version="1.10" tiledversion="1.10.2" name="Enviroment" tilewidth="16" tileheight="16" tilecount="256" columns="16">
- <image source="sprites/world_tileset.png" trans="ff00ff" width="256" height="256"/>
+ <image source="world_tileset.png" trans="ff00ff" width="256" height="256"/>
  <tile id="0">
   <objectgroup draworder="index" id="3">
    <object id="2" x="0" y="0" width="16" height="16"/>

@@ -168,6 +168,40 @@ namespace JumperGame
         {
             return mTexture;
         }
+
+        public bool loadFromRenderedText(string textureText, SDL.SDL_Color textColor)
+        {
+            //Get rid of preexisting texture
+            free();
+
+            //Render text surface
+            var textSurface = SDL_ttf.TTF_RenderText_Solid(RenderManager.Font, textureText, textColor);
+            if (textSurface == IntPtr.Zero)
+            {
+                Console.WriteLine("Unable to render text surface! SDL_ttf Error: {0}", SDL.SDL_GetError());
+                return false;
+            }
+
+            //Create texture from surface pixels
+            mTexture = SDL.SDL_CreateTextureFromSurface(RenderManager.gRenderer, textSurface);
+            if (mTexture == IntPtr.Zero)
+            {
+                Console.WriteLine("Unable to create texture from rendered text! SDL Error: {0}", SDL.SDL_GetError());
+                return false;
+            }
+
+            var s = Marshal.PtrToStructure<SDL.SDL_Surface>(textSurface);
+
+            //Get image dimensions
+            mWidth = s.w;
+            mHeight = s.h;
+
+            //Get rid of old surface
+            SDL.SDL_FreeSurface(textSurface);
+
+            //Return success
+            return true;
+        }
         public String getName()
         {
             return mTextureName;

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tileset version="1.10" tiledversion="1.10.2" name="coin" tilewidth="16" tileheight="16" tilecount="12" columns="12">
- <image source="sprites/coin.png" trans="ff00ff" width="192" height="16"/>
+ <image source="coin.png" trans="ff00ff" width="192" height="16"/>
  <tile id="0">
   <objectgroup draworder="index" id="2">
    <object id="1" x="3" y="3" width="10" height="10"/>
