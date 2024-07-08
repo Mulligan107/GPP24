@@ -135,14 +135,10 @@
     <Content Include="src\tilesets\coin.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="src\tilesets\Enviroment.tsx" />
+    <Content Include="src\tilesets\Enviroment.tsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="src\tilesets\world_tileset.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="src\worlds\coin.tsx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="src\worlds\Enviroment.tsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -167,8 +163,6 @@
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="ppy.SDL2-CS" Version="1.0.82" />
     <PackageReference Include="sdl2" Version="2.0.5" />
-    <PackageReference Include="sdl2_mixer.nuget" Version="2.8.0" />
-    <PackageReference Include="sdl2_ttf.nuget" Version="2.22.0" />
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
     <PackageReference Include="ZstdSharp.Port" Version="0.8.1" />
   </ItemGroup>
@@ -221,6 +215,8 @@
     <NativeSayersSDL2CoreLibs Remove="smpeg2.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="src\tilesets\coin.tsx" />
+    <Content Include="src\tilesets\coin.tsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 </Project>
