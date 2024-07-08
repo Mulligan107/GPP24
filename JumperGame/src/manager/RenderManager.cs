@@ -41,10 +41,16 @@ namespace JumperGame.src.manager
 
         public static IntPtr Font = IntPtr.Zero;
 
+        TiledMap map = new TiledMap("src\\worlds\\testWorld.tmx");
+        Dictionary<int, TiledTileset> tilesets;
+        
+
         public RenderManager(ColorComponent colorComponent)
         {
             _colorComponent = colorComponent;
             _colorComponent.CurrentColor = new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 };
+            tilesets = map.GetTiledTilesets("src/tilesets/"); // DO NOT forget the / at the end
+            
 
         }
         
@@ -53,11 +59,7 @@ namespace JumperGame.src.manager
             SDL.SDL_RenderClear(gRenderer);
             SDL.SDL_SetRenderDrawColor(gRenderer, _colorComponent.CurrentColor.r, _colorComponent.CurrentColor.g, _colorComponent.CurrentColor.b, _colorComponent.CurrentColor.a);
 
-            var map = new TiledMap("src\\worlds\\testWorld.tmx");
-            var tilesets = map.GetTiledTilesets("src/tilesets/"); // DO NOT forget the / at the end
             var tileLayers = map.Layers.Where(x => x.Type == TiledLayerType.TileLayer);
-
-            
 
             foreach (var layer in tileLayers)
             {
@@ -133,7 +135,7 @@ namespace JumperGame.src.manager
 
         static SDL.SDL_Rect changeRectSize(ref SDL.SDL_Rect rect, int num)
         {
-            SDL.SDL_Rect shrunkRect = new SDL.SDL_Rect { x = rect.x - rect.w / 2 , y = rect.y - rect.h +5, w = rect.w * num, h = rect.h * num };
+            SDL.SDL_Rect shrunkRect = new SDL.SDL_Rect { x = rect.x - rect.w / 2 , y = rect.y - rect.h +5, w = rect.w * num, h = rect.h * num }; // TODO +5 rausnehmen
             return shrunkRect;
         }
 
