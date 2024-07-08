@@ -11,8 +11,7 @@ using JumperGame.src.components.testComponents;
 using SDL2;
 using System.Text.RegularExpressions;
 using System.Timers;
-using TiledCS;
-using System.Runtime.Remoting.Messaging;
+using TiledCSPlus;
 
 namespace JumperGame.src.manager
 {
@@ -48,19 +47,19 @@ namespace JumperGame.src.manager
             SDL.SDL_SetRenderDrawColor(gRenderer, _colorComponent.CurrentColor.r, _colorComponent.CurrentColor.g, _colorComponent.CurrentColor.b, _colorComponent.CurrentColor.a);
 
             var map = new TiledMap("src\\worlds\\testWorld.tmx");
-           // var tilesets = map.GetTiledTilesets("src\\tilesets\\"); // DO NOT forget the / at the end
-            var tileLayers = map.Layers.Where(x => x.type == TiledLayerType.TileLayer);
+            var tilesets = map.GetTiledTilesets("src/worlds/"); // DO NOT forget the / at the end
+            var tileLayers = map.Layers.Where(x => x.Type == TiledLayerType.TileLayer);
 
             
 
             foreach (var layer in tileLayers)
             {
-                for (var y = 0; y < layer.height; y++)
+                for (var y = 0; y < layer.Height; y++)
                 {
-                    for (var x = 0; x < layer.width; x++)
+                    for (var x = 0; x < layer.Width; x++)
                     {
-                        var index = (y * layer.width) + x; // Assuming the default render order is used which is from right to bottom
-                        var gid = layer.data[index]; // The tileset tile index
+                        var index = (y * layer.Width) + x; // Assuming the default render order is used which is from right to bottom
+                        var gid = layer.Data[index]; // The tileset tile index
                         var tileX = (x * map.TileWidth);
                         var tileY = (y * map.TileHeight);
 

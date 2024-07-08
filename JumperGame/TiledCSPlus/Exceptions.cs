@@ -1,6 +1,6 @@
 using System;
 
-namespace TiledCS
+namespace TiledCSPlus
 {
     /// <summary>
     /// Represents an exception only thrown by TiledCS
@@ -13,8 +13,8 @@ namespace TiledCS
         /// <param name="message">The exception message</param>
         public TiledException(string message) : base(message)
         {
-            
         }
+
         /// <summary>
         /// Returns an instance of TiledException
         /// </summary>
@@ -22,7 +22,6 @@ namespace TiledCS
         /// <param name="inner">The inner exception</param>
         public TiledException(string message, Exception inner) : base(message, inner)
         {
-            
         }
     }
 }

@@ -1,18 +1,7 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{196B7672-43C2-420D-ADDB-76DF60415608}</ProjectGuid>
+    <TargetFramework>net8.0</TargetFramework>
     <OutputType>Exe</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>JumperGame</RootNamespace>
-    <AssemblyName>JumperGame</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <TargetFrameworkProfile />
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
@@ -28,227 +17,68 @@
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <AssemblyTitle>06</AssemblyTitle>
+    <Product>06</Product>
+    <Copyright>Copyright ©  2017</Copyright>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>x86</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Sdl\SDL2.cs" />
-    <Compile Include="Sdl\SDL2_image.cs" />
-    <Compile Include="Sdl\SDL2_mixer.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="Sdl\SDL2_ttf.cs" />
-    <Compile Include="src\components\AudioComponent.cs" />
-    <Compile Include="src\components\CollisionsComponent.cs" />
-    <Compile Include="src\components\DrawComponent.cs" />
-    <Compile Include="src\components\GameObjectComponent.cs" />
-    <Compile Include="src\components\LevelComponent.cs" />
-    <Compile Include="src\components\PhysicsComponent.cs" />
-    <Compile Include="src\components\RenderingComponent.cs" />
-    <Compile Include="src\components\ResourceComponent.cs" />
-    <Compile Include="src\components\testComponents\ColorComponent.cs" />
-    <Compile Include="src\components\UiComponent.cs" />
-    <Compile Include="src\essentials\JumperGame.cs" />
-    <Compile Include="src\essentials\LTexture.cs" />
-    <Compile Include="src\essentials\LTimer.cs" />
-    <Compile Include="src\manager\AudioManager.cs" />
-    <Compile Include="src\manager\CollisionManager.cs" />
-    <Compile Include="src\manager\DrawManager.cs" />
-    <Compile Include="src\manager\FontManager.cs" />
-    <Compile Include="src\manager\GameObjectManager.cs" />
-    <Compile Include="src\manager\LevelManager.cs" />
-    <Compile Include="src\manager\PhysicsManager.cs" />
-    <Compile Include="src\manager\RenderManager.cs" />
-    <Compile Include="src\manager\RescourceManager.cs" />
-    <Compile Include="src\manager\UIManager.cs" />
-    <Compile Include="src\systems\ColorSystem.cs" />
-    <Compile Include="src\systems\InputSystem.cs" />
-    <Compile Include="src\systems\QuitSystem.cs" />
-    <Compile Include="TiledCS\Enums.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="TiledCS\Exceptions.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="TiledCS\Extensions.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="TiledCS\TiledMap.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="TiledCS\TiledModels.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="TiledCS\TiledTileset.cs">
+    <Compile Update="Sdl\SDL2_mixer.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-    <None Include="lazy.ttf">
+    <None Update="lazy.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="src\worlds\testWorld.tmx">
+    <None Update="libFLAC-8.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="libjpeg-9.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="libmikmod-2.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="libmodplug-1.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="libogg-0.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="libpng16-16.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="libtiff-5.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="libvorbis-0.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="libvorbisfile-3.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="libwebp-4.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="smpeg2.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="src\worlds\testWorld.tmx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="zlib1.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="imgs\Bullet_move.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="imgs\Dread\Dread.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="imgs\Dread\Dread_bullet.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="imgs\Dread\Dread_death.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="imgs\Dread\Dread_shield.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="imgs\Dread\Ray.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="imgs\Fighter\Fighter.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="imgs\Fighter\Fighter_death.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="imgs\Fighter\Fighterrand.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="imgs\Fighter\Fighter_shield.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="imgs\Fighter\Fighter_bullet.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="imgs\hamter.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="imgs\Lasership\Lasership.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="imgs\Lasership\Lasership_death.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="imgs\Lasership\Lasership_shield.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="imgs\Lasership\Lasership_bullet.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="imgs\Menu\Back.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="imgs\Menu\Level1.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="imgs\Menu\Level2.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="imgs\Menu\Level3.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="imgs\Menu\quit.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="imgs\Menu\settings.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="imgs\Menu\start.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="imgs\NebulaBlue.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="imgs\PlayerShip.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="imgs\Fighter\Ray_spawn.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="imgs\Player_dmg1.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="imgs\Player_dmg2.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="imgs\Player_dmg3.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="imgs\Player_shield.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="imgs\Scout\Scout.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="imgs\Scout\Scout_death.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="imgs\Sentry\Sentry_shield.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="imgs\Sentry\Sentry_bullet.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="imgs\Sentry\Sentry_spawn.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="imgs\Sentry\Sentry.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="imgs\Sentry\Sentry_death.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="imgs\spacebg.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="imgs\Stars.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="imgs\tes2.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="imgs\Ritter1.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="libfreetype-6.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="libpng16-16.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="MegaManFont.ttf">
@@ -257,10 +87,10 @@
     <Content Include="SDL2.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="SDL2_image.dll">
+    <Content Include="SDL2_mixer.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="SDL2_mixer.dll">
+    <Content Include="SDL2_image.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="SDL2_ttf.dll">
@@ -305,10 +135,14 @@
     <Content Include="src\tilesets\coin.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="src\tilesets\Enviroment.tsx" />
     <Content Include="src\tilesets\world_tileset.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="zlib1.dll">
+    <Content Include="src\worlds\coin.tsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="src\worlds\Enviroment.tsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -329,12 +163,64 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </TypeScriptCompile>
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="ppy.SDL2-CS" Version="1.0.82" />
+    <PackageReference Include="sdl2" Version="2.0.5" />
+    <PackageReference Include="sdl2_mixer.nuget" Version="2.8.0" />
+    <PackageReference Include="sdl2_ttf.nuget" Version="2.22.0" />
+    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
+    <PackageReference Include="ZstdSharp.Port" Version="0.8.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="C:\Users\kawab\.nuget\packages\sayers.sdl2.core\1.0.11\build\win_x64\libpng16-16.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="C:\Users\kawab\.nuget\packages\sayers.sdl2.core\1.0.11\build\win_x64\SDL2_image.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="C:\Users\kawab\.nuget\packages\sayers.sdl2.core\1.0.11\build\win_x64\zlib1.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <NativeSayersSDL2CoreLibs Remove="libjpeg-9.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <NativeSayersSDL2CoreLibs Remove="libpng16-16.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <NativeSayersSDL2CoreLibs Remove="libtiff-5.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <NativeSayersSDL2CoreLibs Remove="libwebp-4.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <NativeSayersSDL2CoreLibs Remove="SDL2_image.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <NativeSayersSDL2CoreLibs Remove="zlib1.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <NativeSayersSDL2CoreLibs Remove="libFLAC-8.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <NativeSayersSDL2CoreLibs Remove="libmikmod-2.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <NativeSayersSDL2CoreLibs Remove="libmodplug-1.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <NativeSayersSDL2CoreLibs Remove="libogg-0.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <NativeSayersSDL2CoreLibs Remove="libvorbis-0.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <NativeSayersSDL2CoreLibs Remove="libvorbisfile-3.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <NativeSayersSDL2CoreLibs Remove="smpeg2.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="src\tilesets\coin.tsx" />
+  </ItemGroup>
 </Project>
