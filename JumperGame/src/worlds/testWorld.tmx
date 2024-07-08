@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="16" tileheight="16" infinite="0" nextlayerid="3" nextobjectid="1">
- <tileset firstgid="1" source="Enviroment.tsx"/>
- <tileset firstgid="257" source="coin.tsx"/>
+ <tileset firstgid="1" source="../tilesets/Enviroment.tsx"/>
+ <tileset firstgid="257" source="../tilesets/coin.tsx"/>
+ <tileset firstgid="269" source="../tilesets/knight.tsx"/>
  <layer id="2" name="Background" width="50" height="50">
   <data encoding="base64" compression="zlib">
    eJztz7EJAAAIwDD/H8WDvUHQQUigBzQC7uVCNciHDx8+fPjw4cOHDx8+vn8AAAAAAABzDQrdEP4=
@@ -9,7 +10,7 @@
  </layer>
  <layer id="1" name="Tile Layer 1" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJzt1uENgjAQhuHCBo7gFA6gxgHUMIA4gbqBjMAI7un9aJOGlFBs6RHzPsmX/oDcXUMhGAOs215ykBy1B0l0llwkV+1BEt0kreSuPUiih+QpeWkPMlPtxXlLOp1xktUmvCfktdMeIJOTXafOShVRq4uos5TGrqH+VczwHs33J7b3JqJOaC3l135jz0rrXMX23Waul5vfN8e3aw37cN+uue/3WL2S/L7N4NrUfty/iX9fyX30NtVC6QdZyqdwAAAAAAAAAAD4B19y1h4l
+   eJzt1NENgjAQxvHCuw+O4BQOoMYB1DAAOoG6gR2BEdzTM4GkIUWLbTli/r/kSx8gd9fQYgwwbxvJVrLTHiTSQXKUnLQHiVRLzpKL9iCRrpKb5K49yEilk85DYnXGiVYa/56Q1lp7gET27frtrBQBtWxAnVyqdvX1L0KGd2jen9Dey4A6vnUqv/Yb+lZa5yq07ypxvdTcvin+XXPYR/fvGnu/h+pNye1b9Z6997P4sCfrvOerl1vTpsiUppdcnhMHAAAAAAAAAIB/8ALNnB4z
   </data>
  </layer>
 </map>

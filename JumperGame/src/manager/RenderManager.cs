@@ -35,6 +35,7 @@ namespace JumperGame.src.manager
 
         LTexture tileTexEnvi = new LTexture();
         LTexture tileTexCoin = new LTexture();
+        LTexture tileTexKnight = new LTexture();
 
         LTexture timerTexture = new LTexture();
 
@@ -100,6 +101,10 @@ namespace JumperGame.src.manager
                             case "coin":
                                 SDL.SDL_RenderCopy(gRenderer, tileTexCoin.getTexture(), ref srcRect, ref destRect);
                                 break;
+                            case "knight":
+                                destRect = changeRectSize(ref destRect, 2);
+                                SDL.SDL_RenderCopy(gRenderer, tileTexKnight.getTexture(), ref srcRect, ref destRect);
+                                break;
                         }
 
                         //SDL.SDL_RenderCopy(gRenderer, tileTexCoin.getTexture(), ref srcRect, ref destRect);
@@ -124,6 +129,12 @@ namespace JumperGame.src.manager
         {
             Ltex.loadFromRenderedText(text, new SDL.SDL_Color());
             return Ltex;
+        }
+
+        static SDL.SDL_Rect changeRectSize(ref SDL.SDL_Rect rect, int num)
+        {
+            SDL.SDL_Rect shrunkRect = new SDL.SDL_Rect { x = rect.x - rect.w / 2 , y = rect.y - rect.h +5, w = rect.w * num, h = rect.h * num };
+            return shrunkRect;
         }
 
         public bool Initialize()
@@ -213,6 +224,7 @@ namespace JumperGame.src.manager
             tileTexEnvi.loadFromFile("src\\tilesets/world_tileset.png");
             Font = SDL_ttf.TTF_OpenFont("lazy.ttf", 28);
             tileTexCoin.loadFromFile("src\\tilesets/coin.png");
+            tileTexKnight.loadFromFile("src\\tilesets/knight.png");
 
             return true;
         }

@@ -148,6 +148,12 @@
     <Content Include="src\tilesets\Enviroment.tsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="src\tilesets\knight.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="src\tilesets\knight.tsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="src\tilesets\world_tileset.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -184,6 +190,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="C:\Users\kawab\.nuget\packages\sayers.sdl2.core\1.0.11\build\win_x64\zlib1.dll" />
+    <None Remove="src\tilesets\knight.png" />
+    <None Remove="src\tilesets\knight.tsx" />
   </ItemGroup>
   <ItemGroup>
     <NativeSayersSDL2CoreLibs Remove="libjpeg-9.dll" />
