@@ -92,7 +92,6 @@ namespace JumperGame.src.manager
                         SDL.SDL_RenderCopy(gRenderer, tileTexEnvi.getTexture(), ref srcRect, ref destRect);
                         //SDL.SDL_RenderCopy(gRenderer, tileTexCoin.getTexture(), ref srcRect, ref destRect);
 
-
                         // Render sprite at position tileX, tileY using the rect
                     }
                 }
