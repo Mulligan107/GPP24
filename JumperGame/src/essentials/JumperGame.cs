@@ -9,45 +9,41 @@ namespace JumperGame
 {
     public class JumperGame
     {
+        private entitySystem _entitySystem;
         private RenderManager _rendering;
-        private PhysicsManager _physics;
         private AudioManager _audio;
-        private GameObjectManager _gameObjectManager;
         
-        private ColorComponent _colorComponent;
-        
+        private PhysicsSystem _physicsSystem;
         private InputSystem _inputSystem;
         private ColorSystem _colorSystem;
         private QuitSystem _quitSystem;
+        
+        private ColorComponent _colorComponent;
         
         public bool IsRunning;
 
         static int Main(string[] args)
         {
-            ColorComponent colorComponent = new ColorComponent();
+            JumperGame game = new JumperGame();
             
-            JumperGame game = new JumperGame(colorComponent);
-
+            //Initialize the game
+            game.InitializeSystems();
+            
             // Start the game loop
             game.Run();
 
             return 0;
         }
         
-        public JumperGame(ColorComponent colorComponent)
-        {
-            _colorComponent = colorComponent;
-            
-            _rendering = new RenderManager(_colorComponent);
-            _physics = new PhysicsManager();
-            _audio = new AudioManager();
-            _gameObjectManager = new GameObjectManager();
-            
-            InitializeSystems();
-        }
-        
         private void InitializeSystems()
         {
+            _colorComponent = new ColorComponent();
+            
+            _entitySystem = new entitySystem();
+            _rendering = new RenderManager(_colorComponent);
+            _physicsSystem = new PhysicsSystem();
+            _audio = new AudioManager();
+            
             _inputSystem = new InputSystem();
             _colorSystem = new ColorSystem(_colorComponent);
             _quitSystem = new QuitSystem(this);
@@ -56,15 +52,14 @@ namespace JumperGame
             _inputSystem.GameQuitRequested += _quitSystem.QuitGame;
         }
         
-        public bool Initialize()
+        public bool InitializeSdl()
         {
             // Initialize the managers and check if initialization was successful
             bool isRenderingInitSuccessful = _rendering.Initialize();
-            bool isPhysicsInitSuccessful = _physics.Initialize();
+            bool isPhysicsInitSuccessful = _physicsSystem.Initialize();
             bool isAudioInitSuccessful = _audio.Initialize();
-            bool isGameObjectManagerInitSuccessful = _gameObjectManager.Initialize();
             
-            if (!isRenderingInitSuccessful || !isPhysicsInitSuccessful || !isAudioInitSuccessful || !isGameObjectManagerInitSuccessful)
+            if (!isRenderingInitSuccessful || !isPhysicsInitSuccessful || !isAudioInitSuccessful)
             {
                 Console.WriteLine("Failed to initialize the game!");
                 Console.ReadLine();
@@ -79,9 +74,9 @@ namespace JumperGame
         public void Run()
         {
             IsRunning = true;
-            
+    
             // Run the game loop
-            if (Initialize())
+            if (InitializeSdl())
             {
                 SDL.SDL_Event e;
                 while (IsRunning)
@@ -91,13 +86,18 @@ namespace JumperGame
                         // Process the input events
                         _inputSystem.ProcessInput(e);
                     }
-                    
+            
+                    // Retrieve all entities
+                    var entities = _entitySystem.GetAllEntities();
+
                     // Update the managers
                     _rendering.Update();
-                    //_physics.Update();
-                    //_audio.Update();
-                    //_input.Update();
-                    //_gameObjectManager.Update();
+                    _physicsSystem.Update(entities/*, deltaTime*/);
+                    
+                    //_entitySystem.Update(deltaTime);
+                    
+                    // _audio.Update();
+                    // _input.Update();
                 }
             }
         }

@@ -89,7 +89,7 @@ namespace JumperGame.src.manager
                             int fucker = (gid)/16;
                             
 
-                            int foo = 256 * fucker;
+                            int foo = 256 * fucker; //kekw
 
                             SDL.SDL_Rect srcRect = new SDL.SDL_Rect { x = ((gid -1) * 16) - foo, y = fucker * 16 , h = map.TileWidth, w = map.TileWidth };
                             SDL.SDL_RenderCopy(gRenderer, tileTexEnvi.getTexture(), ref srcRect, ref destRect);
