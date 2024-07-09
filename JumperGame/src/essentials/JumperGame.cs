@@ -57,6 +57,7 @@ namespace JumperGame
             _movementSystem = new MovementSystem(_entitySystem);
 
             _inputSystem.KeyPressed += _movementSystem.Update;
+            _inputSystem.KeyReleased += _movementSystem.OnKeyReleased;
             
             _inputSystem.KeyPressed += _colorSystem.ChangeColor;
             _inputSystem.GameQuitRequested += _quitSystem.QuitGame;
