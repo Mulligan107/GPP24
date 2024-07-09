@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using JumperGame.components;
 using JumperGame.src.components;
 using JumperGame.src.components.testComponents;
 using JumperGame.src.manager;
@@ -19,8 +20,10 @@ namespace JumperGame
         public InputSystem _inputSystem;
         public ColorSystem _colorSystem;
         public QuitSystem _quitSystem;
+        public MovementSystem _movementSystem;
         
         public ColorComponent _colorComponent;
+        public PlayerSteeringComponent _playerSteeringComponent;
         
         public bool IsRunning;
 
@@ -42,6 +45,7 @@ namespace JumperGame
             _colorComponent = new ColorComponent();
 
             _entitySystem = new entitySystem();
+            
             _rendering = new RenderManager(_colorComponent);
             _physicsSystem = new PhysicsSystem();
             _audio = new AudioManager();
@@ -50,13 +54,16 @@ namespace JumperGame
             _inputSystem = new InputSystem();
             _colorSystem = new ColorSystem(_colorComponent);
             _quitSystem = new QuitSystem(this);
+            _movementSystem = new MovementSystem(_entitySystem);
 
+            _inputSystem.KeyPressed += _movementSystem.Update;
+            _inputSystem.KeyReleased += _movementSystem.OnKeyReleased;
+            
             _inputSystem.KeyPressed += _colorSystem.ChangeColor;
             _inputSystem.GameQuitRequested += _quitSystem.QuitGame;
             _rescource.loadTiles();
 
             InitializeSdl();
-
         }
         
         public bool InitializeSdl()
@@ -106,13 +113,12 @@ namespace JumperGame
                     
                     // Retrieve all entities
                     var entities = _entitySystem.GetAllEntities();
-                    Console.WriteLine(entities.Count());
 
                     // Update the managers
                     _rendering.Update(deltaTime, timerCurrent);
-                    _physicsSystem.Update(entities/*, deltaTime*/);
+                    _physicsSystem.Update(entities, deltaTime);
                     
-                    //_entitySystem.Update(deltaTime);
+                    _entitySystem.Update(deltaTime);
                     
                     // _audio.Update();
                     // _input.Update();

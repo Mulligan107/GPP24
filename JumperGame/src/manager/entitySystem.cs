@@ -37,7 +37,7 @@ namespace JumperGame.src.manager
             return _entities;
         }
 
-        public void Update(float deltaTime)
+        public void Update(double deltaTime)
         {
             // Update logic for entities if necessary
         }

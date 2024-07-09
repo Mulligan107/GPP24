@@ -51,21 +51,23 @@ namespace JumperGame.src.manager
             SDL.SDL_RenderClear(gRenderer);
             SDL.SDL_SetRenderDrawColor(gRenderer, _colorComponent.CurrentColor.r, _colorComponent.CurrentColor.g, _colorComponent.CurrentColor.b, _colorComponent.CurrentColor.a);
 
-            foreach (Entity enti in JumperGame._entitySystem.GetAllEntities()) {
-                var comp = enti.GetComponent<RenderComponent>();
-                SDL.SDL_Rect src = comp.srcRect;
-                SDL.SDL_Rect dst = comp.dstRect;
-                SDL.SDL_RenderCopy(gRenderer, comp.Rendertexture.getTexture(), ref src, ref dst);
-                Console.WriteLine(comp.Rendertexture.getTexture().ToString() + ": X: " + dst.x + " Y: " + dst.y+ " W: " + dst.w + " H : " + dst.h);
+            foreach (Entity enti in JumperGame._entitySystem.GetAllEntities())
+            {
+                var renderComponent = enti.GetComponent<RenderComponent>();
+                if (renderComponent != null)
+                {
+                    SDL.SDL_Rect src = renderComponent.srcRect;
+                    SDL.SDL_Rect dst = renderComponent.dstRect;
+                    SDL.SDL_RenderCopy(gRenderer, renderComponent.Rendertexture.getTexture(), ref src, ref dst);
+                }
             }
 
+            timerTexture = changeText(timerTexture, "Delta: " + dt.ToString("F3") + "\n Timer: " + timeElapsed.ToString("F3"));
+            timerTexture.render(10, 10);
 
-            timerTexture = changeText(timerTexture,"Delta: " + dt.ToString("F3") + "\n Timer: " + timeElapsed.ToString("F3"));
-            timerTexture.render(10,10);
-
-            
             SDL.SDL_RenderPresent(gRenderer);
         }
+
 
 
         static LTexture changeText(LTexture Ltex, String text)
