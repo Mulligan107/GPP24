@@ -56,7 +56,7 @@ namespace JumperGame.src.manager
                 SDL.SDL_Rect src = comp.srcRect;
                 SDL.SDL_Rect dst = comp.dstRect;
                 SDL.SDL_RenderCopy(gRenderer, comp.Rendertexture.getTexture(), ref src, ref dst);
-                Console.WriteLine(comp.Rendertexture.getTexture().ToString() + ": X: " + dst.x + " Y: " + dst.y+ " W: " + dst.w + " H : " + dst.h);
+                //Console.WriteLine(comp.Rendertexture.getTexture().ToString() + ": X: " + dst.x + " Y: " + dst.y+ " W: " + dst.w + " H : " + dst.h);
             }
 
 

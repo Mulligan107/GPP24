@@ -101,11 +101,22 @@ namespace JumperGame.src.manager
                             case "knight":
                                 destRect = changeRectSize(ref destRect, 2);
 
-                                Entity entityK = new Entity(gid);
+                                Entity entityK = new Entity(gid)
+                                {
+                                    Type = "knight"
+                                };
 
-                                entityK.AddComponent<PhysicsComponent>(new PhysicsComponent(10));
-                                entityK.AddComponent<PositionComponent>(new PositionComponent(new Vector3(destRect.x, destRect.y, 0))); // Z Koordiante Layer ableiten
-                                entityK.AddComponent<RenderComponent>(new RenderComponent(tileTexKnight, srcRect, destRect));
+                                // Create components
+                                var physicsComponent = new PhysicsComponent(10);
+                                var playerSteeringComponent = new PlayerSteeringComponent(physicsComponent);
+                                var positionComponent = new PositionComponent(new Vector3(destRect.x, destRect.y, 0));
+                                var renderComponent = new RenderComponent(tileTexKnight, srcRect, destRect);
+
+                                // Add components to the entity
+                                entityK.AddComponent(physicsComponent);
+                                entityK.AddComponent(playerSteeringComponent);
+                                entityK.AddComponent(positionComponent);
+                                entityK.AddComponent(renderComponent);
 
                                 JumperGame._entitySystem.AddEntity(entityK); //TODO bessere namen
 
