@@ -4,14 +4,14 @@ namespace JumperGame.components;
 
 public class PositionComponent
 {
-    public Vector2 Position { get; set; }
+    public Vector3 Position { get; set; }
 
-    public PositionComponent(Vector2 initialPosition)
+    public PositionComponent(Vector3 initialPosition)
     {
         Position = initialPosition;
     }
 
-    public PositionComponent() : this(new Vector2(0, 0))
+    public PositionComponent() : this(new Vector3(0, 0, 0))
     {
     }
 }

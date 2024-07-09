@@ -6,8 +6,14 @@ namespace JumperGame.gameEntities;
 public class Entity
 {
     private readonly Dictionary<Type, object> _components = new Dictionary<Type, object>();
+    public int gid;
 
     // This method is used to add a component to the entity
+
+    public Entity(int nameId) { 
+        gid = nameId;
+    }
+
     public void AddComponent<T>(T component)
     {
         _components[typeof(T)] = component;

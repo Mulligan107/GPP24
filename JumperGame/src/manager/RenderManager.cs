@@ -13,6 +13,8 @@ using System.Text.RegularExpressions;
 using System.Timers;
 using TiledCSPlus;
 using static System.Net.Mime.MediaTypeNames;
+using JumperGame.gameEntities;
+using JumperGame.components;
 
 namespace JumperGame.src.manager
 {
@@ -33,25 +35,15 @@ namespace JumperGame.src.manager
         
         private ColorComponent _colorComponent;
 
-        LTexture tileTexEnvi = new LTexture();
-        LTexture tileTexCoin = new LTexture();
-        LTexture tileTexKnight = new LTexture();
-
         LTexture timerTexture = new LTexture();
 
         public static IntPtr Font = IntPtr.Zero;
-
-        TiledMap map = new TiledMap("src\\worlds\\testWorld.tmx");
-        Dictionary<int, TiledTileset> tilesets;
-        
 
         public RenderManager(ColorComponent colorComponent)
         {
             _colorComponent = colorComponent;
             _colorComponent.CurrentColor = new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 };
-            tilesets = map.GetTiledTilesets("src/tilesets/"); // DO NOT forget the / at the end
-            
-
+            Initialize();
         }
         
         public void Update(double dt, double timeElapsed)
@@ -59,67 +51,16 @@ namespace JumperGame.src.manager
             SDL.SDL_RenderClear(gRenderer);
             SDL.SDL_SetRenderDrawColor(gRenderer, _colorComponent.CurrentColor.r, _colorComponent.CurrentColor.g, _colorComponent.CurrentColor.b, _colorComponent.CurrentColor.a);
 
-            var tileLayers = map.Layers.Where(x => x.Type == TiledLayerType.TileLayer);
-
-            foreach (var layer in tileLayers)
-            {
-                for (var y = 0; y < layer.Height; y++)
-                {
-                    for (var x = 0; x < layer.Width; x++)
-                    {
-                        var index = (y * layer.Width) + x; // Assuming the default render order is used which is from right to bottom
-                        var gid = layer.Data[index]; // The tileset tile index
-                        var tileX = (x * map.TileWidth);
-                        var tileY = (y * map.TileHeight);
-
-                        // Gid 0 is used to tell there is no tile set
-                        if (gid == 0)
-                        {
-                            continue;
-                        }
-
-                        // Helper method to fetch the right TieldMapTileset instance. 
-                        // This is a connection object Tiled uses for linking the correct tileset to the gid value using the firstgid property.
-                        var mapTileset = map.GetTiledMapTileset(gid);
-
-                        // Retrieve the actual tileset based on the firstgid property of the connection object we retrieved just now
-                        var tileset = tilesets[mapTileset.FirstGid];
-
-                        // Use the connection object as well as the tileset to figure out the source rectangle.
-                        var rect = map.GetSourceRect(mapTileset, tileset, gid);
-
-                        SDL.SDL_Rect destRect = new SDL.SDL_Rect { x = tileX, y = tileY, h = map.TileWidth, w = map.TileWidth };
-
-                        SDL.SDL_Rect srcRect = new SDL.SDL_Rect { x = rect.X, y = rect.Y , h = rect.Height, w = rect.Width };
-
-
-                        //Console.WriteLine(tileset.Name + ": X: " + rect.X + " Y: " + rect.Y+ " W: " + rect.Width + " H : " + rect.Height);
-
-                        switch (tileset.Name)
-                        {
-                            case "Enviroment":
-                                SDL.SDL_RenderCopy(gRenderer, tileTexEnvi.getTexture(), ref srcRect, ref destRect);
-                                break;
-                            case "coin":
-                                SDL.SDL_RenderCopy(gRenderer, tileTexCoin.getTexture(), ref srcRect, ref destRect);
-                                break;
-                            case "knight":
-                                destRect = changeRectSize(ref destRect, 2);
-                                SDL.SDL_RenderCopy(gRenderer, tileTexKnight.getTexture(), ref srcRect, ref destRect);
-                                break;
-                        }
-
-                        //SDL.SDL_RenderCopy(gRenderer, tileTexCoin.getTexture(), ref srcRect, ref destRect);
-
-                        // Render sprite at position tileX, tileY using the rect
-                    }
-                }
+            foreach (Entity enti in JumperGame._entitySystem.GetAllEntities()) {
+                var comp = enti.GetComponent<RenderComponent>();
+                SDL.SDL_Rect src = comp.srcRect;
+                SDL.SDL_Rect dst = comp.dstRect;
+                SDL.SDL_RenderCopy(gRenderer, comp.Rendertexture.getTexture(), ref src, ref dst);
+                Console.WriteLine(comp.Rendertexture.getTexture().ToString() + ": X: " + dst.x + " Y: " + dst.y+ " W: " + dst.w + " H : " + dst.h);
             }
 
+
             timerTexture = changeText(timerTexture,"Delta: " + dt.ToString("F3") + "\n Timer: " + timeElapsed.ToString("F3"));
-
-
-
             timerTexture.render(10,10);
 
             
@@ -133,11 +74,7 @@ namespace JumperGame.src.manager
             return Ltex;
         }
 
-        static SDL.SDL_Rect changeRectSize(ref SDL.SDL_Rect rect, int num)
-        {
-            SDL.SDL_Rect shrunkRect = new SDL.SDL_Rect { x = rect.x - rect.w / 2 , y = rect.y - rect.h +5, w = rect.w * num, h = rect.h * num }; // TODO +5 rausnehmen
-            return shrunkRect;
-        }
+        
 
         public bool Initialize()
         {
@@ -223,10 +160,9 @@ namespace JumperGame.src.manager
                 }
             }
 
-            tileTexEnvi.loadFromFile("src\\tilesets/world_tileset.png");
+            
             Font = SDL_ttf.TTF_OpenFont("lazy.ttf", 28);
-            tileTexCoin.loadFromFile("src\\tilesets/coin.png");
-            tileTexKnight.loadFromFile("src\\tilesets/knight.png");
+            
 
             return true;
         }

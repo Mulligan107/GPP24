@@ -18,10 +18,10 @@ public class PhysicsSystem
             if (physicsComponent != null)
             {
                 // Apply gravity
-                physicsComponent.Acceleration += new Vector2(0, Gravity) * physicsComponent.Mass;
+                physicsComponent.Acceleration += new Vector3(0, Gravity, 0) * physicsComponent.Mass;
                 physicsComponent.Velocity += physicsComponent.Acceleration /* * deltaTime) */;
                 // Reset acceleration after applying it
-                physicsComponent.Acceleration = new Vector2(0, 0);
+                physicsComponent.Acceleration = new Vector3(0, 0, 0);
 
                 // Update entity position
                 var positionComponent = entity.GetComponent<PositionComponent>();

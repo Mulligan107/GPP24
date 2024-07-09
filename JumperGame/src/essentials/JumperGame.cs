@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using JumperGame.src.components;
 using JumperGame.src.components.testComponents;
 using JumperGame.src.manager;
@@ -9,16 +10,17 @@ namespace JumperGame
 {
     public class JumperGame
     {
-        private entitySystem _entitySystem;
+        public static entitySystem _entitySystem;
         private RenderManager _rendering;
         private AudioManager _audio;
+        private RescourceManager _rescource;
+
+        public PhysicsSystem _physicsSystem;
+        public InputSystem _inputSystem;
+        public ColorSystem _colorSystem;
+        public QuitSystem _quitSystem;
         
-        private PhysicsSystem _physicsSystem;
-        private InputSystem _inputSystem;
-        private ColorSystem _colorSystem;
-        private QuitSystem _quitSystem;
-        
-        private ColorComponent _colorComponent;
+        public ColorComponent _colorComponent;
         
         public bool IsRunning;
 
@@ -35,31 +37,37 @@ namespace JumperGame
             return 0;
         }
         
-        private void InitializeSystems()
-        {
+        public void InitializeSystems()
+        {            
             _colorComponent = new ColorComponent();
-            
+
             _entitySystem = new entitySystem();
             _rendering = new RenderManager(_colorComponent);
             _physicsSystem = new PhysicsSystem();
             _audio = new AudioManager();
-            
+            _rescource = new RescourceManager();
+
             _inputSystem = new InputSystem();
             _colorSystem = new ColorSystem(_colorComponent);
             _quitSystem = new QuitSystem(this);
 
             _inputSystem.KeyPressed += _colorSystem.ChangeColor;
             _inputSystem.GameQuitRequested += _quitSystem.QuitGame;
+            _rescource.loadTiles();
+
+            InitializeSdl();
+
         }
         
         public bool InitializeSdl()
         {
             // Initialize the managers and check if initialization was successful
-            bool isRenderingInitSuccessful = _rendering.Initialize();
             bool isPhysicsInitSuccessful = _physicsSystem.Initialize();
             bool isAudioInitSuccessful = _audio.Initialize();
             
-            if (!isRenderingInitSuccessful || !isPhysicsInitSuccessful || !isAudioInitSuccessful)
+
+
+            if (!isPhysicsInitSuccessful || !isAudioInitSuccessful)
             {
                 Console.WriteLine("Failed to initialize the game!");
                 Console.ReadLine();
@@ -78,9 +86,7 @@ namespace JumperGame
             var timerStart = SDL.SDL_GetPerformanceCounter() / (double)SDL.SDL_GetPerformanceFrequency();
             var timerNew = timerStart;
           
-            // Run the game loop
-            if (InitializeSdl())
-            {
+            
                 SDL.SDL_Event e;
                 while (IsRunning)
                 {
@@ -97,9 +103,10 @@ namespace JumperGame
                         // Process the input events
                         _inputSystem.ProcessInput(e);
                     }
-            
+                    
                     // Retrieve all entities
                     var entities = _entitySystem.GetAllEntities();
+                    Console.WriteLine(entities.Count());
 
                     // Update the managers
                     _rendering.Update(deltaTime, timerCurrent);
@@ -110,7 +117,6 @@ namespace JumperGame
                     // _audio.Update();
                     // _input.Update();
                 }
-            }
         }
     }
 }
