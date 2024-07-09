@@ -29,15 +29,23 @@ public class PhysicsSystem
                 if (positionComponent != null)
                 {
                     positionComponent.Position += physicsComponent.Velocity * (float)deltaTime;
+    
+                    // Update the dstRect in RenderComponent
+                    var renderComponent = entity.GetComponent<RenderComponent>();
+                    if (renderComponent != null)
+                    {
+                        renderComponent.UpdateDstRect(positionComponent.Position);
+                    }
                 }
 
+                /*
                 if (entity.Type == "knight")
                 {
                     Console.WriteLine($"Entity ID: {entity.gid}");
                     Console.WriteLine($"DeltaTime: {deltaTime}");
                     Console.WriteLine($"Velocity: {physicsComponent.Velocity}");
                     Console.WriteLine($"Position: {positionComponent?.Position}");
-                }
+                }*/
             }
         }
     }
