@@ -11,4 +11,7 @@ public class PositionComponent
         Position = initialPosition;
     }
 
+    public PositionComponent() : this(new Vector3(0, 0, 0))
+    {
+    }
 }
