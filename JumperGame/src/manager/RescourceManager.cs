@@ -75,11 +75,14 @@ namespace JumperGame.src.manager
                             case "Enviroment":
                                 Entity entity = new Entity(gid);
                               //  foreach (compontNames name in Enum.GetValues(typeof(compontNames)))   // TODO Variable machen
+
+                                var envPositionComponent = new PositionComponent(new Vector3(destRect.x, destRect.y, layer.Id));
+                                var envRenderComponent = (new RenderComponent(tileTexEnvi, srcRect, destRect));
+                                var envCollisionComponent = new CollisionComponent(new Vector2(destRect.w, destRect.h));
                                 
-                                entity.AddComponent(new PhysicsComponent(10));
-                                entity.AddComponent(new PositionComponent(new Vector3(destRect.x, destRect.y, layer.Id))); 
-                                entity.AddComponent(new RenderComponent(tileTexEnvi, srcRect, destRect));
-                                entity.AddComponent(new CollisionComponent(new Vector2(destRect.w, destRect.h)));
+                                entity.AddComponent(envPositionComponent); 
+                                entity.AddComponent(envRenderComponent);
+                                entity.AddComponent(envCollisionComponent);
 
                                 JumperGame._entitySystem.AddEntity(entity);
 
@@ -88,12 +91,15 @@ namespace JumperGame.src.manager
                             case "coin":
                                 Entity entityC = new Entity(gid);
                                 
-                                //var coinCollisionComponent = new CollisionComponent(new Vector2(destRect.w, destRect.h));
+                                var coinCollisionComponent = new CollisionComponent(new Vector2(destRect.w, destRect.h));
+                                var coinPhysicsComponent = new PhysicsComponent(0);
+                                var coinPositionComponent = new PositionComponent(new Vector3(destRect.x, destRect.y, 0));
+                                var coinRenderComponent = new RenderComponent(tileTexCoin, srcRect, destRect);
                                 
-                                entityC.AddComponent(new PhysicsComponent(0));
-                                entityC.AddComponent(new PositionComponent(new Vector3(destRect.x, destRect.y, 0))); 
-                                entityC.AddComponent(new RenderComponent(tileTexCoin, srcRect, destRect));
-                                //entityC.AddComponent(coinCollisionComponent);
+                                entityC.AddComponent(coinPhysicsComponent);
+                                entityC.AddComponent(coinPositionComponent); 
+                                entityC.AddComponent(coinRenderComponent);
+                                entityC.AddComponent(coinCollisionComponent);
                                 
                                 JumperGame._entitySystem.AddEntity(entityC);
 
@@ -116,6 +122,7 @@ namespace JumperGame.src.manager
                                 entityK.AddComponent(positionComponent);
                                 entityK.AddComponent(renderComponent);
                                 entityK.AddComponent(knightCollisionComponent);
+                                
                                 JumperGame._entitySystem.AddEntity(entityK); //TODO bessere namen
 
                                 //SDL.SDL_RenderCopy(gRenderer, tileTexKnight.getTexture(), ref srcRect, ref destRect);
