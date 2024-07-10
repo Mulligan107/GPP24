@@ -114,9 +114,10 @@ namespace JumperGame
                     // Retrieve all entities
                     var entities = _entitySystem.GetAllEntities();
 
-                    // Update the managers
-                    _rendering.Update(deltaTime, timerCurrent);
-                    _physicsSystem.Update(entities, deltaTime);
+                // Update the managers
+                _physicsSystem.Update(entities, deltaTime);
+                _rendering.Update(deltaTime, timerCurrent);
+                    
                     
                     _entitySystem.Update(deltaTime);
                     

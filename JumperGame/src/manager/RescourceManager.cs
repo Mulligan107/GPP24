@@ -67,7 +67,7 @@ namespace JumperGame.src.manager
 
                         SDL.SDL_Rect srcRect = new SDL.SDL_Rect { x = rect.X, y = rect.Y, h = rect.Height, w = rect.Width };
 
-
+                        
                         //Console.WriteLine(tileset.Name + ": X: " + rect.X + " Y: " + rect.Y+ " W: " + rect.Width + " H : " + rect.Height);
 
                         switch (tileset.Name)
@@ -75,11 +75,12 @@ namespace JumperGame.src.manager
                             case "Enviroment":
                                 Entity entity = new Entity(gid);
                               //  foreach (compontNames name in Enum.GetValues(typeof(compontNames)))   // TODO Variable machen
-                                var envCollisionComponent = new CollisionComponent(new Vector2(destRect.w, destRect.h));
                                 
-                                entity.AddComponent(new PositionComponent(new Vector3(destRect.x, destRect.y, 0))); 
+                                entity.AddComponent(new PhysicsComponent(10));
+                                entity.AddComponent(new PositionComponent(new Vector3(destRect.x, destRect.y, layer.Id))); 
                                 entity.AddComponent(new RenderComponent(tileTexEnvi, srcRect, destRect));
-                                entity.AddComponent(envCollisionComponent);
+                                entity.AddComponent(new CollisionComponent(new Vector2(destRect.w, destRect.h)));
+
                                 JumperGame._entitySystem.AddEntity(entity);
 
                                // SDL.SDL_RenderCopy(gRenderer, tileTexEnvi.getTexture(), ref srcRect, ref destRect);
