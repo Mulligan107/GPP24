@@ -69,7 +69,7 @@ namespace JumperGame.src.manager
             camera.x = (int)(newPosi.x + newPosi.w / 2) - camera.w / 2;
             camera.y = (int)(newPosi.y + newPosi.h / 2) - camera.h / 2;
 
-            Console.WriteLine("CAM: " + camera.x);
+            //Console.WriteLine("CAM: " + camera.x);
             
             
             //Keep the camera in bounds

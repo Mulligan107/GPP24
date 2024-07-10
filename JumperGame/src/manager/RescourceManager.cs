@@ -85,15 +85,9 @@ namespace JumperGame.src.manager
                                 entity.AddComponent(envPositionComponent); 
                                 entity.AddComponent(envRenderComponent);
                                 entity.AddComponent(envCollisionComponent);
-
                                 JumperGame._entitySystem.AddEntity(entity);
-
-<<<<<<< Updated upstream
-                               // SDL.SDL_RenderCopy(gRenderer, tileTexEnvi.getTexture(), ref srcRect, ref destRect);
-=======
-                               // SDL.SDL_RenderCopy(gRenderer, tileTexEnvi.getTexture(), ref srcRect, ref destRect
->>>>>>> Stashed changes
                                 break;
+
                             case "coin":
                                 Entity entityC = new Entity(gid);
                                 
