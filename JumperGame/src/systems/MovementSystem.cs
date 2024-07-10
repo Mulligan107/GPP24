@@ -4,8 +4,11 @@ using SDL2;
 using System.Numerics;
 using JumperGame.components;
 
+namespace JumperGame.systems;
+
 public class MovementSystem
 {
+        
     private entitySystem _entitySystem;
 
     public MovementSystem(entitySystem entitySystem)
@@ -15,12 +18,10 @@ public class MovementSystem
 
     public void Update(SDL.SDL_Keycode keycode)
     {
-        //Console.WriteLine("Pressed");
         foreach (var entity in _entitySystem.GetAllEntities())
         {
             if (entity.HasComponent<PlayerSteeringComponent>() && entity.HasComponent<PhysicsComponent>())
             {
-                var playerSteering = entity.GetComponent<PlayerSteeringComponent>();
                 var physics = entity.GetComponent<PhysicsComponent>();
                 var renderer = entity.GetComponent<RenderComponent>();
 
@@ -52,15 +53,13 @@ public class MovementSystem
             }
         }
     }
-    
+        
     public void OnKeyReleased(SDL.SDL_Keycode keycode)
     {
-        //Console.WriteLine("Released");
         foreach (var entity in _entitySystem.GetAllEntities())
         {
             if (entity.HasComponent<PlayerSteeringComponent>() && entity.HasComponent<PhysicsComponent>())
             {
-                var playerSteering = entity.GetComponent<PlayerSteeringComponent>();
                 var physics = entity.GetComponent<PhysicsComponent>();
                 Vector3 newVelocity = physics.Velocity;
 
