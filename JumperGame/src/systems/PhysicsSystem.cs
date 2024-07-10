@@ -58,6 +58,8 @@ namespace JumperGame.systems
 
                     // Update entity position
                     positionComponent.Position = newPosition;
+                    positionComponent.Position += physicsComponent.Velocity * (float)deltaTime;
+
 
                     // Update the dstRect in RenderComponent
                     var renderComponent = entity.GetComponent<RenderComponent>();
@@ -65,6 +67,14 @@ namespace JumperGame.systems
                     {
                         renderComponent.UpdateDstRect(positionComponent.Position);
                     }
+                }
+                
+                if (entity.Type == "knight")
+                {
+                   // Console.WriteLine($"Entity ID: {entity.gid}");
+                   // Console.WriteLine($"DeltaTime: {deltaTime}");
+                   // Console.WriteLine($"Velocity: {physicsComponent.Velocity}");
+                    Console.WriteLine($"Position: {positionComponent?.Position}");
                 }
             }
         }
