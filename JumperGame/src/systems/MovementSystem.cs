@@ -43,6 +43,13 @@ public class MovementSystem
                         newVelocity.X = 250;
                         renderer.flip = SDL.SDL_RendererFlip.SDL_FLIP_NONE;
                         break;
+                    case SDL.SDL_Keycode.SDLK_SPACE:
+                        if (physics.Grounded)
+                        {
+                            newVelocity.Y = -250;
+                            physics.Grounded = false;
+                        }
+                        break;
                     default:
                         newVelocity.X = 0;
                         newVelocity.Y = 0;

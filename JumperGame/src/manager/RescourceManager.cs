@@ -106,7 +106,7 @@ namespace JumperGame.src.manager
 
                                 // Create components
                                 var knightCollisionComponent = new CollisionComponent(new Vector2(destRect.w, destRect.h));
-                                var physicsComponent = new PhysicsComponent(1);
+                                var physicsComponent = new PhysicsComponent(40);
                                 var playerSteeringComponent = new PlayerSteeringComponent(physicsComponent);
                                 var positionComponent = new PositionComponent(new Vector3(destRect.x, destRect.y, 0));
                                 var renderComponent = new RenderComponent(tileTexKnight, srcRect, destRect);

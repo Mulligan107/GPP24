@@ -112,11 +112,14 @@ namespace JumperGame.systems
                 // Resolve vertical collision
                 if (newPosition.Y > otherPositionComponent.Position.Y)
                 {
+                    //If hit from above
                     newPosition.Y = otherPositionComponent.Position.Y + otherCollisionComponent.Size.Y;
                 }
                 else
                 {
+                    //if hit from below
                     newPosition.Y = otherPositionComponent.Position.Y - collisionComponent.Size.Y;
+                    physicsComponent.Grounded = true;  //if the player hits from below he can jump again
                 }
                 physicsComponent.Velocity = new Vector3(physicsComponent.Velocity.X, 0, 0); // Stop vertical movement
             }
