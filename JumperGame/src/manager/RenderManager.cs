@@ -42,6 +42,7 @@ namespace JumperGame.src.manager
 
         LTexture timerTexture = new LTexture();
         LTexture bg = new LTexture();
+        int counter = 0;
 
         public static IntPtr Font = IntPtr.Zero;
 
@@ -110,7 +111,6 @@ namespace JumperGame.src.manager
                         w = dst.w,
                         h = dst.h
                     };
-                    
 
                     SDL.SDL_RenderCopy(gRenderer, renderComponent.Rendertexture.getTexture(), ref src, ref adjustedDst);
                    
@@ -120,9 +120,6 @@ namespace JumperGame.src.manager
 
             //Render objects
             
-
-
-
 
 
             timerTexture = changeText(timerTexture, "Delta: " + dt.ToString("F3") + "\n Timer: " + timeElapsed.ToString("F3"));
