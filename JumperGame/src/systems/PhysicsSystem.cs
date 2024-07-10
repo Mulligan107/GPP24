@@ -45,11 +45,11 @@ namespace JumperGame.systems
 
                             if (otherPositionComponent != null && otherCollisionComponent != null)
                             {
+                                //just checks if it collides
                                 if (IsColliding(newPosition, collisionComponent.Size, otherPositionComponent.Position, otherCollisionComponent.Size))
                                 {
-                                    // Collision detected, stop the entity's fall
-                                    physicsComponent.Velocity = new Vector3(0, 0, 0);
-                                    newPosition.Y = positionComponent.Position.Y; // Reset to original Y position
+                                    //Actual calculation on what to do in case of collision is done in Resolve Collision
+                                    ResolveCollision(physicsComponent, positionComponent, collisionComponent, otherPositionComponent, otherCollisionComponent, ref newPosition);
                                     break;
                                 }
                             }
@@ -76,6 +76,50 @@ namespace JumperGame.systems
                    pos1.X + size1.X > pos2.X &&
                    pos1.Y < pos2.Y + size2.Y &&
                    pos1.Y + size1.Y > pos2.Y;
+        }
+
+        /**
+         * Ok so this can be confusing af to read so to explain it in one text:
+         * The ResolveCollision method calculates the overlap in both horizontal (X-axis) and vertical (Y-axis) directions.
+         * It then determines the direction with the least overlap and resolves the collision by adjusting the position accordingly.
+         *  - If the horizontal overlap is smaller, it resolves the collision horizontally and stops horizontal movement.
+         *  - If the vertical overlap is smaller, it resolves the collision vertically and stops vertical movement.
+         */
+        private void ResolveCollision(PhysicsComponent physicsComponent, PositionComponent positionComponent, CollisionComponent collisionComponent,
+            PositionComponent otherPositionComponent, CollisionComponent otherCollisionComponent, ref Vector3 newPosition)
+        {
+            // Calculate overlap in both axes
+            float overlapX = Math.Min(newPosition.X + collisionComponent.Size.X, otherPositionComponent.Position.X + otherCollisionComponent.Size.X) - 
+                             Math.Max(newPosition.X, otherPositionComponent.Position.X);
+            float overlapY = Math.Min(newPosition.Y + collisionComponent.Size.Y, otherPositionComponent.Position.Y + otherCollisionComponent.Size.Y) - 
+                             Math.Max(newPosition.Y, otherPositionComponent.Position.Y);
+
+            if (overlapX < overlapY)
+            {
+                // Resolve horizontal collision
+                if (newPosition.X > otherPositionComponent.Position.X)
+                {
+                    newPosition.X = otherPositionComponent.Position.X + otherCollisionComponent.Size.X;
+                }
+                else
+                {
+                    newPosition.X = otherPositionComponent.Position.X - collisionComponent.Size.X;
+                }
+                physicsComponent.Velocity = new Vector3(0, physicsComponent.Velocity.Y, 0); // Stop horizontal movement
+            }
+            else
+            {
+                // Resolve vertical collision
+                if (newPosition.Y > otherPositionComponent.Position.Y)
+                {
+                    newPosition.Y = otherPositionComponent.Position.Y + otherCollisionComponent.Size.Y;
+                }
+                else
+                {
+                    newPosition.Y = otherPositionComponent.Position.Y - collisionComponent.Size.Y;
+                }
+                physicsComponent.Velocity = new Vector3(physicsComponent.Velocity.X, 0, 0); // Stop vertical movement
+            }
         }
 
         public bool Initialize()
