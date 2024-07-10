@@ -14,6 +14,10 @@ namespace JumperGame.src.components
 
         public AnimationComponent(TiledTileAnimation[] animationList) {
             AnimimationList = animationList;
+            foreach (var animation in AnimimationList)
+            {
+                Console.WriteLine(animation);
+            }
         }
     }
    

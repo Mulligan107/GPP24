@@ -8,6 +8,7 @@ using TiledCSPlus;
 using JumperGame.gameEntities;
 using JumperGame.components;
 using System.Numerics;
+using JumperGame.src.components;
 
 
 namespace JumperGame.src.manager
@@ -65,7 +66,7 @@ namespace JumperGame.src.manager
                         // Use the connection object as well as the tileset to figure out the source rectangle.
                         var rect = map.GetSourceRect(mapTileset, tileset, gid);
 
-                        SDL.SDL_Rect destRect = new SDL.SDL_Rect { x = tileX, y = tileY, h = map.TileWidth, w = map.TileWidth };
+                        SDL.SDL_Rect destRect = new SDL.SDL_Rect { x = tileX, y = tileY, h = tileset.TileWidth, w = tileset.TileWidth };
 
                         SDL.SDL_Rect srcRect = new SDL.SDL_Rect { x = rect.X, y = rect.Y, h = rect.Height, w = rect.Width };
 
@@ -110,6 +111,16 @@ namespace JumperGame.src.manager
                                 var playerSteeringComponent = new PlayerSteeringComponent(physicsComponent);
                                 var positionComponent = new PositionComponent(new Vector3(destRect.x, destRect.y, 0));
                                 var renderComponent = new RenderComponent(tileTexKnight, srcRect, destRect);
+                                //var animationComponent = new AnimationComponent(tileset.)
+                                foreach (TiledTile till in tileset.Tiles)
+                                {
+                                    if (till.Id == 0)
+                                    {
+                                        var annie = till.Animations;
+                                        Console.WriteLine(annie.ToString());
+                                    }
+                                }
+
 
                                 // Add components to the entity
                                 entity.AddComponent(physicsComponent);

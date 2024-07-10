@@ -11,10 +11,10 @@
  </layer>
  <layer id="1" name="Tile Layer 1" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJztmO0NgjAQhoENGMEpGECNA6hhAHUCdQMZgRHc0yMpSb206Qe9HjT3JG/6Q7yP3pW2VJUgrJs96AA6cgeykDPoAroS+qiRKLiB7qAHkf0JithbZPQJeoHeBL4oaTTNfEADTziLaSpzTjFQ9v3W6dSI10EsqeyEclKjq1d8whs87FDRq9Hkvw6cW9/1Q1EyX9+thx3TaALvcynyiu0DW624+srX7y6xvdTofjvrU3H2cqL7nd9doevbZi8nut8e/ebKZz6b6M/lymPyMyqZ3hspNCJRvLsmm9/MoqgRPu/lkrAtUuzvVHfhnEdfPf6lueD/c9+XQv3b6kn9zcOH0Dy2DNU+apMQD+ccpvbN2RMl9mSuPDjXdgk1c8VfQo463PnIfhTOmuZJ6iYIZSD3iH9Kzk0QOPkBlqofMQ==
+   eJztmO0NgjAQhoENGMEpGECNA6hhAHUCdQMZgRHc0yMpSb20oV/Xg+ae5E1/CPfRu7bUqhKEdbMHHUBH7kAiOYMuoCuhjxqJghvoDnoQ2Z+giL1FRp+gF+hN4IuSRtPMBzTwhBNNU5lzCoGy77dOp0a8DkJJZceXkxqXesUlvMHBDhW9Gk3+a8+5dV0/FCVz9d062DGNJvA5lyKv0D6w1Yqrr1z97hLbS43ut7M+FWYvJ7rfee/yXd82eznR/fbot6V85m+TmLxDmeIelUz7RgqNSBR712Tzm1kUvYa/93JJ2BYpznequ3DObUyPPzYX/D73fcnXv62e1P95uOCbx5ahOkdtEsLhnMPUvjl7osSezJUH59ouoWZL8ZeQow53PnIe+bOmeZK6CUIZyD3in5JzEwROfmWCHy8=
   </data>
  </layer>
- <layer id="4" name="Entities" width="50" height="50">
+ <layer id="4" name="Entities" width="50" height="50" visible="0">
   <data encoding="base64" compression="zlib">
    eJztziEBAAAIA7ATg/5FCYBCYbYESwAAAOCm63sAAAAAAACwDasVABs=
   </data>
