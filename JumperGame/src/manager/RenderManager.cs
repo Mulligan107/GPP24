@@ -95,7 +95,6 @@ namespace JumperGame.src.manager
 
             bg.render(0, 0, camera);
 
-            
             foreach (Entity enti in JumperGame._entitySystem.GetAllEntities())
             {
                 var renderComponent = enti.GetComponent<RenderComponent>();
@@ -111,6 +110,7 @@ namespace JumperGame.src.manager
                         w = dst.w,
                         h = dst.h
                     };
+                    
 
                     SDL.SDL_RenderCopy(gRenderer, renderComponent.Rendertexture.getTexture(), ref src, ref adjustedDst);
                    
