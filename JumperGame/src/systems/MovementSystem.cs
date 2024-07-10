@@ -27,16 +27,16 @@ public class MovementSystem
                 switch (keycode)
                 {
                     case SDL.SDL_Keycode.SDLK_w:
-                        newVelocity.Y = -250;
+                        newVelocity.Y = -50;
                         break;
                     case SDL.SDL_Keycode.SDLK_s:
-                        newVelocity.Y = 250;
+                        newVelocity.Y = 50;
                         break;
                     case SDL.SDL_Keycode.SDLK_a:
-                        newVelocity.X = -250;
+                        newVelocity.X = -50;
                         break;
                     case SDL.SDL_Keycode.SDLK_d:
-                        newVelocity.X = 250;
+                        newVelocity.X = 50;
                         break;
                     default:
                         newVelocity.X = 0;

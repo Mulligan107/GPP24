@@ -42,17 +42,6 @@ namespace JumperGame.src.manager
             // Update logic for entities if necessary
         }
 
-        public Entity GetEntityByGID(int gid) {
-            foreach (Entity enti in _entities)
-            {
-                if (enti.gid == gid)
-                {
-                    return enti;
-                }
-            }
-            return null;
-        }
-
         /*
         public Entity FindEntity(Func<Entity, bool> predicate)
         {
