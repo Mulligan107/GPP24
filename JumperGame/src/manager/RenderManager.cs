@@ -60,7 +60,7 @@ namespace JumperGame.src.manager
 
             SDL.SDL_Rect camera = new SDL.SDL_Rect { w = ScreenWidth, h = ScreenHeight };
 
-            Entity player = JumperGame._entitySystem.GetEntityByGID(269);
+            Entity player = JumperGame._entitySystem.GetEntityByGID(281);
             var posi = player.GetComponent<RenderComponent>();
             SDL.SDL_Rect newPosi = posi.dstRect;
 
@@ -112,7 +112,7 @@ namespace JumperGame.src.manager
                         h = dst.h
                     };
 
-                    SDL.SDL_RenderCopy(gRenderer, renderComponent.Rendertexture.getTexture(), ref src, ref adjustedDst);
+                    SDL.SDL_RenderCopyEx(gRenderer, renderComponent.Rendertexture.getTexture(), ref src, ref adjustedDst, renderComponent.angle, ref renderComponent.centerPoint, renderComponent.flip);
                    
                 }
             }

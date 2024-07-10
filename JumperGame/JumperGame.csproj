@@ -163,6 +163,12 @@
     <Content Include="src\tilesets\knight.tsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="src\tilesets\knightOpti.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="src\tilesets\knightOpti.tsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="src\tilesets\slime_green.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -208,6 +214,8 @@
     <None Remove="src\tilesets\fruit.png" />
     <None Remove="src\tilesets\knight.png" />
     <None Remove="src\tilesets\knight.tsx" />
+    <None Remove="src\tilesets\knightOpti.png" />
+    <None Remove="src\tilesets\knightOpti.tsx" />
     <None Remove="src\tilesets\slime_green.png" />
     <None Remove="src\tilesets\slime_green.tsx" />
   </ItemGroup>

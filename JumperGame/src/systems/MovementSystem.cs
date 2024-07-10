@@ -22,6 +22,8 @@ public class MovementSystem
             {
                 var playerSteering = entity.GetComponent<PlayerSteeringComponent>();
                 var physics = entity.GetComponent<PhysicsComponent>();
+                var renderer = entity.GetComponent<RenderComponent>();
+
                 Vector3 newVelocity = physics.Velocity;
 
                 switch (keycode)
@@ -34,9 +36,11 @@ public class MovementSystem
                         break;
                     case SDL.SDL_Keycode.SDLK_a:
                         newVelocity.X = -250;
+                        renderer.flip = SDL.SDL_RendererFlip.SDL_FLIP_HORIZONTAL;
                         break;
                     case SDL.SDL_Keycode.SDLK_d:
                         newVelocity.X = 250;
+                        renderer.flip = SDL.SDL_RendererFlip.SDL_FLIP_NONE;
                         break;
                     default:
                         newVelocity.X = 0;

@@ -1,4 +1,4 @@
-﻿using SDL2;
+using SDL2;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +30,7 @@ namespace JumperGame.src.manager
             tilesets = map.GetTiledTilesets("src/tilesets/"); // DO NOT forget the / at the 
             tileTexEnvi.loadFromFile("src\\tilesets/world_tileset.png");
             tileTexCoin.loadFromFile("src\\tilesets/coin.png");
-            tileTexKnight.loadFromFile("src\\tilesets/knight.png");
+            tileTexKnight.loadFromFile("src\\tilesets/knightOpti.png");
             tileTexSlime.loadFromFile("src\\tilesets/slime_green.png");
         }
 
@@ -99,8 +99,9 @@ namespace JumperGame.src.manager
                                 entity.AddComponent(coinCollisionComponent);
                                 
                                 break;
-                            case "knight":
-                                destRect = changeRectSize(ref destRect, 2);
+                            case "knightOpti":
+
+                               // destRect = changeRectSize(ref destRect, 2);
                                 entity.Type = "knight";
 
                                 // Create components
