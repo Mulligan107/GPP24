@@ -83,14 +83,15 @@ namespace JumperGame.src.manager
                                 
                                 entity.AddComponent(envPositionComponent); 
                                 entity.AddComponent(envRenderComponent);
-                                if (entity.gid == 1) { entity.AddComponent(envCollisionComponent); }
+                                if (entity.gid == 1 || entity.gid == 3 || entity.gid == 4 || entity.gid == 7 || entity.gid == 8 || entity.gid == 42
+                                    || entity.gid == 43|| entity.gid == 44) { entity.AddComponent(envCollisionComponent); }
                                 
                                 JumperGame._entitySystem.AddEntity(entity);
                                 
                                 break;
                             case "coin":
                                 var coinCollisionComponent = new CollisionComponent(new Vector2(destRect.w, destRect.h));
-                                var coinPhysicsComponent = new PhysicsComponent(1);
+                                var coinPhysicsComponent = new PhysicsComponent(0);
                                 var coinPositionComponent = new PositionComponent(new Vector3(destRect.x, destRect.y, 0));
                                 var coinRenderComponent = new RenderComponent(tileTexCoin, srcRect, destRect);
                                 
