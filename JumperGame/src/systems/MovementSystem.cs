@@ -15,7 +15,7 @@ public class MovementSystem
 
     public void Update(SDL.SDL_Keycode keycode)
     {
-        Console.WriteLine("Pressed");
+        // Console.WriteLine("Pressed");
         foreach (var entity in _entitySystem.GetAllEntities())
         {
             if (entity.HasComponent<PlayerSteeringComponent>() && entity.HasComponent<PhysicsComponent>())
@@ -27,16 +27,16 @@ public class MovementSystem
                 switch (keycode)
                 {
                     case SDL.SDL_Keycode.SDLK_w:
-                        newVelocity.Y = -50;
+                        newVelocity.Y = -250;
                         break;
                     case SDL.SDL_Keycode.SDLK_s:
-                        newVelocity.Y = 50;
+                        newVelocity.Y = 250;
                         break;
                     case SDL.SDL_Keycode.SDLK_a:
-                        newVelocity.X = -50;
+                        newVelocity.X = -250;
                         break;
                     case SDL.SDL_Keycode.SDLK_d:
-                        newVelocity.X = 50;
+                        newVelocity.X = 250;
                         break;
                     default:
                         newVelocity.X = 0;
@@ -51,7 +51,7 @@ public class MovementSystem
     
     public void OnKeyReleased(SDL.SDL_Keycode keycode)
     {
-        Console.WriteLine("Released");
+       // Console.WriteLine("Released");
         foreach (var entity in _entitySystem.GetAllEntities())
         {
             if (entity.HasComponent<PlayerSteeringComponent>() && entity.HasComponent<PhysicsComponent>())

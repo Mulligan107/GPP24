@@ -67,7 +67,7 @@ namespace JumperGame.src.manager
 
                         SDL.SDL_Rect srcRect = new SDL.SDL_Rect { x = rect.X, y = rect.Y, h = rect.Height, w = rect.Width };
 
-
+                        
                         //Console.WriteLine(tileset.Name + ": X: " + rect.X + " Y: " + rect.Y+ " W: " + rect.Width + " H : " + rect.Height);
 
                         switch (tileset.Name)
@@ -77,7 +77,7 @@ namespace JumperGame.src.manager
                               //  foreach (compontNames name in Enum.GetValues(typeof(compontNames)))   // TODO Variable machen
                                 
                                 entity.AddComponent<PhysicsComponent>(new PhysicsComponent(10));
-                                entity.AddComponent<PositionComponent>(new PositionComponent(new Vector3(destRect.x, destRect.y, 0))); // Z Koordiante Layer ableiten
+                                entity.AddComponent<PositionComponent>(new PositionComponent(new Vector3(destRect.x, destRect.y, layer.Id))); // Z Koordiante Layer ableiten
                                 entity.AddComponent<RenderComponent>(new RenderComponent(tileTexEnvi, srcRect, destRect));
 
                                 JumperGame._entitySystem.AddEntity(entity);
