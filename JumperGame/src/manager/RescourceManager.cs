@@ -76,9 +76,6 @@ namespace JumperGame.src.manager
                         switch (tileset.Name)
                         {
                             case "Enviroment":
-                                
-                              //  foreach (compontNames name in Enum.GetValues(typeof(compontNames)))   // TODO Variable machen
-
                                 var envPositionComponent = new PositionComponent(new Vector3(destRect.x, destRect.y, layer.Id));
                                 var envRenderComponent = (new RenderComponent(tileTexEnvi, srcRect, destRect));
                                 var envCollisionComponent = new CollisionComponent(new Vector2(destRect.w, destRect.h));
@@ -88,10 +85,9 @@ namespace JumperGame.src.manager
                                 if (entity.gid == 1) { entity.AddComponent(envCollisionComponent); }
                                 
                                 JumperGame._entitySystem.AddEntity(entity);
-                                break;
-
-                            case "coin":
                                 
+                                break;
+                            case "coin":
                                 var coinCollisionComponent = new CollisionComponent(new Vector2(destRect.w, destRect.h));
                                 var coinPhysicsComponent = new PhysicsComponent(1);
                                 var coinPositionComponent = new PositionComponent(new Vector3(destRect.x, destRect.y, 0));
@@ -102,11 +98,8 @@ namespace JumperGame.src.manager
                                 entity.AddComponent(coinRenderComponent);
                                 entity.AddComponent(coinCollisionComponent);
                                 
-
-                                //SDL.SDL_RenderCopy(gRenderer, tileTexCoin.getTexture(), ref srcRect, ref destRect);
                                 break;
                             case "knight":
-
                                 destRect = changeRectSize(ref destRect, 2);
                                 entity.Type = "knight";
 
@@ -124,19 +117,19 @@ namespace JumperGame.src.manager
                                 entity.AddComponent(renderComponent);
                                 entity.AddComponent(knightCollisionComponent);
                                 
-
-                                //SDL.SDL_RenderCopy(gRenderer, tileTexKnight.getTexture(), ref srcRect, ref destRect);
                                 break;
                             case "slime_green":
-                                //  foreach (compontNames name in Enum.GetValues(typeof(compontNames)))   // TODO Variable machen
-
-                                entity.AddComponent<PhysicsComponent>(new PhysicsComponent(10));
-                                entity.AddComponent<PositionComponent>(new PositionComponent(new Vector3(destRect.x, destRect.y, layer.Id))); // Z Koordiante Layer ableiten
-                                entity.AddComponent<RenderComponent>(new RenderComponent(tileTexSlime, srcRect, destRect));
-
-                                // SDL.SDL_RenderCopy(gRenderer, tileTexEnvi.getTexture(), ref srcRect, ref destRect
+                                var sPhysicsComponent = new PhysicsComponent(10);
+                                var sPositionComponent = new PositionComponent(new Vector3(destRect.x, destRect.y, layer.Id));
+                                var sRenderComponent = new RenderComponent(tileTexSlime, srcRect, destRect);
+                                var sCollisionComponent = new CollisionComponent(new Vector2(destRect.w, destRect.h));
+                                
+                                entity.AddComponent(sPhysicsComponent);
+                                entity.AddComponent(sPositionComponent);
+                                entity.AddComponent(sRenderComponent);
+                                entity.AddComponent(sCollisionComponent);
+                                
                                 break;
-
                         }
                         JumperGame._entitySystem.AddEntity(entity);
 
@@ -150,7 +143,7 @@ namespace JumperGame.src.manager
         }
         static SDL.SDL_Rect changeRectSize(ref SDL.SDL_Rect rect, int num)
         {
-            SDL.SDL_Rect shrunkRect = new SDL.SDL_Rect { x = rect.x - rect.w / 2, y = rect.y - rect.h + 5, w = rect.w * num, h = rect.h * num }; // TODO +5 rausnehmen
+            SDL.SDL_Rect shrunkRect = new SDL.SDL_Rect { x = rect.x - rect.w / 2, y = rect.y - rect.h, w = rect.w * num, h = rect.h * num };
             return shrunkRect;
         }
     }
