@@ -17,6 +17,7 @@ namespace JumperGame.src.manager
         LTexture tileTexEnvi = new LTexture();
         LTexture tileTexCoin = new LTexture();
         LTexture tileTexKnight = new LTexture();
+        LTexture tileTexSlime = new LTexture();
 
         public static IntPtr Font = IntPtr.Zero;
 
@@ -30,6 +31,7 @@ namespace JumperGame.src.manager
             tileTexEnvi.loadFromFile("src\\tilesets/world_tileset.png");
             tileTexCoin.loadFromFile("src\\tilesets/coin.png");
             tileTexKnight.loadFromFile("src\\tilesets/knight.png");
+            tileTexSlime.loadFromFile("src\\tilesets/slime_green.png");
         }
 
         public void loadTiles()
@@ -86,7 +88,11 @@ namespace JumperGame.src.manager
 
                                 JumperGame._entitySystem.AddEntity(entity);
 
+<<<<<<< Updated upstream
                                // SDL.SDL_RenderCopy(gRenderer, tileTexEnvi.getTexture(), ref srcRect, ref destRect);
+=======
+                               // SDL.SDL_RenderCopy(gRenderer, tileTexEnvi.getTexture(), ref srcRect, ref destRect
+>>>>>>> Stashed changes
                                 break;
                             case "coin":
                                 Entity entityC = new Entity(gid);
@@ -126,6 +132,18 @@ namespace JumperGame.src.manager
                                 JumperGame._entitySystem.AddEntity(entityK); //TODO bessere namen
 
                                 //SDL.SDL_RenderCopy(gRenderer, tileTexKnight.getTexture(), ref srcRect, ref destRect);
+                                break;
+                            case "slime_green":
+                                Entity entityS = new Entity(gid);
+                                //  foreach (compontNames name in Enum.GetValues(typeof(compontNames)))   // TODO Variable machen
+
+                                entityS.AddComponent<PhysicsComponent>(new PhysicsComponent(10));
+                                entityS.AddComponent<PositionComponent>(new PositionComponent(new Vector3(destRect.x, destRect.y, layer.Id))); // Z Koordiante Layer ableiten
+                                entityS.AddComponent<RenderComponent>(new RenderComponent(tileTexSlime, srcRect, destRect));
+
+                                JumperGame._entitySystem.AddEntity(entityS);
+
+                                // SDL.SDL_RenderCopy(gRenderer, tileTexEnvi.getTexture(), ref srcRect, ref destRect
                                 break;
                         }
 

@@ -3,6 +3,7 @@
  <tileset firstgid="1" source="../tilesets/Enviroment.tsx"/>
  <tileset firstgid="257" source="../tilesets/coin.tsx"/>
  <tileset firstgid="269" source="../tilesets/knight.tsx"/>
+ <tileset firstgid="333" source="../tilesets/slime_green.tsx"/>
  <layer id="2" name="Background" width="50" height="50">
   <data encoding="base64" compression="zlib">
    eJztz7EJAAAIwDD/H8WDvUHQQUigBzQC7uVCNciHDx8+fPjw4cOHDx8+vn8AAAAAAABzDQrdEP4=
@@ -10,7 +11,7 @@
  </layer>
  <layer id="1" name="Tile Layer 1" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJzt1uENgjAQhuHCBo7gFA6gxgHUMIA4gbqBjMAI7un9aJOGlFBs6RHzPsmX/oDcXUMhGAOs215ykBy1B0l0llwkV+1BEt0kreSuPUiih+QpeWkPMlPtxXlLOp1xktUmvCfktdMeIJOTXafOShVRq4uos5TGrqH+VczwHs33J7b3JqJOaC3l135jz0rrXMX23Waul5vfN8e3aw37cN+uue/3WL2S/L7N4NrUfty/iX9fyX30NtVC6QdZyqdwAAAAAAAAAAD4B19y1h4l
+   eJzt1u8NgjAQh2FgA0dwCgZQ42ejhgHUCdQNZARGcE/vQ0kqgdB/9Ix5n+SXxkDurkiNRQH8to1kK9lpDxLpKDlJztqDRLpIrpKb9iCeDuX357vkIXlqDBOhstJ7SVqdcaJVxfiekFZt1uE5CJWqjq+9WefeFZfxWoc6S2nMOta/9Hy2mufHtffKoc7Ymktov6nvSuu9cu27TlwvNbtvPXlXWL2c7L79b5fv+Z6ql5Pdtxlcm9tP/9/Evi/nPjqTcqF0gyzlnTkAAAAAAAAAAPyDDzsMHxs=
   </data>
  </layer>
  <layer id="4" name="Entities" width="50" height="50">

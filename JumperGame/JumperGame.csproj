@@ -83,6 +83,9 @@
     <None Update="src\tilesets\bg.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="src\tilesets\slime_purple.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="src\worlds\testWorld.tmx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -151,10 +154,19 @@
     <Content Include="src\tilesets\Enviroment.tsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="src\tilesets\fruit.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="src\tilesets\knight.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="src\tilesets\knight.tsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="src\tilesets\slime_green.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="src\tilesets\slime_green.tsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="src\tilesets\world_tileset.png">
@@ -193,8 +205,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="C:\Users\kawab\.nuget\packages\sayers.sdl2.core\1.0.11\build\win_x64\zlib1.dll" />
+    <None Remove="src\tilesets\fruit.png" />
     <None Remove="src\tilesets\knight.png" />
     <None Remove="src\tilesets\knight.tsx" />
+    <None Remove="src\tilesets\slime_green.png" />
+    <None Remove="src\tilesets\slime_green.tsx" />
   </ItemGroup>
   <ItemGroup>
     <NativeSayersSDL2CoreLibs Remove="libjpeg-9.dll" />
