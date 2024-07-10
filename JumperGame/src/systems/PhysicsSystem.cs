@@ -45,9 +45,10 @@ namespace JumperGame.systems
 
                             if (otherPositionComponent != null && otherCollisionComponent != null)
                             {
+                                //just checks if it collides
                                 if (IsColliding(newPosition, collisionComponent.Size, otherPositionComponent.Position, otherCollisionComponent.Size))
                                 {
-                                    //Actual calculation on what to do on case of collision is done in Resolve Collision
+                                    //Actual calculation on what to do in case of collision is done in Resolve Collision
                                     ResolveCollision(physicsComponent, positionComponent, collisionComponent, otherPositionComponent, otherCollisionComponent, ref newPosition);
                                     break;
                                 }
