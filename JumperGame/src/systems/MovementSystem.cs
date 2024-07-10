@@ -15,7 +15,7 @@ public class MovementSystem
 
     public void Update(SDL.SDL_Keycode keycode)
     {
-        Console.WriteLine("Pressed");
+        //Console.WriteLine("Pressed");
         foreach (var entity in _entitySystem.GetAllEntities())
         {
             if (entity.HasComponent<PlayerSteeringComponent>() && entity.HasComponent<PhysicsComponent>())
@@ -51,7 +51,7 @@ public class MovementSystem
     
     public void OnKeyReleased(SDL.SDL_Keycode keycode)
     {
-        Console.WriteLine("Released");
+        //Console.WriteLine("Released");
         foreach (var entity in _entitySystem.GetAllEntities())
         {
             if (entity.HasComponent<PlayerSteeringComponent>() && entity.HasComponent<PhysicsComponent>())

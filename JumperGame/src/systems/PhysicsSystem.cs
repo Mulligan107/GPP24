@@ -6,13 +6,17 @@ using JumperGame.gameEntities;
 
 namespace JumperGame.systems;
 
+
 public class PhysicsSystem
 {
-    
-    private const float Gravity = 0f; // Simplified gravity constant
+    private const float Gravity = 10f; // Simplified gravity constant
+    private const double MaxDeltaTime = 0.1; // Max allowed deltaTime to prevent large initial steps or in this case the initial error value of (720407.368180856) why tf does it do this
 
     public void Update(IEnumerable<Entity> entities, double deltaTime)
     {
+        // Clamp deltaTime to a maximum value
+        deltaTime = Math.Min(deltaTime, MaxDeltaTime);
+
         foreach (var entity in entities)
         {
             var physicsComponent = entity.GetComponent<PhysicsComponent>();
@@ -29,7 +33,7 @@ public class PhysicsSystem
                 if (positionComponent != null)
                 {
                     positionComponent.Position += physicsComponent.Velocity * (float)deltaTime;
-    
+
                     // Update the dstRect in RenderComponent
                     var renderComponent = entity.GetComponent<RenderComponent>();
                     if (renderComponent != null)
@@ -50,7 +54,6 @@ public class PhysicsSystem
         }
     }
 
-    
     public bool Initialize()
     {
         return true; // or false

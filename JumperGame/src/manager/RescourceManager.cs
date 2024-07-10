@@ -76,7 +76,6 @@ namespace JumperGame.src.manager
                                 Entity entity = new Entity(gid);
                               //  foreach (compontNames name in Enum.GetValues(typeof(compontNames)))   // TODO Variable machen
                                 
-                                entity.AddComponent<PhysicsComponent>(new PhysicsComponent(10));
                                 entity.AddComponent<PositionComponent>(new PositionComponent(new Vector3(destRect.x, destRect.y, 0))); // Z Koordiante Layer ableiten
                                 entity.AddComponent<RenderComponent>(new RenderComponent(tileTexEnvi, srcRect, destRect));
 
@@ -107,7 +106,7 @@ namespace JumperGame.src.manager
                                 };
 
                                 // Create components
-                                var physicsComponent = new PhysicsComponent(10);
+                                var physicsComponent = new PhysicsComponent(1);
                                 var playerSteeringComponent = new PlayerSteeringComponent(physicsComponent);
                                 var positionComponent = new PositionComponent(new Vector3(destRect.x, destRect.y, 0));
                                 var renderComponent = new RenderComponent(tileTexKnight, srcRect, destRect);
