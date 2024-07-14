@@ -92,6 +92,8 @@ namespace JumperGame.src.manager
             }
 
 
+            SDL.SDL_RenderSetScale(gRenderer, 3f, 3f);
+
             //Render background
 
             bg.render(0, 0, camera);
@@ -120,7 +122,7 @@ namespace JumperGame.src.manager
 
             //Render objects
             
-
+            
 
             timerTexture = changeText(timerTexture, "Delta: " + dt.ToString("F3") + "\n Timer: " + timeElapsed.ToString("F3"));
             timerTexture.render(10, 10);
@@ -128,7 +130,7 @@ namespace JumperGame.src.manager
             SDL.SDL_RenderPresent(gRenderer);
         }
 
-
+        
 
         static LTexture changeText(LTexture Ltex, String text)
         {
@@ -153,7 +155,7 @@ namespace JumperGame.src.manager
             else
             {
                 //Set texture filtering to linear
-                if (SDL.SDL_SetHint(SDL.SDL_HINT_RENDER_SCALE_QUALITY, "1") == SDL.SDL_bool.SDL_FALSE)
+                if (SDL.SDL_SetHint(SDL.SDL_HINT_RENDER_SCALE_QUALITY, "0") == SDL.SDL_bool.SDL_FALSE)
                 {
                     Console.WriteLine("Warning: Linear texture filtering not enabled!");
                 }
