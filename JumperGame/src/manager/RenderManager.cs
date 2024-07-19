@@ -68,8 +68,8 @@ namespace JumperGame.src.manager
             var s = ScreenWidth / ScreenHeight;
 
             //Center the camera over the dot
-            camera.x = (int)(newPosi.x + newPosi.w / 2) - camera.w / 2;
-            camera.y = (int)(newPosi.y + newPosi.h / 2) - camera.h / 2;
+            camera.x = (int)(newPosi.x + newPosi.w / 2) - (camera.w / 2 ) / 3; // TODO (/3) mit variable ersetzen
+            camera.y = (int)(newPosi.y + newPosi.h / 2) - (camera.h / 2) / 3;
 
             //Console.WriteLine("CAM: " + camera.x);
             
@@ -93,7 +93,7 @@ namespace JumperGame.src.manager
             }
 
 
-            SDL.SDL_RenderSetScale(gRenderer, 3f, 3f);
+            SDL.SDL_RenderSetScale(gRenderer, 3f, 3f); // TODO 3 mit variable ersetzen ; Mausrad?
 
             //Render background
 
