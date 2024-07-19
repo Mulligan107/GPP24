@@ -80,12 +80,12 @@ namespace JumperGame.src.manager
                             case "Enviroment":
                                 var envPositionComponent = new PositionComponent(new Vector3(destRect.x, destRect.y, layer.Id));
                                 var envRenderComponent = (new RenderComponent(tileTexEnvi, srcRect, destRect));
-                         //       var envCollisionComponent = new CollisionComponent(new Vector2(destRect.w, destRect.h));
+                                var envCollisionComponent = new CollisionComponent(new Vector2(destRect.w, destRect.h));
                                 
                                 entity.AddComponent(envPositionComponent); 
                                 entity.AddComponent(envRenderComponent);
-                         //       if (entity.gid == 1 || entity.gid == 3 || entity.gid == 4 || entity.gid == 7 || entity.gid == 8 || entity.gid == 42
-                         //           || entity.gid == 43|| entity.gid == 44) { entity.AddComponent(envCollisionComponent); }
+                                if (entity.gid == 1 || entity.gid == 3 || entity.gid == 4 || entity.gid == 7 || entity.gid == 8 || entity.gid == 42
+                                    || entity.gid == 43|| entity.gid == 44) { entity.AddComponent(envCollisionComponent); }
                                 
                                 JumperGame._entitySystem.AddEntity(entity);
                                 
@@ -104,13 +104,13 @@ namespace JumperGame.src.manager
 
                                 foreach (TiledTile till in tileset.Tiles)
                                 {
-                                    if (till.Id == 0)
-                                    {
-                                        Console.WriteLine("CoinCounter: " + coinCounter);
-                                        Console.WriteLine("Anzahl: " + till.Animations.Length);
-                                        var annie = till.Animations;
-                                        entity.AddComponent(new AnimationComponent(annie));
-                                    }
+                                    //Console.WriteLine("TILE ID " + till.Id);
+                                   // Console.WriteLine(till.Animations.ToString());
+                                    // Console.WriteLine("CoinCounter: " + coinCounter);
+                                    //  Console.WriteLine("Anzahl: " + till.Animations.Length);
+                                    var annie = till.Animations;
+                                    entity.AddComponent(new AnimationComponent(annie, srcRect));
+                                    
                                 }
 
                                 //      entity.AddComponent(coinCollisionComponent);
@@ -122,7 +122,7 @@ namespace JumperGame.src.manager
                                 entity.Type = "knight";
 
                                 // Create components
-                     //           var knightCollisionComponent = new CollisionComponent(new Vector2(destRect.w, destRect.h));
+                                var knightCollisionComponent = new CollisionComponent(new Vector2(destRect.w, destRect.h));
                                 var physicsComponent = new PhysicsComponent(40);
                                 var playerSteeringComponent = new PlayerSteeringComponent(physicsComponent);
                                 var positionComponent = new PositionComponent(new Vector3(destRect.x, destRect.y, 0));
@@ -136,7 +136,7 @@ namespace JumperGame.src.manager
                                 entity.AddComponent(playerSteeringComponent);
                                 entity.AddComponent(positionComponent);
                                 entity.AddComponent(renderComponent);
-                     //           entity.AddComponent(knightCollisionComponent);
+                                entity.AddComponent(knightCollisionComponent);
                                 
                                 break;
                             case "slime_green":

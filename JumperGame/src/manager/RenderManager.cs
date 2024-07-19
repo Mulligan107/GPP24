@@ -17,6 +17,7 @@ using JumperGame.components;
 using System.Numerics;
 using System.Security.Cryptography;
 using System.ComponentModel.DataAnnotations;
+using JumperGame.src.components;
 
 namespace JumperGame.src.manager
 {
@@ -42,7 +43,7 @@ namespace JumperGame.src.manager
 
         LTexture timerTexture = new LTexture();
         LTexture bg = new LTexture();
-        int counter = 0;
+        double counter = 0;
 
         public static IntPtr Font = IntPtr.Zero;
 
@@ -101,10 +102,46 @@ namespace JumperGame.src.manager
             foreach (Entity enti in JumperGame._entitySystem.GetAllEntities())
             {
                 var renderComponent = enti.GetComponent<RenderComponent>();
+                var animationComponent = enti.GetComponent<AnimationComponent>();
+
+                
+
                 if (renderComponent != null)
                 {
                     SDL.SDL_Rect src = renderComponent.srcRect;
                     SDL.SDL_Rect dst = renderComponent.dstRect;
+
+                    // ---------- AnimationManager?
+
+                    if (animationComponent != null) 
+                    {
+                        SDL.SDL_Rect loopSrc =  animationComponent.Update(timeElapsed);
+
+
+                        Console.WriteLine(timeElapsed + " > " + counter + " + " + (animationComponent.duration / 100));
+
+
+                        if (timeElapsed > counter - 2)
+                        {
+                            counter = timeElapsed + (animationComponent.duration / 100);
+ 
+                            if (animationComponent.animationFrame < animationComponent.AnimimationList.Length)
+                            {
+                                animationComponent.animationFrame++;
+                            }
+                            else
+                            {
+                                animationComponent.animationFrame = 1;
+                            }
+                        }
+
+                            
+                        
+
+                        src = loopSrc;
+                    }
+                    // ---------- AnimationManager?
+
 
                     SDL.SDL_Rect adjustedDst = new SDL.SDL_Rect
                     {

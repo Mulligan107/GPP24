@@ -1,5 +1,7 @@
-﻿using System;
+﻿using SDL2;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Numerics;
 using System.Text;
@@ -10,12 +12,29 @@ namespace JumperGame.src.components
 {
     class AnimationComponent
     {
-        TiledTileAnimation[] AnimimationList { get; set; }
+        public TiledTileAnimation[] AnimimationList { get; set; }
+        public int animationFrame {  get; set; }
+        public SDL.SDL_Rect srcRect { get; set; }
+        public int duration { get; set; }
+        public double outerTimer { get; set; }
 
-        public AnimationComponent(TiledTileAnimation[] animationList) {
+        public AnimationComponent(TiledTileAnimation[] animationList, SDL.SDL_Rect src) {
             AnimimationList = animationList;
-           // Console.WriteLine("Anzahl: " + AnimimationList.Length);
-          
+            duration = AnimimationList[0].Duration; // TODO -- NICHT IMMER 0 !!
+            srcRect = src;
+            outerTimer = SDL.SDL_GetPerformanceCounter() / (double)SDL.SDL_GetPerformanceFrequency();
+            animationFrame = 1;
+            // Console.WriteLine("Anzahl: " + AnimimationList.Length);
+        }
+
+        public SDL.SDL_Rect Update(double time)
+        {
+            SDL.SDL_Rect loopRect = new SDL.SDL_Rect();
+            loopRect = srcRect;
+
+            loopRect.x = srcRect.w * animationFrame;
+
+            return loopRect;
         }
     }
    
