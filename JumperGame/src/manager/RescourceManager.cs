@@ -37,6 +37,7 @@ namespace JumperGame.src.manager
 
         public void loadTiles()
         {
+            var coinCounter = 0;
             var tileLayers = map.Layers.Where(x => x.Type == TiledLayerType.TileLayer);
 
             foreach (var layer in tileLayers)
@@ -79,27 +80,41 @@ namespace JumperGame.src.manager
                             case "Enviroment":
                                 var envPositionComponent = new PositionComponent(new Vector3(destRect.x, destRect.y, layer.Id));
                                 var envRenderComponent = (new RenderComponent(tileTexEnvi, srcRect, destRect));
-                                var envCollisionComponent = new CollisionComponent(new Vector2(destRect.w, destRect.h));
+                         //       var envCollisionComponent = new CollisionComponent(new Vector2(destRect.w, destRect.h));
                                 
                                 entity.AddComponent(envPositionComponent); 
                                 entity.AddComponent(envRenderComponent);
-                                if (entity.gid == 1 || entity.gid == 3 || entity.gid == 4 || entity.gid == 7 || entity.gid == 8 || entity.gid == 42
-                                    || entity.gid == 43|| entity.gid == 44) { entity.AddComponent(envCollisionComponent); }
+                         //       if (entity.gid == 1 || entity.gid == 3 || entity.gid == 4 || entity.gid == 7 || entity.gid == 8 || entity.gid == 42
+                         //           || entity.gid == 43|| entity.gid == 44) { entity.AddComponent(envCollisionComponent); }
                                 
                                 JumperGame._entitySystem.AddEntity(entity);
                                 
                                 break;
                             case "coin":
-                                var coinCollisionComponent = new CollisionComponent(new Vector2(destRect.w, destRect.h));
+                            //    var coinCollisionComponent = new CollisionComponent(new Vector2(destRect.w, destRect.h));
                                 var coinPhysicsComponent = new PhysicsComponent(0);
                                 var coinPositionComponent = new PositionComponent(new Vector3(destRect.x, destRect.y, 0));
                                 var coinRenderComponent = new RenderComponent(tileTexCoin, srcRect, destRect);
                                 
                                 entity.AddComponent(coinPhysicsComponent);
-                                entity.AddComponent(coinPositionComponent); 
+                                entity.AddComponent(coinPositionComponent);
                                 entity.AddComponent(coinRenderComponent);
-                                entity.AddComponent(coinCollisionComponent);
-                                
+
+                                coinCounter++;
+
+                                foreach (TiledTile till in tileset.Tiles)
+                                {
+                                    if (till.Id == 0)
+                                    {
+                                        Console.WriteLine("CoinCounter: " + coinCounter);
+                                        Console.WriteLine("Anzahl: " + till.Animations.Length);
+                                        var annie = till.Animations;
+                                        entity.AddComponent(new AnimationComponent(annie));
+                                    }
+                                }
+
+                                //      entity.AddComponent(coinCollisionComponent);
+
                                 break;
                             case "knightOpti":
 
@@ -107,20 +122,13 @@ namespace JumperGame.src.manager
                                 entity.Type = "knight";
 
                                 // Create components
-                                var knightCollisionComponent = new CollisionComponent(new Vector2(destRect.w, destRect.h));
+                     //           var knightCollisionComponent = new CollisionComponent(new Vector2(destRect.w, destRect.h));
                                 var physicsComponent = new PhysicsComponent(40);
                                 var playerSteeringComponent = new PlayerSteeringComponent(physicsComponent);
                                 var positionComponent = new PositionComponent(new Vector3(destRect.x, destRect.y, 0));
                                 var renderComponent = new RenderComponent(tileTexKnight, srcRect, destRect);
                                 //var animationComponent = new AnimationComponent(tileset.)
-                                foreach (TiledTile till in tileset.Tiles)
-                                {
-                                    if (till.Id == 0)
-                                    {
-                                        var annie = till.Animations;
-                                        Console.WriteLine(annie.ToString());
-                                    }
-                                }
+                                
 
 
                                 // Add components to the entity
@@ -128,19 +136,19 @@ namespace JumperGame.src.manager
                                 entity.AddComponent(playerSteeringComponent);
                                 entity.AddComponent(positionComponent);
                                 entity.AddComponent(renderComponent);
-                                entity.AddComponent(knightCollisionComponent);
+                     //           entity.AddComponent(knightCollisionComponent);
                                 
                                 break;
                             case "slime_green":
                                 var sPhysicsComponent = new PhysicsComponent(10);
                                 var sPositionComponent = new PositionComponent(new Vector3(destRect.x, destRect.y, layer.Id));
                                 var sRenderComponent = new RenderComponent(tileTexSlime, srcRect, destRect);
-                                var sCollisionComponent = new CollisionComponent(new Vector2(destRect.w, destRect.h));
+                    //            var sCollisionComponent = new CollisionComponent(new Vector2(destRect.w, destRect.h));
                                 
                                 entity.AddComponent(sPhysicsComponent);
                                 entity.AddComponent(sPositionComponent);
                                 entity.AddComponent(sRenderComponent);
-                                entity.AddComponent(sCollisionComponent);
+                     //           entity.AddComponent(sCollisionComponent);
                                 
                                 break;
                         }
