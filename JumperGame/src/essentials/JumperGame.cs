@@ -105,6 +105,8 @@ namespace JumperGame
                     timerNew = SDL.SDL_GetPerformanceCounter();
 
 
+                    _movementSystem.UpdatePlayerState();
+
                     while (SDL.SDL_PollEvent(out e) != 0)
                     {
                         // Process the input events
@@ -119,7 +121,7 @@ namespace JumperGame
                 _rendering.Update(deltaTime, timerCurrent);
                     
                     
-                    _entitySystem.Update(deltaTime);
+                    _entitySystem.Update(deltaTime,timerCurrent);
                     
                     // _audio.Update();
                     // _input.Update();

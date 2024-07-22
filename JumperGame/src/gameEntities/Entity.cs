@@ -9,6 +9,22 @@ public class Entity
     public int gid { get; set; }
     public string Type { get; set; }
 
+    public enum STATE
+    {
+        SPAWN,
+        IDLE,
+        WALKLEFT,
+        WALKRIGHT,
+        JUMP,
+        AIRTIME,
+        LANDING,
+        ATTACK,
+        HIT,
+        DEATH
+    }
+
+    public STATE activeSTATE;
+
     // This method is used to add a component to the entity
 
     public Entity(int nameId) { 

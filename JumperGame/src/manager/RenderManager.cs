@@ -44,6 +44,7 @@ namespace JumperGame.src.manager
         LTexture timerTexture = new LTexture();
         LTexture bg = new LTexture();
         double counter = 0;
+        int frame = 1;
 
         public static IntPtr Font = IntPtr.Zero;
 
@@ -108,35 +109,44 @@ namespace JumperGame.src.manager
 
                 if (renderComponent != null)
                 {
+
                     SDL.SDL_Rect src = renderComponent.srcRect;
                     SDL.SDL_Rect dst = renderComponent.dstRect;
 
                     // ---------- AnimationManager?
+                    if (enti == player)
+                    {
+                        Console.WriteLine("RENDERMANAGER/ STATE: " + enti.activeSTATE);
+                        Console.WriteLine("RENDERMANAGER/ GROUNDED: " + player.GetComponent<PhysicsComponent>().Grounded);
+                    }
+
 
                     if (animationComponent != null) 
                     {
-                        SDL.SDL_Rect loopSrc =  animationComponent.Update(timeElapsed);
+                        
 
 
-                        Console.WriteLine(timeElapsed + " > " + counter + " + " + (animationComponent.duration / 100));
 
 
-                        if (timeElapsed > counter - 2)
+
+                    if (timeElapsed > counter)
                         {
-                            counter = timeElapsed + (animationComponent.duration / 100);
- 
-                            if (animationComponent.animationFrame < animationComponent.AnimimationList.Length)
-                            {
-                                animationComponent.animationFrame++;
-                            }
-                            else
-                            {
-                                animationComponent.animationFrame = 1;
-                            }
+                            counter = timeElapsed + animationComponent.duration * 0.0005;
+                            frame++;
                         }
 
-                            
-                        
+                    if (animationComponent.animationFrame < animationComponent.AnimimationList.Length-1)
+                        {
+                            animationComponent.animationFrame = frame;
+                        }
+                    else
+                        {
+                            animationComponent.animationFrame = 1;
+                            frame = 1;
+                        }
+
+                        SDL.SDL_Rect loopSrc = animationComponent.Update(timeElapsed);
+
 
                         src = loopSrc;
                     }

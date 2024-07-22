@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,9 +12,11 @@ namespace JumperGame.src.manager
     {
         private List<Entity> _entities;
         
+
         public entitySystem()
         {
             _entities = new List<Entity>();
+            
         }
 
         public bool Initialize()
@@ -37,9 +40,9 @@ namespace JumperGame.src.manager
             return _entities;
         }
 
-        public void Update(double deltaTime)
+        public void Update(double deltaTime, double timeElapsed)
         {
-            // Update logic for entities if necessary
+            
         }
 
         public Entity GetEntityByGID(int gid) {

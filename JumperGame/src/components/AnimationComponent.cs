@@ -13,17 +13,17 @@ namespace JumperGame.src.components
     class AnimationComponent
     {
         public TiledTileAnimation[] AnimimationList { get; set; }
-        public int animationFrame {  get; set; }
+        public int animationFrame { get; set; }
         public SDL.SDL_Rect srcRect { get; set; }
         public int duration { get; set; }
         public double outerTimer { get; set; }
+
+        
 
         public AnimationComponent(TiledTileAnimation[] animationList, SDL.SDL_Rect src) {
             AnimimationList = animationList;
             duration = AnimimationList[0].Duration; // TODO -- NICHT IMMER 0 !!
             srcRect = src;
-            outerTimer = SDL.SDL_GetPerformanceCounter() / (double)SDL.SDL_GetPerformanceFrequency();
-            animationFrame = 1;
             // Console.WriteLine("Anzahl: " + AnimimationList.Length);
         }
 
@@ -31,7 +31,6 @@ namespace JumperGame.src.components
         {
             SDL.SDL_Rect loopRect = new SDL.SDL_Rect();
             loopRect = srcRect;
-
             loopRect.x = srcRect.w * animationFrame;
 
             return loopRect;

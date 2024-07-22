@@ -49,12 +49,14 @@ namespace JumperGame.systems
                                 if (IsColliding(newPosition, collisionComponent.Size, otherPositionComponent.Position, otherCollisionComponent.Size))
                                 {
                                     //Actual calculation on what to do in case of collision is done in Resolve Collision
-                                    ResolveCollision(physicsComponent, positionComponent, collisionComponent, otherPositionComponent, otherCollisionComponent, ref newPosition);
+                                    ResolveCollision(physicsComponent, positionComponent, collisionComponent, otherPositionComponent, otherCollisionComponent, ref newPosition, otherEntity);
                                     break;
                                 }
                             }
                         }
                     }
+
+                    
 
                     // Update entity position
                     positionComponent.Position = newPosition;
@@ -86,7 +88,7 @@ namespace JumperGame.systems
          *  - If the vertical overlap is smaller, it resolves the collision vertically and stops vertical movement.
          */
         private void ResolveCollision(PhysicsComponent physicsComponent, PositionComponent positionComponent, CollisionComponent collisionComponent,
-            PositionComponent otherPositionComponent, CollisionComponent otherCollisionComponent, ref Vector3 newPosition)
+            PositionComponent otherPositionComponent, CollisionComponent otherCollisionComponent, ref Vector3 newPosition, Entity enti)
         {
             // Calculate overlap in both axes
             float overlapX = Math.Min(newPosition.X + collisionComponent.Size.X, otherPositionComponent.Position.X + otherCollisionComponent.Size.X) - 
@@ -120,6 +122,8 @@ namespace JumperGame.systems
                     //if hit from below
                     newPosition.Y = otherPositionComponent.Position.Y - collisionComponent.Size.Y;
                     physicsComponent.Grounded = true;  //if the player hits from below he can jump again
+                    enti.activeSTATE = Entity.STATE.LANDING;
+                    
                 }
                 physicsComponent.Velocity = new Vector3(physicsComponent.Velocity.X, 0, 0); // Stop vertical movement
             }
