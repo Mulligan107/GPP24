@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using JumperGame.src.components.testComponents;
 using SDL2;
 using System.Text.RegularExpressions;
 using System.Timers;
@@ -38,8 +37,6 @@ namespace JumperGame.src.manager
         public static IntPtr gRenderer = IntPtr.Zero;
         //The window we'll be rendering to
         public static IntPtr gWindow = IntPtr.Zero;
-        
-        private ColorComponent _colorComponent;
 
         LTexture timerTexture = new LTexture();
         LTexture bg = new LTexture();
@@ -48,17 +45,14 @@ namespace JumperGame.src.manager
 
         public static IntPtr Font = IntPtr.Zero;
 
-        public RenderManager(ColorComponent colorComponent)
+        public RenderManager()
         {
-            _colorComponent = colorComponent;
-            _colorComponent.CurrentColor = new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 };
             Initialize();
         }
         
         public void Update(double dt, double timeElapsed)
         {
             SDL.SDL_RenderClear(gRenderer);
-            SDL.SDL_SetRenderDrawColor(gRenderer, _colorComponent.CurrentColor.r, _colorComponent.CurrentColor.g, _colorComponent.CurrentColor.b, _colorComponent.CurrentColor.a);
 
             SDL.SDL_Rect camera = new SDL.SDL_Rect { w = ScreenWidth, h = ScreenHeight };
 

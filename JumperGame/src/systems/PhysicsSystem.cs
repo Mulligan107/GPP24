@@ -68,6 +68,8 @@ namespace JumperGame.systems
                     {
                         renderComponent.UpdateDstRect(positionComponent.Position);
                     }
+                    
+                    
                 }
             }
         }
