@@ -78,20 +78,26 @@ namespace JumperGame.src.manager
                         switch (tileset.Name)
                         {
                             case "Enviroment":
+                                entity.Type = Entity.EntityType.Tile;
+                                
                                 var envPositionComponent = new PositionComponent(new Vector3(destRect.x, destRect.y, layer.Id));
-                                var envRenderComponent = (new RenderComponent(tileTexEnvi, srcRect, destRect));
+                                var envRenderComponent = new RenderComponent(tileTexEnvi, srcRect, destRect);
                                 var envCollisionComponent = new CollisionComponent(new Vector2(destRect.w, destRect.h));
                                 
                                 entity.AddComponent(envPositionComponent); 
                                 entity.AddComponent(envRenderComponent);
+                                
+                                //TODO: diesen mist hier ändern das hier ist nur ne temporäre lösung 
                                 if (entity.gid == 1 || entity.gid == 3 || entity.gid == 4 || entity.gid == 7 || entity.gid == 8 || entity.gid == 42
                                     || entity.gid == 43|| entity.gid == 44) { entity.AddComponent(envCollisionComponent); }
                                 
-                                JumperGame._entitySystem.AddEntity(entity);
+                                //JumperGame._entitySystem.AddEntity(entity);
                                 
                                 break;
                             case "coin":
                             //    var coinCollisionComponent = new CollisionComponent(new Vector2(destRect.w, destRect.h));
+                                 entity.Type = Entity.EntityType.Coin;
+                            
                                 var coinPhysicsComponent = new PhysicsComponent(0);
                                 var coinPositionComponent = new PositionComponent(new Vector3(destRect.x, destRect.y, 0));
                                 var coinRenderComponent = new RenderComponent(tileTexCoin, srcRect, destRect);
@@ -110,7 +116,6 @@ namespace JumperGame.src.manager
                                     //  Console.WriteLine("Anzahl: " + till.Animations.Length);
                                     var annie = till.Animations;
                                     entity.AddComponent(new AnimationComponent(annie, srcRect));
-                                    
                                 }
 
                                 //      entity.AddComponent(coinCollisionComponent);
@@ -119,7 +124,7 @@ namespace JumperGame.src.manager
                             case "knightOpti":
 
                                // destRect = changeRectSize(ref destRect, 2);
-                                entity.Type = "knight";
+                                entity.Type = Entity.EntityType.Player;
 
                                 // Create components
                                 var knightCollisionComponent = new CollisionComponent(new Vector2(destRect.w, destRect.h));
@@ -140,6 +145,8 @@ namespace JumperGame.src.manager
                                 
                                 break;
                             case "slime_green":
+                                entity.Type = Entity.EntityType.Enemy;
+                                
                                 var sPhysicsComponent = new PhysicsComponent(10);
                                 var sPositionComponent = new PositionComponent(new Vector3(destRect.x, destRect.y, layer.Id));
                                 var sRenderComponent = new RenderComponent(tileTexSlime, srcRect, destRect);

@@ -7,7 +7,7 @@ public class Entity
 {
     private readonly Dictionary<Type, object> _components = new Dictionary<Type, object>();
     public int gid { get; set; }
-    public string Type { get; set; }
+    public EntityType Type { get; set; }
 
     public enum STATE
     {
@@ -24,8 +24,14 @@ public class Entity
     }
 
     public STATE activeSTATE;
-
-    // This method is used to add a component to the entity
+    
+    public enum EntityType
+    {
+        Player,
+        Tile,
+        Coin,
+        Enemy
+    }
 
     public Entity(int nameId) { 
         gid = nameId;
