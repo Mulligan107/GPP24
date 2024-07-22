@@ -91,8 +91,6 @@ namespace JumperGame.src.manager
                                 if (entity.gid == 1 || entity.gid == 3 || entity.gid == 4 || entity.gid == 7 || entity.gid == 8 || entity.gid == 42
                                     || entity.gid == 43|| entity.gid == 44) { entity.AddComponent(envCollisionComponent); }
                                 
-                                //JumperGame._entitySystem.AddEntity(entity);
-                                
                                 break;
                             case "coin":
                             //    var coinCollisionComponent = new CollisionComponent(new Vector2(destRect.w, destRect.h));
