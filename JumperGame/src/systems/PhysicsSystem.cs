@@ -18,6 +18,8 @@ namespace JumperGame.systems
 
             foreach (var entity in entities)
             {
+                if (entity.Type != Entity.EntityType.Player && entity.Type != Entity.EntityType.Tile) continue; //C# ist geil
+                
                 var physicsComponent = entity.GetComponent<PhysicsComponent>();
                 var positionComponent = entity.GetComponent<PositionComponent>();
                 var collisionComponent = entity.GetComponent<CollisionComponent>();
@@ -34,8 +36,7 @@ namespace JumperGame.systems
                     var newPosition = positionComponent.Position + physicsComponent.Velocity * (float)deltaTime;
 
                     // Check for collisions if the entity has a CollisionComponent
-                    if (collisionComponent != null)
-                    {
+                    if (collisionComponent != null && entity.Type == Entity.EntityType.Player)                    {
                         foreach (var otherEntity in entities)
                         {
                             if (otherEntity == entity) continue;
