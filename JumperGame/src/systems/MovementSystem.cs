@@ -29,7 +29,7 @@ public class MovementSystem
                 var physics = entity.GetComponent<PhysicsComponent>();
                 var renderer = entity.GetComponent<RenderComponent>();
 
-                
+                Vector3 newVelocity = physics.Velocity;
 
                 if (physics.Grounded)
                 {
@@ -39,22 +39,23 @@ public class MovementSystem
                 switch (keycode)
                 {
                     case SDL.SDL_Keycode.SDLK_w:
-                        if (physics.Grounded)
-                        {
-                            entity.activeSTATE = Entity.STATE.JUMP;
-                        }
+                        entity.activeSTATE = Entity.STATE.JUMP;
+                        newVelocity.Y = -250;
                         break;
                     case SDL.SDL_Keycode.SDLK_s:                       
                         break;
                     case SDL.SDL_Keycode.SDLK_a:
                         renderer.flip = SDL.SDL_RendererFlip.SDL_FLIP_HORIZONTAL;
+                        newVelocity.X = -250;
                         if (physics.Grounded)
                         {
                             entity.activeSTATE = Entity.STATE.WALKLEFT;
+
                         }
                         break;
                     case SDL.SDL_Keycode.SDLK_d:
                         renderer.flip = SDL.SDL_RendererFlip.SDL_FLIP_NONE;
+                        newVelocity.X = 250;
                         if (physics.Grounded)
                         {
                             entity.activeSTATE = Entity.STATE.WALKRIGHT;
@@ -65,13 +66,16 @@ public class MovementSystem
                         {
 
                             entity.activeSTATE = Entity.STATE.JUMP;
-
+                            newVelocity.Y = -250;
 
                             physics.Grounded = false;
                             
                         }
                         break;
+
+
                 }
+                physics.Velocity = newVelocity;
             }
         }
     }
@@ -85,27 +89,12 @@ public class MovementSystem
         switch (player.activeSTATE)
         {
             case Entity.STATE.JUMP:
-                newVelocity.Y = -250;
                 break;
             case Entity.STATE.WALKLEFT:
-                newVelocity.X = -200;
                 break;
             case Entity.STATE.WALKRIGHT:
-                newVelocity.X = 200;
                 break;
             case Entity.STATE.IDLE:
-                if (newVelocity.X > 0)
-                {
-                    newVelocity.X -= 5;
-                }
-                if (newVelocity.X < 0)
-                {
-                    newVelocity.X += 5;
-                }
-                if (Enumerable.Range(-5, 5).Contains((int)newVelocity.X))
-                {
-                    newVelocity.X = 0;
-                }
                 break;
             case Entity.STATE.AIRTIME:
                 
@@ -120,8 +109,6 @@ public class MovementSystem
 
         }
 
-
-        physics.Velocity = newVelocity;
 
     }
         
@@ -153,6 +140,7 @@ public class MovementSystem
                         break;
                 case SDL.SDL_Keycode.SDLK_a:
                 case SDL.SDL_Keycode.SDLK_d:
+                        newVelocity.X = 0;
                         if (physics.Grounded)
                         {
                             entity.activeSTATE = Entity.STATE.IDLE;
