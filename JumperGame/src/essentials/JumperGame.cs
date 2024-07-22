@@ -26,14 +26,15 @@ namespace JumperGame
         public PlayerSteeringComponent _playerSteeringComponent;
         
         public bool IsRunning;
+        public bool IsReset;
 
         static int Main(string[] args)
         {
             JumperGame game = new JumperGame();
-            
+
             //Initialize the game
             game.InitializeSystems();
-            
+
             // Start the game loop
             game.Run();
 

@@ -117,17 +117,12 @@ namespace JumperGame.src.manager
                     if (enti == player)
                     {
                         Console.WriteLine("RENDERMANAGER/ STATE: " + enti.activeSTATE);
-                        Console.WriteLine("RENDERMANAGER/ GROUNDED: " + player.GetComponent<PhysicsComponent>().Grounded);
+                   //     Console.WriteLine("RENDERMANAGER/ GROUNDED: " + player.GetComponent<PhysicsComponent>().Grounded);
                     }
 
 
                     if (animationComponent != null) 
                     {
-                        
-
-
-
-
 
                     if (timeElapsed > counter)
                         {

@@ -22,7 +22,7 @@ namespace JumperGame.src.components
 
         public AnimationComponent(TiledTileAnimation[] animationList, SDL.SDL_Rect src) {
             AnimimationList = animationList;
-            duration = AnimimationList[0].Duration; // TODO -- NICHT IMMER 0 !!
+            duration = AnimimationList[animationFrame].Duration; 
             srcRect = src;
             // Console.WriteLine("Anzahl: " + AnimimationList.Length);
         }
@@ -35,6 +35,8 @@ namespace JumperGame.src.components
 
             return loopRect;
         }
+        
+
     }
    
 }

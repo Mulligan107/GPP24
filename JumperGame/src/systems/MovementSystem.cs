@@ -100,9 +100,9 @@ public class MovementSystem
                 }
                 if (newVelocity.X < 0)
                 {
-                    newVelocity.X += 10;
+                    newVelocity.X += 5;
                 }
-                if (Enumerable.Range(-20, 20).Contains((int)newVelocity.X))
+                if (Enumerable.Range(-5, 5).Contains((int)newVelocity.X))
                 {
                     newVelocity.X = 0;
                 }
@@ -117,7 +117,7 @@ public class MovementSystem
         if (!physics.Grounded)
         { 
             player.activeSTATE = Entity.STATE.AIRTIME;
-            newVelocity.Y = 0;
+
         }
 
 
@@ -143,10 +143,13 @@ public class MovementSystem
                         newVelocity.Y = 0;
                         break;
                     case SDL.SDL_Keycode.SDLK_SPACE:
+                        entity.activeSTATE = Entity.STATE.AIRTIME;
+                        /*
                         if (!physics.Grounded)
                         {
                             entity.activeSTATE = Entity.STATE.AIRTIME;
                         }
+                        */
                         break;
                 case SDL.SDL_Keycode.SDLK_a:
                 case SDL.SDL_Keycode.SDLK_d:
