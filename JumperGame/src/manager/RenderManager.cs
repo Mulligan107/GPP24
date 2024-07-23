@@ -45,8 +45,11 @@ namespace JumperGame.src.manager
 
         public static IntPtr Font = IntPtr.Zero;
 
+        public CoinCounterSystem _coinCounterSystem;
+        
         public RenderManager()
         {
+            _coinCounterSystem = CoinCounterSystem.Instance; 
             Initialize();
         }
         
@@ -110,8 +113,8 @@ namespace JumperGame.src.manager
                     // ---------- AnimationManager?
                     if (enti == player)
                     {
-                        Console.WriteLine("RENDERMANAGER/ STATE: " + enti.activeSTATE);
-                        Console.WriteLine("RENDERMANAGER/ GROUNDED: " + player.GetComponent<PhysicsComponent>().Grounded);
+                        //Console.WriteLine("RENDERMANAGER/ STATE: " + enti.activeSTATE);
+                        //Console.WriteLine("RENDERMANAGER/ GROUNDED: " + player.GetComponent<PhysicsComponent>().Grounded);
                     }
 
 
@@ -162,6 +165,7 @@ namespace JumperGame.src.manager
             //Render objects
             
             
+            _coinCounterSystem.RenderCoinCount();
 
             timerTexture = changeText(timerTexture, "Delta: " + dt.ToString("F3") + "\n Timer: " + timeElapsed.ToString("F3"));
             timerTexture.render(10, 10);

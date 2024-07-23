@@ -92,14 +92,14 @@ namespace JumperGame.src.manager
                                     || entity.gid == 43|| entity.gid == 44) { entity.AddComponent(envCollisionComponent); }
                                 
                                 break;
-                            case "coin":
-                            //    var coinCollisionComponent = new CollisionComponent(new Vector2(destRect.w, destRect.h));
-                                 entity.Type = Entity.EntityType.Coin;
-                            
+                            case "coin": 
+                                var coinCollisionComponent = new CollisionComponent(new Vector2(destRect.w, destRect.h));
+                                entity.Type = Entity.EntityType.Coin;
+
                                 var coinPhysicsComponent = new PhysicsComponent(0);
                                 var coinPositionComponent = new PositionComponent(new Vector3(destRect.x, destRect.y, 0));
                                 var coinRenderComponent = new RenderComponent(tileTexCoin, srcRect, destRect);
-                                
+
                                 entity.AddComponent(coinPhysicsComponent);
                                 entity.AddComponent(coinPositionComponent);
                                 entity.AddComponent(coinRenderComponent);
@@ -109,14 +109,14 @@ namespace JumperGame.src.manager
                                 foreach (TiledTile till in tileset.Tiles)
                                 {
                                     //Console.WriteLine("TILE ID " + till.Id);
-                                   // Console.WriteLine(till.Animations.ToString());
+                                    // Console.WriteLine(till.Animations.ToString());
                                     // Console.WriteLine("CoinCounter: " + coinCounter);
                                     //  Console.WriteLine("Anzahl: " + till.Animations.Length);
                                     var annie = till.Animations;
                                     entity.AddComponent(new AnimationComponent(annie, srcRect));
                                 }
 
-                                //      entity.AddComponent(coinCollisionComponent);
+                                entity.AddComponent(coinCollisionComponent);
 
                                 break;
                             case "knightOpti":

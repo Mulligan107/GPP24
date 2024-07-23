@@ -13,63 +13,58 @@ namespace JumperGame.systems
 
         public void Update(IEnumerable<Entity> entities, double deltaTime)
         {
-            // Clamp deltaTime to a maximum value
             deltaTime = Math.Min(deltaTime, MaxDeltaTime);
 
             foreach (var entity in entities)
             {
-                if (entity.Type != Entity.EntityType.Player && entity.Type != Entity.EntityType.Tile) continue; //C# ist geil
-                
+                if (entity.Type != Entity.EntityType.Player && entity.Type != Entity.EntityType.Tile) continue;
+
                 var physicsComponent = entity.GetComponent<PhysicsComponent>();
                 var positionComponent = entity.GetComponent<PositionComponent>();
                 var collisionComponent = entity.GetComponent<CollisionComponent>();
 
                 if (physicsComponent != null && positionComponent != null)
                 {
-                    // Apply gravity
                     physicsComponent.Acceleration += new Vector3(0, Gravity, 0) * physicsComponent.Mass;
                     physicsComponent.Velocity += physicsComponent.Acceleration * (float)deltaTime;
-                    // Reset acceleration after applying it
                     physicsComponent.Acceleration = new Vector3(0, 0, 0);
 
-                    // Calculate potential new position
                     var newPosition = positionComponent.Position + physicsComponent.Velocity * (float)deltaTime;
 
-                    // Check for collisions if the entity has a CollisionComponent
-                    if (collisionComponent != null && entity.Type == Entity.EntityType.Player)                    {
+                    if (collisionComponent != null && entity.Type == Entity.EntityType.Player)
+                    {
                         foreach (var otherEntity in entities)
                         {
-                            if (otherEntity == entity) continue;
+                            if (otherEntity == entity || !otherEntity.IsActive) continue;
 
                             var otherPositionComponent = otherEntity.GetComponent<PositionComponent>();
                             var otherCollisionComponent = otherEntity.GetComponent<CollisionComponent>();
 
                             if (otherPositionComponent != null && otherCollisionComponent != null)
                             {
-                                //just checks if it collides
                                 if (IsColliding(newPosition, collisionComponent.Size, otherPositionComponent.Position, otherCollisionComponent.Size))
                                 {
-                                    //Actual calculation on what to do in case of collision is done in Resolve Collision
                                     ResolveCollision(physicsComponent, positionComponent, collisionComponent, otherPositionComponent, otherCollisionComponent, ref newPosition, otherEntity);
+
+                                    // Check if the other entity is a coin and increment the coin count
+                                    if (otherEntity.Type == Entity.EntityType.Coin)
+                                    {
+                                        CoinCounterSystem.Instance.IncrementCoinCount();
+                                        otherEntity.IsActive = false; // Deactivate the coin
+                                    }
                                     break;
                                 }
                             }
                         }
                     }
 
-                    
-
-                    // Update entity position
                     positionComponent.Position = newPosition;
 
-                    // Update the dstRect in RenderComponent
                     var renderComponent = entity.GetComponent<RenderComponent>();
                     if (renderComponent != null)
                     {
                         renderComponent.UpdateDstRect(positionComponent.Position);
                     }
-                    
-                    
                 }
             }
         }
