@@ -12,7 +12,8 @@ namespace JumperGame.systems
         private entitySystem _entitySystem;
         private float _jumpTimer = 0;
         private const float JumpInterval = 2.0f; // Seconds
-        private const float JumpForce = 250f;
+        private const float JumpForce = 75f;
+        private const float MoveForce = 50f;
         private bool _jumpLeft = true;
 
         public EnemyMovementSystem(entitySystem entitySystem)
@@ -22,36 +23,52 @@ namespace JumperGame.systems
 
         public void Update(double deltaTime)
         {
-            _jumpTimer += (float) deltaTime;
-
-            if (_jumpTimer >= JumpInterval)
+            foreach (var entity in _entitySystem.GetAllEntities())
             {
-                foreach (var entity in _entitySystem.GetAllEntities())
+                if (entity.HasComponent<SlimeSteeringComponent>() && entity.HasComponent<PhysicsComponent>())
                 {
-                    if (entity.HasComponent<SlimeSteeringComponent>() && entity.HasComponent<PhysicsComponent>())
+                    var physics = entity.GetComponent<PhysicsComponent>();
+
+                    if (physics.Grounded)
                     {
-                        var physics = entity.GetComponent<PhysicsComponent>();
+                        //Console.WriteLine("Slime is grounded");
+                        // Only increment the jump timer if the slime is grounded
+                        _jumpTimer += (float)deltaTime;
 
+                        // Prevent horizontal movement while waiting to jump
+                        physics.Velocity = new Vector3(0, physics.Velocity.Y, 0);
+                    }
+
+                    if (_jumpTimer >= JumpInterval && physics.Grounded)
+                    {
                         Vector3 newVelocity = physics.Velocity;
+                        newVelocity.Y = -JumpForce; // Apply vertical force
 
+                        // Apply horizontal force based on the jump direction
                         if (_jumpLeft)
                         {
-                            newVelocity.X = -JumpForce; // Jump left
-                            //Console.WriteLine("Jump left");
+                            newVelocity.X = -MoveForce; // Jump left
                         }
                         else
                         {
-                            newVelocity.X = JumpForce; // Jump right
-                            //Console.WriteLine("Jump right");
+                            newVelocity.X = MoveForce; // Jump right
                         }
 
                         physics.Velocity = newVelocity;
                         entity.activeSTATE = Entity.STATE.JUMP;
+
+                        // Reset the jump timer and toggle jump direction after the jump
+                        _jumpLeft = !_jumpLeft;
+                        _jumpTimer = 0;
+                        physics.Grounded = false;
+                    }
+                    else if (!physics.Grounded)
+                    {
+                        // Reset the jump timer if the slime is in the air to prevent immediate re-jump upon landing
+                        //Console.WriteLine("Slime is in the air");
+                        _jumpTimer = 0;
                     }
                 }
-
-                _jumpLeft = !_jumpLeft; // Toggle direction for the next jump
-                _jumpTimer = 0; // Reset timer
             }
         }
     }
