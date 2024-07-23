@@ -8,6 +8,7 @@ public class Entity
     private readonly Dictionary<Type, object> _components = new Dictionary<Type, object>();
     public int gid { get; set; }
     public EntityType Type { get; set; }
+    public bool IsActive { get; set; } = true;
 
     public enum STATE
     {

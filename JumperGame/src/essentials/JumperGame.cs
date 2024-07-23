@@ -15,6 +15,7 @@ namespace JumperGame
         private AudioManager _audio;
         private RescourceManager _rescource;
 
+        
         public PhysicsSystem _physicsSystem;
         public InputSystem _inputSystem;
         public QuitSystem _quitSystem;
@@ -66,8 +67,6 @@ namespace JumperGame
             bool isPhysicsInitSuccessful = _physicsSystem.Initialize();
             bool isAudioInitSuccessful = _audio.Initialize();
             
-
-
             if (!isPhysicsInitSuccessful || !isAudioInitSuccessful)
             {
                 Console.WriteLine("Failed to initialize the game!");
@@ -91,14 +90,12 @@ namespace JumperGame
                 SDL.SDL_Event e;
                 while (IsRunning)
                 {
-
                     var timerCurrent = SDL.SDL_GetPerformanceCounter() / (double)SDL.SDL_GetPerformanceFrequency();
                     timerCurrent = timerCurrent- timerStart;
 
                     var deltaTime = (SDL.SDL_GetPerformanceCounter() - timerNew) / (double)SDL.SDL_GetPerformanceFrequency();
                     timerNew = SDL.SDL_GetPerformanceCounter();
-
-
+                    
                     _movementSystem.UpdatePlayerState();
 
                     while (SDL.SDL_PollEvent(out e) != 0)
@@ -110,10 +107,9 @@ namespace JumperGame
                     // Retrieve all entities
                     var entities = _entitySystem.GetAllEntities();
 
-                // Update the managers
-                _physicsSystem.Update(entities, deltaTime);
-                _rendering.Update(deltaTime, timerCurrent);
-                    
+                    // Update the managers
+                    _physicsSystem.Update(entities, deltaTime);
+                    _rendering.Update(deltaTime, timerCurrent);
                     
                     _entitySystem.Update(deltaTime,timerCurrent);
                     
