@@ -10,18 +10,18 @@ namespace JumperGame
 {
     public class JumperGame
     {
-        public static entitySystem _entitySystem;
+        public static entitySystem entitySystem;
         private RenderManager _rendering;
         private AudioManager _audio;
         private RescourceManager _rescource;
-
         
-        public PhysicsSystem _physicsSystem;
-        public InputSystem _inputSystem;
-        public QuitSystem _quitSystem;
-        public MovementSystem _movementSystem;
+        private PhysicsSystem _physicsSystem;
+        private InputSystem _inputSystem;
+        private QuitSystem _quitSystem;
+        private MovementSystem _movementSystem;
+        private EnemyMovementSystem _enemyMovementSystem;
         
-        public PlayerSteeringComponent _playerSteeringComponent;
+        public PlayerSteeringComponent PlayerSteeringComponent;
         
         public bool IsRunning;
         public bool IsReset;
@@ -41,7 +41,7 @@ namespace JumperGame
         
         public void InitializeSystems()
         {
-            _entitySystem = new entitySystem();
+            entitySystem = new entitySystem();
             
             _rendering = new RenderManager();
             _physicsSystem = new PhysicsSystem();
@@ -50,8 +50,9 @@ namespace JumperGame
 
             _inputSystem = new InputSystem();
             _quitSystem = new QuitSystem(this);
-            _movementSystem = new MovementSystem(_entitySystem);
-
+            _movementSystem = new MovementSystem(entitySystem);
+            _enemyMovementSystem = new EnemyMovementSystem(entitySystem);
+            
             _inputSystem.KeyPressed += _movementSystem.Update;
             _inputSystem.KeyReleased += _movementSystem.OnKeyReleased;
             
@@ -104,14 +105,17 @@ namespace JumperGame
                         _inputSystem.ProcessInput(e);
                     }
                     
+                    // Update enemy movements
+                    _enemyMovementSystem.Update(deltaTime);
+                    
                     // Retrieve all entities
-                    var entities = _entitySystem.GetAllEntities();
+                    var entities = entitySystem.GetAllEntities();
 
                     // Update the managers
                     _physicsSystem.Update(entities, deltaTime);
                     _rendering.Update(deltaTime, timerCurrent);
                     
-                    _entitySystem.Update(deltaTime,timerCurrent);
+                    entitySystem.Update(deltaTime,timerCurrent);
                     
                     // _audio.Update();
                     // _input.Update();

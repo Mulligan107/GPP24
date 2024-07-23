@@ -59,7 +59,7 @@ namespace JumperGame.src.manager
 
             SDL.SDL_Rect camera = new SDL.SDL_Rect { w = ScreenWidth, h = ScreenHeight };
 
-            Entity player = JumperGame._entitySystem.GetEntityByGID(281);
+            Entity player = JumperGame.entitySystem.GetEntityByGID(281);
             var posi = player.GetComponent<RenderComponent>();
             SDL.SDL_Rect newPosi = posi.dstRect;
 
@@ -97,7 +97,7 @@ namespace JumperGame.src.manager
 
             bg.render(0, 0, camera);
 
-            foreach (Entity enti in JumperGame._entitySystem.GetAllEntities())
+            foreach (Entity enti in JumperGame.entitySystem.GetAllEntities())
             {
                 // Check if the entity is active before rendering
                 if (!enti.IsActive) continue; // Skip rendering if not active

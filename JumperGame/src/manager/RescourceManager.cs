@@ -148,16 +148,18 @@ namespace JumperGame.src.manager
                                 var sPhysicsComponent = new PhysicsComponent(10);
                                 var sPositionComponent = new PositionComponent(new Vector3(destRect.x, destRect.y, layer.Id));
                                 var sRenderComponent = new RenderComponent(tileTexSlime, srcRect, destRect);
-                    //            var sCollisionComponent = new CollisionComponent(new Vector2(destRect.w, destRect.h));
+                                var sCollisionComponent = new CollisionComponent(new Vector2(destRect.w, destRect.h));
+                                var sSteeringComponent = new SlimeSteeringComponent();
                                 
                                 entity.AddComponent(sPhysicsComponent);
                                 entity.AddComponent(sPositionComponent);
                                 entity.AddComponent(sRenderComponent);
-                     //           entity.AddComponent(sCollisionComponent);
+                                entity.AddComponent(sCollisionComponent);
+                                entity.AddComponent(sSteeringComponent);
                                 
                                 break;
                         }
-                        JumperGame._entitySystem.AddEntity(entity);
+                        JumperGame.entitySystem.AddEntity(entity);
 
                         //SDL.SDL_RenderCopy(gRenderer, tileTexCoin.getTexture(), ref srcRect, ref destRect);
 

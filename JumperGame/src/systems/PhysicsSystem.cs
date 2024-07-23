@@ -17,7 +17,7 @@ namespace JumperGame.systems
 
             foreach (var entity in entities)
             {
-                if (entity.Type != Entity.EntityType.Player && entity.Type != Entity.EntityType.Tile) continue;
+                if (entity.Type != Entity.EntityType.Player && entity.Type != Entity.EntityType.Tile && entity.Type != Entity.EntityType.Enemy) continue;
 
                 var physicsComponent = entity.GetComponent<PhysicsComponent>();
                 var positionComponent = entity.GetComponent<PositionComponent>();
@@ -31,7 +31,7 @@ namespace JumperGame.systems
 
                     var newPosition = positionComponent.Position + physicsComponent.Velocity * (float)deltaTime;
 
-                    if (collisionComponent != null && entity.Type == Entity.EntityType.Player)
+                    if ((collisionComponent != null && entity.Type == Entity.EntityType.Player) ||  (collisionComponent != null && entity.Type == Entity.EntityType.Enemy))
                     {
                         foreach (var otherEntity in entities)
                         {
