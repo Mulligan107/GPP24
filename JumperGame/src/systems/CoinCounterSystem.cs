@@ -21,7 +21,7 @@ public class CoinCounterSystem
     public void RenderCoinCount()
     {
         string coinCountText = "Coins: " + coinCount.ToString();
-        Console.WriteLine("Coins: " + coinCount.ToString());
+        //Console.WriteLine("Coins: " + coinCount.ToString());
         coinCountTexture = changeText(coinCountTexture, coinCountText);
         coinCountTexture.render(10, 50); // Adjust position as needed
     }

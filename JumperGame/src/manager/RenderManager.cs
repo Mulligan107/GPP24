@@ -99,10 +99,11 @@ namespace JumperGame.src.manager
 
             foreach (Entity enti in JumperGame._entitySystem.GetAllEntities())
             {
+                // Check if the entity is active before rendering
+                if (!enti.IsActive) continue; // Skip rendering if not active
+                
                 var renderComponent = enti.GetComponent<RenderComponent>();
                 var animationComponent = enti.GetComponent<AnimationComponent>();
-
-                
 
                 if (renderComponent != null)
                 {

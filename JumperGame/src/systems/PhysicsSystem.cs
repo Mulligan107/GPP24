@@ -44,14 +44,15 @@ namespace JumperGame.systems
                             {
                                 if (IsColliding(newPosition, collisionComponent.Size, otherPositionComponent.Position, otherCollisionComponent.Size))
                                 {
-                                    ResolveCollision(physicsComponent, positionComponent, collisionComponent, otherPositionComponent, otherCollisionComponent, ref newPosition, otherEntity);
-
                                     // Check if the other entity is a coin and increment the coin count
                                     if (otherEntity.Type == Entity.EntityType.Coin)
                                     {
                                         CoinCounterSystem.Instance.IncrementCoinCount();
                                         otherEntity.IsActive = false; // Deactivate the coin
+                                        continue; // Skip to the next entity without resolving collision
                                     }
+                                    
+                                    ResolveCollision(physicsComponent, positionComponent, collisionComponent, otherPositionComponent, otherCollisionComponent, ref newPosition, otherEntity);
                                     break;
                                 }
                             }
