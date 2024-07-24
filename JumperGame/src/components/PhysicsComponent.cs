@@ -13,7 +13,6 @@ public class PhysicsComponent
     {
         Mass = mass;
         Velocity = new Vector3(0, 0, 0);
-        Acceleration = new Vector3(0, 0, 0);
         Grounded = true; 
     }
 }

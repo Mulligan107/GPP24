@@ -10,6 +10,7 @@ namespace JumperGame.systems
     {
         private const float Gravity = 10f; // Simplified gravity constant
         private const double MaxDeltaTime = 0.1; // Max allowed deltaTime to prevent large initial steps
+        private bool jumpedOntopOfEnemy;
 
         public void Update(IEnumerable<Entity> entities, double deltaTime)
         {
@@ -17,7 +18,7 @@ namespace JumperGame.systems
 
             foreach (var entity in entities)
             {
-                if (entity.Type != Entity.EntityType.Player && entity.Type != Entity.EntityType.Tile && entity.Type != Entity.EntityType.Enemy) continue;
+                if (entity.Type != Entity.EntityType.Player && entity.Type != Entity.EntityType.Tile && entity.Type != Entity.EntityType.Enemy && !entity.IsActive) continue;
 
                 var physicsComponent = entity.GetComponent<PhysicsComponent>();
                 var positionComponent = entity.GetComponent<PositionComponent>();
@@ -36,7 +37,7 @@ namespace JumperGame.systems
                         foreach (var otherEntity in entities)
                         {
                             if (otherEntity == entity || !otherEntity.IsActive) continue;
-
+                            
                             var otherPositionComponent = otherEntity.GetComponent<PositionComponent>();
                             var otherCollisionComponent = otherEntity.GetComponent<CollisionComponent>();
 
@@ -44,15 +45,20 @@ namespace JumperGame.systems
                             {
                                 if (IsColliding(newPosition, collisionComponent.Size, otherPositionComponent.Position, otherCollisionComponent.Size))
                                 {
+                                    
                                     // Check if the other entity is a coin and increment the coin count
                                     if (otherEntity.Type == Entity.EntityType.Coin)
                                     {
-                                        CoinCounterSystem.Instance.IncrementCoinCount();
-                                        otherEntity.IsActive = false; // Deactivate the coin
+                                        if (entity.Type == Entity.EntityType.Player && otherEntity.Type == Entity.EntityType.Coin)
+                                        {
+                                            CoinCounterSystem.Instance.IncrementCoinCount(1);
+                                            otherEntity.IsActive = false;
+                                        }
+                                        
                                         continue; // Skip to the next entity without resolving collision
                                     }
                                     
-                                    ResolveCollision(physicsComponent, positionComponent, collisionComponent, otherPositionComponent, otherCollisionComponent, ref newPosition, otherEntity);
+                                    ResolveCollision(entity, physicsComponent, positionComponent, collisionComponent, otherPositionComponent, otherCollisionComponent, ref newPosition, otherEntity);
                                     break;
                                 }
                             }
@@ -86,13 +92,13 @@ namespace JumperGame.systems
          *  - If the horizontal overlap is smaller, it resolves the collision horizontally and stops horizontal movement.
          *  - If the vertical overlap is smaller, it resolves the collision vertically and stops vertical movement.
          */
-        private void ResolveCollision(PhysicsComponent physicsComponent, PositionComponent positionComponent, CollisionComponent collisionComponent,
-            PositionComponent otherPositionComponent, CollisionComponent otherCollisionComponent, ref Vector3 newPosition, Entity enti)
+        private void ResolveCollision(Entity entity, PhysicsComponent physicsComponent, PositionComponent positionComponent, CollisionComponent collisionComponent,
+            PositionComponent otherPositionComponent, CollisionComponent otherCollisionComponent, ref Vector3 newPosition, Entity otherEnti)
         {
             // Calculate overlap in both axes
-            float overlapX = Math.Min(newPosition.X + collisionComponent.Size.X, otherPositionComponent.Position.X + otherCollisionComponent.Size.X) - 
+            float overlapX = Math.Min(newPosition.X + collisionComponent.Size.X, otherPositionComponent.Position.X + otherCollisionComponent.Size.X) -
                              Math.Max(newPosition.X, otherPositionComponent.Position.X);
-            float overlapY = Math.Min(newPosition.Y + collisionComponent.Size.Y, otherPositionComponent.Position.Y + otherCollisionComponent.Size.Y) - 
+            float overlapY = Math.Min(newPosition.Y + collisionComponent.Size.Y, otherPositionComponent.Position.Y + otherCollisionComponent.Size.Y) -
                              Math.Max(newPosition.Y, otherPositionComponent.Position.Y);
 
             if (overlapX < overlapY)
@@ -113,18 +119,33 @@ namespace JumperGame.systems
                 // Resolve vertical collision
                 if (newPosition.Y > otherPositionComponent.Position.Y)
                 {
-                    //If hit from above
+                    // If hit from above
                     newPosition.Y = otherPositionComponent.Position.Y + otherCollisionComponent.Size.Y;
                 }
                 else
                 {
-                    //if hit from below
+                    // If hit from below
                     newPosition.Y = otherPositionComponent.Position.Y - collisionComponent.Size.Y;
-                    physicsComponent.Grounded = true;  //if the player hits from below he can jump again
-                    enti.activeSTATE = Entity.STATE.LANDING;
-                    
+                    physicsComponent.Grounded = true;  // If the player hits from below, they can jump again
+
+                    entity.activeSTATE = Entity.STATE.LANDING;
+
+                    if (entity.HasComponent<PlayerSteeringComponent>() && otherEnti.Type == Entity.EntityType.Enemy)
+                    {
+                        CoinCounterSystem.Instance.IncrementCoinCount(5);
+                        otherEnti.IsActive = false;
+                        jumpedOntopOfEnemy = true;
+                    }
                 }
                 physicsComponent.Velocity = new Vector3(physicsComponent.Velocity.X, 0, 0); // Stop vertical movement
+            }
+
+            //Needs to be here because if the player jumps on top of an enemy,
+            //inside the if statement above, the player will not be thrown up
+            if (jumpedOntopOfEnemy)
+            {
+                physicsComponent.Velocity = new Vector3(physicsComponent.Velocity.X, -300, 0);
+                jumpedOntopOfEnemy = false;
             }
         }
 

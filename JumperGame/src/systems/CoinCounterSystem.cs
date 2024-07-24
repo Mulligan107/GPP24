@@ -12,9 +12,9 @@ public class CoinCounterSystem
     
     private CoinCounterSystem() { }
 
-    public void IncrementCoinCount()
+    public void IncrementCoinCount(int coinAmount)
     {
-        coinCount++;
+        coinCount += coinAmount;
     }
 
     public void RenderCoinCount()
