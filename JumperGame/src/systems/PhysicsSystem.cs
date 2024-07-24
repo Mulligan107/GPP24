@@ -23,9 +23,12 @@ namespace JumperGame.systems
                 var physicsComponent = entity.GetComponent<PhysicsComponent>();
                 var positionComponent = entity.GetComponent<PositionComponent>();
                 var collisionComponent = entity.GetComponent<CollisionComponent>();
+                
 
                 if (physicsComponent != null && positionComponent != null)
                 {
+                    if (physicsComponent.Grounded && entity.Type != Entity.EntityType.Player) continue;
+                    
                     physicsComponent.Acceleration += new Vector3(0, Gravity, 0) * physicsComponent.Mass;
                     physicsComponent.Velocity += physicsComponent.Acceleration * (float)deltaTime;
                     physicsComponent.Acceleration = new Vector3(0, 0, 0);
@@ -123,18 +126,26 @@ namespace JumperGame.systems
                 }
                 else
                 {
-                    // If hit from below
-                    newPosition.Y = otherPositionComponent.Position.Y - collisionComponent.Size.Y;
-                    physicsComponent.Grounded = true;  // If the player hits from below, they can jump again
-
-                    entity.activeSTATE = Entity.STATE.LANDING;
-
-                    if (entity.HasComponent<PlayerSteeringComponent>() && otherEnti.Type == Entity.EntityType.Enemy)
+                    if ((entity.Type == Entity.EntityType.Enemy) && (otherEnti.Type == Entity.EntityType.Player || otherEnti.Type == Entity.EntityType.Enemy))
                     {
-                        CoinCounterSystem.Instance.IncrementCoinCount(5);
-                        otherEnti.IsActive = false;
-                        jumpedOntopOfEnemy = true;
+                        physicsComponent.Grounded = false; 
                     }
+                    else
+                    {
+                        // If hit from below
+                        newPosition.Y = otherPositionComponent.Position.Y - collisionComponent.Size.Y;
+                        physicsComponent.Grounded = true;  // If the player hits from below, they can jump again
+
+                        entity.activeSTATE = Entity.STATE.LANDING;
+
+                        if (entity.HasComponent<PlayerSteeringComponent>() && otherEnti.Type == Entity.EntityType.Enemy)
+                        {
+                            CoinCounterSystem.Instance.IncrementCoinCount(5);
+                            otherEnti.IsActive = false;
+                            jumpedOntopOfEnemy = true;
+                        } 
+                    }
+                    
                 }
                 physicsComponent.Velocity = new Vector3(physicsComponent.Velocity.X, 0, 0); // Stop vertical movement
             }
