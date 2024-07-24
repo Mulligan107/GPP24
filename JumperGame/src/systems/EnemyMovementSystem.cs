@@ -28,6 +28,7 @@ namespace JumperGame.systems
                 {
                     var physics = entity.GetComponent<PhysicsComponent>();
                     var slimeSteering = entity.GetComponent<SlimeSteeringComponent>();
+                    var renderer = entity.GetComponent<RenderComponent>();
 
                     if (physics.Grounded)
                     {
@@ -46,10 +47,12 @@ namespace JumperGame.systems
                         // Apply horizontal force based on the jump direction
                         if (_jumpLeft)
                         {
+                            renderer.flip = SDL.SDL_RendererFlip.SDL_FLIP_HORIZONTAL;
                             newVelocity.X = -MoveForce; // Jump left
                         }
                         else
                         {
+                            renderer.flip = SDL.SDL_RendererFlip.SDL_FLIP_NONE;
                             newVelocity.X = MoveForce; // Jump right
                         }
 
