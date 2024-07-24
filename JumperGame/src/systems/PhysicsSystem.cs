@@ -140,7 +140,8 @@ namespace JumperGame.systems
                 physicsComponent.Velocity = new Vector3(physicsComponent.Velocity.X, 0, 0); // Stop vertical movement
             }
 
-            
+            //Needs to be here because if the player jumps on top of an enemy,
+            //inside the if statement above, the player will not be thrown up
             if (jumpedOntopOfEnemy)
             {
                 physicsComponent.Velocity = new Vector3(physicsComponent.Velocity.X, -300, 0);
