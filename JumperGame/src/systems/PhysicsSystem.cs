@@ -49,14 +49,14 @@ namespace JumperGame.systems
                                     {
                                         if (entity.Type == Entity.EntityType.Player && otherEntity.Type == Entity.EntityType.Coin)
                                         {
-                                            CoinCounterSystem.Instance.IncrementCoinCount();
+                                            CoinCounterSystem.Instance.IncrementCoinCount(1);
                                             otherEntity.IsActive = false; // Deactivate the coin
                                         }
                                         
                                         continue; // Skip to the next entity without resolving collision
                                     }
                                     
-                                    ResolveCollision(physicsComponent, positionComponent, collisionComponent, otherPositionComponent, otherCollisionComponent, ref newPosition, otherEntity);
+                                    ResolveCollision(entity, physicsComponent, positionComponent, collisionComponent, otherPositionComponent, otherCollisionComponent, ref newPosition, otherEntity);
                                     break;
                                 }
                             }
@@ -90,8 +90,8 @@ namespace JumperGame.systems
          *  - If the horizontal overlap is smaller, it resolves the collision horizontally and stops horizontal movement.
          *  - If the vertical overlap is smaller, it resolves the collision vertically and stops vertical movement.
          */
-        private void ResolveCollision(PhysicsComponent physicsComponent, PositionComponent positionComponent, CollisionComponent collisionComponent,
-            PositionComponent otherPositionComponent, CollisionComponent otherCollisionComponent, ref Vector3 newPosition, Entity enti)
+        private void ResolveCollision(Entity entity, PhysicsComponent physicsComponent, PositionComponent positionComponent, CollisionComponent collisionComponent,
+            PositionComponent otherPositionComponent, CollisionComponent otherCollisionComponent, ref Vector3 newPosition, Entity otherEnti)
         {
             // Calculate overlap in both axes
             float overlapX = Math.Min(newPosition.X + collisionComponent.Size.X, otherPositionComponent.Position.X + otherCollisionComponent.Size.X) - 
@@ -125,7 +125,14 @@ namespace JumperGame.systems
                     //if hit from below
                     newPosition.Y = otherPositionComponent.Position.Y - collisionComponent.Size.Y;
                     physicsComponent.Grounded = true;  //if the player hits from below he can jump again
-                    enti.activeSTATE = Entity.STATE.LANDING;
+
+                    entity.activeSTATE = Entity.STATE.LANDING;
+                    
+                    if (otherEnti.Type == Entity.EntityType.Enemy)
+                    {
+                        CoinCounterSystem.Instance.IncrementCoinCount(5);
+                        otherEnti.IsActive = false;
+                    }
                     
                 }
                 physicsComponent.Velocity = new Vector3(physicsComponent.Velocity.X, 0, 0); // Stop vertical movement

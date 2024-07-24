@@ -1,6 +1,12 @@
-﻿namespace JumperGame.components;
-
-public class SlimeSteeringComponent
+﻿namespace JumperGame.components
 {
-    //soll leer bleiben dient nur als marker
+    public class SlimeSteeringComponent
+    {
+        public float JumpTimer { get; set; }
+
+        public SlimeSteeringComponent()
+        {
+            JumpTimer = 0;
+        }
+    }
 }
