@@ -36,6 +36,10 @@ namespace JumperGame
             // Start the game loop
             game.Run();
 
+            game.LevelSelect("hey");
+
+            game.Run();
+
             return 0;
         }
         
@@ -46,7 +50,7 @@ namespace JumperGame
             _rendering = new RenderManager();
             _physicsSystem = new PhysicsSystem();
             _audio = new AudioManager();
-            _rescource = new RescourceManager();
+            _rescource = new RescourceManager("testWorld");
 
             _inputSystem = new InputSystem();
             _quitSystem = new QuitSystem(this);
@@ -78,6 +82,23 @@ namespace JumperGame
             // If all initializations were successful, return true
             
             return true;
+        }
+
+        public void LevelSelect(String level)
+        {
+            entitySystem = new entitySystem();
+            _rescource = new RescourceManager("level2");
+            _inputSystem = new InputSystem();
+            _quitSystem = new QuitSystem(this);
+            _movementSystem = new MovementSystem(entitySystem);
+            _enemyMovementSystem = new EnemyMovementSystem(entitySystem);
+
+            _inputSystem.KeyPressed += _movementSystem.Update;
+            _inputSystem.KeyReleased += _movementSystem.OnKeyReleased;
+
+            _inputSystem.GameQuitRequested += _quitSystem.QuitGame;
+            _rescource.loadTiles();
+
         }
         
         public void Run()

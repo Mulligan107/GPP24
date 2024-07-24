@@ -22,12 +22,13 @@ namespace JumperGame.src.manager
 
         public static IntPtr Font = IntPtr.Zero;
 
-        TiledMap map = new TiledMap("src\\worlds\\testWorld.tmx");
+        TiledMap map;
         Dictionary<int, TiledTileset> tilesets;
 
 
-        public RescourceManager()
+        public RescourceManager(String worldselect)
         {
+            map = new TiledMap("src\\worlds\\" + worldselect + ".tmx");
             tilesets = map.GetTiledTilesets("src/tilesets/"); // DO NOT forget the / at the 
             tileTexEnvi.loadFromFile("src\\tilesets/world_tileset.png");
             tileTexCoin.loadFromFile("src\\tilesets/coin.png");
@@ -37,6 +38,7 @@ namespace JumperGame.src.manager
 
         public void loadTiles()
         {
+            
             var coinCounter = 0;
             var tileLayers = map.Layers.Where(x => x.Type == TiledLayerType.TileLayer);
 
