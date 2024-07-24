@@ -25,7 +25,7 @@ namespace JumperGame.systems
         {
             foreach (var entity in _entitySystem.GetAllEntities())
             {
-                if (entity.HasComponent<SlimeSteeringComponent>() && entity.HasComponent<PhysicsComponent>())
+                if (entity.HasComponent<SlimeSteeringComponent>() && entity.HasComponent<PhysicsComponent>() && entity.IsActive)
                 {
                     var physics = entity.GetComponent<PhysicsComponent>();
 

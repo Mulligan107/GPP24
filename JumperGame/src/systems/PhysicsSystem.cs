@@ -17,7 +17,7 @@ namespace JumperGame.systems
 
             foreach (var entity in entities)
             {
-                if (entity.Type != Entity.EntityType.Player && entity.Type != Entity.EntityType.Tile && entity.Type != Entity.EntityType.Enemy) continue;
+                if (entity.Type != Entity.EntityType.Player && entity.Type != Entity.EntityType.Tile && entity.Type != Entity.EntityType.Enemy && !entity.IsActive) continue;
 
                 var physicsComponent = entity.GetComponent<PhysicsComponent>();
                 var positionComponent = entity.GetComponent<PositionComponent>();
@@ -47,8 +47,12 @@ namespace JumperGame.systems
                                     // Check if the other entity is a coin and increment the coin count
                                     if (otherEntity.Type == Entity.EntityType.Coin)
                                     {
-                                        CoinCounterSystem.Instance.IncrementCoinCount();
-                                        otherEntity.IsActive = false; // Deactivate the coin
+                                        if (entity.Type == Entity.EntityType.Player && otherEntity.Type == Entity.EntityType.Coin)
+                                        {
+                                            CoinCounterSystem.Instance.IncrementCoinCount();
+                                            otherEntity.IsActive = false; // Deactivate the coin
+                                        }
+                                        
                                         continue; // Skip to the next entity without resolving collision
                                     }
                                     
