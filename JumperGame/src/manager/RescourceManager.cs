@@ -20,6 +20,11 @@ namespace JumperGame.src.manager
         LTexture tileTexKnight = new LTexture();
         LTexture tileTexSlime = new LTexture();
 
+        LTexture addTexture = new LTexture();
+
+        bool collision;
+        int mass;
+
         public static IntPtr Font = IntPtr.Zero;
 
         TiledMap map;
@@ -38,8 +43,6 @@ namespace JumperGame.src.manager
 
         public void loadTiles()
         {
-            
-            var coinCounter = 0;
             var tileLayers = map.Layers.Where(x => x.Type == TiledLayerType.TileLayer);
 
             foreach (var layer in tileLayers)
@@ -76,37 +79,29 @@ namespace JumperGame.src.manager
 
                         //Console.WriteLine(tileset.Name + ": X: " + rect.X + " Y: " + rect.Y+ " W: " + rect.Width + " H : " + rect.Height);
                         Entity entity = new Entity(gid);
+                        collision = false;
+                        mass = -1;
 
                         switch (tileset.Name)
                         {
                             case "Enviroment":
                                 entity.Type = Entity.EntityType.Tile;
-                                
-                                var envPositionComponent = new PositionComponent(new Vector3(destRect.x, destRect.y, layer.Id));
-                                var envRenderComponent = new RenderComponent(tileTexEnvi, srcRect, destRect);
-                                var envCollisionComponent = new CollisionComponent(new Vector2(destRect.w, destRect.h));
-                                
-                                entity.AddComponent(envPositionComponent); 
-                                entity.AddComponent(envRenderComponent);
-                                
-                                //TODO: diesen mist hier ändern das hier ist nur ne temporäre lösung 
-                                if (entity.gid == 1 || entity.gid == 3 || entity.gid == 4 || entity.gid == 7 || entity.gid == 8 || entity.gid == 42
-                                    || entity.gid == 43|| entity.gid == 44) { entity.AddComponent(envCollisionComponent); }
+                                addTexture = tileTexEnvi;
+
+
+                                if (Enumerable.Range(1, 44).Contains(entity.gid)) // if (entity.gid == 1 || entity.gid == 3 || entity.gid == 4 || entity.gid == 7 || entity.gid == 8 || entity.gid == 42|| entity.gid == 43|| entity.gid == 44) 
+                                {
+                                    collision = true;
+                                }
                                 
                                 break;
+
                             case "coin": 
                                 var coinCollisionComponent = new CollisionComponent(new Vector2(destRect.w, destRect.h));
                                 entity.Type = Entity.EntityType.Coin;
-
-                                var coinPhysicsComponent = new PhysicsComponent(0);
-                                var coinPositionComponent = new PositionComponent(new Vector3(destRect.x, destRect.y, 0));
-                                var coinRenderComponent = new RenderComponent(tileTexCoin, srcRect, destRect);
-
-                                entity.AddComponent(coinPhysicsComponent);
-                                entity.AddComponent(coinPositionComponent);
-                                entity.AddComponent(coinRenderComponent);
-
-                                coinCounter++;
+                                addTexture = tileTexCoin;
+                                collision = true;
+                                mass = 0;
 
                                 foreach (TiledTile till in tileset.Tiles)
                                 {
@@ -121,60 +116,57 @@ namespace JumperGame.src.manager
                                 entity.AddComponent(coinCollisionComponent);
 
                                 break;
+
                             case "knightOpti":
 
                                // destRect = changeRectSize(ref destRect, 2);
                                 entity.Type = Entity.EntityType.Player;
-
+                                addTexture = tileTexKnight;
+                                collision = true;
+                                mass = 40;
                                 // Create components
-                                var knightCollisionComponent = new CollisionComponent(new Vector2(destRect.w, destRect.h));
                                 var physicsComponent = new PhysicsComponent(40);
                                 var playerSteeringComponent = new PlayerSteeringComponent(physicsComponent);
-                                var positionComponent = new PositionComponent(new Vector3(destRect.x, destRect.y, 0));
-                                var renderComponent = new RenderComponent(tileTexKnight, srcRect, destRect);
                                 //var animationComponent = new AnimationComponent(tileset.)
                                 
 
-
                                 // Add components to the entity
-                                entity.AddComponent(physicsComponent);
                                 entity.AddComponent(playerSteeringComponent);
-                                entity.AddComponent(positionComponent);
-                                entity.AddComponent(renderComponent);
-                                entity.AddComponent(knightCollisionComponent);
                                 
                                 break;
                             case "slime_green":
                                 entity.Type = Entity.EntityType.Enemy;
-                                
-                                var sPhysicsComponent = new PhysicsComponent(10);
-                                var sPositionComponent = new PositionComponent(new Vector3(destRect.x, destRect.y, layer.Id));
-                                var sRenderComponent = new RenderComponent(tileTexSlime, srcRect, destRect);
-                                var sCollisionComponent = new CollisionComponent(new Vector2(destRect.w, destRect.h));
+                                addTexture = tileTexSlime;
+                                collision = true;
+                                mass = 10;
+
                                 var sSteeringComponent = new SlimeSteeringComponent();
                                 
-                                entity.AddComponent(sPhysicsComponent);
-                                entity.AddComponent(sPositionComponent);
-                                entity.AddComponent(sRenderComponent);
-                                entity.AddComponent(sCollisionComponent);
+                                
                                 entity.AddComponent(sSteeringComponent);
                                 
                                 break;
                         }
+
+
+                        entity.AddComponent(new PositionComponent(new Vector3(destRect.x, destRect.y, layer.Id)));
+                        entity.AddComponent(new RenderComponent(addTexture, srcRect, destRect));
+
+                        if (collision)
+                        {
+                            entity.AddComponent(new CollisionComponent(new Vector2(destRect.w, destRect.h)));
+                        }
+                        if (mass > -1)
+                        {
+                            entity.AddComponent(new PhysicsComponent(mass));
+                        }
+
                         JumperGame.entitySystem.AddEntity(entity);
-
-                        //SDL.SDL_RenderCopy(gRenderer, tileTexCoin.getTexture(), ref srcRect, ref destRect);
-
-                        // Render sprite at position tileX, tileY using the rect
                     }
                 }
 
             }
         }
-        static SDL.SDL_Rect changeRectSize(ref SDL.SDL_Rect rect, int num)
-        {
-            SDL.SDL_Rect shrunkRect = new SDL.SDL_Rect { x = rect.x - rect.w / 2, y = rect.y - rect.h, w = rect.w * num, h = rect.h * num };
-            return shrunkRect;
-        }
+
     }
 }
