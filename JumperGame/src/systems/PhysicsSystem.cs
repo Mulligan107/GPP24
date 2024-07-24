@@ -18,7 +18,7 @@ namespace JumperGame.systems
 
             foreach (var entity in entities)
             {
-                if (entity.Type != Entity.EntityType.Player && entity.Type != Entity.EntityType.Tile && entity.Type != Entity.EntityType.Enemy && !entity.IsActive) continue;
+                if (!entity.IsActive) continue; // Skip inactive entities early
 
                 var physicsComponent = entity.GetComponent<PhysicsComponent>();
                 var positionComponent = entity.GetComponent<PositionComponent>();
@@ -32,12 +32,12 @@ namespace JumperGame.systems
 
                     var newPosition = positionComponent.Position + physicsComponent.Velocity * (float)deltaTime;
 
-                    if ((collisionComponent != null && entity.Type == Entity.EntityType.Player) ||  (collisionComponent != null && entity.Type == Entity.EntityType.Enemy))
+                    if (collisionComponent != null && (entity.Type == Entity.EntityType.Player || entity.Type == Entity.EntityType.Enemy))
                     {
                         foreach (var otherEntity in entities)
                         {
-                            if (otherEntity == entity || !otherEntity.IsActive) continue;
-                            
+                            if (otherEntity == entity || !otherEntity.IsActive) continue; // Skip inactive entities
+
                             var otherPositionComponent = otherEntity.GetComponent<PositionComponent>();
                             var otherCollisionComponent = otherEntity.GetComponent<CollisionComponent>();
 
@@ -45,19 +45,18 @@ namespace JumperGame.systems
                             {
                                 if (IsColliding(newPosition, collisionComponent.Size, otherPositionComponent.Position, otherCollisionComponent.Size))
                                 {
-                                    
                                     // Check if the other entity is a coin and increment the coin count
                                     if (otherEntity.Type == Entity.EntityType.Coin)
                                     {
-                                        if (entity.Type == Entity.EntityType.Player && otherEntity.Type == Entity.EntityType.Coin)
+                                        if (entity.Type == Entity.EntityType.Player)
                                         {
                                             CoinCounterSystem.Instance.IncrementCoinCount(1);
                                             otherEntity.IsActive = false;
                                         }
-                                        
+
                                         continue; // Skip to the next entity without resolving collision
                                     }
-                                    
+
                                     ResolveCollision(entity, physicsComponent, positionComponent, collisionComponent, otherPositionComponent, otherCollisionComponent, ref newPosition, otherEntity);
                                     break;
                                 }
