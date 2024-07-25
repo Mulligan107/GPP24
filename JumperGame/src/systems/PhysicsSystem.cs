@@ -114,7 +114,7 @@ namespace JumperGame.systems
                 {
                     newPosition.X = otherPositionComponent.Position.X - collisionComponent.Size.X;
                 }
-                physicsComponent.Velocity = new Vector3(physicsComponent.Velocity.X, physicsComponent.Velocity.Y, 0); // Stop horizontal movement
+                physicsComponent.Velocity = new Vector3(0, physicsComponent.Velocity.Y, 0); // Stop horizontal movement
             }
             else
             {
