@@ -2,9 +2,9 @@
 {
     public class QuitSystem
     {
-        private JumperGame _game;
+        private essentials.JumperGame _game;
 
-        public QuitSystem(JumperGame game)
+        public QuitSystem(essentials.JumperGame game)
         {
             _game = game;
         }

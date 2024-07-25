@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using JumperGame.manager;
 using JumperGame.src.manager;
 using SDL2;
 
@@ -175,7 +176,7 @@ namespace JumperGame
             free();
 
             //Render text surface
-            var textSurface = SDL_ttf.TTF_RenderText_Solid(RenderManager.Font, textureText, textColor);
+            var textSurface = SDL_ttf.TTF_RenderText_Solid(RenderManager.font, textureText, textColor);
             if (textSurface == IntPtr.Zero)
             {
                 Console.WriteLine("Unable to render text surface! SDL_ttf Error: {0}", SDL.SDL_GetError());

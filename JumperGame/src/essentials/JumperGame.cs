@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Linq;
-using JumperGame.components;
-using JumperGame.gameEntities;
-using JumperGame.src.components;
+using JumperGame.manager;
 using JumperGame.src.manager;
 using JumperGame.systems;
 using SDL2;
 
-namespace JumperGame
+namespace JumperGame.essentials
 {
     public class JumperGame
     {
@@ -26,7 +23,7 @@ namespace JumperGame
         public bool IsRunning;
         public bool IsReset;
 
-        static int Main(string[] args)
+        static int Main()
         {
             JumperGame game = new JumperGame();
 
@@ -117,9 +114,9 @@ namespace JumperGame
             while (IsRunning)
             {
                 var timerCurrent = SDL.SDL_GetPerformanceCounter() / (double)SDL.SDL_GetPerformanceFrequency();
-                timerCurrent = timerCurrent - timerStart;
+                timerCurrent -= timerStart;
 
-                var deltaTime = (SDL.SDL_GetPerformanceCounter() - timerNew) / (double)SDL.SDL_GetPerformanceFrequency();
+                var deltaTime = (SDL.SDL_GetPerformanceCounter() - timerNew) / SDL.SDL_GetPerformanceFrequency();
                 timerNew = SDL.SDL_GetPerformanceCounter();
 
                 _movementSystem.UpdatePlayerState();

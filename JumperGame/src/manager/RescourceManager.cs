@@ -161,7 +161,7 @@ namespace JumperGame.src.manager
                             entity.AddComponent(new PhysicsComponent(mass));
                         }
 
-                        JumperGame.entitySystem.AddEntity(entity);
+                        essentials.JumperGame.entitySystem.AddEntity(entity);
                     }
                 }
 
