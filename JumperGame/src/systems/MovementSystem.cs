@@ -6,6 +6,7 @@ using JumperGame.components;
 using JumperGame.gameEntities;
 using TiledCSPlus;
 using System.Linq;
+using System.Runtime.InteropServices;
 
 namespace JumperGame.systems;
 
@@ -26,66 +27,9 @@ public class MovementSystem
         {
             if (entity.HasComponent<PlayerSteeringComponent>() && entity.HasComponent<PhysicsComponent>())
             {
-                var physics = entity.GetComponent<PhysicsComponent>();
-                var renderer = entity.GetComponent<RenderComponent>();
 
-                Vector3 newVelocity = physics.Velocity;
+                keySetup(keycode, entity);
 
-                if (physics.Grounded)
-                {
-                    entity.activeSTATE = Entity.STATE.IDLE;
-                }
-
-                switch (keycode)
-                {
-                    case SDL.SDL_Keycode.SDLK_w:
-                        entity.activeSTATE = Entity.STATE.JUMP;
-                        newVelocity.Y = -250;
-                        break;
-
-                    case SDL.SDL_Keycode.SDLK_s:                       
-                        break;
-
-                    case SDL.SDL_Keycode.SDLK_a:
-                        if(entity.activeSTATE != Entity.STATE.AIRTIME)
-                        {
-                            renderer.flip = SDL.SDL_RendererFlip.SDL_FLIP_HORIZONTAL;
-                        }
-                        
-                        newVelocity.X = -250;
-                        if (physics.Grounded)
-                        {
-                            entity.activeSTATE = Entity.STATE.WALKLEFT;
-                        }
-                        break;
-
-                    case SDL.SDL_Keycode.SDLK_d:
-                        if (entity.activeSTATE != Entity.STATE.AIRTIME)
-                        {
-                            renderer.flip = SDL.SDL_RendererFlip.SDL_FLIP_NONE;
-                        }
-                        
-                        newVelocity.X = 250;
-                        if (physics.Grounded)
-                        {
-                            entity.activeSTATE = Entity.STATE.WALKRIGHT;
-                        }
-                        break;
-                    case SDL.SDL_Keycode.SDLK_SPACE:
-                        if (physics.Grounded)
-                        {
-
-                            entity.activeSTATE = Entity.STATE.JUMP;
-                            newVelocity.Y = -250;
-
-                            physics.Grounded = false;
-                            
-                        }
-                        break;
-
-
-                }
-                physics.Velocity = newVelocity;
             }
         }
     }
@@ -94,6 +38,7 @@ public class MovementSystem
     {
         var player = _entitySystem.GetEntityByGID(281);
         var physics = player.GetComponent<PhysicsComponent>();
+
         Vector3 newVelocity = physics.Velocity;
 
         switch (player.activeSTATE)
@@ -129,6 +74,7 @@ public class MovementSystem
             if (entity.HasComponent<PlayerSteeringComponent>() && entity.HasComponent<PhysicsComponent>())
             {
                 var physics = entity.GetComponent<PhysicsComponent>();
+                var renderer = entity.GetComponent<RenderComponent>();
                 Vector3 newVelocity = physics.Velocity;
 
                 
@@ -149,8 +95,16 @@ public class MovementSystem
                         */
                         break;
                 case SDL.SDL_Keycode.SDLK_a:
-                case SDL.SDL_Keycode.SDLK_d:
-                        newVelocity.X = 0;
+                            newVelocity.X = 0;
+
+                        if (physics.Grounded)
+                        {
+                            entity.activeSTATE = Entity.STATE.IDLE;
+                        }
+                        break;
+
+                    case SDL.SDL_Keycode.SDLK_d:
+                            newVelocity.X = 0;            
                         if (physics.Grounded)
                         {
                             entity.activeSTATE = Entity.STATE.IDLE;
@@ -162,5 +116,66 @@ public class MovementSystem
             }
         }
     }
+
+    public void keySetup(SDL.SDL_Keycode keycode, Entity entity)
+    {
+        var physics = entity.GetComponent<PhysicsComponent>();
+        var renderer = entity.GetComponent<RenderComponent>();
+        Vector3 newVelocity = physics.Velocity;
+
+        switch (keycode)
+        {
+            case SDL.SDL_Keycode.SDLK_w:
+                entity.activeSTATE = Entity.STATE.JUMP;
+                newVelocity.Y = -250;
+                break;
+
+            case SDL.SDL_Keycode.SDLK_s:
+                break;
+
+            case SDL.SDL_Keycode.SDLK_a:
+                if (entity.activeSTATE != Entity.STATE.AIRTIME)
+                {
+                    renderer.flip = SDL.SDL_RendererFlip.SDL_FLIP_HORIZONTAL;
+                }
+
+                newVelocity.X = -250;
+                if (physics.Grounded)
+                {
+                    entity.activeSTATE = Entity.STATE.WALKLEFT;
+                }
+                break;
+
+            case SDL.SDL_Keycode.SDLK_d:
+                if (entity.activeSTATE != Entity.STATE.AIRTIME)
+                {
+                    renderer.flip = SDL.SDL_RendererFlip.SDL_FLIP_NONE;
+                }
+
+                newVelocity.X = 250;
+                if (physics.Grounded)
+                {
+                    entity.activeSTATE = Entity.STATE.WALKRIGHT;
+                }
+                break;
+            case SDL.SDL_Keycode.SDLK_SPACE:
+                if (physics.Grounded)
+                {
+
+                    entity.activeSTATE = Entity.STATE.JUMP;
+                    newVelocity.Y = -250;
+
+                    physics.Grounded = false;
+
+                }
+                break;
+
+
+        }
+        physics.Velocity = newVelocity;
+    }
+
+ 
+
 
 }

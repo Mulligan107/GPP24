@@ -87,7 +87,7 @@ namespace JumperGame
         public void LevelSelect(String level)
         {
             entitySystem = new entitySystem();
-            _rescource = new RescourceManager("level2");
+            _rescource = new RescourceManager("movementTest");
             _inputSystem = new InputSystem();
             _quitSystem = new QuitSystem(this);
             _movementSystem = new MovementSystem(entitySystem);

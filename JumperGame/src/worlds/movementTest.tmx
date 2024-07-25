@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="200" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="1">
+ <tileset firstgid="1" source="../tilesets/Enviroment.tsx"/>
+ <tileset firstgid="257" source="../tilesets/coin.tsx"/>
+ <tileset firstgid="269" source="../tilesets/slime_green.tsx"/>
+ <tileset firstgid="281" source="../tilesets/knightOpti.tsx"/>
+ <layer id="2" name="Background" width="200" height="40">
+  <data encoding="base64" compression="zlib">
+   eJzt0yEBwDAABLH6Z5UwpzOw4T8QEAm555wLfHqAX+ufULb+CWXrn1C2/gll659Qtv4JZeufULb+CWXrn1C2/gll659Qtv4JZeufULb+CWXrn1C2/gll659Qtv4JZeufULb+CWXrn1C2/gll659Qtv4JZeufULb+CWXrn1C2/gll659Qtv4JZeufULb+CWXrn1C2/gll659Qtv4JZeufULb+CWUvrEGuTw==
+  </data>
+ </layer>
+ <layer id="1" name="Tile Layer 1" width="200" height="40">
+  <data encoding="base64" compression="zlib">
+   eJzt2gENADAIBDHwb3omtn0gbXIurgoAgJtaCgUAAAAAAAAAAAAA8FP6oZZ3HQAAAAAAAAAAAACYIf1Ba3cAAAAAwDsHBdsBtg==
+  </data>
+ </layer>
+ <layer id="4" name="Entities" width="200" height="40">
+  <data encoding="base64" compression="zlib">
+   eJztzjERAAAIBKA3hv2LmsHBc4EEJAAAAAAAAAAAwIWu7wEAAAAAAAAAAAAAAAAAAAAAAAAAAADA3gCRrgAb
+  </data>
+ </layer>
+</map>

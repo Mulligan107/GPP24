@@ -116,6 +116,7 @@ namespace JumperGame.src.manager
                     {
                         //Console.WriteLine("RENDERMANAGER/ STATE: " + enti.activeSTATE);
                         //Console.WriteLine("RENDERMANAGER/ GROUNDED: " + player.GetComponent<PhysicsComponent>().Grounded);
+                        //Console.WriteLine("RM // " + player.GetComponent<PhysicsComponent>().Velocity);
                     }
 
 
@@ -178,6 +179,7 @@ namespace JumperGame.src.manager
                         renderComponent.angle = 0;
                     }
 
+                    
 
                     if (SDL.SDL_HasIntersection(ref dst, ref camera) == SDL.SDL_bool.SDL_TRUE)
                     {
