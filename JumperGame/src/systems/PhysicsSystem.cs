@@ -154,6 +154,7 @@ namespace JumperGame.systems
             //inside the if statement above, the player will not be thrown up
             if (jumpedOntopOfEnemy)
             {
+                entity.activeSTATE = Entity.STATE.AIRTIME;
                 physicsComponent.Velocity = new Vector3(physicsComponent.Velocity.X, -300, 0);
                 jumpedOntopOfEnemy = false;
             }
