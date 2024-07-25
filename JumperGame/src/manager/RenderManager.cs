@@ -182,36 +182,6 @@ namespace JumperGame.src.manager
             Ltex.loadFromRenderedText(text, new SDL.SDL_Color());
             return Ltex;
         }
-        
-        public void InitializeMenu(MenuSystem menuSystem)
-        {
-            var menuItem1 = new MenuItemEntity(
-                new MenuComponent("Start Game", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, StartGame, "lazy.ttf"),
-                new MenuPositionComponent(new SDL.SDL_Rect { x = 10, y = 10, w = 200, h = 50 }),
-                null
-            );
-
-            var menuItem2 = new MenuItemEntity(
-                new MenuComponent("Exit", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, ExitGame, "lazy.ttf"),
-                new MenuPositionComponent(new SDL.SDL_Rect { x = 10, y = 20, w = 200, h = 50 }),
-                null
-            );
-
-            menuSystem.AddMenuItem(menuItem1);
-            menuSystem.AddMenuItem(menuItem2);
-        }
-        
-        private void StartGame()
-        {
-            Console.WriteLine("Start Game selected");
-        }
-
-        private void ExitGame()
-        {
-            Console.WriteLine("Exit Game selected");
-            Environment.Exit(0);
-        }
-        
 
         public bool Initialize()
         {

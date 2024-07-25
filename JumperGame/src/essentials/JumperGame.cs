@@ -41,12 +41,12 @@ namespace JumperGame
         
         public void InitializeSystems()
         {
-            _menuSystem = new MenuSystem(RenderManager.gRenderer);
-            
             entitySystem = new entitySystem();
             
             _rendering = new RenderManager();
-            _rendering.InitializeMenu(_menuSystem);
+            
+            _menuSystem = new MenuSystem();
+            _menuSystem.InitializeMenu(_menuSystem);
             
             _physicsSystem = new PhysicsSystem();
             _audio = new AudioManager();

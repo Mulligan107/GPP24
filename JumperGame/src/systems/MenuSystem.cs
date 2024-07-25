@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using JumperGame.components;
 using JumperGame.gameEntities;
 using SDL2;
 
@@ -8,16 +9,8 @@ namespace JumperGame.systems
 {
     public class MenuSystem
     {
-        private List<MenuItemEntity> _menuItems;
+        private List<MenuItemEntity> _menuItems = new();
         private int _selectedIndex;
-        private IntPtr _renderer;
-
-        public MenuSystem(IntPtr renderer)
-        {
-            _menuItems = new List<MenuItemEntity>();
-            _selectedIndex = 0;
-            _renderer = renderer;
-        }
 
         public void AddMenuItem(MenuItemEntity menuItem)
         {
@@ -43,6 +36,33 @@ namespace JumperGame.systems
         {
             _menuItems[_selectedIndex].MenuComponent.Action();
         }
+        
+        public void InitializeMenu(MenuSystem menuSystem)
+        {
+            var menuItem1 = new MenuItemEntity(
+                new MenuComponent("Start Game", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, StartGame, "lazy.ttf"),
+                new MenuPositionComponent(new SDL.SDL_Rect { x = 10, y = 10, w = 200, h = 50 })
+            );
+
+            var menuItem2 = new MenuItemEntity(
+                new MenuComponent("Exit", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, ExitGame, "lazy.ttf"),
+                new MenuPositionComponent(new SDL.SDL_Rect { x = 10, y = 20, w = 200, h = 50 })
+            );
+
+            menuSystem.AddMenuItem(menuItem1);
+            menuSystem.AddMenuItem(menuItem2);
+        }
+        
+        private void StartGame()
+        {
+            Console.WriteLine("Start Game selected");
+        }
+
+        private void ExitGame()
+        {
+            Console.WriteLine("Exit Game selected");
+            Environment.Exit(0);
+        }
 
         public void Render()
         {
@@ -52,20 +72,6 @@ namespace JumperGame.systems
                 menuItem.MenuComponent.Texture.loadFromRenderedText(menuItem.MenuComponent.Text, color);
                 menuItem.MenuComponent.Texture.render(menuItem.PositionComponent.Position.x, menuItem.PositionComponent.Position.y);
             }
-        }
-
-        private void RenderText(string text, SDL.SDL_Rect position, string fontPath, SDL.SDL_Color color)
-        {
-            Console.WriteLine($"Rendering text: {text} at position: {position.x}, {position.y}");
-            
-            IntPtr font = SDL_ttf.TTF_OpenFont(fontPath, 60);
-            IntPtr surfaceMessage = SDL_ttf.TTF_RenderText_Solid(font, text, color);
-            IntPtr texture = SDL.SDL_CreateTextureFromSurface(_renderer, surfaceMessage);
-
-            SDL.SDL_RenderCopy(_renderer, texture, IntPtr.Zero, ref position);
-            SDL.SDL_DestroyTexture(texture);
-            SDL.SDL_FreeSurface(surfaceMessage);
-            SDL_ttf.TTF_CloseFont(font);
         }
     }
 }
