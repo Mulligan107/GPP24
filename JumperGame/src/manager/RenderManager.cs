@@ -34,7 +34,7 @@ namespace JumperGame.src.manager
 
         public static IntPtr Font = IntPtr.Zero;
 
-        public CoinCounterSystem _coinCounterSystem;
+        private CoinCounterSystem _coinCounterSystem;
         
         public RenderManager()
         {
@@ -42,7 +42,7 @@ namespace JumperGame.src.manager
             Initialize();
         }
         
-        public void Update(double dt, double timeElapsed)
+        public void Update(double dt, double timeElapsed, MenuSystem menuSystem)
         {
             SDL.SDL_RenderClear(gRenderer);
 
@@ -52,32 +52,15 @@ namespace JumperGame.src.manager
             var posi = player.GetComponent<RenderComponent>();
             SDL.SDL_Rect newPosi = posi.dstRect;
 
-            var s = ScreenWidth / ScreenHeight;
-
             //Center the camera over the dot
             camera.x = (int)(newPosi.x + newPosi.w / 2) - (camera.w / 2 ) / 3; // TODO (/3) mit variable ersetzen
             camera.y = (int)(newPosi.y + newPosi.h / 2) - (camera.h / 2) / 3;
-
-            //Console.WriteLine("CAM: " + camera.x);
             
-            
-            //Keep the camera in bounds
-            if (camera.x < 0)
-            {
-                camera.x = 0;
-            }
-            if (camera.y < 0)
-            {
-                camera.y = 0;
-            }
-            if (camera.x > levelWidth - camera.w)
-            {
-                camera.x = levelWidth - camera.w;
-            }
-            if (camera.y > levelHeight - camera.h)
-            {
-                camera.y = levelHeight - camera.h;
-            }
+            // Keep the camera in bounds
+            if (camera.x < 0) camera.x = 0;
+            if (camera.y < 0) camera.y = 0;
+            if (camera.x > levelWidth - camera.w) camera.x = levelWidth - camera.w;
+            if (camera.y > levelHeight - camera.h) camera.y = levelHeight - camera.h;
 
 
             SDL.SDL_RenderSetScale(gRenderer, 3f, 3f); // TODO 3 mit variable ersetzen ; Mausrad?
@@ -111,18 +94,18 @@ namespace JumperGame.src.manager
 
                     if (animationComponent != null) 
                     {
-
-                    if (timeElapsed > counter)
+                        if (timeElapsed > counter)
                         {
                             counter = timeElapsed + animationComponent.duration * 0.0005;
                             frame++;
                         }
 
-                    if (animationComponent.animationFrame < animationComponent.AnimimationList.Length-1)
+                        if (animationComponent.animationFrame < animationComponent.AnimimationList.Length-1)
                         {
                             animationComponent.animationFrame = frame;
                         }
-                    else
+                        
+                        else
                         {
                             animationComponent.animationFrame = 1;
                             frame = 1;
@@ -131,7 +114,7 @@ namespace JumperGame.src.manager
                         SDL.SDL_Rect loopSrc = animationComponent.Update(timeElapsed);
 
 
-                        src = loopSrc;
+                            src = loopSrc;
                     }
                     // ---------- AnimationManager?
 
@@ -184,8 +167,10 @@ namespace JumperGame.src.manager
             
             _coinCounterSystem.RenderCoinCount();
 
-            timerTexture = changeText(timerTexture, "Delta: " + dt.ToString("F3") + "\n Timer: " + timeElapsed.ToString("F3"));
+            timerTexture = changeText(timerTexture, "Delta: " + dt.ToString("F3") + " Timer: " + timeElapsed.ToString("F3"));
             timerTexture.render(10, 10);
+            
+            menuSystem.Render();
 
             SDL.SDL_RenderPresent(gRenderer);
         }
@@ -202,13 +187,13 @@ namespace JumperGame.src.manager
         {
             var menuItem1 = new MenuItemEntity(
                 new MenuComponent("Start Game", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, StartGame, "lazy.ttf"),
-                new MenuPositionComponent(new SDL.SDL_Rect { x = 100, y = 100, w = 200, h = 50 }),
+                new MenuPositionComponent(new SDL.SDL_Rect { x = 10, y = 10, w = 200, h = 50 }),
                 null
             );
 
             var menuItem2 = new MenuItemEntity(
                 new MenuComponent("Exit", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, ExitGame, "lazy.ttf"),
-                new MenuPositionComponent(new SDL.SDL_Rect { x = 100, y = 200, w = 200, h = 50 }),
+                new MenuPositionComponent(new SDL.SDL_Rect { x = 10, y = 20, w = 200, h = 50 }),
                 null
             );
 

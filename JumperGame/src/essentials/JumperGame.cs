@@ -138,11 +138,9 @@ namespace JumperGame
 
                 // Update the managers
                 _physicsSystem.Update(entities, deltaTime);
-                _rendering.Update(deltaTime, timerCurrent);
+                _rendering.Update(deltaTime, timerCurrent, _menuSystem);
 
                 entitySystem.Update(deltaTime, timerCurrent);
-                
-                _menuSystem.Render();
 
                 // _audio.Update();
                 // _input.Update();

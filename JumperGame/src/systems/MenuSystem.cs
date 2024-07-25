@@ -21,6 +21,8 @@ namespace JumperGame.systems
 
         public void AddMenuItem(MenuItemEntity menuItem)
         {
+            menuItem.MenuComponent.Texture.loadFromRenderedText(menuItem.MenuComponent.Text, menuItem.MenuComponent.Color);
+
             _menuItems.Add(menuItem);
         }
 
@@ -47,12 +49,15 @@ namespace JumperGame.systems
             foreach (var menuItem in _menuItems)
             {
                 var color = menuItem == _menuItems[_selectedIndex] ? menuItem.MenuComponent.SelectedColor : menuItem.MenuComponent.Color;
-                RenderText(menuItem.MenuComponent.Text, menuItem.PositionComponent.Position, menuItem.MenuComponent.Font, color);
+                menuItem.MenuComponent.Texture.loadFromRenderedText(menuItem.MenuComponent.Text, color);
+                menuItem.MenuComponent.Texture.render(menuItem.PositionComponent.Position.x, menuItem.PositionComponent.Position.y);
             }
         }
 
         private void RenderText(string text, SDL.SDL_Rect position, string fontPath, SDL.SDL_Color color)
         {
+            Console.WriteLine($"Rendering text: {text} at position: {position.x}, {position.y}");
+            
             IntPtr font = SDL_ttf.TTF_OpenFont(fontPath, 60);
             IntPtr surfaceMessage = SDL_ttf.TTF_RenderText_Solid(font, text, color);
             IntPtr texture = SDL.SDL_CreateTextureFromSurface(_renderer, surfaceMessage);
