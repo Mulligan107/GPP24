@@ -42,19 +42,29 @@ public class MovementSystem
                         entity.activeSTATE = Entity.STATE.JUMP;
                         newVelocity.Y = -250;
                         break;
+
                     case SDL.SDL_Keycode.SDLK_s:                       
                         break;
+
                     case SDL.SDL_Keycode.SDLK_a:
-                        renderer.flip = SDL.SDL_RendererFlip.SDL_FLIP_HORIZONTAL;
+                        if(entity.activeSTATE != Entity.STATE.AIRTIME)
+                        {
+                            renderer.flip = SDL.SDL_RendererFlip.SDL_FLIP_HORIZONTAL;
+                        }
+                        
                         newVelocity.X = -250;
                         if (physics.Grounded)
                         {
                             entity.activeSTATE = Entity.STATE.WALKLEFT;
-
                         }
                         break;
+
                     case SDL.SDL_Keycode.SDLK_d:
-                        renderer.flip = SDL.SDL_RendererFlip.SDL_FLIP_NONE;
+                        if (entity.activeSTATE != Entity.STATE.AIRTIME)
+                        {
+                            renderer.flip = SDL.SDL_RendererFlip.SDL_FLIP_NONE;
+                        }
+                        
                         newVelocity.X = 250;
                         if (physics.Grounded)
                         {

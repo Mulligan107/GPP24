@@ -145,6 +145,7 @@ namespace JumperGame.src.manager
                     }
                     // ---------- AnimationManager?
 
+                    
 
                     SDL.SDL_Rect adjustedDst = new SDL.SDL_Rect
                     {
@@ -153,6 +154,30 @@ namespace JumperGame.src.manager
                         w = dst.w,
                         h = dst.h
                     };
+
+
+
+
+                    if (enti.activeSTATE == Entity.STATE.AIRTIME)
+                    {
+                        renderComponent.centerPoint = new SDL.SDL_Point {x = adjustedDst.w/2 , y = adjustedDst.h/2  };
+
+
+                        if(renderComponent.flip == SDL.SDL_RendererFlip.SDL_FLIP_NONE)
+                        {
+                            renderComponent.angle += dt * 1000;
+                        }
+                        else
+                        {
+                            renderComponent.angle -= dt * 1000;
+                        }
+                        
+                    }
+                    else
+                    {
+                        renderComponent.angle = 0;
+                    }
+
 
                     if (SDL.SDL_HasIntersection(ref dst, ref camera) == SDL.SDL_bool.SDL_TRUE)
                     {
