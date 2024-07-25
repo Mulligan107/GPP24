@@ -1,22 +1,11 @@
-﻿using JumperGame;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System;
 using System.Globalization;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using SDL2;
-using System.Text.RegularExpressions;
-using System.Timers;
-using TiledCSPlus;
 using JumperGame.gameEntities;
 using JumperGame.components;
-using System.Numerics;
-using System.Security.Cryptography;
-using System.ComponentModel.DataAnnotations;
 using JumperGame.src.components;
+using JumperGame.systems;
 
 namespace JumperGame.src.manager
 {
@@ -208,7 +197,35 @@ namespace JumperGame.src.manager
             Ltex.loadFromRenderedText(text, new SDL.SDL_Color());
             return Ltex;
         }
+        
+        public void InitializeMenu(MenuSystem menuSystem)
+        {
+            var menuItem1 = new MenuItemEntity(
+                new MenuComponent("Start Game", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, StartGame, "lazy.ttf"),
+                new MenuPositionComponent(new SDL.SDL_Rect { x = 100, y = 100, w = 200, h = 50 }),
+                null
+            );
 
+            var menuItem2 = new MenuItemEntity(
+                new MenuComponent("Exit", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, ExitGame, "lazy.ttf"),
+                new MenuPositionComponent(new SDL.SDL_Rect { x = 100, y = 200, w = 200, h = 50 }),
+                null
+            );
+
+            menuSystem.AddMenuItem(menuItem1);
+            menuSystem.AddMenuItem(menuItem2);
+        }
+        
+        private void StartGame()
+        {
+            Console.WriteLine("Start Game selected");
+        }
+
+        private void ExitGame()
+        {
+            Console.WriteLine("Exit Game selected");
+            Environment.Exit(0);
+        }
         
 
         public bool Initialize()
