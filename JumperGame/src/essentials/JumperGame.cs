@@ -25,6 +25,13 @@ namespace JumperGame
         
         public bool IsRunning;
         public bool IsReset;
+        
+        public static JumperGame Instance { get; private set; }
+
+        public JumperGame()
+        {
+            Instance = this;
+        }
 
         static int Main(string[] args)
         {
@@ -42,29 +49,29 @@ namespace JumperGame
         public void InitializeSystems()
         {
             entitySystem = new entitySystem();
-            
+    
             _rendering = new RenderManager();
-            
+    
             _menuSystem = new MenuSystem();
             _menuSystem.InitializeMenu(_menuSystem);
-            
+    
             _physicsSystem = new PhysicsSystem();
             _audio = new AudioManager();
-            _rescource = new RescourceManager("testWorld");
+            _rescource = new RescourceManager("Level1");
 
             _inputSystem = new InputSystem();
             _quitSystem = new QuitSystem(this);
             _movementSystem = new MovementSystem(entitySystem);
             _enemyMovementSystem = new EnemyMovementSystem(entitySystem);
-            
+    
             _inputSystem.KeyPressed += _movementSystem.Update;
             _inputSystem.KeyReleased += _movementSystem.OnKeyReleased;
-            
+    
             _inputSystem.GameQuitRequested += _quitSystem.QuitGame;
             _inputSystem.SelectNextMenuItem += _menuSystem.SelectNextItem;
             _inputSystem.SelectPreviousMenuItem += _menuSystem.SelectPreviousItem;
             _inputSystem.ExecuteMenuItem += _menuSystem.ExecuteSelectedItem;
-            
+    
             _rescource.loadTiles();
 
             InitializeSdl();
@@ -87,12 +94,11 @@ namespace JumperGame
             
             return true;
         }
-
         
-        public void LevelSelect(String level)
+        public void LoadLevel(string levelName)
         {
             entitySystem = new entitySystem();
-            _rescource = new RescourceManager("movementTest");
+            _rescource = new RescourceManager(levelName);
             _inputSystem = new InputSystem();
             _quitSystem = new QuitSystem(this);
             _movementSystem = new MovementSystem(entitySystem);
@@ -102,8 +108,13 @@ namespace JumperGame
             _inputSystem.KeyReleased += _movementSystem.OnKeyReleased;
 
             _inputSystem.GameQuitRequested += _quitSystem.QuitGame;
+            
+            _inputSystem.GameQuitRequested += _quitSystem.QuitGame;
+            _inputSystem.SelectNextMenuItem += _menuSystem.SelectNextItem;
+            _inputSystem.SelectPreviousMenuItem += _menuSystem.SelectPreviousItem;
+            _inputSystem.ExecuteMenuItem += _menuSystem.ExecuteSelectedItem;
+            
             _rescource.loadTiles();
-
         }
         
         public void Run()

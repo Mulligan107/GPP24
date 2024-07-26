@@ -40,22 +40,33 @@ namespace JumperGame.systems
         public void InitializeMenu(MenuSystem menuSystem)
         {
             var menuItem1 = new MenuItemEntity(
-                new MenuComponent("Start Game", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, StartGame, "lazy.ttf"),
-                new MenuPositionComponent(new SDL.SDL_Rect { x = 10, y = 10, w = 200, h = 50 })
+                new MenuComponent("Start Level 1", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, StartLevel1, "lazy.ttf"),
+                new MenuPositionComponent(new SDL.SDL_Rect { x = 200, y = 10, w = 200, h = 50 })
             );
 
             var menuItem2 = new MenuItemEntity(
+                new MenuComponent("Start Level 2", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, StartLevel2, "lazy.ttf"),
+                new MenuPositionComponent(new SDL.SDL_Rect { x = 200, y = 20, w = 200, h = 50 })
+            );
+            
+            var menuItem3 = new MenuItemEntity(
                 new MenuComponent("Exit", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, ExitGame, "lazy.ttf"),
-                new MenuPositionComponent(new SDL.SDL_Rect { x = 10, y = 20, w = 200, h = 50 })
+                new MenuPositionComponent(new SDL.SDL_Rect { x = 200, y = 20, w = 200, h = 50 })
             );
 
             menuSystem.AddMenuItem(menuItem1);
             menuSystem.AddMenuItem(menuItem2);
+            menuSystem.AddMenuItem(menuItem3);
         }
         
-        private void StartGame()
+        private void StartLevel1()
         {
-            Console.WriteLine("Start Game selected");
+            JumperGame.Instance.LoadLevel("Level1");
+        }
+        
+        private void StartLevel2()
+        {
+            JumperGame.Instance.LoadLevel("Level2");
         }
 
         private void ExitGame()
