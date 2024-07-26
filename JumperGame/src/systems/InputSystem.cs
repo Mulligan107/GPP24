@@ -14,83 +14,85 @@ namespace JumperGame.systems
         public event Action SelectPreviousMenuItem;
         public event Action ExecuteMenuItem;
 
-        public SDL.SDL_Keycode PreviousKeyPressed;
+        public SDL.SDL_Keycode previousKeyPressed;
 
-        public SDL.SDL_Keycode LastKeyPressed;
+        public SDL.SDL_Keycode lastKeyPressed;
+
+        bool keyStillDown;
 
 
         public void ProcessInput(SDL.SDL_Event e)
         {
-            switch (e.type)
+            if (e.type == SDL.SDL_EventType.SDL_KEYDOWN)
             {
-                case SDL.SDL_EventType.SDL_KEYDOWN:
+
+                if (e.key.keysym.sym != previousKeyPressed)
                 {
-                    if (e.key.keysym.sym != PreviousKeyPressed)
-                    {
-                        LastKeyPressed = e.key.keysym.sym;
-                    }
+                    lastKeyPressed = e.key.keysym.sym;
+                }
 
-                    KeyPressed?.Invoke(e.key.keysym.sym);
+                KeyPressed?.Invoke(e.key.keysym.sym);
 
-                    switch (e.key.keysym.sym)
-                    {
-                        case SDL.SDL_Keycode.SDLK_ESCAPE:
-                            GameQuitRequested?.Invoke();
-                            break;
-                        case SDL.SDL_Keycode.SDLK_DOWN:
-                            SelectNextMenuItem?.Invoke();
-                            break;
-                        case SDL.SDL_Keycode.SDLK_UP:
-                            SelectPreviousMenuItem?.Invoke();
-                            break;
-                        case SDL.SDL_Keycode.SDLK_RETURN:
-                            ExecuteMenuItem?.Invoke();
-                            break;
-                    }
+                if (e.key.keysym.sym == SDL.SDL_Keycode.SDLK_ESCAPE)
+                {
+                    GameQuitRequested?.Invoke();
+                }
+                else if (e.key.keysym.sym == SDL.SDL_Keycode.SDLK_DOWN)
+                {
+                    SelectNextMenuItem?.Invoke();
+                }
+                else if (e.key.keysym.sym == SDL.SDL_Keycode.SDLK_UP)
+                {
+                    SelectPreviousMenuItem?.Invoke();
+                }
+                else if (e.key.keysym.sym == SDL.SDL_Keycode.SDLK_RETURN)
+                {
+                    ExecuteMenuItem?.Invoke();
+                }
 
 
-                    /*
+                /*
                 Console.WriteLine("IS // AKTUELL: " + e.key.keysym.sym + "\n" +
                     "last: " + lastKeyPressed + "\n" +
                     "prev: " + previousKeyPressed);
                 */
-                    break;
-                }
-                case SDL.SDL_EventType.SDL_KEYUP:
-                {
-                    //Console.WriteLine("IS // " + isKeyPressed(SDL.SDL_Keycode.SDLK_a) + isKeyPressed(SDL.SDL_Keycode.SDLK_d));
-                    if (!IsKeyPressed(SDL.SDL_Keycode.SDLK_d) && !IsKeyPressed(SDL.SDL_Keycode.SDLK_a))
-                    {
-                        KeyReleased?.Invoke(e.key.keysym.sym);
-                    }
-                    else
-                    {
-                        SDL.SDL_Keycode key;
-                        switch (IsKeyPressed(SDL.SDL_Keycode.SDLK_d))
-                        {
-                            case true:
-                                key = SDL.SDL_Keycode.SDLK_d;
-                                break;
-                            case false:
-                                key = SDL.SDL_Keycode.SDLK_a;
-                                break;
 
-                        }
-
-                        KeyPressed?.Invoke(key);
-
-
-                    }
-                    PreviousKeyPressed = LastKeyPressed;
-                    break;
-                }
             }
+            else if (e.type == SDL.SDL_EventType.SDL_KEYUP)
+            {
+                //Console.WriteLine("IS // " + isKeyPressed(SDL.SDL_Keycode.SDLK_a) + isKeyPressed(SDL.SDL_Keycode.SDLK_d));
+                if (!isKeyPressed(SDL.SDL_Keycode.SDLK_d) && !isKeyPressed(SDL.SDL_Keycode.SDLK_a))
+                {
+                    KeyReleased?.Invoke(e.key.keysym.sym);
+                }
+                else
+                {
+                    SDL.SDL_Keycode key;
+                    switch (isKeyPressed(SDL.SDL_Keycode.SDLK_d))
+                    {
+                        case true:
+                            key = SDL.SDL_Keycode.SDLK_d;
+                            break;
+                            case false:
+                            key = SDL.SDL_Keycode.SDLK_a;
+                            break;
+
+                    }
+
+                    KeyPressed?.Invoke(key);
+
+
+                }
+                previousKeyPressed = lastKeyPressed;
+
+            }
+            
         }
 
-        public bool IsKeyPressed(SDL.SDL_Keycode _keycode)
+        public bool isKeyPressed(SDL.SDL_Keycode _keycode)
         {
             int arraySize;
-            bool isKeyPressed;
+            bool isKeyPressed = false;
             IntPtr origArray = SDL.SDL_GetKeyboardState(out arraySize);
             byte[] keys = new byte[arraySize];
             byte keycode = (byte)SDL.SDL_GetScancodeFromKey(_keycode);
