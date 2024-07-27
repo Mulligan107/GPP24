@@ -110,7 +110,7 @@ namespace JumperGame.systems
                     newPosition.X = otherPositionComponent.Position.X + otherCollisionComponent.Size.X;
                     if (entity.Type == Entity.EntityType.Player && otherEntity.Type == Entity.EntityType.Enemy)
                     {
-                        physicsComponent.Velocity = new Vector3(600, -150, 0); 
+                        physicsComponent.Velocity = new Vector3(100, -150, 0); 
                     }
                 }
                 else
@@ -118,7 +118,7 @@ namespace JumperGame.systems
                     newPosition.X = otherPositionComponent.Position.X - collisionComponent.Size.X;
                     if (entity.Type == Entity.EntityType.Player && otherEntity.Type == Entity.EntityType.Enemy)
                     {
-                        physicsComponent.Velocity = new Vector3(-600, -150, 0);
+                        physicsComponent.Velocity = new Vector3(-100, -150, 0);
                     }
                 }
             }
