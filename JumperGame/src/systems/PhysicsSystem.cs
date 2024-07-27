@@ -90,6 +90,13 @@ namespace JumperGame.systems
         private void ResolveCollision(Entity entity, PhysicsComponent physicsComponent, PositionComponent positionComponent, CollisionComponent collisionComponent,
             PositionComponent otherPositionComponent, CollisionComponent otherCollisionComponent, ref Vector3 newPosition, Entity otherEntity, ref bool grounded)
         {
+            
+            // Check if the entity should ignore terrain collisions
+            if (entity.IgnoreCollisionWithTerrain && otherEntity.Type == Entity.EntityType.Tile)
+            {
+                return;
+            }
+            
             // Calculate overlap in both axes
             float overlapX = Math.Min(newPosition.X + collisionComponent.Size.X, otherPositionComponent.Position.X + otherCollisionComponent.Size.X) -
                              Math.Max(newPosition.X, otherPositionComponent.Position.X);
