@@ -47,7 +47,7 @@ namespace JumperGame.src.manager
             SDL.SDL_RenderClear(gRenderer);
 
             SDL.SDL_Rect camera = new SDL.SDL_Rect { w = ScreenWidth, h = ScreenHeight };
-
+            
             Entity player = JumperGame.entitySystem.GetEntityByGID(281);
             var posi = player.GetComponent<RenderComponent>();
             SDL.SDL_Rect newPosi = posi.dstRect;
@@ -175,7 +175,31 @@ namespace JumperGame.src.manager
             SDL.SDL_RenderPresent(gRenderer);
         }
 
-        
+        public void InitializeMenu(MenuSystem menuSystem)
+        {
+            int centerX = ScreenWidth / 2 / 3; // Adjusting for the camera zoom factor
+            Console.WriteLine("CenterX: " + centerX);
+            int centerY = ScreenHeight / 2 / 3; // Adjusting for the camera zoom factor
+
+            var menuItem1 = new MenuItemEntity(
+                new MenuComponent("Start Level 1", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, menuSystem.StartLevel1, "lazy.ttf"),
+                new MenuPositionComponent(new SDL.SDL_Rect { x = centerX - 100, y = centerY - 60, w = 200, h = 50 })
+            );
+
+            var menuItem2 = new MenuItemEntity(
+                new MenuComponent("Start Level 2", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, menuSystem.StartLevel2, "lazy.ttf"),
+                new MenuPositionComponent(new SDL.SDL_Rect { x = centerX - 100, y = centerY, w = 200, h = 50 })
+            );
+
+            var menuItem3 = new MenuItemEntity(
+                new MenuComponent("Exit", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, menuSystem.ExitGame, "lazy.ttf"),
+                new MenuPositionComponent(new SDL.SDL_Rect { x = centerX - 100, y = centerY + 60, w = 200, h = 50 })
+            );
+
+            menuSystem.AddMenuItem(menuItem1);
+            menuSystem.AddMenuItem(menuItem2);
+            menuSystem.AddMenuItem(menuItem3);
+        }
 
         static LTexture changeText(LTexture Ltex, String text)
         {
