@@ -18,6 +18,12 @@ namespace JumperGame.systems
 
             _menuItems.Add(menuItem);
         }
+        
+        public void ClearMenuItems()
+        {
+            _menuItems.Clear();
+            _selectedIndex = 0;
+        }
 
         public void SelectNextItem()
         {
@@ -46,6 +52,11 @@ namespace JumperGame.systems
         public void StartLevel2()
         {
             JumperGame.Instance.LoadLevel("Level2");
+        }
+        
+        public void StartLevel3()
+        {
+            //JumperGame.Instance.LoadLevel("Level2");
         }
 
         public void ExitGame()
