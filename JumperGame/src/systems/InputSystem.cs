@@ -9,7 +9,10 @@ namespace JumperGame.systems
         // This event is triggered whenever a key is pressed.
         public event Action<SDL.SDL_Keycode> KeyPressed;
         public event Action<SDL.SDL_Keycode> KeyReleased;
-        public event Action GameQuitRequested;
+        public event Action InitializePauseRequested;
+        public event Action SelectNextMenuItem;
+        public event Action SelectPreviousMenuItem;
+        public event Action ExecuteMenuItem;
 
         public SDL.SDL_Keycode previousKeyPressed;
 
@@ -32,7 +35,21 @@ namespace JumperGame.systems
 
                 if (e.key.keysym.sym == SDL.SDL_Keycode.SDLK_ESCAPE)
                 {
-                    GameQuitRequested?.Invoke();
+                    InitializePauseRequested?.Invoke();
+                    JumperGame.Instance.IsMenuOpen = true;
+
+                }
+                else if (e.key.keysym.sym == SDL.SDL_Keycode.SDLK_DOWN)
+                {
+                    SelectNextMenuItem?.Invoke();
+                }
+                else if (e.key.keysym.sym == SDL.SDL_Keycode.SDLK_UP)
+                {
+                    SelectPreviousMenuItem?.Invoke();
+                }
+                else if (e.key.keysym.sym == SDL.SDL_Keycode.SDLK_RETURN)
+                {
+                    ExecuteMenuItem?.Invoke();
                 }
 
 
@@ -45,7 +62,7 @@ namespace JumperGame.systems
             }
             else if (e.type == SDL.SDL_EventType.SDL_KEYUP)
             {
-                Console.WriteLine("IS // " + isKeyPressed(SDL.SDL_Keycode.SDLK_a) + isKeyPressed(SDL.SDL_Keycode.SDLK_d));
+                //Console.WriteLine("IS // " + isKeyPressed(SDL.SDL_Keycode.SDLK_a) + isKeyPressed(SDL.SDL_Keycode.SDLK_d));
                 if (!isKeyPressed(SDL.SDL_Keycode.SDLK_d) && !isKeyPressed(SDL.SDL_Keycode.SDLK_a))
                 {
                     KeyReleased?.Invoke(e.key.keysym.sym);
