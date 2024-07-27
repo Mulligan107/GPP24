@@ -19,6 +19,7 @@ namespace JumperGame.src.manager
         LTexture tileTexCoin = new LTexture();
         LTexture tileTexKnight = new LTexture();
         LTexture tileTexSlime = new LTexture();
+        LTexture tileTexMonster = new LTexture();
 
         LTexture addTexture = new LTexture();
 
@@ -39,6 +40,8 @@ namespace JumperGame.src.manager
             tileTexCoin.loadFromFile("src\\tilesets/coin.png");
             tileTexKnight.loadFromFile("src\\tilesets/knightOpti.png");
             tileTexSlime.loadFromFile("src\\tilesets/slime_green.png");
+            tileTexMonster.loadFromFile("src\\tilesets/monsters.png");
+
         }
 
         public void loadTiles()
@@ -145,6 +148,18 @@ namespace JumperGame.src.manager
                                 
                                 entity.AddComponent(sSteeringComponent);
                                 
+                                break;
+                            case "monsters":
+                                entity.Type = Entity.EntityType.Enemy;
+                                addTexture = tileTexMonster;
+                                collision = true;
+                                mass = 10;
+
+                                var sSteeringComponent2 = new SlimeSteeringComponent();
+
+
+                                entity.AddComponent(sSteeringComponent2);
+
                                 break;
                         }
 

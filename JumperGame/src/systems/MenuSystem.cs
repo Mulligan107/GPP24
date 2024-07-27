@@ -68,7 +68,8 @@ namespace JumperGame.systems
         
         public void StartLevel3()
         {
-            //JumperGame.Instance.LoadLevel("Level3");
+            JumperGame.Instance.LoadLevel("movementTest");
+            JumperGame.Instance.IsMenuOpen = false;
             ClearMenuItems();
         }
 
