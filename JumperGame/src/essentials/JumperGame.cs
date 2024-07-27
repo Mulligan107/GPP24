@@ -67,7 +67,7 @@ namespace JumperGame
             _inputSystem.KeyPressed += _movementSystem.Update;
             _inputSystem.KeyReleased += _movementSystem.OnKeyReleased;
     
-            _inputSystem.InitializeMenuRequested += () => _rendering.InitializeMenu(_menuSystem);
+            _inputSystem.InitializePauseRequested += () => _rendering.InitializePauseMenu(_menuSystem);
             _inputSystem.SelectNextMenuItem += _menuSystem.SelectNextItem;
             _inputSystem.SelectPreviousMenuItem += _menuSystem.SelectPreviousItem;
             _inputSystem.ExecuteMenuItem += _menuSystem.ExecuteSelectedItem;
@@ -107,7 +107,7 @@ namespace JumperGame
             _inputSystem.KeyPressed += _movementSystem.Update;
             _inputSystem.KeyReleased += _movementSystem.OnKeyReleased;
             
-            _inputSystem.InitializeMenuRequested += () => _rendering.InitializeMenu(_menuSystem);
+            _inputSystem.InitializePauseRequested += () => _rendering.InitializePauseMenu(_menuSystem);
             _inputSystem.SelectNextMenuItem += _menuSystem.SelectNextItem;
             _inputSystem.SelectPreviousMenuItem += _menuSystem.SelectPreviousItem;
             _inputSystem.ExecuteMenuItem += _menuSystem.ExecuteSelectedItem;

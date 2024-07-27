@@ -192,7 +192,7 @@ namespace JumperGame.src.manager
             );
 
             var exitMenuItem = new MenuItemEntity(
-                new MenuComponent("Exit", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, menuSystem.ExitGame, "lazy.ttf"),
+                new MenuComponent("Quit Game", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, menuSystem.ExitGame, "lazy.ttf"),
                 new MenuPositionComponent(new SDL.SDL_Rect())
             );
 
@@ -249,6 +249,26 @@ namespace JumperGame.src.manager
             );
 
             InitializeSubMenu(menuSystem, new List<MenuItemEntity> { backMenuItem });
+        }
+        
+        public void InitializePauseMenu(MenuSystem menuSystem)
+        {
+            var resumeMenuItem = new MenuItemEntity(
+                new MenuComponent("Resume", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, menuSystem.resume, "lazy.ttf"),
+                new MenuPositionComponent(new SDL.SDL_Rect())
+            );
+            
+            var mainMenuItem = new MenuItemEntity(
+                new MenuComponent("Back to Main Menu", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, () => InitializeMenu(menuSystem), "lazy.ttf"),
+                new MenuPositionComponent(new SDL.SDL_Rect())
+            );
+            
+            var quitMenuItem = new MenuItemEntity(
+                new MenuComponent("Quit Game", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, menuSystem.ExitGame, "lazy.ttf"),
+                new MenuPositionComponent(new SDL.SDL_Rect())
+            );
+
+            InitializeSubMenu(menuSystem, new List<MenuItemEntity> { resumeMenuItem, mainMenuItem, quitMenuItem });
         }
 
         static LTexture changeText(LTexture Ltex, String text)

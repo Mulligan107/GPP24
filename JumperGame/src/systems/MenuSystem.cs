@@ -24,11 +24,6 @@ namespace JumperGame.systems
             _menuItems.Clear();
             _selectedIndex = 0;
         }
-        
-        public void HideMenu()
-        {
-            ClearMenuItems();
-        }
 
         public void SelectNextItem()
         {
@@ -45,33 +40,40 @@ namespace JumperGame.systems
 
         public void ExecuteSelectedItem()
         {
-            _menuItems[_selectedIndex].MenuComponent.Action();
+            if (_menuItems.Count > 0)
+            {
+                _menuItems[_selectedIndex].MenuComponent.Action();
+            }
         }
         
+        public void resume()
+        {
+            JumperGame.Instance.IsMenuOpen = false;
+            ClearMenuItems();
+        }
         
         public void StartLevel1()
         {
             JumperGame.Instance.LoadLevel("Level1");
             JumperGame.Instance.IsMenuOpen = false;
-            HideMenu();
+            ClearMenuItems();
         }
         
         public void StartLevel2()
         {
             JumperGame.Instance.LoadLevel("Level2");
             JumperGame.Instance.IsMenuOpen = false;
-            HideMenu();
+            ClearMenuItems();
         }
         
         public void StartLevel3()
         {
-            //JumperGame.Instance.LoadLevel("Level2");
-            HideMenu();
+            //JumperGame.Instance.LoadLevel("Level3");
+            ClearMenuItems();
         }
 
         public void ExitGame()
         {
-            Console.WriteLine("Exit Game selected");
             Environment.Exit(0);
         }
 
