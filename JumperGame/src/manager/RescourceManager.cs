@@ -156,9 +156,20 @@ namespace JumperGame.src.manager
                                 mass = 10;
 
                                 var sSteeringComponent2 = new SlimeSteeringComponent();
-
-
-                                entity.AddComponent(sSteeringComponent2);
+                                var eSteeringComponent = new EyeSteeringComponent();
+                                
+                                
+                                if (entity.gid == 393)
+                                {
+                                    entity.AddComponent(eSteeringComponent);
+                                    mass = 0;
+                                }
+                                else
+                                {
+                                    entity.AddComponent(sSteeringComponent2);
+                                }
+                                
+                                
 
                                 break;
                         }
