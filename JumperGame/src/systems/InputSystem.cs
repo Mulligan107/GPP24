@@ -9,7 +9,7 @@ namespace JumperGame.systems
         // This event is triggered whenever a key is pressed.
         public event Action<SDL.SDL_Keycode> KeyPressed;
         public event Action<SDL.SDL_Keycode> KeyReleased;
-        public event Action GameQuitRequested;
+        public event Action InitializeMenuRequested;
         public event Action SelectNextMenuItem;
         public event Action SelectPreviousMenuItem;
         public event Action ExecuteMenuItem;
@@ -35,7 +35,7 @@ namespace JumperGame.systems
 
                 if (e.key.keysym.sym == SDL.SDL_Keycode.SDLK_ESCAPE)
                 {
-                    GameQuitRequested?.Invoke();
+                    InitializeMenuRequested?.Invoke();
                 }
                 else if (e.key.keysym.sym == SDL.SDL_Keycode.SDLK_DOWN)
                 {

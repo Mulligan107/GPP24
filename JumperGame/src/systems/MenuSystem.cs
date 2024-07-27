@@ -24,6 +24,11 @@ namespace JumperGame.systems
             _menuItems.Clear();
             _selectedIndex = 0;
         }
+        
+        public void HideMenu()
+        {
+            ClearMenuItems();
+        }
 
         public void SelectNextItem()
         {
@@ -47,16 +52,19 @@ namespace JumperGame.systems
         public void StartLevel1()
         {
             JumperGame.Instance.LoadLevel("Level1");
+            HideMenu();
         }
         
         public void StartLevel2()
         {
             JumperGame.Instance.LoadLevel("Level2");
+            HideMenu();
         }
         
         public void StartLevel3()
         {
             //JumperGame.Instance.LoadLevel("Level2");
+            HideMenu();
         }
 
         public void ExitGame()

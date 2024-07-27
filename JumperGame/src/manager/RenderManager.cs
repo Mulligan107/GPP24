@@ -203,7 +203,7 @@ namespace JumperGame.src.manager
         {
             menuSystem.ClearMenuItems(); 
 
-            int centerX = ScreenWidth / 2 / 3; // Adjusting for the camera zoom factor
+            int centerX = ScreenWidth / 2 / 3; 
             int itemHeight = 50;
             int totalHeight = menuItems.Count * itemHeight;
             int startY = (ScreenHeight / 2 / 3) - (totalHeight / 2); // Centering the list

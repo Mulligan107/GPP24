@@ -15,14 +15,14 @@ namespace JumperGame
         private RenderManager _rendering;
         private AudioManager _audio;
         private RescourceManager _rescource;
-        
+
         private MenuSystem _menuSystem;
         private PhysicsSystem _physicsSystem;
         private InputSystem _inputSystem;
         private QuitSystem _quitSystem;
         private MovementSystem _movementSystem;
         private EnemyMovementSystem _enemyMovementSystem;
-        
+
         public bool IsRunning;
         public bool IsReset;
         
@@ -66,7 +66,7 @@ namespace JumperGame
             _inputSystem.KeyPressed += _movementSystem.Update;
             _inputSystem.KeyReleased += _movementSystem.OnKeyReleased;
     
-            _inputSystem.GameQuitRequested += _quitSystem.QuitGame;
+            _inputSystem.InitializeMenuRequested += () => _rendering.InitializeMenu(_menuSystem);
             _inputSystem.SelectNextMenuItem += _menuSystem.SelectNextItem;
             _inputSystem.SelectPreviousMenuItem += _menuSystem.SelectPreviousItem;
             _inputSystem.ExecuteMenuItem += _menuSystem.ExecuteSelectedItem;
@@ -105,10 +105,8 @@ namespace JumperGame
 
             _inputSystem.KeyPressed += _movementSystem.Update;
             _inputSystem.KeyReleased += _movementSystem.OnKeyReleased;
-
-            _inputSystem.GameQuitRequested += _quitSystem.QuitGame;
             
-            _inputSystem.GameQuitRequested += _quitSystem.QuitGame;
+            _inputSystem.InitializeMenuRequested += () => _rendering.InitializeMenu(_menuSystem);
             _inputSystem.SelectNextMenuItem += _menuSystem.SelectNextItem;
             _inputSystem.SelectPreviousMenuItem += _menuSystem.SelectPreviousItem;
             _inputSystem.ExecuteMenuItem += _menuSystem.ExecuteSelectedItem;
