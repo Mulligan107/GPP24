@@ -90,13 +90,12 @@ namespace JumperGame.systems
         private void ResolveCollision(Entity entity, PhysicsComponent physicsComponent, PositionComponent positionComponent, CollisionComponent collisionComponent,
             PositionComponent otherPositionComponent, CollisionComponent otherCollisionComponent, ref Vector3 newPosition, Entity otherEntity, ref bool grounded)
         {
-            
             // Check if the entity should ignore terrain collisions
             if (entity.IgnoreCollisionWithTerrain && otherEntity.Type == Entity.EntityType.Tile)
             {
                 return;
             }
-            
+
             // Calculate overlap in both axes
             float overlapX = Math.Min(newPosition.X + collisionComponent.Size.X, otherPositionComponent.Position.X + otherCollisionComponent.Size.X) -
                              Math.Max(newPosition.X, otherPositionComponent.Position.X);
@@ -109,12 +108,19 @@ namespace JumperGame.systems
                 if (newPosition.X > otherPositionComponent.Position.X)
                 {
                     newPosition.X = otherPositionComponent.Position.X + otherCollisionComponent.Size.X;
+                    if (entity.Type == Entity.EntityType.Player && otherEntity.Type == Entity.EntityType.Enemy)
+                    {
+                        physicsComponent.Velocity = new Vector3(600, -150, 0); 
+                    }
                 }
                 else
                 {
                     newPosition.X = otherPositionComponent.Position.X - collisionComponent.Size.X;
+                    if (entity.Type == Entity.EntityType.Player && otherEntity.Type == Entity.EntityType.Enemy)
+                    {
+                        physicsComponent.Velocity = new Vector3(-600, -150, 0);
+                    }
                 }
-                physicsComponent.Velocity = new Vector3(0, physicsComponent.Velocity.Y, 0); // Stop horizontal movement
             }
             else
             {
