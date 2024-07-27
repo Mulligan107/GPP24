@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using SDL2;
@@ -174,69 +175,80 @@ namespace JumperGame.src.manager
 
             SDL.SDL_RenderPresent(gRenderer);
         }
-
+        
+        //Ich hasse mich selber für diesen Code aber hab grad keinen bock das zu refactoren / PP anzuwenden
+        //TODO: Refactor this
+        //Verzeih mir Thoma
         public void InitializeMenu(MenuSystem menuSystem)
         {
-            menuSystem.ClearMenuItems(); 
-
-            int centerX = ScreenWidth / 2 / 3; // Adjusting for the camera zoom factor
-            int itemHeight = 50;
-            int totalHeight = 3 * itemHeight; 
-            int startY = (ScreenHeight / 2 / 3) - (totalHeight / 2); 
-
             var playMenuItem = new MenuItemEntity(
                 new MenuComponent("Play", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, () => InitializePlayMenu(menuSystem), "lazy.ttf"),
-                new MenuPositionComponent(new SDL.SDL_Rect { x = centerX - 100, y = startY, w = 200, h = itemHeight })
+                new MenuPositionComponent(new SDL.SDL_Rect())
             );
 
             var settingsMenuItem = new MenuItemEntity(
-                new MenuComponent("Settings", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, menuSystem.StartLevel2, "lazy.ttf"),
-                new MenuPositionComponent(new SDL.SDL_Rect { x = centerX - 100, y = startY + itemHeight, w = 200, h = itemHeight })
+                new MenuComponent("Settings", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, () => InitializeSettingsMenu(menuSystem), "lazy.ttf"),
+                new MenuPositionComponent(new SDL.SDL_Rect())
             );
 
             var exitMenuItem = new MenuItemEntity(
                 new MenuComponent("Exit", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, menuSystem.ExitGame, "lazy.ttf"),
-                new MenuPositionComponent(new SDL.SDL_Rect { x = centerX - 100, y = startY + 2 * itemHeight, w = 200, h = itemHeight })
+                new MenuPositionComponent(new SDL.SDL_Rect())
             );
 
-            menuSystem.AddMenuItem(playMenuItem);
-            menuSystem.AddMenuItem(settingsMenuItem);
-            menuSystem.AddMenuItem(exitMenuItem);
+            InitializeSubMenu(menuSystem, new List<MenuItemEntity> { playMenuItem, settingsMenuItem, exitMenuItem });
         }
-
-        public void InitializePlayMenu(MenuSystem menuSystem)
+        
+        private void InitializeSubMenu(MenuSystem menuSystem, List<MenuItemEntity> menuItems)
         {
             menuSystem.ClearMenuItems(); 
 
             int centerX = ScreenWidth / 2 / 3; // Adjusting for the camera zoom factor
             int itemHeight = 50;
-            int totalHeight = 4 * itemHeight; 
-            int startY = (ScreenHeight / 2 / 3) - (totalHeight / 2);
+            int totalHeight = menuItems.Count * itemHeight;
+            int startY = (ScreenHeight / 2 / 3) - (totalHeight / 2); // Centering the list
 
+            for (int i = 0; i < menuItems.Count; i++)
+            {
+                var menuItem = menuItems[i];
+                menuItem.PositionComponent.Position = new SDL.SDL_Rect { x = centerX - 100, y = startY + i * itemHeight, w = 200, h = itemHeight };
+                menuSystem.AddMenuItem(menuItem);
+            }
+        }
+
+        public void InitializePlayMenu(MenuSystem menuSystem)
+        {
             var level1MenuItem = new MenuItemEntity(
                 new MenuComponent("Level 1", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, menuSystem.StartLevel1, "lazy.ttf"),
-                new MenuPositionComponent(new SDL.SDL_Rect { x = centerX - 100, y = startY, w = 200, h = itemHeight })
+                new MenuPositionComponent(new SDL.SDL_Rect())
             );
 
             var level2MenuItem = new MenuItemEntity(
                 new MenuComponent("Level 2", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, menuSystem.StartLevel2, "lazy.ttf"),
-                new MenuPositionComponent(new SDL.SDL_Rect { x = centerX - 100, y = startY + itemHeight, w = 200, h = itemHeight })
+                new MenuPositionComponent(new SDL.SDL_Rect())
             );
 
             var level3MenuItem = new MenuItemEntity(
                 new MenuComponent("Level 3", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, menuSystem.StartLevel3, "lazy.ttf"),
-                new MenuPositionComponent(new SDL.SDL_Rect { x = centerX - 100, y = startY + 2 * itemHeight, w = 200, h = itemHeight })
+                new MenuPositionComponent(new SDL.SDL_Rect())
             );
 
             var backMenuItem = new MenuItemEntity(
                 new MenuComponent("Back", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, () => InitializeMenu(menuSystem), "lazy.ttf"),
-                new MenuPositionComponent(new SDL.SDL_Rect { x = centerX - 100, y = startY + 3 * itemHeight, w = 200, h = itemHeight })
+                new MenuPositionComponent(new SDL.SDL_Rect())
             );
 
-            menuSystem.AddMenuItem(level1MenuItem);
-            menuSystem.AddMenuItem(level2MenuItem);
-            menuSystem.AddMenuItem(level3MenuItem);
-            menuSystem.AddMenuItem(backMenuItem);
+            InitializeSubMenu(menuSystem, new List<MenuItemEntity> { level1MenuItem, level2MenuItem, level3MenuItem, backMenuItem });
+        }
+        
+        public void InitializeSettingsMenu(MenuSystem menuSystem)
+        {
+            var backMenuItem = new MenuItemEntity(
+                new MenuComponent("Back", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, () => InitializeMenu(menuSystem), "lazy.ttf"),
+                new MenuPositionComponent(new SDL.SDL_Rect())
+            );
+
+            InitializeSubMenu(menuSystem, new List<MenuItemEntity> { backMenuItem });
         }
 
         static LTexture changeText(LTexture Ltex, String text)
