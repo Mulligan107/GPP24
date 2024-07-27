@@ -36,6 +36,8 @@ namespace JumperGame.systems
                 if (e.key.keysym.sym == SDL.SDL_Keycode.SDLK_ESCAPE)
                 {
                     InitializeMenuRequested?.Invoke();
+                    JumperGame.Instance.IsMenuOpen = true;
+
                 }
                 else if (e.key.keysym.sym == SDL.SDL_Keycode.SDLK_DOWN)
                 {

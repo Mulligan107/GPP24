@@ -52,12 +52,14 @@ namespace JumperGame.systems
         public void StartLevel1()
         {
             JumperGame.Instance.LoadLevel("Level1");
+            JumperGame.Instance.IsMenuOpen = false;
             HideMenu();
         }
         
         public void StartLevel2()
         {
             JumperGame.Instance.LoadLevel("Level2");
+            JumperGame.Instance.IsMenuOpen = false;
             HideMenu();
         }
         

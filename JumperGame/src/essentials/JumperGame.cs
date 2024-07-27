@@ -27,6 +27,7 @@ namespace JumperGame
         public bool IsReset;
         
         public static JumperGame Instance { get; private set; }
+        public bool IsMenuOpen { get; set; } = true;
 
         public JumperGame()
         {
@@ -130,6 +131,11 @@ namespace JumperGame
                 var deltaTime = (SDL.SDL_GetPerformanceCounter() - timerNew) / (double)SDL.SDL_GetPerformanceFrequency();
                 timerNew = SDL.SDL_GetPerformanceCounter();
 
+                if (IsMenuOpen)
+                {
+                    deltaTime = 0;
+                }
+                
                 _movementSystem.UpdatePlayerState();
 
                 while (SDL.SDL_PollEvent(out e) != 0)
