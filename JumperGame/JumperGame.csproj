@@ -95,7 +95,7 @@
     <None Update="src\tilesets\monsters.tsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="src\tilesets\shrimp.mp4">
+    <None Update="src\tilesets\BIGshrimp.mp4">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="src\tilesets\slime_purple.png">

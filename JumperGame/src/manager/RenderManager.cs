@@ -39,7 +39,6 @@ namespace JumperGame.src.manager
         LTexture black = new LTexture();
 
         SDL.SDL_Rect view;
-        SDL.SDL_Rect spawn;
 
         public string levelname;
 
@@ -212,7 +211,6 @@ namespace JumperGame.src.manager
 
             if (levelStart)
             {
-                spawn = player.GetComponent<RenderComponent>().dstRect;
                 fadeCounter -= dt * 300;
                 balkenCounter += dt * 100;
 

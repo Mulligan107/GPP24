@@ -139,6 +139,8 @@ namespace JumperGame
                 
                 if (LifeSystem.Instance.IsGameOver())
                 {
+                    _rendering.resetSystem();
+                    _rendering.deathEvent(_menuSystem);
                     _rendering.InitializeDeathMenu(_menuSystem);
                     IsMenuOpen = true; // Open the death menu
                 }
