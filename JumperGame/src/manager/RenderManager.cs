@@ -273,6 +273,21 @@ namespace JumperGame.src.manager
             InitializeSubMenu(menuSystem, new List<MenuItemEntity> { resumeMenuItem, mainMenuItem, quitMenuItem });
         }
         
+        public void InitializeDeathMenu(MenuSystem menuSystem)
+        {
+            var mainMenuItem = new MenuItemEntity(
+                new MenuComponent("Back to Main Menu", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, () => InitializeMenu(menuSystem), "lazy.ttf"),
+                new MenuPositionComponent(new SDL.SDL_Rect())
+            );
+            
+            var quitMenuItem = new MenuItemEntity(
+                new MenuComponent("Quit Game", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, menuSystem.ExitGame, "lazy.ttf"),
+                new MenuPositionComponent(new SDL.SDL_Rect())
+            );
+
+            InitializeSubMenu(menuSystem, new List<MenuItemEntity> { mainMenuItem, quitMenuItem});
+        }
+        
         public void RenderLifeCount(int lifeCount)
         {
             string lifeCountText = "Lives: " + lifeCount.ToString();
