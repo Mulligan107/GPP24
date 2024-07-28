@@ -104,6 +104,13 @@ namespace JumperGame.systems
             {
                 return;
             }
+            
+            // Check for collision with block with gid 34
+            if (otherEntity.gid == 34 && entity.Type == Entity.EntityType.Player)
+            {
+                JumperGame.Instance.LoadNextLevel();
+                return;
+            }
 
             // Calculate overlap in both axes
             float overlapX = Math.Min(newPosition.X + collisionComponent.Size.X, otherPositionComponent.Position.X + otherCollisionComponent.Size.X) -
