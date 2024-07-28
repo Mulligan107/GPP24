@@ -9,6 +9,7 @@ public class CoinCounterSystem
     public static CoinCounterSystem Instance => _instance ??= new CoinCounterSystem();
 
     private int coinCount = 0;
+    private LTexture coinCountTexture = new LTexture();
 
     private CoinCounterSystem() { }
 
@@ -22,8 +23,17 @@ public class CoinCounterSystem
         coinCount = 0;
     }
 
-    public void RenderCoinCount(RenderManager renderManager)
+    public void RenderCoinCount()
     {
-        renderManager.RenderCoinCount(coinCount);
+        string coinCountText = "Coins: " + coinCount.ToString();
+        //Console.WriteLine("Coins: " + coinCount.ToString());
+        coinCountTexture = changeText(coinCountTexture, coinCountText);
+        coinCountTexture.render(10, 50); 
+    }
+    
+    static LTexture changeText(LTexture Ltex, String text)
+    {
+        Ltex.loadFromRenderedText(text, new SDL.SDL_Color());
+        return Ltex;
     }
 }

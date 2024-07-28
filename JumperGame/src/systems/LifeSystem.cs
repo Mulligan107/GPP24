@@ -10,6 +10,7 @@ public class LifeSystem
 
     public int LifeCount { get; set; } = 3;
     public bool IsGameOverTriggered { get; set; }
+    private LTexture lifeCountTexture = new LTexture();
 
     private LifeSystem() { }
 
@@ -31,8 +32,17 @@ public class LifeSystem
         return false;
     }
     
-    public void RenderLifeCount(RenderManager renderManager)
+    public void RenderLifeCount()
     {
-        renderManager.RenderLifeCount(LifeCount);
+        string lifeCountText = "Lives: " + LifeCount.ToString();
+        Console.WriteLine("Lives: " + LifeCount.ToString());
+        lifeCountTexture = changeText(lifeCountTexture, lifeCountText);
+        lifeCountTexture.render(10, 100); 
+    }
+    
+    static LTexture changeText(LTexture Ltex, String text)
+    {
+        Ltex.loadFromRenderedText(text, new SDL.SDL_Color());
+        return Ltex;
     }
 }

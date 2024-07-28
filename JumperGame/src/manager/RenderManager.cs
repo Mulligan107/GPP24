@@ -185,8 +185,8 @@ namespace JumperGame.src.manager
 
             //Render objects
             
-            _lifeSystem.RenderLifeCount(this);
-            _coinCounterSystem.RenderCoinCount(this);
+            _lifeSystem.RenderLifeCount();
+            _coinCounterSystem.RenderCoinCount();
 
             /*
             timerTexture = changeText(timerTexture, "Delta: " + dt.ToString("F3") + " Timer: " + timeElapsed.ToString("F3"));
@@ -380,22 +380,6 @@ namespace JumperGame.src.manager
             );
 
             InitializeSubMenu(menuSystem, new List<MenuItemEntity> { mainMenuItem, quitMenuItem});
-        }
-        
-        public void RenderLifeCount(int lifeCount)
-        {
-            string lifeCountText = "Lives: " + lifeCount.ToString();
-            LTexture lifeCountTexture = new LTexture();
-            lifeCountTexture = changeText(lifeCountTexture, lifeCountText);
-            lifeCountTexture.render(10, 100);
-        }
-        
-        public void RenderCoinCount(int coinCount)
-        {
-            string coinCountText = "Coins: " + coinCount.ToString();
-            LTexture coinCountTexture = new LTexture();
-            coinCountTexture = changeText(coinCountTexture, coinCountText);
-            coinCountTexture.render(10, 50);
         }
         
         static LTexture changeText(LTexture Ltex, String text)
