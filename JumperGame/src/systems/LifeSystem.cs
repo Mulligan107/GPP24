@@ -13,11 +13,11 @@ public class LifeSystem
 
     private LifeSystem() { }
 
-    public void DecrementLife()
+    public void DecrementLife(int lifeAmount)
     {
         if (lifeCount > 0)
         {
-            lifeCount--;
+            lifeCount -= lifeAmount;
         }
     }
     
