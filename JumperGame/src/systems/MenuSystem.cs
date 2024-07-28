@@ -52,34 +52,30 @@ namespace JumperGame.systems
             ClearMenuItems();
         }
         
-        public void StartLevel1()
+        public void StartLevel(string levelName, int initialLifeCount)
         {
+            JumperGame.Instance.CurrentLevel = levelName;
+            
             CoinCounterSystem.Instance.ResetCoinCount();
-            LifeSystem.Instance.LifeCount = 3;
+            LifeSystem.Instance.LifeCount = initialLifeCount;
             LifeSystem.Instance.IsGameOverTriggered = false;
-            JumperGame.Instance.LoadLevel("Level1");
+            JumperGame.Instance.LoadLevel(levelName);
             JumperGame.Instance.IsMenuOpen = false;
             ClearMenuItems();
         }
         
-        public void StartLevel2()
+        public void LoadNextLevel()
         {
-            CoinCounterSystem.Instance.ResetCoinCount();
-            LifeSystem.Instance.LifeCount = 5;
-            LifeSystem.Instance.IsGameOverTriggered = false;
-            JumperGame.Instance.LoadLevel("Level2");
-            JumperGame.Instance.IsMenuOpen = false;
-            ClearMenuItems();
-        }
-        
-        public void StartLevel3()
-        {
-            CoinCounterSystem.Instance.ResetCoinCount();
-            LifeSystem.Instance.LifeCount = 10;
-            LifeSystem.Instance.IsGameOverTriggered = false;
-            JumperGame.Instance.LoadLevel("movementTest");
-            JumperGame.Instance.IsMenuOpen = false;
-            ClearMenuItems();
+            // Logic to determine the next level
+            string currentLevel = JumperGame.Instance.CurrentLevel;
+            string nextLevel = currentLevel switch
+            {
+                "Level1" => "Level2",
+                "Level2" => "Level3",
+                _ => "Level1" // Loop back to Level1 or handle as needed
+            };
+
+            StartLevel(nextLevel, LifeSystem.Instance.LifeCount);
         }
 
         public void ExitGame()

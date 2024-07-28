@@ -280,13 +280,12 @@ namespace JumperGame.src.manager
             switch (levelname)
             {
                 case "Level1":
-                    menuSystem.StartLevel1();
+                    menuSystem.StartLevel("Level1", 3);
                     break;
                 case "Level2":
-                    menuSystem.StartLevel2();
-                    break;
+                    menuSystem.StartLevel("Level2", 5);                    break;
                 case "movementTest":
-                    menuSystem.StartLevel3();
+                    menuSystem.StartLevel("movementTest", 10);
                     break;
             }
         }
@@ -320,17 +319,17 @@ namespace JumperGame.src.manager
 
             resetSystem();
             var level1MenuItem = new MenuItemEntity(
-                new MenuComponent("Level 1", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, menuSystem.StartLevel1, "lazy.ttf"),
+                new MenuComponent("Level 1", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, () => menuSystem.StartLevel("Level1", 3), "lazy.ttf"),
                 new MenuPositionComponent(new SDL.SDL_Rect())
             );
 
             var level2MenuItem = new MenuItemEntity(
-                new MenuComponent("Level 2", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, menuSystem.StartLevel2, "lazy.ttf"),
+                new MenuComponent("Level 2", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, () => menuSystem.StartLevel("Level2", 3), "lazy.ttf"),
                 new MenuPositionComponent(new SDL.SDL_Rect())
             );
 
             var level3MenuItem = new MenuItemEntity(
-                new MenuComponent("Level 3", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, menuSystem.StartLevel3, "lazy.ttf"),
+                new MenuComponent("Level 3", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, () => menuSystem.StartLevel("movementTest", 3), "lazy.ttf"),
                 new MenuPositionComponent(new SDL.SDL_Rect())
             );
 

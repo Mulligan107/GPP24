@@ -28,6 +28,7 @@ namespace JumperGame
         public bool IsReset;
         public static JumperGame Instance { get; private set; }
         public bool IsMenuOpen { get; set; } = true;
+        public string CurrentLevel { get;  set; }
 
         public IEnumerable<Entity> entities;
 
@@ -117,6 +118,11 @@ namespace JumperGame
             _inputSystem.ExecuteMenuItem += _menuSystem.ExecuteSelectedItem;
             
             _rescource.loadTiles();
+        }
+        
+        public void LoadNextLevel()
+        {
+            _menuSystem.LoadNextLevel();
         }
         
         public void Run()
