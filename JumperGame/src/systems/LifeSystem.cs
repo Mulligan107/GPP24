@@ -1,5 +1,6 @@
 ﻿using System;
 using JumperGame;
+using JumperGame.src.manager;
 using SDL2;
 
 public class LifeSystem
@@ -7,9 +8,8 @@ public class LifeSystem
     private static LifeSystem _instance;
     public static LifeSystem Instance => _instance ??= new LifeSystem();
 
-    private int lifeCount = 3; 
-    private LTexture lifeCountTexture = new LTexture();
-    
+    private int lifeCount = 3;
+
     private LifeSystem() { }
 
     public void DecrementLife()
@@ -20,17 +20,8 @@ public class LifeSystem
         }
     }
 
-    public void RenderLifeCount()
+    public void RenderLifeCount(RenderManager renderManager)
     {
-        string lifeCountText = "Lives: " + lifeCount.ToString();
-        Console.WriteLine("Lives: " + lifeCount.ToString());
-        lifeCountTexture = changeText(lifeCountTexture, lifeCountText);
-        lifeCountTexture.render(10, 100); 
-    }
-
-    private static LTexture changeText(LTexture Ltex, String text)
-    {
-        Ltex.loadFromRenderedText(text, new SDL.SDL_Color());
-        return Ltex;
+        renderManager.RenderLifeCount(lifeCount);
     }
 }
