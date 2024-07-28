@@ -28,6 +28,7 @@ namespace JumperGame.systems
             {
                 SlimeJumpMovement(entity, deltaTime);
                 EyeMovement(entity, deltaTime);
+                SimpleEnemyMovement(entity, deltaTime);
             }
         }
         
@@ -98,6 +99,37 @@ namespace JumperGame.systems
                 {
                     // Reset the jump timer if the slime is in the air to prevent immediate re-jump upon landing
                     slimeSteering.JumpTimer = 0;
+                }
+            }
+        }
+        
+        private void SimpleEnemyMovement(Entity entity, double deltaTime)
+        {
+            if (entity.HasComponent<SimpleMovementComponent>() && entity.HasComponent<PhysicsComponent>() && entity.IsActive)
+            {
+                var physics = entity.GetComponent<PhysicsComponent>();
+                var simpleMovement = entity.GetComponent<SimpleMovementComponent>();
+                var renderer = entity.GetComponent<RenderComponent>();
+
+                // Update the direction change timer
+                simpleMovement.DirectionChangeTimer += (float)deltaTime;
+
+                if (simpleMovement.MoveLeft)
+                {
+                    physics.Velocity = new Vector3(-simpleMovement.Speed, physics.Velocity.Y, 0);
+                    renderer.flip = SDL.SDL_RendererFlip.SDL_FLIP_HORIZONTAL;
+                }
+                else
+                {
+                    physics.Velocity = new Vector3(simpleMovement.Speed, physics.Velocity.Y, 0);
+                    renderer.flip = SDL.SDL_RendererFlip.SDL_FLIP_NONE;
+                }
+
+                // Change direction when the timer exceeds the interval
+                if (simpleMovement.DirectionChangeTimer >= simpleMovement.DirectionChangeInterval)
+                {
+                    simpleMovement.MoveLeft = !simpleMovement.MoveLeft;
+                    simpleMovement.DirectionChangeTimer = 0.0f; // Reset the timer
                 }
             }
         }

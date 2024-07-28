@@ -26,7 +26,8 @@ namespace JumperGame.systems
 
                 if (physicsComponent != null && positionComponent != null)
                 {
-                    if (physicsComponent.Grounded && entity.Type != Entity.EntityType.Player) continue;
+                    if (physicsComponent.Grounded && entity.Type != Entity.EntityType.Player && entity.gid != 361) continue;
+
                     
                     physicsComponent.Acceleration += new Vector3(0, Gravity, 0) * physicsComponent.Mass;
                     physicsComponent.Velocity += physicsComponent.Acceleration * (float)deltaTime;

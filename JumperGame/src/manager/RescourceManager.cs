@@ -157,12 +157,18 @@ namespace JumperGame.src.manager
 
                                 var sSteeringComponent2 = new SlimeSteeringComponent();
                                 var eSteeringComponent = new EyeSteeringComponent();
+                                var simpleMovementComponent = new SimpleMovementComponent();
                                 
-                                if (entity.gid == 393)
+                                if (entity.gid == 361)
+                                {
+                                    entity.AddComponent(simpleMovementComponent);
+                                    mass = 10;
+                                }
+                                else if (entity.gid == 393)
                                 {
                                     entity.AddComponent(eSteeringComponent);
                                     mass = 0;
-                                    entity.IgnoreCollisionWithTerrain = true; // Set to ignore terrain collisions
+                                    entity.IgnoreCollisionWithTerrain = true; // Set to ignore terrain collisions 
                                 }
                                 else
                                 {
