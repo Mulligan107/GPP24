@@ -30,6 +30,9 @@ namespace JumperGame
         public static JumperGame Instance { get; private set; }
         public bool IsMenuOpen { get; set; } = true;
         public string CurrentLevel { get;  set; }
+        
+        public LevelProgressionSystem LevelProgressionSystem { get; private set; }
+        public LifeSystem LifeSystem { get; private set; }
 
         public IEnumerable<Entity> entities;
 
@@ -38,6 +41,8 @@ namespace JumperGame
         public JumperGame()
         {
             Instance = this;
+            LevelProgressionSystem = new LevelProgressionSystem();
+            LifeSystem = new LifeSystem();
         }
 
         static int Main(string[] args)
@@ -157,7 +162,7 @@ namespace JumperGame
                     deltaTime = 0;
                 }
                 
-                if (LifeSystem.Instance.IsGameOver())
+                if (LifeSystem.IsGameOver())
                 {
                     _rendering.resetSystem();
                     _rendering.deathEvent(_menuSystem);

@@ -36,7 +36,7 @@ namespace JumperGame.systems
                 {
                     if (physicsComponent.Grounded && entity.Type != Entity.EntityType.Player && entity.gid != 361) continue;
 
-                    
+
                     physicsComponent.Acceleration += new Vector3(0, Gravity, 0) * physicsComponent.Mass;
                     physicsComponent.Velocity += physicsComponent.Acceleration * (float)deltaTime;
                     physicsComponent.Acceleration = Vector3.Zero;
@@ -104,7 +104,7 @@ namespace JumperGame.systems
             {
                 return;
             }
-            
+
             // Check for collision with block with gid 34
             if (otherEntity.gid == 34 && entity.Type == Entity.EntityType.Player)
             {
@@ -126,8 +126,8 @@ namespace JumperGame.systems
                     newPosition.X = otherPositionComponent.Position.X + otherCollisionComponent.Size.X;
                     if (entity.Type == Entity.EntityType.Player && otherEntity.Type == Entity.EntityType.Enemy)
                     {
-                        physicsComponent.Velocity = new Vector3(100, -150, 0); 
-                        LifeSystem.Instance.DecrementLife(1);
+                        physicsComponent.Velocity = new Vector3(100, -150, 0);
+                        JumperGame.Instance.LifeSystem.DecrementLife(1);
                     }
                 }
                 else
@@ -136,7 +136,7 @@ namespace JumperGame.systems
                     if (entity.Type == Entity.EntityType.Player && otherEntity.Type == Entity.EntityType.Enemy)
                     {
                         physicsComponent.Velocity = new Vector3(-100, -150, 0);
-                        LifeSystem.Instance.DecrementLife(1);
+                        JumperGame.Instance.LifeSystem.DecrementLife(1);
                     }
                 }
             }
@@ -152,7 +152,7 @@ namespace JumperGame.systems
                 {
                     // If hit from below
                     newPosition.Y = otherPositionComponent.Position.Y - collisionComponent.Size.Y;
-                    
+
                     if (entity.Type == Entity.EntityType.Enemy && otherEntity.Type != Entity.EntityType.Tile)
                     {
                         grounded = false; // Do not ground the enemy
