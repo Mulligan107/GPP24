@@ -122,6 +122,7 @@ namespace JumperGame
             _movementSystem = new MovementSystem(entitySystem);
             _enemyMovementSystem = new EnemyMovementSystem(entitySystem);
             _rendering.levelStart = true;
+            _rendering.resetSystem();
 
             _inputSystem.KeyPressed += _movementSystem.Update;
             _inputSystem.KeyReleased += _movementSystem.OnKeyReleased;
