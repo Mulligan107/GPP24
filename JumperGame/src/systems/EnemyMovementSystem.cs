@@ -40,11 +40,11 @@ namespace JumperGame.systems
                 var playerPosition = player.GetComponent<PositionComponent>().Position;
 
                 var distance = Vector3.Distance(eyePosition, playerPosition);
-                Console.WriteLine("Distance: " + distance);
+                //Console.WriteLine("Distance: " + distance);
                 
                 if (distance <= DetectionRadius)
                 {
-                    Console.WriteLine("Player detected by eye");
+                    //Console.WriteLine("Player detected by eye");
                     var direction = Vector3.Normalize(playerPosition - eyePosition);
                     var newPosition = eyePosition + direction * EyeMoveSpeed * (float)deltaTime;
                     entity.GetComponent<PositionComponent>().Position = newPosition;
