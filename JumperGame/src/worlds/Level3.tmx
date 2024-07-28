@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="600" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="4" nextobjectid="1">
+ <tileset firstgid="1" source="../tilesets/Enviroment.tsx"/>
+ <tileset firstgid="257" source="../tilesets/coin.tsx"/>
+ <tileset firstgid="269" source="../tilesets/slime_green.tsx"/>
+ <tileset firstgid="281" source="../tilesets/knightOpti.tsx"/>
+ <tileset firstgid="361" source="../tilesets/monsters.tsx"/>
+ <layer id="2" name="Background" width="600" height="40">
+  <data encoding="base64" compression="zlib">
+   eJztw0ENAAAMA6Hz/67gGZgESFg1VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVXV5wH5lTYr
+  </data>
+ </layer>
+ <layer id="1" name="Tile Layer 1" width="600" height="40">
+  <data encoding="base64" compression="zlib">
+   eJzt3OFqwyAYBdD+K32EPsGec28+yiqEzBRnEv0054C0hK0RKeRyK95u47r3nsDArB0AkCMj1LN2AECOjFDP2gEAOTJCPWsHAOTICPWsHQCQIyP8rkFulPwfAMCajFDP2gHAtW1lgd4ZobQrimjUeQMAx3hlgcd7rK9Tx9oBQBv/2b/T0ms+z/dYX/9qP50plO7R+u/3oXY/GADQ1rq/Su9Tvkrjlnklr2XmkbEAII5l/7HsrlKXtc5XW4O/WucdGQsAyrR4ZqaMlLqrlK1y/ZV8Va5H1pGxACCGlJFSf5Wy1Z7+apZ9QXvmf9b+q9LPBIDZRX3mLfPTur9a5qulK/VXZ+ers0T9vgHAKGqfpbluKid3/QrZ6mXUfJXu33sOAHA1pRkpYr5qlRtG/H0w9/kAwPmW3VWto7JV7RlQLYzcXwHAFfTsEu6L1zSi5Ksa8hUA0FvKVI/VGHX/1L3h2DNHAKCfs7utXLZK51vZo3OOCPuvAIDz5LLVyP3VCGQmAJhbi3wVtYvpvecNAJhTOj/0U746at9RNPIVALB0VNYpyVezipyvZsyzAHAV8tV17gsAtLEnX43+u6F8BQAc6fv9unU+Q4/+qnVO27pX5LOzAIDPWp6F+WlEyVetRc45shgA1Nk6GyHKmJ3sAgDzeWbGY+N6j3GEyL+LRZsPALBfrjN6blzXXx1PvgKA+VyhvzrT3l4scr6K2vkBQHT6q75kFwCYj/6qr5LzGUo+o+Tv9VEA0Ib+qi9ZBwDmo7/qS74CgPnor/qSrwBgPvqrvuQrAJiP/qov+QoA5vMDiLczeQ==
+  </data>
+ </layer>
+ <layer id="3" name="Entities" width="600" height="40">
+  <data encoding="base64" compression="zlib">
+   eJzt3DEOwCAIAEB5hs/t6AP6XycXk462JdxNkDAwQ6A1AAAAAAAAAAAAAAAAAIAzRnzdAQAAAABZ3GZJAAAAAAAAwMYeEQAgD/eEAAAAAAAAAAAAAAB1uQcEAAAAICuzLQAAAAAAAAAAAAAAAAAAAKC67v8CAMBvXfGcr3ivAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeMsE/e8Fjw==
+  </data>
+ </layer>
+</map>
