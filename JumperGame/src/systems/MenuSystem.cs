@@ -54,19 +54,24 @@ namespace JumperGame.systems
         
         public void StartLevel(string levelName, int initialLifeCount)
         {
+            if (!JumperGame.Instance.LevelProgressionSystem.IsLevelUnlocked(levelName))
+            {
+                Console.WriteLine($"Level {levelName} is locked!");
+                return;
+            }
+
             JumperGame.Instance.CurrentLevel = levelName;
-            
+
             CoinCounterSystem.Instance.ResetCoinCount();
-            LifeSystem.Instance.LifeCount = initialLifeCount;
-            LifeSystem.Instance.IsGameOverTriggered = false;
+            JumperGame.Instance.LifeSystem.LifeCount = initialLifeCount;
+            JumperGame.Instance.LifeSystem.IsGameOverTriggered = false;
             JumperGame.Instance.LoadLevel(levelName);
             JumperGame.Instance.IsMenuOpen = false;
             ClearMenuItems();
         }
-        
+
         public void LoadNextLevel()
         {
-            // Logic to determine the next level
             string currentLevel = JumperGame.Instance.CurrentLevel;
             string nextLevel = currentLevel switch
             {
@@ -75,7 +80,14 @@ namespace JumperGame.systems
                 _ => "Level1" // Loop back to Level1 or handle as needed
             };
 
-            StartLevel(nextLevel, LifeSystem.Instance.LifeCount);
+            // Mark the current level as completed
+            JumperGame.Instance.LevelProgressionSystem.MarkLevelAsCompleted(currentLevel);
+
+            // Unlock the next level
+            JumperGame.Instance.LevelProgressionSystem.MarkLevelAsCompleted(nextLevel);
+
+            // Start the next level
+            StartLevel(nextLevel, JumperGame.Instance.LifeSystem.LifeCount);
         }
 
         public void ExitGame()

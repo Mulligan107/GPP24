@@ -58,7 +58,6 @@ namespace JumperGame.src.manager
 
         public RenderManager()
         {
-            _lifeSystem = LifeSystem.Instance;
             _coinCounterSystem = CoinCounterSystem.Instance; 
             Initialize();
             view = new SDL.SDL_Rect { x = 0, y = 0, h = ScreenHeight / 3, w = ScreenWidth / 3 };
@@ -189,7 +188,7 @@ namespace JumperGame.src.manager
 
             //Render objects
             
-            _lifeSystem.RenderLifeCount();
+            JumperGame.Instance.LifeSystem.RenderLifeCount();
             _coinCounterSystem.RenderCoinCount();
 
             
@@ -316,7 +315,6 @@ namespace JumperGame.src.manager
 
         public void InitializePlayMenu(MenuSystem menuSystem)
         {
-
             resetSystem();
             var level1MenuItem = new MenuItemEntity(
                 new MenuComponent("Level 1", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, () => menuSystem.StartLevel("Level1", 3), "lazy.ttf"),
@@ -337,6 +335,18 @@ namespace JumperGame.src.manager
                 new MenuComponent("Back", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, () => InitializeMenu(menuSystem), "lazy.ttf"),
                 new MenuPositionComponent(new SDL.SDL_Rect())
             );
+
+            if (!JumperGame.Instance.LevelProgressionSystem.IsLevelUnlocked("Level2"))
+            {
+                level2MenuItem.MenuComponent.Color = new SDL.SDL_Color { r = 128, g = 128, b = 128, a = 255 }; // Grey out locked levels
+                level2MenuItem.MenuComponent.Action = () => Console.WriteLine("Level 2 is locked!");
+            }
+
+            if (!JumperGame.Instance.LevelProgressionSystem.IsLevelUnlocked("Level3"))
+            {
+                level3MenuItem.MenuComponent.Color = new SDL.SDL_Color { r = 128, g = 128, b = 128, a = 255 }; // Grey out locked levels
+                level3MenuItem.MenuComponent.Action = () => Console.WriteLine("Level 3 is locked!");
+            }
 
             InitializeSubMenu(menuSystem, new List<MenuItemEntity> { level1MenuItem, level2MenuItem, level3MenuItem, backMenuItem });
         }
