@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using JumperGame.components;
+using System.Collections.Generic;
 using JumperGame.gameEntities;
 using JumperGame.src.components;
 using JumperGame.src.manager;
@@ -27,6 +28,8 @@ namespace JumperGame
         public bool IsReset;
         public static JumperGame Instance { get; private set; }
         public bool IsMenuOpen { get; set; } = true;
+
+        public IEnumerable<Entity> entities;
 
         public JumperGame()
         {
@@ -120,16 +123,18 @@ namespace JumperGame
         {
             IsRunning = true;
 
-            var timerStart = SDL.SDL_GetPerformanceCounter() / (double)SDL.SDL_GetPerformanceFrequency();
-            var timerNew = timerStart;
+            double timerStart = SDL.SDL_GetPerformanceCounter() / (double)SDL.SDL_GetPerformanceFrequency();
+            double timerNew = timerStart;
+            double timerCurrent;
+            double deltaTime;
 
             SDL.SDL_Event e;
             while (IsRunning)
             {
-                var timerCurrent = SDL.SDL_GetPerformanceCounter() / (double)SDL.SDL_GetPerformanceFrequency();
+                timerCurrent = SDL.SDL_GetPerformanceCounter() / (double)SDL.SDL_GetPerformanceFrequency();
                 timerCurrent = timerCurrent - timerStart;
 
-                var deltaTime = (SDL.SDL_GetPerformanceCounter() - timerNew) / (double)SDL.SDL_GetPerformanceFrequency();
+                deltaTime = (SDL.SDL_GetPerformanceCounter() - timerNew) / (double)SDL.SDL_GetPerformanceFrequency();
                 timerNew = SDL.SDL_GetPerformanceCounter();
 
                 if (IsMenuOpen)
@@ -157,7 +162,7 @@ namespace JumperGame
                 _enemyMovementSystem.Update(deltaTime);
 
                 // Retrieve all entities
-                var entities = entitySystem.GetAllEntities();
+                entities = entitySystem.GetAllEntities();
 
                 // Update the managers
                 _physicsSystem.Update(entities, deltaTime);
@@ -165,6 +170,7 @@ namespace JumperGame
 
                 entitySystem.Update(deltaTime, timerCurrent);
 
+                
                 // _audio.Update();
                 // _input.Update();
             }

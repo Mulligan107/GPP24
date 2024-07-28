@@ -11,6 +11,14 @@ namespace JumperGame.systems
         private const float Gravity = 10f; // Simplified gravity constant
         private const double MaxDeltaTime = 0.1; // Max allowed deltaTime to prevent large initial steps
         private bool jumpedOntopOfEnemy;
+        PhysicsComponent physicsComponent;
+        PositionComponent positionComponent;
+        CollisionComponent collisionComponent;
+        Vector3 newPosition;
+
+        PositionComponent otherPositionComponent;
+        CollisionComponent otherCollisionComponent;
+        RenderComponent renderComponent;
 
         public void Update(IEnumerable<Entity> entities, double deltaTime)
         {
@@ -20,9 +28,9 @@ namespace JumperGame.systems
             {
                 if (!entity.IsActive) continue; // Skip inactive entities early
 
-                var physicsComponent = entity.GetComponent<PhysicsComponent>();
-                var positionComponent = entity.GetComponent<PositionComponent>();
-                var collisionComponent = entity.GetComponent<CollisionComponent>();
+                physicsComponent = entity.GetComponent<PhysicsComponent>();
+                positionComponent = entity.GetComponent<PositionComponent>();
+                collisionComponent = entity.GetComponent<CollisionComponent>();
 
                 if (physicsComponent != null && positionComponent != null)
                 {
@@ -33,7 +41,7 @@ namespace JumperGame.systems
                     physicsComponent.Velocity += physicsComponent.Acceleration * (float)deltaTime;
                     physicsComponent.Acceleration = Vector3.Zero;
 
-                    var newPosition = positionComponent.Position + physicsComponent.Velocity * (float)deltaTime;
+                    newPosition = positionComponent.Position + physicsComponent.Velocity * (float)deltaTime;
                     bool grounded = false;
 
                     if (collisionComponent != null && (entity.Type == Entity.EntityType.Player || entity.Type == Entity.EntityType.Enemy))
@@ -42,8 +50,8 @@ namespace JumperGame.systems
                         {
                             if (otherEntity == entity || !otherEntity.IsActive) continue; // Skip inactive entities
 
-                            var otherPositionComponent = otherEntity.GetComponent<PositionComponent>();
-                            var otherCollisionComponent = otherEntity.GetComponent<CollisionComponent>();
+                            otherPositionComponent = otherEntity.GetComponent<PositionComponent>();
+                            otherCollisionComponent = otherEntity.GetComponent<CollisionComponent>();
 
                             if (otherPositionComponent != null && otherCollisionComponent != null)
                             {
@@ -70,7 +78,7 @@ namespace JumperGame.systems
                     positionComponent.Position = newPosition;
                     physicsComponent.Grounded = grounded;
 
-                    var renderComponent = entity.GetComponent<RenderComponent>();
+                    renderComponent = entity.GetComponent<RenderComponent>();
                     if (renderComponent != null)
                     {
                         renderComponent.UpdateDstRect(positionComponent.Position);

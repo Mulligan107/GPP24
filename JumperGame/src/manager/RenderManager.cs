@@ -51,7 +51,11 @@ namespace JumperGame.src.manager
 
         private CoinCounterSystem _coinCounterSystem;
         private LifeSystem _lifeSystem;
-        
+
+        RenderComponent renderComponent;
+        AnimationComponent animationComponent;
+
+
         public RenderManager()
         {
             _lifeSystem = LifeSystem.Instance;
@@ -90,8 +94,8 @@ namespace JumperGame.src.manager
                 // Check if the entity is active before rendering
                 if (!enti.IsActive) continue; // Skip rendering if not active
                 
-                var renderComponent = enti.GetComponent<RenderComponent>();
-                var animationComponent = enti.GetComponent<AnimationComponent>();
+                renderComponent = enti.GetComponent<RenderComponent>();
+                animationComponent = enti.GetComponent<AnimationComponent>();
 
                 if (renderComponent != null)
                 {
@@ -188,10 +192,10 @@ namespace JumperGame.src.manager
             _lifeSystem.RenderLifeCount();
             _coinCounterSystem.RenderCoinCount();
 
-            /*
+            
             timerTexture = changeText(timerTexture, "Delta: " + dt.ToString("F3") + " Timer: " + timeElapsed.ToString("F3"));
             timerTexture.render(10, 10);
-            */
+            
 
             if (death)
             {
@@ -252,6 +256,7 @@ namespace JumperGame.src.manager
         //Verzeih mir Thoma
         public void InitializeMenu(MenuSystem menuSystem)
         {
+            resetSystem();
             var playMenuItem = new MenuItemEntity(
                 new MenuComponent("Play", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, () => InitializePlayMenu(menuSystem), "lazy.ttf"),
                 new MenuPositionComponent(new SDL.SDL_Rect())
@@ -312,7 +317,7 @@ namespace JumperGame.src.manager
 
         public void InitializePlayMenu(MenuSystem menuSystem)
         {
-            
+
             resetSystem();
             var level1MenuItem = new MenuItemEntity(
                 new MenuComponent("Level 1", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, menuSystem.StartLevel1, "lazy.ttf"),
@@ -339,6 +344,7 @@ namespace JumperGame.src.manager
         
         public void InitializeSettingsMenu(MenuSystem menuSystem)
         {
+
             var backMenuItem = new MenuItemEntity(
                 new MenuComponent("Back", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, () => InitializeMenu(menuSystem), "lazy.ttf"),
                 new MenuPositionComponent(new SDL.SDL_Rect())
@@ -390,9 +396,7 @@ namespace JumperGame.src.manager
 
         public bool Initialize()
         {
-            SDL.SDL_SetHint(SDL.SDL_HINT_WINDOWS_DISABLE_THREAD_NAMING, "1");
-            Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
-            Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
+            
             
             //Initialize SDL
             if (SDL.SDL_Init(SDL.SDL_INIT_VIDEO) < 0)
