@@ -36,9 +36,11 @@ namespace JumperGame.src.manager
         public static IntPtr Font = IntPtr.Zero;
 
         private CoinCounterSystem _coinCounterSystem;
+        private LifeSystem _lifeSystem;
         
         public RenderManager()
         {
+            _lifeSystem = LifeSystem.Instance;
             _coinCounterSystem = CoinCounterSystem.Instance; 
             Initialize();
         }
@@ -165,7 +167,7 @@ namespace JumperGame.src.manager
 
             //Render objects
             
-            
+            _lifeSystem.RenderLifeCount();
             _coinCounterSystem.RenderCoinCount();
 
             timerTexture = changeText(timerTexture, "Delta: " + dt.ToString("F3") + " Timer: " + timeElapsed.ToString("F3"));

@@ -111,6 +111,7 @@ namespace JumperGame.systems
                     if (entity.Type == Entity.EntityType.Player && otherEntity.Type == Entity.EntityType.Enemy)
                     {
                         physicsComponent.Velocity = new Vector3(100, -150, 0); 
+                        LifeSystem.Instance.DecrementLife();
                     }
                 }
                 else
@@ -119,6 +120,7 @@ namespace JumperGame.systems
                     if (entity.Type == Entity.EntityType.Player && otherEntity.Type == Entity.EntityType.Enemy)
                     {
                         physicsComponent.Velocity = new Vector3(-100, -150, 0);
+                        LifeSystem.Instance.DecrementLife();
                     }
                 }
             }
