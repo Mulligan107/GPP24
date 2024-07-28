@@ -54,6 +54,9 @@ namespace JumperGame.systems
         
         public void StartLevel1()
         {
+            CoinCounterSystem.Instance.ResetCoinCount();
+            LifeSystem.Instance.LifeCount = 3;
+            LifeSystem.Instance.IsGameOverTriggered = false;
             JumperGame.Instance.LoadLevel("Level1");
             JumperGame.Instance.IsMenuOpen = false;
             ClearMenuItems();
@@ -61,6 +64,9 @@ namespace JumperGame.systems
         
         public void StartLevel2()
         {
+            CoinCounterSystem.Instance.ResetCoinCount();
+            LifeSystem.Instance.LifeCount = 5;
+            LifeSystem.Instance.IsGameOverTriggered = false;
             JumperGame.Instance.LoadLevel("Level2");
             JumperGame.Instance.IsMenuOpen = false;
             ClearMenuItems();
@@ -68,6 +74,9 @@ namespace JumperGame.systems
         
         public void StartLevel3()
         {
+            CoinCounterSystem.Instance.ResetCoinCount();
+            LifeSystem.Instance.LifeCount = 10;
+            LifeSystem.Instance.IsGameOverTriggered = false;
             JumperGame.Instance.LoadLevel("movementTest");
             JumperGame.Instance.IsMenuOpen = false;
             ClearMenuItems();

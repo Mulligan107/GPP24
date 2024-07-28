@@ -16,6 +16,11 @@ public class CoinCounterSystem
     {
         coinCount += coinAmount;
     }
+    
+    public void ResetCoinCount()
+    {
+        coinCount = 0;
+    }
 
     public void RenderCoinCount(RenderManager renderManager)
     {
