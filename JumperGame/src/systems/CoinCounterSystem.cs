@@ -1,5 +1,6 @@
 ﻿using System;
 using JumperGame;
+using JumperGame.src.manager;
 using SDL2;
 
 public class CoinCounterSystem
@@ -8,26 +9,21 @@ public class CoinCounterSystem
     public static CoinCounterSystem Instance => _instance ??= new CoinCounterSystem();
 
     private int coinCount = 0;
-    private LTexture coinCountTexture = new LTexture();
-    
+
     private CoinCounterSystem() { }
 
     public void IncrementCoinCount(int coinAmount)
     {
         coinCount += coinAmount;
     }
-
-    public void RenderCoinCount()
+    
+    public void ResetCoinCount()
     {
-        string coinCountText = "Coins: " + coinCount.ToString();
-        //Console.WriteLine("Coins: " + coinCount.ToString());
-        coinCountTexture = changeText(coinCountTexture, coinCountText);
-        coinCountTexture.render(10, 50); 
+        coinCount = 0;
     }
 
-    private static LTexture changeText(LTexture Ltex, String text)
+    public void RenderCoinCount(RenderManager renderManager)
     {
-        Ltex.loadFromRenderedText(text, new SDL.SDL_Color());
-        return Ltex;
+        renderManager.RenderCoinCount(coinCount);
     }
 }

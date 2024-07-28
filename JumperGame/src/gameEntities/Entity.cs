@@ -9,6 +9,9 @@ public class Entity
     public int gid { get; set; }
     public EntityType Type { get; set; }
     public bool IsActive { get; set; } = true;
+    
+    public bool IgnoreCollisionWithTerrain { get; set; } = false;
+
 
     public enum STATE
     {

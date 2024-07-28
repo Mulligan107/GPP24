@@ -25,7 +25,6 @@ namespace JumperGame
 
         public bool IsRunning;
         public bool IsReset;
-        
         public static JumperGame Instance { get; private set; }
         public bool IsMenuOpen { get; set; } = true;
 
@@ -134,6 +133,12 @@ namespace JumperGame
                 if (IsMenuOpen)
                 {
                     deltaTime = 0;
+                }
+                
+                if (LifeSystem.Instance.IsGameOver())
+                {
+                    _rendering.InitializeDeathMenu(_menuSystem);
+                    IsMenuOpen = true; // Open the death menu
                 }
                 
                 _movementSystem.UpdatePlayerState();

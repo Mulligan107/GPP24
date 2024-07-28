@@ -10,7 +10,7 @@ using JumperGame.systems;
 
 namespace JumperGame.src.manager
 {
-    class RenderManager
+    public class RenderManager
     {
         //Screen dimension constants
         public int ScreenWidth;
@@ -36,9 +36,11 @@ namespace JumperGame.src.manager
         public static IntPtr Font = IntPtr.Zero;
 
         private CoinCounterSystem _coinCounterSystem;
+        private LifeSystem _lifeSystem;
         
         public RenderManager()
         {
+            _lifeSystem = LifeSystem.Instance;
             _coinCounterSystem = CoinCounterSystem.Instance; 
             Initialize();
         }
@@ -165,8 +167,8 @@ namespace JumperGame.src.manager
 
             //Render objects
             
-            
-            _coinCounterSystem.RenderCoinCount();
+            _lifeSystem.RenderLifeCount(this);
+            _coinCounterSystem.RenderCoinCount(this);
 
             timerTexture = changeText(timerTexture, "Delta: " + dt.ToString("F3") + " Timer: " + timeElapsed.ToString("F3"));
             timerTexture.render(10, 10);
@@ -270,7 +272,38 @@ namespace JumperGame.src.manager
 
             InitializeSubMenu(menuSystem, new List<MenuItemEntity> { resumeMenuItem, mainMenuItem, quitMenuItem });
         }
+        
+        public void InitializeDeathMenu(MenuSystem menuSystem)
+        {
+            var mainMenuItem = new MenuItemEntity(
+                new MenuComponent("Back to Main Menu", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, () => InitializeMenu(menuSystem), "lazy.ttf"),
+                new MenuPositionComponent(new SDL.SDL_Rect())
+            );
+            
+            var quitMenuItem = new MenuItemEntity(
+                new MenuComponent("Quit Game", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, menuSystem.ExitGame, "lazy.ttf"),
+                new MenuPositionComponent(new SDL.SDL_Rect())
+            );
 
+            InitializeSubMenu(menuSystem, new List<MenuItemEntity> { mainMenuItem, quitMenuItem});
+        }
+        
+        public void RenderLifeCount(int lifeCount)
+        {
+            string lifeCountText = "Lives: " + lifeCount.ToString();
+            LTexture lifeCountTexture = new LTexture();
+            lifeCountTexture = changeText(lifeCountTexture, lifeCountText);
+            lifeCountTexture.render(10, 100);
+        }
+        
+        public void RenderCoinCount(int coinCount)
+        {
+            string coinCountText = "Coins: " + coinCount.ToString();
+            LTexture coinCountTexture = new LTexture();
+            coinCountTexture = changeText(coinCountTexture, coinCountText);
+            coinCountTexture.render(10, 50);
+        }
+        
         static LTexture changeText(LTexture Ltex, String text)
         {
             Ltex.loadFromRenderedText(text, new SDL.SDL_Color());

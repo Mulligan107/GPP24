@@ -23,17 +23,18 @@ namespace JumperGame.systems
                 var physicsComponent = entity.GetComponent<PhysicsComponent>();
                 var positionComponent = entity.GetComponent<PositionComponent>();
                 var collisionComponent = entity.GetComponent<CollisionComponent>();
-                
 
                 if (physicsComponent != null && positionComponent != null)
                 {
-                    if (physicsComponent.Grounded && entity.Type != Entity.EntityType.Player) continue;
+                    if (physicsComponent.Grounded && entity.Type != Entity.EntityType.Player && entity.gid != 361) continue;
+
                     
                     physicsComponent.Acceleration += new Vector3(0, Gravity, 0) * physicsComponent.Mass;
                     physicsComponent.Velocity += physicsComponent.Acceleration * (float)deltaTime;
-                    physicsComponent.Acceleration = new Vector3(0, 0, 0);
+                    physicsComponent.Acceleration = Vector3.Zero;
 
                     var newPosition = positionComponent.Position + physicsComponent.Velocity * (float)deltaTime;
+                    bool grounded = false;
 
                     if (collisionComponent != null && (entity.Type == Entity.EntityType.Player || entity.Type == Entity.EntityType.Enemy))
                     {
@@ -60,14 +61,14 @@ namespace JumperGame.systems
                                         continue; // Skip to the next entity without resolving collision
                                     }
 
-                                    ResolveCollision(entity, physicsComponent, positionComponent, collisionComponent, otherPositionComponent, otherCollisionComponent, ref newPosition, otherEntity);
-                                    break;
+                                    ResolveCollision(entity, physicsComponent, positionComponent, collisionComponent, otherPositionComponent, otherCollisionComponent, ref newPosition, otherEntity, ref grounded);
                                 }
                             }
                         }
                     }
 
                     positionComponent.Position = newPosition;
+                    physicsComponent.Grounded = grounded;
 
                     var renderComponent = entity.GetComponent<RenderComponent>();
                     if (renderComponent != null)
@@ -87,16 +88,15 @@ namespace JumperGame.systems
                    pos1.Y + size1.Y > pos2.Y;
         }
 
-        /**
-         * Ok so this can be confusing af to read so to explain it in one text:
-         * The ResolveCollision method calculates the overlap in both horizontal (X-axis) and vertical (Y-axis) directions.
-         * It then determines the direction with the least overlap and resolves the collision by adjusting the position accordingly.
-         *  - If the horizontal overlap is smaller, it resolves the collision horizontally and stops horizontal movement.
-         *  - If the vertical overlap is smaller, it resolves the collision vertically and stops vertical movement.
-         */
         private void ResolveCollision(Entity entity, PhysicsComponent physicsComponent, PositionComponent positionComponent, CollisionComponent collisionComponent,
-            PositionComponent otherPositionComponent, CollisionComponent otherCollisionComponent, ref Vector3 newPosition, Entity otherEnti)
+            PositionComponent otherPositionComponent, CollisionComponent otherCollisionComponent, ref Vector3 newPosition, Entity otherEntity, ref bool grounded)
         {
+            // Check if the entity should ignore terrain collisions
+            if (entity.IgnoreCollisionWithTerrain && otherEntity.Type == Entity.EntityType.Tile)
+            {
+                return;
+            }
+
             // Calculate overlap in both axes
             float overlapX = Math.Min(newPosition.X + collisionComponent.Size.X, otherPositionComponent.Position.X + otherCollisionComponent.Size.X) -
                              Math.Max(newPosition.X, otherPositionComponent.Position.X);
@@ -109,12 +109,21 @@ namespace JumperGame.systems
                 if (newPosition.X > otherPositionComponent.Position.X)
                 {
                     newPosition.X = otherPositionComponent.Position.X + otherCollisionComponent.Size.X;
+                    if (entity.Type == Entity.EntityType.Player && otherEntity.Type == Entity.EntityType.Enemy)
+                    {
+                        physicsComponent.Velocity = new Vector3(100, -150, 0); 
+                        LifeSystem.Instance.DecrementLife(1);
+                    }
                 }
                 else
                 {
                     newPosition.X = otherPositionComponent.Position.X - collisionComponent.Size.X;
+                    if (entity.Type == Entity.EntityType.Player && otherEntity.Type == Entity.EntityType.Enemy)
+                    {
+                        physicsComponent.Velocity = new Vector3(-100, -150, 0);
+                        LifeSystem.Instance.DecrementLife(1);
+                    }
                 }
-                physicsComponent.Velocity = new Vector3(0, physicsComponent.Velocity.Y, 0); // Stop horizontal movement
             }
             else
             {
@@ -126,32 +135,32 @@ namespace JumperGame.systems
                 }
                 else
                 {
-                    if ((entity.Type == Entity.EntityType.Enemy) && (otherEnti.Type == Entity.EntityType.Player || otherEnti.Type == Entity.EntityType.Enemy))
+                    // If hit from below
+                    newPosition.Y = otherPositionComponent.Position.Y - collisionComponent.Size.Y;
+                    
+                    if (entity.Type == Entity.EntityType.Enemy && otherEntity.Type != Entity.EntityType.Tile)
                     {
-                        physicsComponent.Grounded = false; 
+                        grounded = false; // Do not ground the enemy
                     }
                     else
                     {
-                        // If hit from below
-                        newPosition.Y = otherPositionComponent.Position.Y - collisionComponent.Size.Y;
-                        physicsComponent.Grounded = true;  // If the player hits from below, they can jump again
-
-                        entity.activeSTATE = Entity.STATE.LANDING;
-
-                        if (entity.HasComponent<PlayerSteeringComponent>() && otherEnti.Type == Entity.EntityType.Enemy)
-                        {
-                            CoinCounterSystem.Instance.IncrementCoinCount(5);
-                            otherEnti.IsActive = false;
-                            jumpedOntopOfEnemy = true;
-                        } 
+                        grounded = true; // Ground the entity
                     }
-                    
+
+                    entity.activeSTATE = Entity.STATE.LANDING;
+
+                    if (entity.HasComponent<PlayerSteeringComponent>() && otherEntity.Type == Entity.EntityType.Enemy)
+                    {
+                        CoinCounterSystem.Instance.IncrementCoinCount(5);
+                        otherEntity.IsActive = false;
+                        jumpedOntopOfEnemy = true;
+                    }
                 }
                 physicsComponent.Velocity = new Vector3(physicsComponent.Velocity.X, 0, 0); // Stop vertical movement
             }
 
-            //Needs to be here because if the player jumps on top of an enemy,
-            //inside the if statement above, the player will not be thrown up
+            // Needs to be here because if the player jumps on top of an enemy,
+            // inside the if statement above, the player will not be thrown up
             if (jumpedOntopOfEnemy)
             {
                 entity.activeSTATE = Entity.STATE.AIRTIME;
