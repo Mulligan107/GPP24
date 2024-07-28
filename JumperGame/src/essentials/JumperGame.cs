@@ -96,12 +96,14 @@ namespace JumperGame
         
         public void LoadLevel(string levelName)
         {
+            _rendering.levelname = levelName;
             entitySystem = new entitySystem();
             _rescource = new RescourceManager(levelName);
             _inputSystem = new InputSystem();
             _quitSystem = new QuitSystem(this);
             _movementSystem = new MovementSystem(entitySystem);
             _enemyMovementSystem = new EnemyMovementSystem(entitySystem);
+            _rendering.levelStart = true;
 
             _inputSystem.KeyPressed += _movementSystem.Update;
             _inputSystem.KeyReleased += _movementSystem.OnKeyReleased;
@@ -146,7 +148,7 @@ namespace JumperGame
                 while (SDL.SDL_PollEvent(out e) != 0)
                 {
                     // Process the input events
-                    _inputSystem.ProcessInput(e);
+                    _inputSystem.ProcessInput(e, IsMenuOpen);
                 }
 
                 // Update enemy movements

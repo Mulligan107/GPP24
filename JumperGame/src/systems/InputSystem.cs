@@ -21,7 +21,7 @@ namespace JumperGame.systems
         bool keyStillDown;
 
 
-        public void ProcessInput(SDL.SDL_Event e)
+        public void ProcessInput(SDL.SDL_Event e, bool IsMenuOpen)
         {
             if (e.type == SDL.SDL_EventType.SDL_KEYDOWN)
             {
@@ -39,15 +39,15 @@ namespace JumperGame.systems
                     JumperGame.Instance.IsMenuOpen = true;
 
                 }
-                else if (e.key.keysym.sym == SDL.SDL_Keycode.SDLK_DOWN)
+                else if (e.key.keysym.sym == SDL.SDL_Keycode.SDLK_DOWN && IsMenuOpen)
                 {
                     SelectNextMenuItem?.Invoke();
                 }
-                else if (e.key.keysym.sym == SDL.SDL_Keycode.SDLK_UP)
+                else if (e.key.keysym.sym == SDL.SDL_Keycode.SDLK_UP && IsMenuOpen)
                 {
                     SelectPreviousMenuItem?.Invoke();
                 }
-                else if (e.key.keysym.sym == SDL.SDL_Keycode.SDLK_RETURN)
+                else if (e.key.keysym.sym == SDL.SDL_Keycode.SDLK_RETURN && IsMenuOpen)
                 {
                     ExecuteMenuItem?.Invoke();
                 }

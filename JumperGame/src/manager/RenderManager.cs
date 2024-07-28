@@ -29,8 +29,23 @@ namespace JumperGame.src.manager
         public static IntPtr gWindow = IntPtr.Zero;
 
         LTexture timerTexture = new LTexture();
-        LTexture bg = new LTexture();
+
+        public IntPtr fadeTexture = IntPtr.Zero;
+
+        public bool death;
+        public bool levelStart;
+
+        LTexture balken = new LTexture();
+        LTexture black = new LTexture();
+
+        SDL.SDL_Rect view;
+        SDL.SDL_Rect spawn;
+
+        public string levelname;
+
         double counter = 0;
+        double fadeCounter = 255;
+        double balkenCounter = 0;
         int frame = 1;
 
         public static IntPtr Font = IntPtr.Zero;
@@ -43,6 +58,7 @@ namespace JumperGame.src.manager
             _lifeSystem = LifeSystem.Instance;
             _coinCounterSystem = CoinCounterSystem.Instance; 
             Initialize();
+            view = new SDL.SDL_Rect { x = 0, y = 0, h = ScreenHeight / 3, w = ScreenWidth / 3 };
         }
         
         public void Update(double dt, double timeElapsed, MenuSystem menuSystem)
@@ -55,22 +71,20 @@ namespace JumperGame.src.manager
             var posi = player.GetComponent<RenderComponent>();
             SDL.SDL_Rect newPosi = posi.dstRect;
 
-            //Center the camera over the dot
+            //Center the camera over the player
             camera.x = (int)(newPosi.x + newPosi.w / 2) - (camera.w / 2 ) / 3; // TODO (/3) mit variable ersetzen
-            camera.y = (int)(newPosi.y + newPosi.h / 2) - (camera.h / 2) / 3;
+            camera.y = (int)(newPosi.y) - (camera.h /2) / 3;
             
             // Keep the camera in bounds
             if (camera.x < 0) camera.x = 0;
             if (camera.y < 0) camera.y = 0;
             if (camera.x > levelWidth - camera.w) camera.x = levelWidth - camera.w;
-            if (camera.y > levelHeight - camera.h) camera.y = levelHeight - camera.h;
+            if (camera.y > 1200 - camera.h) camera.y = 1200 - camera.h;
 
 
             SDL.SDL_RenderSetScale(gRenderer, 3f, 3f); // TODO 3 mit variable ersetzen ; Mausrad?
 
             //Render background
-
-            bg.render(0, 0, camera);
 
             foreach (Entity enti in JumperGame.entitySystem.GetAllEntities())
             {
@@ -87,12 +101,14 @@ namespace JumperGame.src.manager
                     SDL.SDL_Rect dst = renderComponent.dstRect;
 
                     // ---------- AnimationManager?
-                    if (enti == player)
+                    if (enti == player && renderComponent.dstRect.y > 950)
                     {
-                        //Console.WriteLine("RENDERMANAGER/ STATE: " + enti.activeSTATE);
-                        //Console.WriteLine("RENDERMANAGER/ GROUNDED: " + player.GetComponent<PhysicsComponent>().Grounded);
-                        //Console.WriteLine("RM // " + player.GetComponent<PhysicsComponent>().Velocity);
+                        death = true;
+
+
                     }
+
+                    
 
 
                     if (animationComponent != null) 
@@ -101,6 +117,7 @@ namespace JumperGame.src.manager
                         {
                             counter = timeElapsed + animationComponent.duration * 0.0005;
                             frame++;
+
                         }
 
                         if (animationComponent.animationFrame < animationComponent.AnimimationList.Length-1)
@@ -156,6 +173,8 @@ namespace JumperGame.src.manager
 
                     
 
+                    
+
                     if (SDL.SDL_HasIntersection(ref dst, ref camera) == SDL.SDL_bool.SDL_TRUE)
                     {
                         SDL.SDL_RenderCopyEx(gRenderer, renderComponent.Rendertexture.getTexture(), ref src, ref adjustedDst, renderComponent.angle, ref renderComponent.centerPoint, renderComponent.flip);
@@ -170,9 +189,61 @@ namespace JumperGame.src.manager
             _lifeSystem.RenderLifeCount(this);
             _coinCounterSystem.RenderCoinCount(this);
 
+            /*
             timerTexture = changeText(timerTexture, "Delta: " + dt.ToString("F3") + " Timer: " + timeElapsed.ToString("F3"));
             timerTexture.render(10, 10);
-            
+            */
+
+            if (death)
+            {
+                fadeCounter += dt * 500;
+
+                if (fadeCounter > 255)
+                {
+                    fadeCounter = 255;
+                    death = false;
+                    levelStart = true;
+                    deathEvent(menuSystem);
+                }
+
+                black.setAlpha((byte)fadeCounter);
+            }
+
+
+            if (levelStart)
+            {
+                spawn = player.GetComponent<RenderComponent>().dstRect;
+                fadeCounter -= dt * 300;
+                balkenCounter += dt * 100;
+
+                if (fadeCounter < 0) // stops flickering. if it goes below 0;
+                {
+                    fadeCounter = 0;  
+                }
+
+                if (balkenCounter > 80)
+                {
+                    view.y -= (int)(dt * 200);
+                    view.h += (int)(dt * 400);
+                }
+
+                if (balkenCounter > 300 && fadeCounter == 0)
+                {
+                    levelStart = false;
+                }
+
+
+                black.setAlpha((byte)fadeCounter);
+
+            }
+
+
+
+
+
+            SDL.SDL_RenderCopy(gRenderer, black.getTexture() , IntPtr.Zero, ref view);
+            SDL.SDL_RenderCopy(gRenderer, balken.getTexture(), IntPtr.Zero, ref view);
+
             menuSystem.Render();
 
             SDL.SDL_RenderPresent(gRenderer);
@@ -200,8 +271,24 @@ namespace JumperGame.src.manager
 
             InitializeSubMenu(menuSystem, new List<MenuItemEntity> { playMenuItem, settingsMenuItem, exitMenuItem });
         }
-        
-        private void InitializeSubMenu(MenuSystem menuSystem, List<MenuItemEntity> menuItems)
+
+        public void deathEvent(MenuSystem menuSystem)
+        {
+            switch (levelname)
+            {
+                case "Level1":
+                    menuSystem.StartLevel1();
+                    break;
+                case "Level2":
+                    menuSystem.StartLevel2();
+                    break;
+                case "movementTest":
+                    menuSystem.StartLevel3();
+                    break;
+            }
+        }
+
+            private void InitializeSubMenu(MenuSystem menuSystem, List<MenuItemEntity> menuItems)
         {
             menuSystem.ClearMenuItems(); 
 
@@ -218,8 +305,17 @@ namespace JumperGame.src.manager
             }
         }
 
+        public void resetSystem()
+        {
+            fadeCounter = 255;
+            balkenCounter = 0;
+            view = new SDL.SDL_Rect { x = 0, y = 0, h = ScreenHeight / 3, w = ScreenWidth / 3 };
+        }
+
         public void InitializePlayMenu(MenuSystem menuSystem)
         {
+            
+            resetSystem();
             var level1MenuItem = new MenuItemEntity(
                 new MenuComponent("Level 1", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, menuSystem.StartLevel1, "lazy.ttf"),
                 new MenuPositionComponent(new SDL.SDL_Rect())
@@ -392,13 +488,17 @@ namespace JumperGame.src.manager
                         }
                     }
                 }
+
+
+
             }
 
-            
+
             Font = SDL_ttf.TTF_OpenFont("lazy.ttf", 28);
 
 
-            bg.loadFromFile("src\\tilesets/bg.png");
+            black.loadFromFile("src\\tilesets/black.png");
+            balken.loadFromFile("src\\tilesets/balken.png");
 
             return true;
         }
