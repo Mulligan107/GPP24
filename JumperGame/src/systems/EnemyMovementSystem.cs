@@ -13,7 +13,7 @@ namespace JumperGame.systems
         private const float JumpInterval = 2.0f; // Seconds
         private const float JumpForce = 75f;
         private const float MoveForce = 50f;
-        private const float EyeMoveSpeed = 50f;
+        private const float EyeMoveSpeed = 5000f;
         private const float DetectionRadius = 300f;
         private bool _jumpLeft = true;
 
@@ -34,21 +34,23 @@ namespace JumperGame.systems
         
         private void EyeMovement(Entity entity, double deltaTime)
         {
-            if (entity.HasComponent<EyeSteeringComponent>() && entity.HasComponent<PositionComponent>() && entity.IsActive)
+            if (entity.HasComponent<EyeSteeringComponent>() && entity.HasComponent<PhysicsComponent>() && entity.IsActive)
             {
-                var eyePosition = entity.GetComponent<PositionComponent>().Position;
-                var player = _entitySystem.GetEntityByGID(281); 
+                var physics = entity.GetComponent<PhysicsComponent>();
+                var player = _entitySystem.GetEntityByGID(281);
                 var playerPosition = player.GetComponent<PositionComponent>().Position;
 
+                var eyePosition = entity.GetComponent<PositionComponent>().Position;
                 var distance = Vector3.Distance(eyePosition, playerPosition);
-                //Console.WriteLine("Distance: " + distance);
-                
+
                 if (distance <= DetectionRadius)
                 {
-                    //Console.WriteLine("Player detected by eye");
                     var direction = Vector3.Normalize(playerPosition - eyePosition);
-                    var newPosition = eyePosition + direction * EyeMoveSpeed * (float)deltaTime;
-                    entity.GetComponent<PositionComponent>().Position = newPosition;
+                    physics.Velocity = direction * EyeMoveSpeed * (float) deltaTime;
+                }
+                else
+                {
+                    physics.Velocity = Vector3.Zero; // Stop movement if the player is out of range
                 }
             }
         }

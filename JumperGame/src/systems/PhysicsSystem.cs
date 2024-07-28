@@ -137,7 +137,15 @@ namespace JumperGame.systems
                 {
                     // If hit from below
                     newPosition.Y = otherPositionComponent.Position.Y - collisionComponent.Size.Y;
-                    grounded = true;  // If the player hits from below, they can jump again
+                    
+                    if (entity.Type == Entity.EntityType.Enemy && otherEntity.Type != Entity.EntityType.Tile)
+                    {
+                        grounded = false; // Do not ground the enemy
+                    }
+                    else
+                    {
+                        grounded = true; // Ground the entity
+                    }
 
                     entity.activeSTATE = Entity.STATE.LANDING;
 
