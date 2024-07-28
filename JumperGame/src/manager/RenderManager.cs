@@ -81,7 +81,7 @@ namespace JumperGame.src.manager
             if (camera.x < 0) camera.x = 0;
             if (camera.y < 0) camera.y = 0;
             if (camera.x > levelWidth - camera.w) camera.x = levelWidth - camera.w;
-            if (camera.y > 1200 - camera.h) camera.y = 1200 - camera.h;
+            if (camera.y > 1300 - camera.h) camera.y = 1300 - camera.h;
 
 
             SDL.SDL_RenderSetScale(gRenderer, 3f, 3f); // TODO 3 mit variable ersetzen ; Mausrad?
