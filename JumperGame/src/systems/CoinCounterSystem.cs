@@ -28,7 +28,7 @@ public class CoinCounterSystem
         string coinCountText = "Coins: " + coinCount.ToString();
         //Console.WriteLine("Coins: " + coinCount.ToString());
         coinCountTexture = changeText(coinCountTexture, coinCountText);
-        coinCountTexture.render(10, 50); 
+        coinCountTexture.render(10, 10); 
     }
     
     static LTexture changeText(LTexture Ltex, String text)

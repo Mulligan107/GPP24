@@ -30,7 +30,30 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="sounds\buttons\**" />
+    <Compile Remove="sounds\enemy\**" />
+    <Compile Remove="sounds\music\**" />
+    <Compile Remove="sounds\player\**" />
+    <EmbeddedResource Remove="sounds\buttons\**" />
+    <EmbeddedResource Remove="sounds\enemy\**" />
+    <EmbeddedResource Remove="sounds\music\**" />
+    <EmbeddedResource Remove="sounds\player\**" />
+    <None Remove="sounds\buttons\**" />
+    <None Remove="sounds\enemy\**" />
+    <None Remove="sounds\music\**" />
+    <None Remove="sounds\player\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Sdl\SDL2.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="Sdl\SDL2_image.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
     <Compile Update="Sdl\SDL2_mixer.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="Sdl\SDL2_ttf.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Update="src\essentials\JumperGame.cs">
@@ -72,6 +95,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="libvorbisfile-3.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="libwavpack-1.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="libwebp-4.dll">
@@ -122,6 +148,9 @@
     <None Update="src\worlds\Level2.tmx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="src\worlds\Level3.tmx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="src\worlds\movementTest.tmx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -149,42 +178,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="SDL2_ttf.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="sounds\buttons\button.wav">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="sounds\buttons\button_back.wav">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="sounds\buttons\button_next.wav">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="sounds\enemy\enemy_explode.wav">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="sounds\enemy\enemy_hit.wav">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="sounds\enemy\enemy_shoot_laser.wav">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="sounds\enemy\enemy_shoot_laser_2.wav">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="sounds\enemy\enemy_shoot_laser_3.wav">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="sounds\music\menu_music.wav">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="sounds\player\player_hit.wav">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="sounds\player\player_shoot1.wav">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="sounds\player\sp_piercing_bullets_2.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="src\tilesets\coin.png">
@@ -250,6 +243,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="C:\Users\kawab\.nuget\packages\sayers.sdl2.core\1.0.11\build\win_x64\zlib1.dll" />
+    <None Remove="sounds\coin.wav" />
+    <None Remove="sounds\explosion.wav" />
+    <None Remove="sounds\hurt.wav" />
+    <None Remove="sounds\jump.wav" />
+    <None Remove="sounds\power_up.wav" />
+    <None Remove="sounds\tap.wav" />
     <None Remove="src\tilesets\fruit.png" />
     <None Remove="src\tilesets\knight.png" />
     <None Remove="src\tilesets\knight.tsx" />
@@ -298,8 +297,31 @@
     <NativeSayersSDL2CoreLibs Remove="smpeg2.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="sounds\coin.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="sounds\explosion.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="sounds\hurt.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="sounds\jump.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="sounds\power_up.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="sounds\tap.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="src\tilesets\coin.tsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="src\savefiles\" />
   </ItemGroup>
 </Project>

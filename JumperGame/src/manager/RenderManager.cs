@@ -191,11 +191,11 @@ namespace JumperGame.src.manager
             
             _lifeSystem.RenderLifeCount();
             _coinCounterSystem.RenderCoinCount();
-
             
+            /*
             timerTexture = changeText(timerTexture, "Delta: " + dt.ToString("F3") + " Timer: " + timeElapsed.ToString("F3"));
             timerTexture.render(10, 10);
-            
+            */
 
             if (death)
             {
@@ -284,8 +284,8 @@ namespace JumperGame.src.manager
                     break;
                 case "Level2":
                     menuSystem.StartLevel("Level2", 5);                    break;
-                case "movementTest":
-                    menuSystem.StartLevel("movementTest", 10);
+                case "Level3":
+                    menuSystem.StartLevel("Level3", 10);
                     break;
             }
         }
@@ -311,6 +311,7 @@ namespace JumperGame.src.manager
         {
             fadeCounter = 255;
             balkenCounter = 0;
+            black.setAlpha((byte)fadeCounter);
             view = new SDL.SDL_Rect { x = 0, y = 0, h = ScreenHeight / 3, w = ScreenWidth / 3 };
         }
 
@@ -329,7 +330,7 @@ namespace JumperGame.src.manager
             );
 
             var level3MenuItem = new MenuItemEntity(
-                new MenuComponent("Level 3", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, () => menuSystem.StartLevel("movementTest", 3), "lazy.ttf"),
+                new MenuComponent("Level 3", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, () => menuSystem.StartLevel("Level3", 3), "lazy.ttf"),
                 new MenuPositionComponent(new SDL.SDL_Rect())
             );
 

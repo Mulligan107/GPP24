@@ -1,6 +1,8 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using JumperGame.components;
 using JumperGame.gameEntities;
 using SDL2;
@@ -82,6 +84,10 @@ namespace JumperGame.systems
         {
             Environment.Exit(0);
         }
+
+
+
+
 
         public void Render()
         {

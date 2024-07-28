@@ -7,6 +7,7 @@ using JumperGame.src.components;
 using JumperGame.src.manager;
 using JumperGame.systems;
 using SDL2;
+using System.IO;
 
 namespace JumperGame
 {
@@ -32,6 +33,8 @@ namespace JumperGame
 
         public IEnumerable<Entity> entities;
 
+
+
         public JumperGame()
         {
             Instance = this;
@@ -52,6 +55,8 @@ namespace JumperGame
         
         public void InitializeSystems()
         {
+            _audio = new AudioManager();
+            //InitializeSdl();
             entitySystem = new entitySystem();
     
             _rendering = new RenderManager();
@@ -59,7 +64,8 @@ namespace JumperGame
             _rendering.InitializeMenu(_menuSystem);
     
             _physicsSystem = new PhysicsSystem();
-            _audio = new AudioManager();
+            
+            
             _rescource = new RescourceManager("Level1");
 
             _inputSystem = new InputSystem();
@@ -74,19 +80,22 @@ namespace JumperGame
             _inputSystem.SelectNextMenuItem += _menuSystem.SelectNextItem;
             _inputSystem.SelectPreviousMenuItem += _menuSystem.SelectPreviousItem;
             _inputSystem.ExecuteMenuItem += _menuSystem.ExecuteSelectedItem;
-    
+
+            
+
             _rescource.loadTiles();
 
-            InitializeSdl();
+
+           // _audio.LoadMedia();
+
         }
         
         public bool InitializeSdl()
         {
             // Initialize the managers and check if initialization was successful
-            bool isPhysicsInitSuccessful = _physicsSystem.Initialize();
             bool isAudioInitSuccessful = _audio.Initialize();
             
-            if (!isPhysicsInitSuccessful || !isAudioInitSuccessful)
+            if (!isAudioInitSuccessful)
             {
                 Console.WriteLine("Failed to initialize the game!");
                 Console.ReadLine();

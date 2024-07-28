@@ -35,9 +35,8 @@ public class LifeSystem
     public void RenderLifeCount()
     {
         string lifeCountText = "Lives: " + LifeCount.ToString();
-        //Console.WriteLine("Lives: " + LifeCount.ToString());
         lifeCountTexture = changeText(lifeCountTexture, lifeCountText);
-        lifeCountTexture.render(10, 100); 
+        lifeCountTexture.render(10, 35); 
     }
     
     static LTexture changeText(LTexture Ltex, String text)
