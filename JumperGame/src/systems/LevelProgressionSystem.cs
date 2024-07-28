@@ -3,15 +3,12 @@
 public class LevelProgressionSystem
 {
     private readonly Dictionary<string, bool> _levelCompletionStatus;
+    private readonly LevelProgressionFileHandler _fileHandler;
 
     public LevelProgressionSystem()
     {
-        _levelCompletionStatus = new Dictionary<string, bool>
-        {
-            { "Level1", true }, // Level 1 is always unlocked
-            { "Level2", false },
-            { "Level3", false }
-        };
+        _fileHandler = new LevelProgressionFileHandler("levelProgression.json");
+        _levelCompletionStatus = _fileHandler.LoadLevelCompletionStatus();
     }
 
     public void MarkLevelAsCompleted(string levelName)
@@ -19,6 +16,7 @@ public class LevelProgressionSystem
         if (_levelCompletionStatus.ContainsKey(levelName))
         {
             _levelCompletionStatus[levelName] = true;
+            _fileHandler.SaveLevelCompletionStatus(_levelCompletionStatus);
         }
     }
 

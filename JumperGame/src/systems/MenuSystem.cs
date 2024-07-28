@@ -84,10 +84,15 @@ namespace JumperGame.systems
             JumperGame.Instance.LevelProgressionSystem.MarkLevelAsCompleted(currentLevel);
 
             // Unlock the next level
-            JumperGame.Instance.LevelProgressionSystem.MarkLevelAsCompleted(nextLevel);
+            unlockLevel(nextLevel);
 
             // Start the next level
             StartLevel(nextLevel, JumperGame.Instance.LifeSystem.LifeCount);
+        }
+        
+        public void unlockLevel(string levelName)
+        {
+            JumperGame.Instance.LevelProgressionSystem.MarkLevelAsCompleted(levelName);
         }
 
         public void ExitGame()
