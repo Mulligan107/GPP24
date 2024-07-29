@@ -257,7 +257,7 @@ namespace JumperGame.src.manager
         
         //Ich hasse mich selber für diesen Code aber hab grad keinen bock das zu refactoren / PP anzuwenden
         //TODO: Refactor this
-        //Verzeih mir Thoma
+        //Verzeih mir Thomas
         public void InitializeMenu(MenuSystem menuSystem)
         {
             resetSystem();
