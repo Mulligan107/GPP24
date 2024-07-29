@@ -353,6 +353,16 @@ namespace JumperGame.src.manager
                 new MenuComponent("Level 3", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, () => menuSystem.StartLevel("Level3", 3), "lazy.ttf"),
                 new MenuPositionComponent(new SDL.SDL_Rect())
             );
+            
+            var level4MenuItem = new MenuItemEntity(
+                new MenuComponent("Level 4", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, () => menuSystem.StartLevel("Level4", 3), "lazy.ttf"),
+                new MenuPositionComponent(new SDL.SDL_Rect())
+            );
+            
+            var level5MenuItem = new MenuItemEntity(
+                new MenuComponent("Level 5", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, () => menuSystem.StartLevel("Level5", 3), "lazy.ttf"),
+                new MenuPositionComponent(new SDL.SDL_Rect())
+            );
 
             var backMenuItem = new MenuItemEntity(
                 new MenuComponent("Back", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, () => InitializeMenu(menuSystem), "lazy.ttf"),
@@ -370,8 +380,20 @@ namespace JumperGame.src.manager
                 level3MenuItem.MenuComponent.Color = new SDL.SDL_Color { r = 128, g = 128, b = 128, a = 255 }; // Grey out locked levels
                 level3MenuItem.MenuComponent.Action = () => Console.WriteLine("Level 3 is locked!");
             }
+            
+            if (!JumperGame.Instance.LevelProgressionSystem.IsLevelUnlocked("Level4"))
+            {
+                level3MenuItem.MenuComponent.Color = new SDL.SDL_Color { r = 128, g = 128, b = 128, a = 255 }; // Grey out locked levels
+                level3MenuItem.MenuComponent.Action = () => Console.WriteLine("Level 4 is locked!");
+            }
+            
+            if (!JumperGame.Instance.LevelProgressionSystem.IsLevelUnlocked("Level5"))
+            {
+                level3MenuItem.MenuComponent.Color = new SDL.SDL_Color { r = 128, g = 128, b = 128, a = 255 }; // Grey out locked levels
+                level3MenuItem.MenuComponent.Action = () => Console.WriteLine("Level 5 is locked!");
+            }
 
-            InitializeSubMenu(menuSystem, new List<MenuItemEntity> { level1MenuItem, level2MenuItem, level3MenuItem, backMenuItem });
+            InitializeSubMenu(menuSystem, new List<MenuItemEntity> { level1MenuItem, level2MenuItem, level3MenuItem, level4MenuItem, level5MenuItem, backMenuItem });
         }
         
         public void InitializeSettingsMenu(MenuSystem menuSystem)
