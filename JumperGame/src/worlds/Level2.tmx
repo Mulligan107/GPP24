@@ -4,19 +4,20 @@
  <tileset firstgid="257" source="../tilesets/coin.tsx"/>
  <tileset firstgid="269" source="../tilesets/slime_green.tsx"/>
  <tileset firstgid="281" source="../tilesets/knightOpti.tsx"/>
+ <tileset firstgid="361" source="../tilesets/monsters.tsx"/>
  <layer id="1" name="Background" width="200" height="40">
   <data encoding="base64" compression="zlib">
-   eJzt2EEKQFAARdG//xlL+zuxA1MpotR76QxOmP30bsoyxliAW/PBPQBcmQfps0CLebjO03P6bNDC9wOAN/y/AgD4xgoAAAAAAAAAjO1H0u+S/0lvWh80S29aHzRLb1ofNEtvWh80S29aHzRLb1ofNEtvWh80S29aHzRLb1ofNEtvWh80S29aHzRLb1ofNEtvWh80S29aHzRLb1ofNEtvWh80S29aHzRLb1ofNEtvWh802wFKIUqj
+   eJzt2bGNAzEQBEHmb0qhfGiXgBSE/noOKIMof9Br8X3OeX3fmxzy+r6/AesdyMW7cB9cc+Ee3AfXvE5/B+6Di9b9uw8uWnfvPrjqQvfug2su9O4+uGjdufvgonXf7oOrLvTtPrjmQtfug4vWPbsPLlp37D646kLH7oNrLvT73y7szOdZd3uX9c58lnWvd1vvzee40OvdLuzObRc6rVzYnyRJkiRJkiRJ/tbrbPxDVNb7c9u6z9p6f25b91lb789t6z5r6/25bd1nbb0/t637rK3357Z1n7X1/ty27rO23p/b1n3W1vtz27rP2np/blv3WVvvz23rPmvr/blt3WftBzhDqEg=
   </data>
  </layer>
  <layer id="2" name="Tiles" width="200" height="40">
   <data encoding="base64" compression="zlib">
-   eJzt28sRgjAQAFBoxSIswRKoAa8c7IC+FUcGBhOdMPx5b2ZPhMAh62aNZhmwtmrtF4ANa/Ijz9d+C9im/BNwRk1taPdQob2U/ODM8kEAADBOPePc5YxzwxJ+9RtV1vXqY77b1ctwVMN+3TqHjvyAb6n9SNNj+O0JZ5FaK6aqLeoTRyQ/IE5+sDeXP9dTeoylegv5wVakfOa3464TPTs2j/xgDaFaMSY/bpHrqWfksXnkB3OJ7ZfqXrTe/3PKuvXYPyNvDNd7O654xSPwjFB+3Hv3Dtd9Ebi/DIyDKYTO8fYaAAAAAAAAAAAAAAAAAAAAjPcEfHMO9Q==
+   eJztnEtSwzAMhtMFG+imV+AQTOFW5QZlA9waPFMPqvFDcvyQLH0zmbSJY0ey/8iPtNtmGPw4zr4Bw2DIcTNtaOM8YZOIBF1YHbZHk601SIoZo+pSU5vxtl5v+8Ph79x7kPYj+H7pc0tskKILj+mjPedgHztX+10qkmIGZFTfh1IGfN5KpKU/V9CHRF14evg/1kfAluO1IVkjOVupdknWh9SYAXH+j7Xn1515Yo6FhG1HqkZitobjDM8VfI7ZK1Uf0nXhaT3flLq2lF9KCxI1QrG/5Bdp+lghZkBsfN6evbbCeC7JbyvpwkP1f21skVTPe9lr6znxmSurxQxIzP89+jS5en783U7bfx+njnNH0/yVtLqhEvN/jzWqUj2fiMc5k7P1i5DPpZDXTFaOGZDauaYULvbUzMOsqo8V38vRoAtPT31gx5nuXE4fHNtIjlX7V1piBiQ37zhynLla/ID25mJqLl64a7joQ5suPFT/l8YmqbrWpg9ITB9Yv8/Wh8aYAamZ3+1Rzmr6yD1HsHMi10TaUWjWhYfi/73r6rlzq40/sONtjuNz7TEDwmX9fLX40SrdaH04Xbwo3kJq/F+zfqhNH63WWGfHzl7lt3g2jIivpo/2pGyNvcNbWi+UqI9RcbGkj1ZleFLzLGdwPrYP05XKiZ3TNP6grAtKsx0LB7ueEWkw8/RbJE2Y7i2RLlZODA3xY3Zes5Foi79n7DtXvm8d2prSxwVcl2MlfeSAzxdMP5Vjm6LOeWLT1aw1YN7/2OPDmpjf4tqQlfXxfduXfpP5CT77scosfZT6w5h2WcoHk2fra3owYo5Ay/iDknZ0/TtfPyjfanH11PO/mTjHD6m/Q6HCwdeSSfXrXPt52u7bD/aYh7M+HFzuoycabOxJz9hv+piPBhulMloflD6THx9JGwdRMX3wZUb8oOStoe1osFEqWH20HCubPu7RYKNUKPEjV49Y/VD7TBrajgYbpdJKH5jz1HTUtFLRYKNUsPrAPPdNH3VosFEqreIHpd+EbQ+2PmjMxvpX89Fgo1RMH/PRYGOJH3Rzbhk=
   </data>
  </layer>
  <layer id="4" name="Entities" width="200" height="40">
   <data encoding="base64" compression="zlib">
-   eJzt17ENwCAMRUEyAmX2X5QyULiLsAV3Ei3Vf4VbAwAgS3++V/E/yKQPiOkDYvqAffQBAABUMN8m7hNY6QNi+qC6zI3qA2L64BR2zA1e+wYAAAAAAAAAAAAAAAAAAAAAgF8MgG0D5w==
+   eJzt270NwkAMgNHQsgEjUjIAA7A1LULIAi6c7eO9Lk0URfpyzt+2AQB7uR2yjwAAWMnZbFF6vjpmHwAU904jlRtfwcn5Lc060l/XWa3LtVcjENNIXZcm19nVaYSZusxXjzQCMY1ATCMQ08hc14bz+L/TSB/6yjGrkefnGZ9uZ+0brCN08e37otH1VyMQ0wjENAIxjfxO1+9xq6jyvZpGIKYRYG+jzxKrzBAAAMCa3HMAAAAwyv9JkE+HAAAAwCt3Fp4Rmw==
   </data>
  </layer>
 </map>
