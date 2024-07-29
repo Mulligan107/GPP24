@@ -262,12 +262,12 @@ namespace JumperGame.src.manager
         {
             resetSystem();
             var playMenuItem = new MenuItemEntity(
-                new MenuComponent("Play", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, () => InitializePlayMenu(menuSystem), "lazy.ttf"),
+                new MenuComponent("Play", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 0, g = 255, b = 0, a = 255 }, () => InitializePlayMenu(menuSystem), "lazy.ttf"),
                 new MenuPositionComponent(new SDL.SDL_Rect())
             );
 
             var settingsMenuItem = new MenuItemEntity(
-                new MenuComponent("Settings", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, () => InitializeSettingsMenu(menuSystem), "lazy.ttf"),
+                new MenuComponent("Settings", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 0, g = 0, b = 255, a = 255 }, () => InitializeSettingsMenu(menuSystem), "lazy.ttf"),
                 new MenuPositionComponent(new SDL.SDL_Rect())
             );
 
