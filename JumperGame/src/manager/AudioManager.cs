@@ -50,7 +50,7 @@ namespace JumperGame.src.manager
             success &= LoadSound(8, "sounds/button_next.wav");
 
             // Load music
-            _music = SDL_mixer.Mix_LoadMUS("sounds/music/menu_music.wav");
+            _music = SDL_mixer.Mix_LoadMUS("sounds/music/Dorian-Concept_Hide.wav");
             if (_music == IntPtr.Zero)
             {
                 Console.WriteLine($"Failed to load menu_music.wav! {SDL.SDL_GetError()}");
