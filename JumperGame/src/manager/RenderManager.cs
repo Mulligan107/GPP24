@@ -383,14 +383,14 @@ namespace JumperGame.src.manager
             
             if (!JumperGame.Instance.LevelProgressionSystem.IsLevelUnlocked("Level4"))
             {
-                level3MenuItem.MenuComponent.Color = new SDL.SDL_Color { r = 128, g = 128, b = 128, a = 255 }; // Grey out locked levels
-                level3MenuItem.MenuComponent.Action = () => Console.WriteLine("Level 4 is locked!");
+                level4MenuItem.MenuComponent.Color = new SDL.SDL_Color { r = 128, g = 128, b = 128, a = 255 }; // Grey out locked levels
+                level4MenuItem.MenuComponent.Action = () => Console.WriteLine("Level 4 is locked!");
             }
             
             if (!JumperGame.Instance.LevelProgressionSystem.IsLevelUnlocked("Level5"))
             {
-                level3MenuItem.MenuComponent.Color = new SDL.SDL_Color { r = 128, g = 128, b = 128, a = 255 }; // Grey out locked levels
-                level3MenuItem.MenuComponent.Action = () => Console.WriteLine("Level 5 is locked!");
+                level5MenuItem.MenuComponent.Color = new SDL.SDL_Color { r = 128, g = 128, b = 128, a = 255 }; // Grey out locked levels
+                level5MenuItem.MenuComponent.Action = () => Console.WriteLine("Level 5 is locked!");
             }
 
             InitializeSubMenu(menuSystem, new List<MenuItemEntity> { level1MenuItem, level2MenuItem, level3MenuItem, level4MenuItem, level5MenuItem, backMenuItem });

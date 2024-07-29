@@ -20,8 +20,8 @@ public class LevelProgressionFileHandler
                 { "Level1", true }, // Level 1 is always unlocked
                 { "Level2", false },
                 { "Level3", false },
-                { "Level4", true },
-                { "Level5", true }
+                { "Level4", false },
+                { "Level5", false }
             };
         }
 
