@@ -32,15 +32,12 @@
   <ItemGroup>
     <Compile Remove="sounds\buttons\**" />
     <Compile Remove="sounds\enemy\**" />
-    <Compile Remove="sounds\music\**" />
     <Compile Remove="sounds\player\**" />
     <EmbeddedResource Remove="sounds\buttons\**" />
     <EmbeddedResource Remove="sounds\enemy\**" />
-    <EmbeddedResource Remove="sounds\music\**" />
     <EmbeddedResource Remove="sounds\player\**" />
     <None Remove="sounds\buttons\**" />
     <None Remove="sounds\enemy\**" />
-    <None Remove="sounds\music\**" />
     <None Remove="sounds\player\**" />
     <None Update="SDL2_mixer.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -49,7 +46,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="sounds\button_back.wav">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="sounds\button_next.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -187,6 +184,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="SDL2_ttf.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="sounds\music\menu_music.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="src\tilesets\coin.png">

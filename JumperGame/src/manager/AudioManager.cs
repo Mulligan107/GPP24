@@ -12,7 +12,7 @@ namespace JumperGame.src.manager
         private static IntPtr _music = IntPtr.Zero;
 
         // Set the volume for sound effects and music
-        public static int SoundVolume { get; set; } = 1; // 0 -> 128
+        public static int SoundVolume { get; set; } = 2; // 0 -> 128
         private static int _musicVolume = 4;
 
         public bool Initialize()
@@ -40,11 +40,14 @@ namespace JumperGame.src.manager
 
             // Load sound effects
             success &= LoadSound(0, "sounds/coin.wav");
-            success &= LoadSound(1, "src\\sounds\\explosion.wav");
-            success &= LoadSound(2, "src\\sounds\\hurt.wav");
-            success &= LoadSound(3, "src\\sounds\\jump.wav");
-            success &= LoadSound(4, "src\\sounds\\power_up.wav");
-            success &= LoadSound(5, "src\\sounds\\tap.wav");
+            success &= LoadSound(1, "sounds/explosion.wav");
+            success &= LoadSound(2, "sounds/hurt.wav");
+            success &= LoadSound(3, "sounds/jump.wav");
+            success &= LoadSound(4, "sounds/power_up.wav");
+            success &= LoadSound(5, "sounds/tap.wav");
+            success &= LoadSound(6, "sounds/button.wav");
+            success &= LoadSound(7, "sounds/button_back.wav");
+            success &= LoadSound(8, "sounds/button_next.wav");
 
             // Load music
             _music = SDL_mixer.Mix_LoadMUS("sounds/music/menu_music.wav");
@@ -88,7 +91,7 @@ namespace JumperGame.src.manager
             }
         }
 
-        public static void PlayMusic()
+        public static void PlayOrPauseMusic()
         {
             if (SDL_mixer.Mix_PlayingMusic() == 0)
             {
@@ -106,12 +109,7 @@ namespace JumperGame.src.manager
                 }
             }
         }
-
-        public static void StopMusic()
-        {
-            SDL_mixer.Mix_HaltMusic();
-        }
-
+        
         public static void Close()
         {
             // Free the sound effects

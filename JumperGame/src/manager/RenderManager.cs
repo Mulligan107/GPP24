@@ -365,6 +365,8 @@ namespace JumperGame.src.manager
         
         public void InitializePauseMenu(MenuSystem menuSystem)
         {
+            AudioManager.PlayOrPauseMusic();
+            
             var resumeMenuItem = new MenuItemEntity(
                 new MenuComponent("Resume", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, menuSystem.resume, "lazy.ttf"),
                 new MenuPositionComponent(new SDL.SDL_Rect())
