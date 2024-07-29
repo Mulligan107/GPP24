@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using JumperGame.src.manager;
 using SDL2;
 
 namespace JumperGame.systems

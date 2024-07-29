@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using JumperGame.components;
 using JumperGame.gameEntities;
+using JumperGame.src.manager;
 using SDL2;
 
 namespace JumperGame.systems
@@ -33,11 +34,14 @@ namespace JumperGame.systems
             
             Console.WriteLine("Selected Menu Item: " + (_selectedIndex + 1) + " / " + "Out of " + _menuItems.Count);
 
+            AudioManager.PlaySound(8);
         }
 
         public void SelectPreviousItem()
         {
             _selectedIndex = (_selectedIndex - 1 + _menuItems.Count) % _menuItems.Count;
+            
+            AudioManager.PlaySound(7);
         }
 
         public void ExecuteSelectedItem()
@@ -46,11 +50,14 @@ namespace JumperGame.systems
             {
                 _menuItems[_selectedIndex].MenuComponent.Action();
             }
+            
+            AudioManager.PlaySound(6);
         }
         
         public void resume()
         {
             JumperGame.Instance.IsMenuOpen = false;
+            AudioManager.PlayOrPauseMusic();
             ClearMenuItems();
         }
         
@@ -62,6 +69,8 @@ namespace JumperGame.systems
                 return;
             }
 
+            AudioManager.PlayOrPauseMusic();
+            
             JumperGame.Instance.CurrentLevel = levelName;
 
             CoinCounterSystem.Instance.ResetCoinCount();
@@ -81,6 +90,8 @@ namespace JumperGame.systems
                 "Level2" => "Level3",
                 _ => "Level1" // Loop back to Level1 or handle as needed
             };
+            
+            AudioManager.PlayOrPauseMusic();
 
             // Mark the current level as completed
             JumperGame.Instance.LevelProgressionSystem.MarkLevelAsCompleted(currentLevel);
@@ -101,10 +112,6 @@ namespace JumperGame.systems
         {
             Environment.Exit(0);
         }
-
-
-
-
 
         public void Render()
         {

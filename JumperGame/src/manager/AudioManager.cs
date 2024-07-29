@@ -1,104 +1,60 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using SDL2;
 
 namespace JumperGame.src.manager
 {
     class AudioManager
     {
-        //The sound effects that will be used
-        public static IntPtr[] Sounds = new IntPtr[10]; //TODO - Automatisieren
+        // The sound effects that will be used
+        private static IntPtr[] Sounds = new IntPtr[100];
 
-        //The music that will be played
+        // The music that will be played
         private static IntPtr _music = IntPtr.Zero;
 
         // Set the volume for sound effects and music
-        public static int SoundVolume = 0; // 0 -> 128
+        public static int SoundVolume { get; set; } = 2; // 0 -> 128
         private static int _musicVolume = 4;
+
+        public bool Initialize()
+        {
+            // Initialize SDL
+            if (SDL.SDL_Init(SDL.SDL_INIT_AUDIO) < 0)
+            {
+                Console.WriteLine($"SDL could not initialize! SDL_Error: {SDL.SDL_GetError()}");
+                return false;
+            }
+
+            // Initialize SDL_mixer
+            if (SDL_mixer.Mix_OpenAudio(44100, SDL_mixer.MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+            {
+                Console.WriteLine($"SDL_mixer could not initialize! SDL_mixer Error: {SDL.SDL_GetError()}");
+                return false;
+            }
+
+            return true;
+        }
 
         public bool LoadMedia()
         {
-            //Loading success flag
             bool success = true;
 
-            //Load sound effects
-            Sounds[0] = SDL_mixer.Mix_LoadWAV("sounds/coin.wav");
-            if (Sounds[0] == IntPtr.Zero)
-            {
-                Console.WriteLine("Failed to load button.wav! {0}", SDL.SDL_GetError());
-                success = false;
-            }
-            else
-            {
-                SDL_mixer.Mix_VolumeChunk(Sounds[0], SoundVolume);
-            }
+            // Load sound effects
+            success &= LoadSound(0, "sounds/coin.wav");
+            success &= LoadSound(1, "sounds/explosion.wav");
+            success &= LoadSound(2, "sounds/hurt.wav");
+            success &= LoadSound(3, "sounds/jump.wav");
+            success &= LoadSound(4, "sounds/power_up.wav");
+            success &= LoadSound(5, "sounds/tap.wav");
+            success &= LoadSound(6, "sounds/button.wav");
+            success &= LoadSound(7, "sounds/button_back.wav");
+            success &= LoadSound(8, "sounds/button_next.wav");
+            success &= LoadSound(9, "sounds/wilhelm.wav");
 
-            Sounds[1] = SDL_mixer.Mix_LoadWAV("src\\sounds\\explosion.wav");
-            if (Sounds[1] == IntPtr.Zero)
-            {
-                Console.WriteLine("Failed to load button_back.wav! {0}", SDL.SDL_GetError());
-                success = false;
-            }
-            else
-            {
-                SDL_mixer.Mix_VolumeChunk(Sounds[1], SoundVolume);
-            }
-
-            Sounds[2] = SDL_mixer.Mix_LoadWAV("src\\sounds/hurt.wav");
-            if (Sounds[2] == IntPtr.Zero)
-            {
-                Console.WriteLine("Failed to load button_next.wav! {0}", SDL.SDL_GetError());
-                success = false;
-            }
-            else
-            {
-                SDL_mixer.Mix_VolumeChunk(Sounds[2], SoundVolume);
-            }
-
-            Sounds[3] = SDL_mixer.Mix_LoadWAV("src\\sounds/jump.wav");
-            if (Sounds[3] == IntPtr.Zero)
-            {
-                Console.WriteLine("Failed to load enemy_explode.wav! {0}", SDL.SDL_GetError());
-                success = false;
-            }
-            else
-            {
-                SDL_mixer.Mix_VolumeChunk(Sounds[3], SoundVolume);
-            }
-
-            Sounds[4] = SDL_mixer.Mix_LoadWAV("src\\sounds/power_up.wav");
-            if (Sounds[4] == IntPtr.Zero)
-            {
-                Console.WriteLine("Failed to load player_hit.wav! {0}", SDL.SDL_GetError());
-                success = false;
-            }
-            else
-            {
-                SDL_mixer.Mix_VolumeChunk(Sounds[4], SoundVolume);
-            }
-
-            Sounds[5] = SDL_mixer.Mix_LoadWAV("src\\sounds/tap.wav");
-            if (Sounds[5] == IntPtr.Zero)
-            {
-                Console.WriteLine("Failed to load enemy_shoot_laser.wav! {0}", SDL.SDL_GetError());
-                success = false;
-            }
-            else
-            {
-                SDL_mixer.Mix_VolumeChunk(Sounds[5], SoundVolume);
-            }
-
-
-
-            /*
-            //Load music
-            _music = SDL_mixer.Mix_LoadMUS("sounds/music/menu_music.wav");
+            // Load music
+            _music = SDL_mixer.Mix_LoadMUS("sounds/music/Dorian-Concept_Hide.wav");
             if (_music == IntPtr.Zero)
             {
-                Console.WriteLine("Failed to load lofi.wav! {0}", SDL.SDL_GetError());
+                Console.WriteLine($"Failed to load menu_music.wav! {SDL.SDL_GetError()}");
                 success = false;
             }
             else
@@ -106,9 +62,22 @@ namespace JumperGame.src.manager
                 SDL_mixer.Mix_VolumeMusic(_musicVolume);
             }
 
-            */
-
             return success;
+        }
+
+        private bool LoadSound(int index, string path)
+        {
+            Sounds[index] = SDL_mixer.Mix_LoadWAV(path);
+            if (Sounds[index] == IntPtr.Zero)
+            {
+                Console.WriteLine($"Failed to load {path}! {SDL.SDL_GetError()}");
+                return false;
+            }
+            else
+            {
+                SDL_mixer.Mix_VolumeChunk(Sounds[index], SoundVolume);
+                return true;
+            }
         }
 
         public static void PlaySound(int soundIndex)
@@ -119,11 +88,11 @@ namespace JumperGame.src.manager
             }
             else
             {
-                Console.WriteLine("Sound index out of range: {0}", soundIndex);
+                Console.WriteLine($"Sound index out of range: {soundIndex}");
             }
         }
 
-        public static void PlayMusic()
+        public static void PlayOrPauseMusic()
         {
             if (SDL_mixer.Mix_PlayingMusic() == 0)
             {
@@ -141,12 +110,7 @@ namespace JumperGame.src.manager
                 }
             }
         }
-
-        public static void StopMusic()
-        {
-            SDL_mixer.Mix_HaltMusic();
-        }
-
+        
         public static void Close()
         {
             // Free the sound effects
@@ -166,29 +130,5 @@ namespace JumperGame.src.manager
                 _music = IntPtr.Zero;
             }
         }
-
-        public bool Initialize()
-        {
-            //Initialize SDL
-            if (SDL.SDL_Init(SDL.SDL_INIT_AUDIO) < 0)
-            {
-                Console.WriteLine("SDL could not initialize! SDL_Error: {0}", SDL.SDL_GetError());
-                return false;
-            }
-            else
-            {
-
-                //Initialize SDL_mixer
-                if (SDL_mixer.Mix_OpenAudio(44100, SDL_mixer.MIX_DEFAULT_FORMAT, 2, 2048) < 0)
-                {
-                    Console.WriteLine("SDL_mixer could not initialize! SDL_mixer Error: {0}", SDL.SDL_GetError());
-                    return false;
-                }
-            }
-
-
-            return true;
-        }
     }
-    
 }

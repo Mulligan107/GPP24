@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Numerics;
 using JumperGame.components;
 using JumperGame.gameEntities;
+using JumperGame.src.manager;
 
 namespace JumperGame.systems
 {
@@ -64,6 +65,7 @@ namespace JumperGame.systems
                                         {
                                             CoinCounterSystem.Instance.IncrementCoinCount(1);
                                             otherEntity.IsActive = false;
+                                            AudioManager.PlaySound(0);
                                         }
 
                                         continue; // Skip to the next entity without resolving collision
@@ -128,6 +130,7 @@ namespace JumperGame.systems
                     {
                         physicsComponent.Velocity = new Vector3(100, -150, 0);
                         JumperGame.Instance.LifeSystem.DecrementLife(1);
+                        AudioManager.PlaySound(2);
                     }
                 }
                 else
@@ -137,6 +140,7 @@ namespace JumperGame.systems
                     {
                         physicsComponent.Velocity = new Vector3(-100, -150, 0);
                         JumperGame.Instance.LifeSystem.DecrementLife(1);
+                        AudioManager.PlaySound(2);
                     }
                 }
             }
@@ -169,6 +173,7 @@ namespace JumperGame.systems
                         CoinCounterSystem.Instance.IncrementCoinCount(5);
                         otherEntity.IsActive = false;
                         jumpedOntopOfEnemy = true;
+                        AudioManager.PlaySound(5);
                     }
                 }
                 physicsComponent.Velocity = new Vector3(physicsComponent.Velocity.X, 0, 0); // Stop vertical movement

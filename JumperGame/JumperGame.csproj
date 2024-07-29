@@ -23,7 +23,7 @@
     <Copyright>Copyright ©  2017</Copyright>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <FileVersion>1.0.0.0</FileVersion>
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -32,16 +32,28 @@
   <ItemGroup>
     <Compile Remove="sounds\buttons\**" />
     <Compile Remove="sounds\enemy\**" />
-    <Compile Remove="sounds\music\**" />
     <Compile Remove="sounds\player\**" />
     <EmbeddedResource Remove="sounds\buttons\**" />
     <EmbeddedResource Remove="sounds\enemy\**" />
-    <EmbeddedResource Remove="sounds\music\**" />
     <EmbeddedResource Remove="sounds\player\**" />
     <None Remove="sounds\buttons\**" />
     <None Remove="sounds\enemy\**" />
-    <None Remove="sounds\music\**" />
     <None Remove="sounds\player\**" />
+    <None Update="SDL2_mixer.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="sounds\button.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="sounds\button_back.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="sounds\button_next.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="sounds\wilhelm.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Sdl\SDL2.cs">
@@ -107,7 +119,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="src\sounds\coin.wav">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="src\sounds\explosion.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -171,13 +183,19 @@
     <Content Include="SDL2.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="SDL2_mixer.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="SDL2_image.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="SDL2_ttf.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="sounds\music\David_Fesliyan-Relaxing_Green_Nature.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="sounds\music\Dorian-Concept_Hide.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="sounds\music\menu_music.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="src\tilesets\coin.png">
@@ -321,8 +339,5 @@
     <Content Include="src\tilesets\coin.tsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="src\savefiles\" />
   </ItemGroup>
 </Project>

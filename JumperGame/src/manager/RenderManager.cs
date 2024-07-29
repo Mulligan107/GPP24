@@ -105,12 +105,12 @@ namespace JumperGame.src.manager
                     // ---------- AnimationManager?
                     if (renderComponent.dstRect.y > 950)
                     {
-
                         enti.IsActive = false;
 
                         if (enti == player)
                         {
                             death = true;
+                            AudioManager.PlaySound(9);
 
 
                         }
@@ -285,11 +285,15 @@ namespace JumperGame.src.manager
             {
                 case "Level1":
                     menuSystem.StartLevel("Level1", 3);
+                    AudioManager.PlayOrPauseMusic();
                     break;
                 case "Level2":
-                    menuSystem.StartLevel("Level2", 3);                    break;
+                    menuSystem.StartLevel("Level2", 5);     
+                    AudioManager.PlayOrPauseMusic();
+                    break;
                 case "Level3":
-                    menuSystem.StartLevel("Level3", 3);
+                    menuSystem.StartLevel("Level3", 5);
+                    AudioManager.PlayOrPauseMusic();
                     break;
             }
         }
@@ -370,6 +374,8 @@ namespace JumperGame.src.manager
         
         public void InitializePauseMenu(MenuSystem menuSystem)
         {
+            AudioManager.PlayOrPauseMusic();
+            
             var resumeMenuItem = new MenuItemEntity(
                 new MenuComponent("Resume", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, menuSystem.resume, "lazy.ttf"),
                 new MenuPositionComponent(new SDL.SDL_Rect())
