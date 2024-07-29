@@ -92,7 +92,7 @@ namespace JumperGame.src.manager
                                 addTexture = tileTexEnvi;
 
 
-                                if (Enumerable.Range(1, 44).Contains(entity.gid)) // if (entity.gid == 1 || entity.gid == 3 || entity.gid == 4 || entity.gid == 7 || entity.gid == 8 || entity.gid == 42|| entity.gid == 43|| entity.gid == 44) 
+                                if (Enumerable.Range(1, 56).Contains(entity.gid)) // if (entity.gid == 1 || entity.gid == 3 || entity.gid == 4 || entity.gid == 7 || entity.gid == 8 || entity.gid == 42|| entity.gid == 43|| entity.gid == 44) 
                                 {
                                     collision = true;
                                 }
