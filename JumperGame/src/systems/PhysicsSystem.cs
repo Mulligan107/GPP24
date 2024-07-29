@@ -130,6 +130,7 @@ namespace JumperGame.systems
                     {
                         physicsComponent.Velocity = new Vector3(100, -150, 0);
                         JumperGame.Instance.LifeSystem.DecrementLife(1);
+                        AudioManager.PlaySound(2);
                     }
                 }
                 else
@@ -139,6 +140,7 @@ namespace JumperGame.systems
                     {
                         physicsComponent.Velocity = new Vector3(-100, -150, 0);
                         JumperGame.Instance.LifeSystem.DecrementLife(1);
+                        AudioManager.PlaySound(2);
                     }
                 }
             }
@@ -171,6 +173,7 @@ namespace JumperGame.systems
                         CoinCounterSystem.Instance.IncrementCoinCount(5);
                         otherEntity.IsActive = false;
                         jumpedOntopOfEnemy = true;
+                        AudioManager.PlaySound(5);
                     }
                 }
                 physicsComponent.Velocity = new Vector3(physicsComponent.Velocity.X, 0, 0); // Stop vertical movement

@@ -337,7 +337,4 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="src\savefiles\" />
-  </ItemGroup>
 </Project>
