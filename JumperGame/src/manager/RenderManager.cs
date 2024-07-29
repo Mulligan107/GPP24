@@ -20,7 +20,7 @@ namespace JumperGame.src.manager
         public int AltScreenWidth;
         public int AltScreenHeight;
 
-        public int levelWidth = 8096;
+        public int levelWidth = 4450;
         public int levelHeight = 4096;
         
         //The surface contained by the window
@@ -117,8 +117,14 @@ namespace JumperGame.src.manager
 
                     }
 
+                    if (renderComponent.dstRect.x < posi.dstRect.x - 900)
+                    {
+                        enti.IsActive = false;
+                    }
 
-                    if (animationComponent != null) 
+
+
+                        if (animationComponent != null) 
                     {
                         if (timeElapsed > counter)
                         {
@@ -184,8 +190,10 @@ namespace JumperGame.src.manager
 
                     if (SDL.SDL_HasIntersection(ref dst, ref camera) == SDL.SDL_bool.SDL_TRUE)
                     {
+                        
                         SDL.SDL_RenderCopyEx(gRenderer, renderComponent.Rendertexture.getTexture(), ref src, ref adjustedDst, renderComponent.angle, ref renderComponent.centerPoint, renderComponent.flip);
                     }
+                    
 
                 }
             }
@@ -295,6 +303,10 @@ namespace JumperGame.src.manager
                     menuSystem.StartLevel("Level3", 5);
                     AudioManager.PlayOrPauseMusic();
                     break;
+                case "Level4":
+                    menuSystem.StartLevel("Level4", 5);
+                    AudioManager.PlayOrPauseMusic();
+                    break;
             }
         }
 
@@ -317,6 +329,7 @@ namespace JumperGame.src.manager
 
         public void resetSystem()
         {
+            levelWidth = 4450;
             fadeCounter = 255;
             balkenCounter = 0;
             black.setAlpha((byte)fadeCounter);

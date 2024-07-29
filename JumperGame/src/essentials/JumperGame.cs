@@ -124,6 +124,11 @@ namespace JumperGame
             _rendering.levelStart = true;
             _rendering.resetSystem();
 
+            if (levelName == "Level3")
+            {
+                _rendering.levelWidth = 9450; //TODO das gehört hier nicht hin
+            }
+
             _inputSystem.KeyPressed += _movementSystem.Update;
             _inputSystem.KeyReleased += _movementSystem.OnKeyReleased;
             
