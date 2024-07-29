@@ -124,7 +124,12 @@ namespace JumperGame
             _enemyMovementSystem = new EnemyMovementSystem(entitySystem);
             _rendering.levelStart = true;
             _rendering.resetSystem();
-            
+          
+            if (levelName == "Level3")
+            {
+                _rendering.levelWidth = 9450; //TODO das gehört hier nicht hin
+            }
+          
             Instance._movementSystem.debugMovement = debug;
             _inputSystem.KeyPressed += _movementSystem.Update;
             _inputSystem.KeyReleased += _movementSystem.OnKeyReleased;

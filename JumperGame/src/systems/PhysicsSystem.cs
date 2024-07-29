@@ -108,7 +108,7 @@ namespace JumperGame.systems
             }
 
             // Check for collision with block with gid 34
-            if (otherEntity.gid == 34 && entity.Type == Entity.EntityType.Player)
+            if ((otherEntity.gid == 34 || otherEntity.gid == 52) && entity.Type == Entity.EntityType.Player)
             {
                 JumperGame.Instance.LoadNextLevel();
                 return;
