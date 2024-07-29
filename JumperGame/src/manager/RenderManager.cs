@@ -117,10 +117,6 @@ namespace JumperGame.src.manager
 
                     }
 
-                    if (renderComponent.dstRect.x < posi.dstRect.x - 900)
-                    {
-                        enti.IsActive = false;
-                    }
 
 
 
@@ -305,6 +301,10 @@ namespace JumperGame.src.manager
                     break;
                 case "Level4":
                     menuSystem.StartLevel("Level4", 5);
+                    AudioManager.PlayOrPauseMusic();
+                    break;
+                case "Level5":
+                    menuSystem.StartLevel("Level5", 5);
                     AudioManager.PlayOrPauseMusic();
                     break;
             }

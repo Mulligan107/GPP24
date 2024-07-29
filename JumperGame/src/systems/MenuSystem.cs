@@ -91,6 +91,7 @@ namespace JumperGame.systems
                 "Level1" => "Level2",
                 "Level2" => "Level3",
                 "Level3" => "Level4",
+                "Level4" => "Level5",
                 _ => "Level1" // Loop back to Level1 or handle as needed
             };
             
