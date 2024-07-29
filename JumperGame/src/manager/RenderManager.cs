@@ -20,7 +20,7 @@ namespace JumperGame.src.manager
         public int AltScreenWidth;
         public int AltScreenHeight;
 
-        public int levelWidth = 4096;
+        public int levelWidth = 8096;
         public int levelHeight = 4096;
         
         //The surface contained by the window
@@ -103,14 +103,19 @@ namespace JumperGame.src.manager
                     SDL.SDL_Rect dst = renderComponent.dstRect;
 
                     // ---------- AnimationManager?
-                    if (enti == player && renderComponent.dstRect.y > 950)
+                    if (renderComponent.dstRect.y > 950)
                     {
-                        death = true;
 
+                        enti.IsActive = false;
+
+                        if (enti == player)
+                        {
+                            death = true;
+
+
+                        }
 
                     }
-
-                    
 
 
                     if (animationComponent != null) 
@@ -282,9 +287,9 @@ namespace JumperGame.src.manager
                     menuSystem.StartLevel("Level1", 3);
                     break;
                 case "Level2":
-                    menuSystem.StartLevel("Level2", 5);                    break;
+                    menuSystem.StartLevel("Level2", 3);                    break;
                 case "Level3":
-                    menuSystem.StartLevel("Level3", 10);
+                    menuSystem.StartLevel("Level3", 3);
                     break;
             }
         }
