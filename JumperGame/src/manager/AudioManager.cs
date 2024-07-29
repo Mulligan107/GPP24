@@ -48,6 +48,7 @@ namespace JumperGame.src.manager
             success &= LoadSound(6, "sounds/button.wav");
             success &= LoadSound(7, "sounds/button_back.wav");
             success &= LoadSound(8, "sounds/button_next.wav");
+            success &= LoadSound(9, "sounds/wilhelm.wav");
 
             // Load music
             _music = SDL_mixer.Mix_LoadMUS("sounds/music/Dorian-Concept_Hide.wav");

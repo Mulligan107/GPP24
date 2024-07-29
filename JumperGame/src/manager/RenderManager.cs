@@ -106,8 +106,7 @@ namespace JumperGame.src.manager
                     if (enti == player && renderComponent.dstRect.y > 950)
                     {
                         death = true;
-
-
+                        AudioManager.PlaySound(9);
                     }
 
                     
@@ -280,11 +279,15 @@ namespace JumperGame.src.manager
             {
                 case "Level1":
                     menuSystem.StartLevel("Level1", 3);
+                    AudioManager.PlayOrPauseMusic();
                     break;
                 case "Level2":
-                    menuSystem.StartLevel("Level2", 5);                    break;
+                    menuSystem.StartLevel("Level2", 5);     
+                    AudioManager.PlayOrPauseMusic();
+                    break;
                 case "Level3":
                     menuSystem.StartLevel("Level3", 10);
+                    AudioManager.PlayOrPauseMusic();
                     break;
             }
         }
