@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using JumperGame.src.manager;
 using SDL2;
 
 namespace JumperGame.systems
@@ -42,6 +43,8 @@ namespace JumperGame.systems
                 else if (e.key.keysym.sym == SDL.SDL_Keycode.SDLK_DOWN && IsMenuOpen)
                 {
                     SelectNextMenuItem?.Invoke();
+                    AudioManager.PlaySound(0);
+
                 }
                 else if (e.key.keysym.sym == SDL.SDL_Keycode.SDLK_UP && IsMenuOpen)
                 {

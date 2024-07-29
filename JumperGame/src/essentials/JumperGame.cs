@@ -91,7 +91,7 @@ namespace JumperGame
             _rescource.loadTiles();
 
 
-           // _audio.LoadMedia();
+            _audio.LoadMedia();
 
         }
         

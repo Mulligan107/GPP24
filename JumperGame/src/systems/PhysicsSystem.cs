@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Numerics;
 using JumperGame.components;
 using JumperGame.gameEntities;
+using JumperGame.src.manager;
 
 namespace JumperGame.systems
 {
@@ -64,6 +65,7 @@ namespace JumperGame.systems
                                         {
                                             CoinCounterSystem.Instance.IncrementCoinCount(1);
                                             otherEntity.IsActive = false;
+                                            AudioManager.PlaySound(0);
                                         }
 
                                         continue; // Skip to the next entity without resolving collision

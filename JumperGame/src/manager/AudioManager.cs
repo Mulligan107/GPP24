@@ -16,7 +16,7 @@ namespace JumperGame.src.manager
         private static IntPtr _music = IntPtr.Zero;
 
         // Set the volume for sound effects and music
-        public static int SoundVolume = 0; // 0 -> 128
+        public static int SoundVolume = 1; // 0 -> 128
         private static int _musicVolume = 4;
 
         public bool LoadMedia()
