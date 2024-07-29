@@ -61,7 +61,7 @@ namespace JumperGame
         public void InitializeSystems()
         {
             _audio = new AudioManager();
-            //InitializeSdl();
+            InitializeSdl();
             entitySystem = new entitySystem();
     
             _rendering = new RenderManager();
