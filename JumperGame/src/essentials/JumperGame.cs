@@ -22,7 +22,7 @@ namespace JumperGame
         private PhysicsSystem _physicsSystem;
         private InputSystem _inputSystem;
         private QuitSystem _quitSystem;
-        private MovementSystem _movementSystem;
+        public MovementSystem _movementSystem;
         private EnemyMovementSystem _enemyMovementSystem;
 
         public bool IsRunning;
@@ -41,7 +41,8 @@ namespace JumperGame
         public JumperGame()
         {
             Instance = this;
-            LevelProgressionSystem = new LevelProgressionSystem();
+            string filePath = "savefiles";
+            LevelProgressionSystem = new LevelProgressionSystem(filePath);
             LifeSystem = new LifeSystem();
         }
 
@@ -112,7 +113,7 @@ namespace JumperGame
             return true;
         }
         
-        public void LoadLevel(string levelName)
+        public void LoadLevel(string levelName, bool debug)
         {
             _rendering.levelname = levelName;
             entitySystem = new entitySystem();
@@ -123,12 +124,13 @@ namespace JumperGame
             _enemyMovementSystem = new EnemyMovementSystem(entitySystem);
             _rendering.levelStart = true;
             _rendering.resetSystem();
-
+          
             if (levelName == "Level3")
             {
                 _rendering.levelWidth = 9450; //TODO das gehört hier nicht hin
             }
-
+          
+            Instance._movementSystem.debugMovement = debug;
             _inputSystem.KeyPressed += _movementSystem.Update;
             _inputSystem.KeyReleased += _movementSystem.OnKeyReleased;
             
@@ -195,10 +197,6 @@ namespace JumperGame
                 _rendering.Update(deltaTime, timerCurrent, _menuSystem);
 
                 entitySystem.Update(deltaTime, timerCurrent);
-
-                
-                // _audio.Update();
-                // _input.Update();
             }
         }
     }

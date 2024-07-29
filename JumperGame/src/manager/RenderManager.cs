@@ -265,17 +265,17 @@ namespace JumperGame.src.manager
         
         //Ich hasse mich selber für diesen Code aber hab grad keinen bock das zu refactoren / PP anzuwenden
         //TODO: Refactor this
-        //Verzeih mir Thoma
+        //Verzeih mir Thomas
         public void InitializeMenu(MenuSystem menuSystem)
         {
             resetSystem();
             var playMenuItem = new MenuItemEntity(
-                new MenuComponent("Play", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, () => InitializePlayMenu(menuSystem), "lazy.ttf"),
+                new MenuComponent("Play", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 0, g = 255, b = 0, a = 255 }, () => InitializePlayMenu(menuSystem), "lazy.ttf"),
                 new MenuPositionComponent(new SDL.SDL_Rect())
             );
 
             var settingsMenuItem = new MenuItemEntity(
-                new MenuComponent("Settings", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, () => InitializeSettingsMenu(menuSystem), "lazy.ttf"),
+                new MenuComponent("Settings", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 0, g = 0, b = 255, a = 255 }, () => InitializeSettingsMenu(menuSystem), "lazy.ttf"),
                 new MenuPositionComponent(new SDL.SDL_Rect())
             );
 
@@ -340,17 +340,17 @@ namespace JumperGame.src.manager
         {
             resetSystem();
             var level1MenuItem = new MenuItemEntity(
-                new MenuComponent("Level 1", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, () => menuSystem.StartLevel("Level1", 3), "lazy.ttf"),
+                new MenuComponent("Level 1", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 0, g = 255, b = 0, a = 255 }, () => menuSystem.StartLevel("Level1", 3), "lazy.ttf"),
                 new MenuPositionComponent(new SDL.SDL_Rect())
             );
 
             var level2MenuItem = new MenuItemEntity(
-                new MenuComponent("Level 2", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, () => menuSystem.StartLevel("Level2", 3), "lazy.ttf"),
+                new MenuComponent("Level 2", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 0, g = 255, b = 0, a = 255 }, () => menuSystem.StartLevel("Level2", 3), "lazy.ttf"),
                 new MenuPositionComponent(new SDL.SDL_Rect())
             );
 
             var level3MenuItem = new MenuItemEntity(
-                new MenuComponent("Level 3", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, () => menuSystem.StartLevel("Level3", 3), "lazy.ttf"),
+                new MenuComponent("Level 3", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 0, g = 255, b = 0, a = 255 }, () => menuSystem.StartLevel("Level3", 3), "lazy.ttf"),
                 new MenuPositionComponent(new SDL.SDL_Rect())
             );
             
@@ -398,13 +398,32 @@ namespace JumperGame.src.manager
         
         public void InitializeSettingsMenu(MenuSystem menuSystem)
         {
+            var muteMusicMenuItem = new MenuItemEntity(
+                new MenuComponent("Mute Music", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 0, g = 0, b = 255, a = 255 }, () => AudioManager.SetMusicVolume(0), "lazy.ttf"),
+                new MenuPositionComponent(new SDL.SDL_Rect())
+            );
+            
+            var resumeMusicMenuItem = new MenuItemEntity(
+                new MenuComponent("Resume Music", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 0, g = 0, b = 255, a = 255 }, () => AudioManager.SetMusicVolume(4), "lazy.ttf"),
+                new MenuPositionComponent(new SDL.SDL_Rect())
+            );
+            
+            var unlockAllLevelsMenuItem = new MenuItemEntity(
+                new MenuComponent("Unlock All Levels", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, () => JumperGame.Instance.LevelProgressionSystem.UnlockAllLevels(), "lazy.ttf"),
+                new MenuPositionComponent(new SDL.SDL_Rect())
+            );
+            
+            var unlockDebugLevelsMenuItem = new MenuItemEntity(
+                new MenuComponent("Unlock debug movement with W", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, () => JumperGame.Instance._movementSystem.debugMovement = true, "lazy.ttf"),
+                new MenuPositionComponent(new SDL.SDL_Rect())
+            );
 
             var backMenuItem = new MenuItemEntity(
                 new MenuComponent("Back", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, () => InitializeMenu(menuSystem), "lazy.ttf"),
                 new MenuPositionComponent(new SDL.SDL_Rect())
             );
 
-            InitializeSubMenu(menuSystem, new List<MenuItemEntity> { backMenuItem });
+            InitializeSubMenu(menuSystem, new List<MenuItemEntity> { resumeMusicMenuItem, muteMusicMenuItem, unlockAllLevelsMenuItem, unlockDebugLevelsMenuItem, backMenuItem });
         }
         
         public void InitializePauseMenu(MenuSystem menuSystem)
@@ -412,7 +431,7 @@ namespace JumperGame.src.manager
             AudioManager.PlayOrPauseMusic();
             
             var resumeMenuItem = new MenuItemEntity(
-                new MenuComponent("Resume", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, menuSystem.resume, "lazy.ttf"),
+                new MenuComponent("Resume", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 0, g = 255, b = 0, a = 255 }, menuSystem.resume, "lazy.ttf"),
                 new MenuPositionComponent(new SDL.SDL_Rect())
             );
             
@@ -432,7 +451,7 @@ namespace JumperGame.src.manager
         public void InitializeDeathMenu(MenuSystem menuSystem)
         {
             var mainMenuItem = new MenuItemEntity(
-                new MenuComponent("Back to Main Menu", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, () => InitializeMenu(menuSystem), "lazy.ttf"),
+                new MenuComponent("Back to Main Menu", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 0, g = 255, b = 0, a = 255 }, () => InitializeMenu(menuSystem), "lazy.ttf"),
                 new MenuPositionComponent(new SDL.SDL_Rect())
             );
             

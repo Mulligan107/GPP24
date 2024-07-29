@@ -15,6 +15,7 @@ public class MovementSystem
         
     private entitySystem _entitySystem;
     bool speedlimitX;
+    public bool debugMovement {get; set;}
 
     public MovementSystem(entitySystem entitySystem)
     {
@@ -83,7 +84,6 @@ public class MovementSystem
                 {
                     case SDL.SDL_Keycode.SDLK_w:
                     case SDL.SDL_Keycode.SDLK_s:
-                        newVelocity.Y = 0;
                         break;
                     case SDL.SDL_Keycode.SDLK_SPACE:
                         entity.activeSTATE = Entity.STATE.AIRTIME;
@@ -126,8 +126,11 @@ public class MovementSystem
         switch (keycode)
         {
             case SDL.SDL_Keycode.SDLK_w:
-                entity.activeSTATE = Entity.STATE.JUMP;
-                newVelocity.Y = -250;
+                if (debugMovement)
+                {
+                    entity.activeSTATE = Entity.STATE.JUMP;
+                    newVelocity.Y = -250;
+                }
                 break;
 
             case SDL.SDL_Keycode.SDLK_s:
@@ -161,7 +164,7 @@ public class MovementSystem
             case SDL.SDL_Keycode.SDLK_SPACE:
                 if (physics.Grounded)
                 {
-
+                    AudioManager.PlaySound(3);
                     entity.activeSTATE = Entity.STATE.JUMP;
                     newVelocity.Y = -250;
 

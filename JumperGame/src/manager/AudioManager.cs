@@ -111,6 +111,12 @@ namespace JumperGame.src.manager
             }
         }
         
+        public static void SetMusicVolume(int volume)
+        {
+            _musicVolume = volume;
+            SDL_mixer.Mix_VolumeMusic(_musicVolume);
+        }
+        
         public static void Close()
         {
             // Free the sound effects

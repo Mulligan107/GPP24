@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 public class LevelProgressionSystem
 {
-    private readonly Dictionary<string, bool> _levelCompletionStatus;
-    private readonly LevelProgressionFileHandler _fileHandler;
+    private Dictionary<string, bool> _levelCompletionStatus;
+    private LevelProgressionFileHandler _fileHandler;
 
-    public LevelProgressionSystem()
+    public LevelProgressionSystem(string filePath)
     {
-        _fileHandler = new LevelProgressionFileHandler("levelProgression.json");
+        _fileHandler = new LevelProgressionFileHandler(filePath);
         _levelCompletionStatus = _fileHandler.LoadLevelCompletionStatus();
     }
 
@@ -23,5 +24,14 @@ public class LevelProgressionSystem
     public bool IsLevelUnlocked(string levelName)
     {
         return _levelCompletionStatus.ContainsKey(levelName) && _levelCompletionStatus[levelName];
+    }
+
+    public void UnlockAllLevels()
+    {
+        foreach (var key in _levelCompletionStatus.Keys.ToList())
+        {
+            _levelCompletionStatus[key] = true;
+        }
+        _fileHandler.SaveLevelCompletionStatus(_levelCompletionStatus);
     }
 }

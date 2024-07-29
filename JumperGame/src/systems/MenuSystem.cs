@@ -76,7 +76,9 @@ namespace JumperGame.systems
             CoinCounterSystem.Instance.ResetCoinCount();
             JumperGame.Instance.LifeSystem.LifeCount = initialLifeCount;
             JumperGame.Instance.LifeSystem.IsGameOverTriggered = false;
-            JumperGame.Instance.LoadLevel(levelName);
+
+            bool debug = JumperGame.Instance._movementSystem.debugMovement;
+            JumperGame.Instance.LoadLevel(levelName, debug);
             JumperGame.Instance.IsMenuOpen = false;
             ClearMenuItems();
         }

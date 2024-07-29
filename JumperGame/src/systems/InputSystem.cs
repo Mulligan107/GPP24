@@ -34,7 +34,7 @@ namespace JumperGame.systems
 
                 KeyPressed?.Invoke(e.key.keysym.sym);
 
-                if (e.key.keysym.sym == SDL.SDL_Keycode.SDLK_ESCAPE)
+                if (e.key.keysym.sym == SDL.SDL_Keycode.SDLK_ESCAPE && !IsMenuOpen)
                 {
                     InitializePauseRequested?.Invoke();
                     JumperGame.Instance.IsMenuOpen = true;

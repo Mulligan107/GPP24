@@ -13,7 +13,7 @@ namespace JumperGame.systems
         private const float JumpInterval = 2.0f; // Seconds
         private const float JumpForce = 75f;
         private const float MoveForce = 50f;
-        private const float EyeMoveSpeed = 5000f;
+        private const float EyeMoveSpeed = 50f;
         private const float DetectionRadius = 300f;
         private bool _jumpLeft = true;
 
@@ -27,12 +27,12 @@ namespace JumperGame.systems
             foreach (var entity in _entitySystem.GetAllEntities())
             {
                 SlimeJumpMovement(entity, deltaTime);
-                EyeMovement(entity, deltaTime);
+                EyeMovement(entity);
                 SimpleEnemyMovement(entity, deltaTime);
             }
         }
         
-        private void EyeMovement(Entity entity, double deltaTime)
+        private void EyeMovement(Entity entity)
         {
             if (entity.HasComponent<EyeSteeringComponent>() && entity.HasComponent<PhysicsComponent>() && entity.IsActive)
             {
@@ -46,7 +46,7 @@ namespace JumperGame.systems
                 if (distance <= DetectionRadius)
                 {
                     var direction = Vector3.Normalize(playerPosition - eyePosition);
-                    physics.Velocity = direction * EyeMoveSpeed * (float) deltaTime;
+                    physics.Velocity = direction * EyeMoveSpeed;
                 }
                 else
                 {
