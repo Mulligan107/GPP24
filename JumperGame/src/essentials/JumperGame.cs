@@ -41,7 +41,8 @@ namespace JumperGame
         public JumperGame()
         {
             Instance = this;
-            LevelProgressionSystem = new LevelProgressionSystem();
+            string filePath = "savefiles";
+            LevelProgressionSystem = new LevelProgressionSystem(filePath);
             LifeSystem = new LifeSystem();
         }
 

@@ -372,13 +372,18 @@ namespace JumperGame.src.manager
                 new MenuComponent("Resume Music", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 0, g = 0, b = 255, a = 255 }, () => AudioManager.SetMusicVolume(4), "lazy.ttf"),
                 new MenuPositionComponent(new SDL.SDL_Rect())
             );
+            
+            var unlockAllLevelsMenuItem = new MenuItemEntity(
+                new MenuComponent("Unlock All Levels", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, () => JumperGame.Instance.LevelProgressionSystem.UnlockAllLevels(), "lazy.ttf"),
+                new MenuPositionComponent(new SDL.SDL_Rect())
+            );
 
             var backMenuItem = new MenuItemEntity(
                 new MenuComponent("Back", new SDL.SDL_Color { r = 255, g = 255, b = 255, a = 255 }, new SDL.SDL_Color { r = 255, g = 0, b = 0, a = 255 }, () => InitializeMenu(menuSystem), "lazy.ttf"),
                 new MenuPositionComponent(new SDL.SDL_Rect())
             );
 
-            InitializeSubMenu(menuSystem, new List<MenuItemEntity> { resumeMusicMenuItem, muteMusicMenuItem, backMenuItem });
+            InitializeSubMenu(menuSystem, new List<MenuItemEntity> { resumeMusicMenuItem, muteMusicMenuItem, unlockAllLevelsMenuItem, backMenuItem });
         }
         
         public void InitializePauseMenu(MenuSystem menuSystem)
